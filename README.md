@@ -44,10 +44,10 @@ which is a shorthand / more readable version (based on overridable assumptions) 
     <largest-scale -rhs>
         <a-duck></a-duck>
     </largest-scale>
-    <iff-diff iff not-equals set-attr=hidden be-observant='[
-        {"lhs": {"observe": "[lhs]", "on":"value-changed", "value-from-target": "value"}}, 
-        {"rhs": {"observe": "[rhs]", "on":"value-changed", "value-from-target": "value"}} 
-    ]'></iff-diff>
+    <iff-diff iff not-equals set-attr=hidden be-observant='{
+        "lhs": {"observe": "[lhs]", "on":"value-changed", "value-from-target": "value"}, 
+        "rhs": {"observe": "[rhs]", "on":"value-changed", "value-from-target": "value"} 
+    }'></iff-diff>
     <div hidden>A witch!</div>
 </ways-of-science>
 ```
