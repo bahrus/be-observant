@@ -29,17 +29,13 @@ We have
     <largest-scale -rhs>
         <a-duck></a-duck>
     </largest-scale>
-    <iff-diff iff -lhs not-equals -rhs set-attr=hidden be-observant='[
-        {
-            "lhs": {"vft": true}
-        },
-        {
-            "rhs": {"vft": true}
-        } 
+    <iff-diff iff -lhs=largest-scale[-lhs] not-equals -rhs=largest-scale[-rhs] set-attr=hidden be-observant='[
+        {"lhs": {"observe": ["lhs"], "vft": true}}, {"rhs": {"observe": ["rhs"], "vft": true}} 
     ]'></iff-diff>
     <div hidden>A witch!</div>
 </ways-of-science>
 ```
+
 
 **NB I:** Editing large JSON attributes like this is quite error-prone, if you are like me.  The [json-in-html](https://marketplace.visualstudio.com/items?itemName=andersonbruceb.json-in-html) VSCode extension can help with this issue.  That extension is compatible with [pressing "." on the github page](https://github.dev/bahrus/be-observant). 
 
