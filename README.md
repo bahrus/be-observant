@@ -49,4 +49,4 @@ Whereas in the first example, -lhs and -rhs are required, they are left in for r
 
 **NB III:**  The attribute name "be-observant" is configurable.  "data-be-observant" also works, with the default configuration.  
 
-**NB IV:** Support for :has() has is not quite [hassle free](https://developer.mozilla.org/en-US/docs/Web/CSS/:has#browser_compatibility).
+**NB IV:** Support for :has() has not yet achieved [hassle-free-status](https://developer.mozilla.org/en-US/docs/Web/CSS/:has#browser_compatibility).
