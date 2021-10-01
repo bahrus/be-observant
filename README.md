@@ -29,8 +29,24 @@ We have
     <largest-scale -rhs>
         <a-duck></a-duck>
     </largest-scale>
-    <iff-diff iff -lhs=largest-scale[-lhs] not-equals -rhs=largest-scale[-rhs] set-attr=hidden be-observant='[
-        {"lhs": {"observe": ["lhs"], "vft": true}}, {"rhs": {"observe": ["rhs"], "vft": true}} 
+    <iff-diff iff -lhs=largest-scale[-lhs] not-equals -rhs=largest-scale[-rhs] set-attr=hidden be-observant></iff-diff>
+    <div hidden>A witch!</div>
+</ways-of-science>
+```
+
+which is a shorthand / more readable version (based on overridable assumptions) of:
+
+```html
+<ways-of-science>
+    <largest-scale -lhs>
+        <woman-with-carrot-attached-to-nose></woman-with-carrot-attached-to-nose>
+    </largest-scale>
+    <largest-scale -rhs>
+        <a-duck></a-duck>
+    </largest-scale>
+    <iff-diff iff not-equals set-attr=hidden be-observant='[
+        {"lhs": {"observe": "[lhs]", "on":"value-changed", "value-from-target": "value"}}, 
+        {"rhs": {"observe": "[rhs]", "on":"value-changed", "value-from-target": "value"}} 
     ]'></iff-diff>
     <div hidden>A witch!</div>
 </ways-of-science>
