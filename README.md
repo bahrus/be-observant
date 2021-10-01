@@ -23,30 +23,26 @@ We have
 
 ```html
 <ways-of-science>
-    <largest-scale>
+    <largest-scale -lhs>
         <woman-with-carrot-attached-to-nose></woman-with-carrot-attached-to-nose>
     </largest-scale>
-    <largest-scale>
+    <largest-scale -rhs>
         <a-duck></a-duck>
     </largest-scale>
     <iff-diff iff -lhs not-equals -rhs set-attr=hidden be-observant='[
         {
-            "lhs": {"observe":"largest-scale:has(woman-with-carrot-attached-to-nose)", "vft": true}
+            "lhs": {"vft": true}
         },
         {
-            "rhs": {"observe": "largest-scale:has(a-duck)", "vft": true}
+            "rhs": {"vft": true}
         } 
     ]'></iff-diff>
     <div hidden>A witch!</div>
 </ways-of-science>
 ```
 
-Whereas in the first example, -lhs and -rhs are required, they are left in for readability purposes here.
-
 **NB I:** Editing large JSON attributes like this is quite error-prone, if you are like me.  The [json-in-html](https://marketplace.visualstudio.com/items?itemName=andersonbruceb.json-in-html) VSCode extension can help with this issue.  That extension is compatible with [pressing "." on the github page](https://github.dev/bahrus/be-observant). 
 
 **NB II:** Whilst the first example involves more tags, and may often impose a slightly higher performance penalty, it is (subjectively) a bit more pleasant to type, and to reason about, add comments to, and to debug.  Perhaps starting with the former approach, and then moving to this approach when it is close to being ready for production may be the way to reconcile this.  Other approaches could be to transform one into the other during build time, or sometime during template processing (pre- or post- cloning).
 
 **NB III:**  The attribute name "be-observant" is configurable.  "data-be-observant" also works, with the default configuration.  
-
-**NB IV:** Support for :has() has not yet achieved [hassle-free-status](https://developer.mozilla.org/en-US/docs/Web/CSS/:has#browser_compatibility).
