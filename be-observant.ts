@@ -105,7 +105,8 @@ export function getElementToObserve(self:Element,
     }
     return elementToObserve;
 }
-export function setProp(valFT: string | undefined, valFE: string | undefined, propKey: string, observedElement: Element, {parseValAs, clone}: IObserve, self: Element, event?: Event){
+export function setProp(valFT: string | undefined, valFE: string | undefined, propKey: string, observedElement: Element, 
+    {parseValAs, clone, as}: IObserve, self: Element, event?: Event){
     if(event === undefined && valFE !== undefined) return;
     const valPath = event !== undefined && valFE ? valFE : valFT;
     if(valPath === undefined) throw 'NI';//not implemented;
@@ -117,7 +118,36 @@ export function setProp(valFT: string | undefined, valFE: string | undefined, pr
     if(parseValAs !== undefined){
         val = convert(val, parseValAs);
     }
-    (<any>self)[propKey] = val;
+    if(as !== undefined){
+        const propKeyLispCase = camelToLisp(propKey);
+        switch(as){
+            case 'str-attr':
+                observedElement.setAttribute(propKeyLispCase, val.toString());
+                break;
+            case 'obj-attr':
+                observedElement.setAttribute(propKeyLispCase, JSON.stringify(val));
+                break;
+            case 'bool-attr':
+                if(val) {
+                    observedElement.setAttribute(propKeyLispCase, '');
+                }else{
+                    observedElement.removeAttribute(propKeyLispCase);
+                }
+                break;
+            // default:
+            //     if(toProp === '...'){
+            //         Object.assign(subMatch, val);
+            //     }else{
+            //         (<any>subMatch)[toProp] = val;
+            //     }
+                
+    
+        }
+    }else{
+        (<any>self)[propKey] = val;
+    }
+
+
 }
 export function getHost(self:Element): HTMLElement{
     let host = (<any>self.getRootNode()).host;

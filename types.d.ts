@@ -11,4 +11,5 @@ export interface IObserve{
     skipInit: boolean,
     parseValAs: string,
     onProp: string,
+    as: 'str-attr' | 'bool-attr' | 'obj-attr'
 }

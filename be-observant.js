@@ -99,7 +99,7 @@ export function getElementToObserve(self, { observeHost, observeClosest, observe
     }
     return elementToObserve;
 }
-export function setProp(valFT, valFE, propKey, observedElement, { parseValAs, clone }, self, event) {
+export function setProp(valFT, valFE, propKey, observedElement, { parseValAs, clone, as }, self, event) {
     if (event === undefined && valFE !== undefined)
         return;
     const valPath = event !== undefined && valFE ? valFE : valFT;
@@ -115,7 +115,34 @@ export function setProp(valFT, valFE, propKey, observedElement, { parseValAs, cl
     if (parseValAs !== undefined) {
         val = convert(val, parseValAs);
     }
-    self[propKey] = val;
+    if (as !== undefined) {
+        const propKeyLispCase = camelToLisp(propKey);
+        switch (as) {
+            case 'str-attr':
+                observedElement.setAttribute(propKeyLispCase, val.toString());
+                break;
+            case 'obj-attr':
+                observedElement.setAttribute(propKeyLispCase, JSON.stringify(val));
+                break;
+            case 'bool-attr':
+                if (val) {
+                    observedElement.setAttribute(propKeyLispCase, '');
+                }
+                else {
+                    observedElement.removeAttribute(propKeyLispCase);
+                }
+                break;
+            // default:
+            //     if(toProp === '...'){
+            //         Object.assign(subMatch, val);
+            //     }else{
+            //         (<any>subMatch)[toProp] = val;
+            //     }
+        }
+    }
+    else {
+        self[propKey] = val;
+    }
 }
 export function getHost(self) {
     let host = self.getRootNode().host;
