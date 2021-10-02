@@ -10,6 +10,7 @@ const ce = new CE({
             upgrade: '*',
             ifWantsToBe: 'observant',
             noParse: true,
+            forceVisible: true,
         }
     },
     complexPropDefaults: {

@@ -13,6 +13,7 @@ const ce = new CE<XtalDecorCore<Element>>({
             upgrade: '*',
             ifWantsToBe: 'observant',
             noParse: true,
+            forceVisible: true,
         }
     },
     complexPropDefaults:{

@@ -8,7 +8,7 @@
     "serve": "node node_modules/xtal-test/serve.js"
   },
   "dependencies": {
-    "xtal-decor": "0.0.44",
+    "xtal-decor": "0.0.45",
     "on-to-me": "0.0.49"
   },
   "devDependencies": {
