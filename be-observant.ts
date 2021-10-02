@@ -106,7 +106,7 @@ export function getElementToObserve(self:Element,
     return elementToObserve;
 }
 export function setProp(valFT: string | undefined, valFE: string | undefined, propKey: string, observedElement: Element, 
-    {parseValAs, clone, as}: IObserve, self: Element, event?: Event){
+    {parseValAs, clone, as, trueVal, falseVal}: IObserve, self: Element, event?: Event){
     if(event === undefined && valFE !== undefined) return;
     const valPath = event !== undefined && valFE ? valFE : valFT;
     if(valPath === undefined) throw 'NI';//not implemented;
@@ -117,6 +117,11 @@ export function setProp(valFT: string | undefined, valFE: string | undefined, pr
     if(clone) val = structuralClone(val);
     if(parseValAs !== undefined){
         val = convert(val, parseValAs);
+    }
+    if(trueVal && val){
+        val = trueVal;
+    }else if(falseVal && !val){
+        val = falseVal;
     }
     if(as !== undefined){
         //const propKeyLispCase = camelToLisp(propKey);

@@ -99,7 +99,7 @@ export function getElementToObserve(self, { observeHost, observeClosest, observe
     }
     return elementToObserve;
 }
-export function setProp(valFT, valFE, propKey, observedElement, { parseValAs, clone, as }, self, event) {
+export function setProp(valFT, valFE, propKey, observedElement, { parseValAs, clone, as, trueVal, falseVal }, self, event) {
     if (event === undefined && valFE !== undefined)
         return;
     const valPath = event !== undefined && valFE ? valFE : valFT;
@@ -114,6 +114,12 @@ export function setProp(valFT, valFE, propKey, observedElement, { parseValAs, cl
         val = structuralClone(val);
     if (parseValAs !== undefined) {
         val = convert(val, parseValAs);
+    }
+    if (trueVal && val) {
+        val = trueVal;
+    }
+    else if (falseVal && !val) {
+        val = falseVal;
     }
     if (as !== undefined) {
         //const propKeyLispCase = camelToLisp(propKey);

@@ -1,11 +1,32 @@
 {
   "name": "be-observant",
   "version": "0.0.3",
-  "description": "",
-  "main": "index.js",
+  "keywords": [
+    "web-components",
+    "web-component",
+    "custom-element",
+    "custom-elements",
+    "JSON",
+    "bind",
+    "observe"
+  ],
+  "description": "Glue DOM and custom elements together via JSON declarations.",
+  "main": "be-observant.js",
+  "module": "be-observant.js",
+  "exports": {
+    ".": "./be-observant.js",
+    "./be-observant.js": "./be-observant.js"
+  },
+  "files": [
+    "be*.*",
+    "types.d.ts"
+  ],
+  "types": "types.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "serve": "node node_modules/xtal-test/serve.js"
+    "serve": "node node_modules/xtal-test/serve.js",
+    "package-check": "package-check",
+    "doc": "custom-elements-manifest analyze"
   },
   "dependencies": {
     "xtal-decor": "0.0.45",
@@ -13,6 +34,8 @@
   },
   "devDependencies": {
     "xtal-test": "0.0.51",
+    "@skypack/package-check": "0.2.2",
+    "@custom-elements-manifest/analyzer": "0.5.5",
     "if-diff": "0.0.120"
   },
   "repository": {
