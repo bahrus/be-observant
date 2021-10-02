@@ -10,4 +10,5 @@ export interface IObserve{
     clone: boolean,
     skipInit: boolean,
     parseValAs: string,
+    onProp: string,
 }

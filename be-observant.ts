@@ -38,7 +38,7 @@ const ce = new CE<XtalDecorCore<Element>>({
                     console.warn({msg:'404',...observeParams});
                     continue;
                 }
-                const {on, vft, valFromTarget, valFromEvent, vfe, skipInit} = observeParams;
+                const {on, vft, valFromTarget, valFromEvent, vfe, skipInit, onProp} = observeParams;
                 const valFT = vft || valFromTarget;
                 const onz = on || (valFT ? camelToLisp(valFT) + '-changed' : undefined); 
                 const valFE = vfe || valFromEvent;
@@ -50,6 +50,34 @@ const ce = new CE<XtalDecorCore<Element>>({
                         setProp(valFT, valFE, propKey, elementToObserve, observeParams, self, e);
                     });
                     nudge(elementToObserve);
+                }else if(onProp !== undefined){
+                    let proto = elementToObserve;
+                    let prop: PropertyDescriptor | undefined = Object.getOwnPropertyDescriptor(proto, onProp);
+                    while(proto && !prop){
+                        proto = Object.getPrototypeOf(proto);
+                        prop = Object.getOwnPropertyDescriptor(proto, onProp);
+                    }
+                    if(prop === undefined){
+                        throw {elementToObserve, onProp, message: "Can't find property."};
+                    }
+                    const setter = prop.set!.bind(elementToObserve);
+                    const getter = prop.get!.bind(elementToObserve);
+                    Object.defineProperty(elementToObserve, onProp!, {
+                        get(){
+                            return getter();
+                        },
+                        set(nv){
+                            setter(nv);
+                            const event = {
+                                target: this
+                            };
+                            setProp(valFT, valFE, propKey, elementToObserve, observeParams, self);
+                        },
+                        enumerable: true,
+                        configurable: true,
+                    });     
+                }else{
+                    throw 'NI'; // not implemented
                 }
                 
             }
