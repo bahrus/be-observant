@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <ways-of-science>
+        <largest-scale -lhs>
+            <woman-with-carrot-attached-to-nose></woman-with-carrot-attached-to-nose>
+        </largest-scale>
+        <largest-scale -rhs>
+            <a-duck></a-duck>
+        </largest-scale>
+        <iff-diff iff not-equals set-attr=hidden be-observant='{
+            "lhs": {"observe": "[lhs]", "on":"value-changed", "value-from-target": "value"}, 
+            "rhs": {"observe": "[rhs]", "on":"value-changed", "value-from-target": "value"} 
+        }'></iff-diff>
+        <div hidden>A witch!</div>
+    </ways-of-science>
+    <script type=importmap>
+    {
+        "imports": {
+            "trans-render/": "../node_modules/trans-render/",
+            "xtal-element/": "../node_modules/xtal-element/",
+            "xtal-decor/": "../node_modules/xtal-decor/"
+        }
+    }
+    </script>
+    <script type=module>
+        import '../be-observant.js';
+    </script>
+</body>
+</html>
