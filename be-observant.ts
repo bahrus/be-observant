@@ -29,7 +29,7 @@ const ce = new CE<XtalDecorCore<Element>>({
                 decor,
                 decor_ifWantsToBe: decor.ifWantsToBe,
                 ifWantsToBe: self.getAttribute('is-' + decor.ifWantsToBe!)
-            })
+            });
             const params = JSON.parse(self.getAttribute('is-' + decor.ifWantsToBe!)!);
             for(const propKey in params){
                 const observeParams = params[propKey] as IObserve;
@@ -105,11 +105,11 @@ export function getElementToObserve(self:Element,
     return elementToObserve;
 }
 export function setProp(valFT: string | undefined, valFE: string | undefined, propKey: string, observedElement: Element, {parseValAs, clone}: IObserve, self: Element, event?: Event){
-    if(event === undefined && valFE === undefined) return;
+    if(event === undefined && valFE !== undefined) return;
     const valPath = event !== undefined && valFE ? valFE : valFT;
     if(valPath === undefined) throw 'NI';//not implemented;
     const split = splitExt(valPath);
-    let src: any = valFE !== undefined ? event ? observedElement; 
+    let src: any = valFE !== undefined ? ( event ? event : observedElement) : observedElement; 
     let val = getProp(src, split, observedElement);
     if(val === undefined) return;
     if(clone) val = structuralClone(val);

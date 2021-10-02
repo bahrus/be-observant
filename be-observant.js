@@ -99,13 +99,13 @@ export function getElementToObserve(self, { observeHost, observeClosest, observe
     return elementToObserve;
 }
 export function setProp(valFT, valFE, propKey, observedElement, { parseValAs, clone }, self, event) {
-    if (event === undefined && valFE === undefined)
+    if (event === undefined && valFE !== undefined)
         return;
     const valPath = event !== undefined && valFE ? valFE : valFT;
     if (valPath === undefined)
         throw 'NI'; //not implemented;
     const split = splitExt(valPath);
-    let src = valFE !== undefined ? event ? observedElement :  : ;
+    let src = valFE !== undefined ? (event ? event : observedElement) : observedElement;
     let val = getProp(src, split, observedElement);
     if (val === undefined)
         return;
