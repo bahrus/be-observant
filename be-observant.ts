@@ -81,7 +81,8 @@ export function setProp(valFT: string | undefined, valFE: string | undefined, pr
     const valPath = event !== undefined && valFE ? valFE : valFT;
     if(valPath === undefined) throw 'NI';//not implemented;
     const split = splitExt(valPath);
-    let val = getProp(observedElement, split, observedElement);
+    let src: any = valFE !== undefined ? event ? observedElement; 
+    let val = getProp(src, split, observedElement);
     if(val === undefined) return;
     if(clone) val = structuralClone(val);
     if(parseValAs !== undefined){
