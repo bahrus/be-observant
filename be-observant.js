@@ -116,20 +116,20 @@ export function setProp(valFT, valFE, propKey, observedElement, { parseValAs, cl
         val = convert(val, parseValAs);
     }
     if (as !== undefined) {
-        const propKeyLispCase = camelToLisp(propKey);
+        //const propKeyLispCase = camelToLisp(propKey);
         switch (as) {
             case 'str-attr':
-                observedElement.setAttribute(propKeyLispCase, val.toString());
+                self.setAttribute(propKey, val.toString());
                 break;
             case 'obj-attr':
-                observedElement.setAttribute(propKeyLispCase, JSON.stringify(val));
+                self.setAttribute(propKey, JSON.stringify(val));
                 break;
             case 'bool-attr':
                 if (val) {
-                    observedElement.setAttribute(propKeyLispCase, '');
+                    self.setAttribute(propKey, '');
                 }
                 else {
-                    observedElement.removeAttribute(propKeyLispCase);
+                    self.removeAttribute(propKey);
                 }
                 break;
             // default:
