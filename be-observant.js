@@ -20,7 +20,8 @@ const ce = new CE({
         init: (self, decor) => {
             const params = JSON.parse(self.getAttribute('is-' + decor.ifWantsToBe));
             for (const propKey in params) {
-                const observeParams = params[propKey];
+                const parm = params[propKey];
+                const observeParams = ((typeof parm === 'string') ? { vft: parm } : parm);
                 const elementToObserve = getElementToObserve(self, observeParams);
                 if (elementToObserve === null) {
                     console.warn({ msg: '404', observeParams });
@@ -76,12 +77,9 @@ const ce = new CE({
     },
     superclass: XtalDecor
 });
-function getElementToObserve(self, { observeHost, observeClosest, observe }) {
+function getElementToObserve(self, { observeClosest, observe }) {
     let elementToObserve = null;
-    if (observeHost) {
-        elementToObserve = getHost(self);
-    }
-    else if (observeClosest !== undefined) {
+    if (observeClosest !== undefined) {
         elementToObserve = self.closest(observeClosest);
         if (elementToObserve !== null && observe) {
             elementToObserve = upSearch(elementToObserve, observe);
@@ -91,7 +89,7 @@ function getElementToObserve(self, { observeHost, observeClosest, observe }) {
         elementToObserve = upSearch(self, observe);
     }
     else {
-        throw 'NI'; //not implemented
+        elementToObserve = getHost(self);
     }
     return elementToObserve;
 }

@@ -1,4 +1,4 @@
-# be-observant [TODO]
+# be-observant
 
 be-observant is a member of the [p-et-alia](https://github.com/bahrus/p-et-alia) family of web components.
 

@@ -1,6 +1,6 @@
 export interface IObserve{
     observe: string,
-    observeHost: boolean,
+    //observeHost: boolean,
     observeClosest: string,
     on: string,
     valFromTarget: string,
