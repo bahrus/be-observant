@@ -12,6 +12,6 @@ export interface IObserve{
     parseValAs: string,
     onProp: string,
     as: 'str-attr' | 'bool-attr' | 'obj-attr',
-    trueVal: string,
-    falseVal: string,
+    trueVal: any,
+    falseVal: any,
 }

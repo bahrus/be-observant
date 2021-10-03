@@ -3,6 +3,7 @@ import { CE } from 'trans-render/lib/CE.js';
 import { camelToLisp } from 'trans-render/lib/camelToLisp.js';
 import { convert, getProp, splitExt } from 'on-to-me/prop-mixin.js';
 import { structuralClone } from 'trans-render/lib/structuralClone.js';
+import { upSearch } from 'trans-render/lib/upSearch.js';
 const ce = new CE({
     config: {
         tagName: 'be-observant',
@@ -22,7 +23,7 @@ const ce = new CE({
                 const observeParams = params[propKey];
                 const elementToObserve = getElementToObserve(self, observeParams);
                 if (elementToObserve === null) {
-                    console.warn({ msg: '404', ...observeParams });
+                    console.warn({ msg: '404', observeParams });
                     continue;
                 }
                 const { on, vft, valFromTarget, valFromEvent, vfe, skipInit, onProp } = observeParams;
@@ -35,7 +36,8 @@ const ce = new CE({
                 }
                 if (onz !== undefined) {
                     elementToObserve.addEventListener(onz, e => {
-                        setProp(valFT, valFE, propKey, elementToObserve, observeParams, self, e);
+                        e.stopPropagation();
+                        setProp(valFT, valFE, propKey, e.target, observeParams, self, e);
                     });
                     nudge(elementToObserve);
                 }
@@ -74,7 +76,7 @@ const ce = new CE({
     },
     superclass: XtalDecor
 });
-export function getElementToObserve(self, { observeHost, observeClosest, observe }) {
+function getElementToObserve(self, { observeHost, observeClosest, observe }) {
     let elementToObserve = null;
     if (observeHost) {
         elementToObserve = getHost(self);
@@ -82,18 +84,18 @@ export function getElementToObserve(self, { observeHost, observeClosest, observe
     else if (observeClosest !== undefined) {
         elementToObserve = self.closest(observeClosest);
         if (elementToObserve !== null && observe) {
-            elementToObserve = getPreviousSib(elementToObserve.previousElementSibling || elementToObserve.parentElement, observe);
+            elementToObserve = upSearch(elementToObserve, observe);
         }
     }
     else if (observe !== undefined) {
-        elementToObserve = getPreviousSib(self.previousElementSibling || self.parentElement, observe);
+        elementToObserve = upSearch(self, observe);
     }
     else {
         throw 'NI'; //not implemented
     }
     return elementToObserve;
 }
-export function setProp(valFT, valFE, propKey, observedElement, { parseValAs, clone, as, trueVal, falseVal }, self, event) {
+function setProp(valFT, valFE, propKey, observedElement, { parseValAs, clone, as, trueVal, falseVal }, self, event) {
     if (event === undefined && valFE !== undefined)
         return;
     const valPath = event !== undefined && valFE ? valFE : valFT;
@@ -144,7 +146,7 @@ export function setProp(valFT, valFE, propKey, observedElement, { parseValAs, cl
         self[propKey] = val;
     }
 }
-export function getHost(self) {
+function getHost(self) {
     let host = self.getRootNode().host;
     if (host === undefined) {
         host = self.parentElement;
@@ -154,22 +156,22 @@ export function getHost(self) {
     }
     return host;
 }
-/**
-* get previous sibling
-*/
-export function getPreviousSib(self, observe) {
-    let prevSib = self;
-    while (prevSib && !prevSib.matches(observe)) {
-        const nextPrevSib = prevSib.previousElementSibling || prevSib.parentElement;
-        prevSib = nextPrevSib;
-    }
-    return prevSib;
-}
+// /**
+// * get previous sibling
+// */
+// function getPreviousSib(self: Element, observe: string) : Element | null{
+//     let prevSib: Element | null = self;
+//     while(prevSib && !prevSib.matches(observe)){
+//         const nextPrevSib: Element | null = prevSib.previousElementSibling || prevSib.parentElement;
+//         prevSib = nextPrevSib;
+//     }
+//     return prevSib;
+//  }
 /**
 * Decrement "disabled" counter, remove when reaches 0
 * @param prevSib
 */
-export function nudge(prevSib) {
+function nudge(prevSib) {
     const da = prevSib.getAttribute('disabled');
     if (da !== null) {
         if (da.length === 0 || da === "1") {
