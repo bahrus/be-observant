@@ -17,13 +17,13 @@ const ce = new CE({
         actions: [],
         on: {},
         init: (self, decor) => {
-            console.log({
-                self,
-                tagName: self.tagName,
-                decor,
-                decor_ifWantsToBe: decor.ifWantsToBe,
-                ifWantsToBe: self.getAttribute('is-' + decor.ifWantsToBe)
-            });
+            // console.log({
+            //     self, 
+            //     tagName: self.tagName,
+            //     decor,
+            //     decor_ifWantsToBe: decor.ifWantsToBe,
+            //     ifWantsToBe: self.getAttribute('is-' + decor.ifWantsToBe!)
+            // });
             const params = JSON.parse(self.getAttribute('is-' + decor.ifWantsToBe));
             for (const propKey in params) {
                 const observeParams = params[propKey];
@@ -34,7 +34,8 @@ const ce = new CE({
                 }
                 const { on, vft, valFromTarget, valFromEvent, vfe, skipInit, onProp } = observeParams;
                 const valFT = vft || valFromTarget;
-                const onz = on || (valFT ? camelToLisp(valFT) + '-changed' : undefined);
+                const onz = onProp !== undefined ? undefined :
+                    on || (valFT ? camelToLisp(valFT) + '-changed' : undefined);
                 const valFE = vfe || valFromEvent;
                 if (valFT !== undefined && !skipInit) {
                     setProp(valFT, valFE, propKey, elementToObserve, observeParams, self);
