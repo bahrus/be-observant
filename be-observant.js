@@ -17,13 +17,6 @@ const ce = new CE({
         actions: [],
         on: {},
         init: (self, decor) => {
-            // console.log({
-            //     self, 
-            //     tagName: self.tagName,
-            //     decor,
-            //     decor_ifWantsToBe: decor.ifWantsToBe,
-            //     ifWantsToBe: self.getAttribute('is-' + decor.ifWantsToBe!)
-            // });
             const params = JSON.parse(self.getAttribute('is-' + decor.ifWantsToBe));
             for (const propKey in params) {
                 const observeParams = params[propKey];

@@ -24,13 +24,6 @@ const ce = new CE<XtalDecorCore<Element>>({
 
         },
         init: (self: Element, decor: XtalDecorProps<Element>) => {
-            // console.log({
-            //     self, 
-            //     tagName: self.tagName,
-            //     decor,
-            //     decor_ifWantsToBe: decor.ifWantsToBe,
-            //     ifWantsToBe: self.getAttribute('is-' + decor.ifWantsToBe!)
-            // });
             const params = JSON.parse(self.getAttribute('is-' + decor.ifWantsToBe!)!);
             for(const propKey in params){
                 const observeParams = params[propKey] as IObserve;
