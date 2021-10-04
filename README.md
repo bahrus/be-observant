@@ -60,3 +60,5 @@ which is a shorthand / more readable version (based on overridable assumptions) 
 **NB II:** Whilst the first example involves more tags, and may often impose a slightly higher performance penalty, it is (subjectively) a bit more pleasant to type, and to reason about, add comments to, and to debug.  Perhaps starting with the former approach, and then moving to this approach when it is close to being ready for production may be the way to reconcile this.  Other approaches could be to transform one into the other during build time, or sometime during template processing (pre- or post- cloning).
 
 **NB III:**  The attribute name "be-observant" is configurable.  "data-be-observant" also works, with the default configuration.  
+
+[TODO] Remove event handler on dispose?
