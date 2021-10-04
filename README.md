@@ -1,5 +1,7 @@
 # be-observant
 
+[![Actions Status](https://github.com/bahrus/be-observant/workflows/CI/badge.svg)](https://github.com/bahrus/be-observant/actions?query=workflow%3ACI)
+
 be-observant is a member of the [p-et-alia](https://github.com/bahrus/p-et-alia) family of web components.
 
 It strives to accomplish the same thing as the [pass-down](https://github.com/bahrus/pass-down) custom element, but in a possibly more performant way in many circumstances.  It uses attributes rather than elements to bind things together.  So instead of:
