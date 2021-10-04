@@ -21,7 +21,7 @@ It strives to accomplish the same thing as the [pass-down](https://github.com/ba
 </ways-of-science>
 ```
 
-We have
+We have [TODO]
 
 ```html
 <ways-of-science>

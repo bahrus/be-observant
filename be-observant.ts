@@ -30,9 +30,9 @@ const ce = new CE<XtalDecorCore<Element>>({
                     console.warn({msg:'404',observeParams});
                     continue;
                 }
-                const {on, vft, valFromTarget, valFromEvent, vfe, skipInit, onProp} = observeParams;
+                const {on, vft, valFromTarget, valFromEvent, vfe, skipInit, onSet} = observeParams;
                 const valFT = vft || valFromTarget;
-                const onz = onProp !== undefined ? undefined :
+                const onz = onSet !== undefined ? undefined :
                      on || (valFT ? camelToLisp(valFT) + '-changed' : undefined); 
                 const valFE = vfe || valFromEvent;
                 if(valFT !== undefined && !skipInit){
@@ -44,19 +44,19 @@ const ce = new CE<XtalDecorCore<Element>>({
                         setProp(valFT, valFE, propKey, e.target! as Element, observeParams, self, e);
                     });
                     nudge(elementToObserve);
-                }else if(onProp !== undefined){
+                }else if(onSet !== undefined){
                     let proto = elementToObserve;
-                    let prop: PropertyDescriptor | undefined = Object.getOwnPropertyDescriptor(proto, onProp);
+                    let prop: PropertyDescriptor | undefined = Object.getOwnPropertyDescriptor(proto, onSet);
                     while(proto && !prop){
                         proto = Object.getPrototypeOf(proto);
-                        prop = Object.getOwnPropertyDescriptor(proto, onProp);
+                        prop = Object.getOwnPropertyDescriptor(proto, onSet);
                     }
                     if(prop === undefined){
-                        throw {elementToObserve, onProp, message: "Can't find property."};
+                        throw {elementToObserve, onSet, message: "Can't find property."};
                     }
                     const setter = prop.set!.bind(elementToObserve);
                     const getter = prop.get!.bind(elementToObserve);
-                    Object.defineProperty(elementToObserve, onProp!, {
+                    Object.defineProperty(elementToObserve, onSet!, {
                         get(){
                             return getter();
                         },

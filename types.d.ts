@@ -10,7 +10,7 @@ export interface IObserve{
     clone: boolean,
     skipInit: boolean,
     parseValAs: string,
-    onProp: string,
+    onSet: string,
     as: 'str-attr' | 'bool-attr' | 'obj-attr',
     trueVal: any,
     falseVal: any,
