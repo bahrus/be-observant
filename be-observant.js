@@ -12,6 +12,7 @@ const ce = new CE({
             ifWantsToBe: 'observant',
             noParse: true,
             forceVisible: true,
+            virtualProps: ['eventHandlers']
         }
     },
     complexPropDefaults: {
@@ -36,10 +37,14 @@ const ce = new CE({
                     setProp(valFT, valFE, propKey, elementToObserve, observeParams, self);
                 }
                 if (onz !== undefined) {
-                    elementToObserve.addEventListener(onz, e => {
+                    const fn = (e) => {
                         e.stopPropagation();
                         setProp(valFT, valFE, propKey, e.target, observeParams, self, e);
-                    });
+                    };
+                    elementToObserve.addEventListener(onz, fn);
+                    if (self.eventHandlers === undefined)
+                        self.eventHandlers = [];
+                    self.eventHandlers.push({ onz, elementToObserve, fn });
                     nudge(elementToObserve);
                 }
                 else if (onSet !== undefined) {
@@ -72,6 +77,13 @@ const ce = new CE({
                 else {
                     throw 'NI'; // not implemented
                 }
+            }
+        },
+        finale: (self, target) => {
+            const eventHandlers = self.eventHandlers;
+            console.log(eventHandlers);
+            for (const eh of eventHandlers) {
+                eh.elementToObserve.removeEventListener(eh.onz, eh.fn);
             }
         }
     },

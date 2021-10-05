@@ -15,6 +15,7 @@ const ce = new CE<XtalDecorCore<Element>>({
             ifWantsToBe: 'observant',
             noParse: true,
             forceVisible: true,
+            virtualProps: ['eventHandlers']
         }
     },
     complexPropDefaults:{
@@ -39,10 +40,13 @@ const ce = new CE<XtalDecorCore<Element>>({
                     setProp(valFT, valFE, propKey, elementToObserve, observeParams, self);
                 }
                 if(onz !== undefined){
-                    elementToObserve.addEventListener(onz, e => {
+                    const fn = (e: Event) => {
                         e.stopPropagation();
                         setProp(valFT, valFE, propKey, e.target! as Element, observeParams, self, e);
-                    });
+                    }
+                    elementToObserve.addEventListener(onz, fn);
+                    if((<any>self).eventHandlers === undefined) (<any>self).eventHandlers = [];
+                    (<any>self).eventHandlers.push({onz, elementToObserve, fn});
                     nudge(elementToObserve);
                 }else if(onSet !== undefined){
                     let proto = elementToObserve;
@@ -74,6 +78,13 @@ const ce = new CE<XtalDecorCore<Element>>({
                     throw 'NI'; // not implemented
                 }
                 
+            }
+        },
+        finale: (self: Element, target:Element) => {
+            const eventHandlers = (<any>self).eventHandlers;
+            console.log(eventHandlers);
+            for(const eh of eventHandlers){
+                eh.elementToObserve.removeEventListener(eh.onz, eh.fn);
             }
         }
     },

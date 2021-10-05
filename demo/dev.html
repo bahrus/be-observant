@@ -20,6 +20,12 @@
           <div>LHS == RHS</div>
         </template>
     </if-diff>
+    <button onclick="removeIfDiff()">Remove IfDiff</button>
+    <script>
+        function removeIfDiff(){
+            document.querySelector('if-diff').remove();
+        }
+    </script>
     <script type=importmap>
     {
         "imports": {
