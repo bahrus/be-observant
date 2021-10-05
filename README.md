@@ -61,4 +61,3 @@ which is a shorthand / more readable version (based on overridable assumptions) 
 
 **NB III:**  The attribute name "be-observant" is configurable.  "data-be-observant" also works, with the default configuration.  
 
-[TODO] Remove event handler on dispose?
