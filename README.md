@@ -96,7 +96,7 @@ To specify a different source to observe other than the host, we use "observe", 
 
 These searches all stop at any ShadowDOM boundary.
 
-## [Confguration Parameters](types.d.ts)
+## [Confoguration Parameters](types.d.ts)
 
  
 
