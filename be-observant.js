@@ -81,7 +81,6 @@ const ce = new CE({
         },
         finale: (self, target) => {
             const eventHandlers = self.eventHandlers;
-            console.log(eventHandlers);
             for (const eh of eventHandlers) {
                 eh.elementToObserve.removeEventListener(eh.onz, eh.fn);
             }

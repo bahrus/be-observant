@@ -82,7 +82,6 @@ const ce = new CE<XtalDecorCore<Element>>({
         },
         finale: (self: Element, target:Element) => {
             const eventHandlers = (<any>self).eventHandlers;
-            console.log(eventHandlers);
             for(const eh of eventHandlers){
                 eh.elementToObserve.removeEventListener(eh.onz, eh.fn);
             }
