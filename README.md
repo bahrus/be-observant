@@ -96,7 +96,75 @@ To specify a different source to observe other than the host, we use "observe", 
 
 These searches all stop at any ShadowDOM boundary.
 
-## [Confoguration Parameters](types.d.ts)
+## [Configuration Parameters](types.d.ts)
+
+## Inserting dynamic settings [TODO]
+
+Suppose we have a list-sorter element decorator:
+
+```html
+<list-sorter upgrade=* if-wants-to-be=sorted></list-sorter>
+
+...
+
+<ul be-sorted='{"direction":"asc","nodeSelectorToSortOn":"span"}'>
+    <li>
+        <span>Zorse</span>
+    </li>
+    <li>
+        <span>Aardvark</span>
+    </li>
+</ul>
+
+```
+
+resulting in:
+
+```html
+
+<ul is-sorted='{"direction":"asc","nodeSelectorToSortOn":"span"}'>
+    <li>
+        <span>Aardvark</span>
+    </li>
+    <li>
+        <span>Zorse</span>
+    </li>
+</ul>
+
+```
+
+But we want to make the direction of sorting bound to a nearby toggle button:
+
+```html
+<toggle-button></toggle-button>
+```
+
+be-observant should be able to hook-up to that list-sorter proxy, passing in the direction property changes as the toggle button changes.
+
+Proposed syntax:
+
+```html
+<list-sorter  upgrade=* if-wants-to-be=sorted with-binding></list-sorter>
+<be-observant upgrade=* if-wants-to-be=sorted-with-binding proxy-to=list-sorter></be-observant>
+
+...
+
+<toggle-button></toggle-button>
+
+...
+
+<ul be-sorted='{"nodeSelectorToSortOn":"span"}' be-sorted-with-binding='{
+    "direction": {"observe": "toggle-button", "vft": "on", "valIfTrue": "asc", "valIfFalse": "desc"}
+}'>
+    <li>
+        <span>Zorse</span>
+    </li>
+    <li>
+        <span>Aardvark</span>
+    </li>
+</ul>
+
+```
 
  
 
