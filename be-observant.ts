@@ -31,52 +31,7 @@ const ce = new CE<XtalDecorCore<Element>>({
                     console.warn({msg:'404',observeParams});
                     continue;
                 }
-                const {on, vft, valFromTarget, valFromEvent, vfe, skipInit, onSet} = observeParams;
-                const valFT = vft || valFromTarget;
-                const onz = onSet !== undefined ? undefined :
-                     on || (valFT ? camelToLisp(valFT) + '-changed' : undefined); 
-                const valFE = vfe || valFromEvent;
-                if(valFT !== undefined && !skipInit){
-                    setProp(valFT, valFE, propKey, elementToObserve, observeParams, self);
-                }
-                if(onz !== undefined){
-                    const fn = (e: Event) => {
-                        e.stopPropagation();
-                        setProp(valFT, valFE, propKey, e.target! as Element, observeParams, self, e);
-                    }
-                    elementToObserve.addEventListener(onz, fn);
-                    if((<any>self).eventHandlers === undefined) (<any>self).eventHandlers = [];
-                    (<any>self).eventHandlers.push({onz, elementToObserve, fn});
-                    nudge(elementToObserve);
-                }else if(onSet !== undefined){
-                    let proto = elementToObserve;
-                    let prop: PropertyDescriptor | undefined = Object.getOwnPropertyDescriptor(proto, onSet);
-                    while(proto && !prop){
-                        proto = Object.getPrototypeOf(proto);
-                        prop = Object.getOwnPropertyDescriptor(proto, onSet);
-                    }
-                    if(prop === undefined){
-                        throw {elementToObserve, onSet, message: "Can't find property."};
-                    }
-                    const setter = prop.set!.bind(elementToObserve);
-                    const getter = prop.get!.bind(elementToObserve);
-                    Object.defineProperty(elementToObserve, onSet!, {
-                        get(){
-                            return getter();
-                        },
-                        set(nv){
-                            setter(nv);
-                            const event = {
-                                target: this
-                            };
-                            setProp(valFT, valFE, propKey, elementToObserve, observeParams, self);
-                        },
-                        enumerable: true,
-                        configurable: true,
-                    });     
-                }else{
-                    throw 'NI'; // not implemented
-                }
+                addListener(elementToObserve, observeParams, propKey, self);
                 
             }
         },
@@ -89,7 +44,8 @@ const ce = new CE<XtalDecorCore<Element>>({
     },
     superclass: XtalDecor
 });
-function getElementToObserve(self:Element, 
+
+export function getElementToObserve(self:Element, 
     {observeClosest, observe}: IObserve)
 {
     let elementToObserve: Element | null = null;
@@ -104,6 +60,55 @@ function getElementToObserve(self:Element,
         elementToObserve = getHost(self);
     }
     return elementToObserve;
+}
+
+export function addListener(elementToObserve: Element, observeParams: IObserve, propKey: string, self: Element){
+    const {on, vft, valFromTarget, valFromEvent, vfe, skipInit, onSet} = observeParams;
+    const valFT = vft || valFromTarget;
+    const onz = onSet !== undefined ? undefined :
+         on || (valFT ? camelToLisp(valFT) + '-changed' : undefined); 
+    const valFE = vfe || valFromEvent;
+    if(valFT !== undefined && !skipInit){
+        setProp(valFT, valFE, propKey, elementToObserve, observeParams, self);
+    }
+    if(onz !== undefined){
+        const fn = (e: Event) => {
+            e.stopPropagation();
+            setProp(valFT, valFE, propKey, e.target! as Element, observeParams, self, e);
+        }
+        elementToObserve.addEventListener(onz, fn);
+        if((<any>self).eventHandlers === undefined) (<any>self).eventHandlers = [];
+        (<any>self).eventHandlers.push({onz, elementToObserve, fn});
+        nudge(elementToObserve);
+    }else if(onSet !== undefined){
+        let proto = elementToObserve;
+        let prop: PropertyDescriptor | undefined = Object.getOwnPropertyDescriptor(proto, onSet);
+        while(proto && !prop){
+            proto = Object.getPrototypeOf(proto);
+            prop = Object.getOwnPropertyDescriptor(proto, onSet);
+        }
+        if(prop === undefined){
+            throw {elementToObserve, onSet, message: "Can't find property."};
+        }
+        const setter = prop.set!.bind(elementToObserve);
+        const getter = prop.get!.bind(elementToObserve);
+        Object.defineProperty(elementToObserve, onSet!, {
+            get(){
+                return getter();
+            },
+            set(nv){
+                setter(nv);
+                const event = {
+                    target: this
+                };
+                setProp(valFT, valFE, propKey, elementToObserve, observeParams, self);
+            },
+            enumerable: true,
+            configurable: true,
+        });     
+    }else{
+        throw 'NI'; // not implemented
+    }
 }
 function setProp(valFT: string | undefined, valFE: string | undefined, propKey: string, observedElement: Element, 
     {parseValAs, clone, as, trueVal, falseVal}: IObserve, self: Element, event?: Event){
