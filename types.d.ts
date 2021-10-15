@@ -1,3 +1,5 @@
+import {BeDecoratedProps} from 'be-decorated/types';
+
 export interface IObserve{
     /**
      * A css match criteria, used in an "upsearch" for the element to observe.
@@ -61,10 +63,10 @@ export interface BeObservantVirtualProps{
     eventHandlers: EventHandler[];
 }
 
-export interface BeObservantProps{
+export interface BeObservantProps extends BeObservantVirtualProps{
     proxy: Element & BeObservantVirtualProps;
 }
 
 export interface BeObservantActions{
-    
+    intro(proxy: Element & BeObservantVirtualProps, target: Element, beDecorProps: BeDecoratedProps): void;
 }

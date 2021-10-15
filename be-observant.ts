@@ -33,7 +33,7 @@ export interface BeObservantController extends BeObservantProps{}
 
 const tagName = 'be-observant';
 
-define<BeObservantProps & BeDecoratedProps, BeObservantActions>({
+define<BeObservantProps & BeDecoratedProps<BeObservantProps, BeObservantActions>, BeObservantActions>({
     config:{
         tagName,
         propDefaults:{
