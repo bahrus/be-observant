@@ -50,3 +50,11 @@ export interface IObserve{
     /** If val is false, set property to this value. */
     falseVal: any,
 }
+
+export interface BeObservantProps{
+
+}
+
+export interface BeObservantActions{
+    
+}

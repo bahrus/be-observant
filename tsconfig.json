@@ -9,7 +9,7 @@
 		"strict": true,
 	},
 	"files":[
-		"be-observant.ts"
+		"be-observant2.ts"
 	],
 	"exclude":[
 		"build",
