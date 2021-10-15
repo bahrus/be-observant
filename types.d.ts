@@ -54,7 +54,7 @@ export interface IObserve{
 }
 
 export interface EventHandler{
-    onz: keyof ElementEventMap;
+    on: keyof ElementEventMap;
     elementToObserve: Element;
     fn: (e: Event) => void;
 }

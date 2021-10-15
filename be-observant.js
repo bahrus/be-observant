@@ -21,7 +21,7 @@ export class BeObservantController {
     finale(proxy, target) {
         const eventHandlers = proxy.eventHandlers;
         for (const eh of eventHandlers) {
-            eh.elementToObserve.removeEventListener(eh.onz, eh.fn);
+            eh.elementToObserve.removeEventListener(eh.on, eh.fn);
         }
     }
 }
@@ -35,6 +35,7 @@ define({
             noParse: true,
             forceVisible: true,
             intro: 'intro',
+            finale: 'finale',
             virtualProps: ['eventHandlers']
         }
     },
