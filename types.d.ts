@@ -1,4 +1,4 @@
-import {BeDecoratedProps} from 'be-decorated/types';
+import {BeDecoratedProps, EventHandler} from 'be-decorated/types';
 
 export interface IObserve{
     /**
@@ -53,11 +53,7 @@ export interface IObserve{
     falseVal: any,
 }
 
-export interface EventHandler{
-    on: keyof ElementEventMap;
-    elementToObserve: Element;
-    fn: (e: Event) => void;
-}
+
 
 export interface BeObservantVirtualProps{
     eventHandlers: EventHandler[];
