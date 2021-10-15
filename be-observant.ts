@@ -1,5 +1,5 @@
 import {define, BeDecoratedProps} from 'be-decorated/be-decorated.js';
-import {BeObservantProps, BeObservantActions, IObserve} from './types';
+import {BeObservantProps, BeObservantActions, IObserve, BeObservantVirtualProps} from './types';
 import {nudge} from 'trans-render/lib/nudge.js';
 import { convert, getProp, splitExt } from 'on-to-me/prop-mixin.js';
 import { upSearch } from 'trans-render/lib/upSearch.js';
@@ -7,22 +7,22 @@ import { camelToLisp } from 'trans-render/lib/camelToLisp.js';
 import { structuralClone } from 'trans-render/lib/structuralClone.js';
 
 export class BeObservantController {
-    intro(self: Element, target: Element, beDecorProps: BeDecoratedProps){
-        const params = JSON.parse(self.getAttribute('is-' + beDecorProps.ifWantsToBe!)!);
+    intro(proxy: Element & BeObservantVirtualProps, target: Element, beDecorProps: BeDecoratedProps){
+        const params = JSON.parse(proxy.getAttribute('is-' + beDecorProps.ifWantsToBe!)!);
         for(const propKey in params){
             const parm = params[propKey];
             const observeParams = ((typeof parm === 'string') ? {vft: parm} : parm) as IObserve;
-            const elementToObserve = getElementToObserve(self, observeParams);
+            const elementToObserve = getElementToObserve(proxy, observeParams);
             if(elementToObserve === null){
                 console.warn({msg:'404',observeParams});
                 continue;
             }
-            addListener(elementToObserve, observeParams, propKey, self);
+            addListener(elementToObserve, observeParams, propKey, proxy);
             
         }        
     }
-    finale(self: Element, target:Element){
-        const eventHandlers = (<any>self).eventHandlers;
+    finale(proxy: Element & BeObservantVirtualProps, target:Element){
+        const eventHandlers = proxy.eventHandlers;
         for(const eh of eventHandlers){
             eh.elementToObserve.removeEventListener(eh.onz, eh.fn);
         }
@@ -68,7 +68,7 @@ export function getElementToObserve(self:Element,
     return elementToObserve;
 }
 
-export function addListener(elementToObserve: Element, observeParams: IObserve, propKey: string, self: Element){
+export function addListener(elementToObserve: Element, observeParams: IObserve, propKey: string, self: Element & BeObservantVirtualProps){
     const {on, vft, valFromTarget, valFromEvent, vfe, skipInit, onSet} = observeParams;
     const valFT = vft || valFromTarget;
     const onz = onSet !== undefined ? undefined :

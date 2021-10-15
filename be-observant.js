@@ -5,21 +5,21 @@ import { upSearch } from 'trans-render/lib/upSearch.js';
 import { camelToLisp } from 'trans-render/lib/camelToLisp.js';
 import { structuralClone } from 'trans-render/lib/structuralClone.js';
 export class BeObservantController {
-    intro(self, target, beDecorProps) {
-        const params = JSON.parse(self.getAttribute('is-' + beDecorProps.ifWantsToBe));
+    intro(proxy, target, beDecorProps) {
+        const params = JSON.parse(proxy.getAttribute('is-' + beDecorProps.ifWantsToBe));
         for (const propKey in params) {
             const parm = params[propKey];
             const observeParams = ((typeof parm === 'string') ? { vft: parm } : parm);
-            const elementToObserve = getElementToObserve(self, observeParams);
+            const elementToObserve = getElementToObserve(proxy, observeParams);
             if (elementToObserve === null) {
                 console.warn({ msg: '404', observeParams });
                 continue;
             }
-            addListener(elementToObserve, observeParams, propKey, self);
+            addListener(elementToObserve, observeParams, propKey, proxy);
         }
     }
-    finale(self, target) {
-        const eventHandlers = self.eventHandlers;
+    finale(proxy, target) {
+        const eventHandlers = proxy.eventHandlers;
         for (const eh of eventHandlers) {
             eh.elementToObserve.removeEventListener(eh.onz, eh.fn);
         }

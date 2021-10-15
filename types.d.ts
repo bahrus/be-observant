@@ -51,8 +51,18 @@ export interface IObserve{
     falseVal: any,
 }
 
+export interface EventHandler{
+    onz: keyof ElementEventMap;
+    elementToObserve: Element;
+    fn: (e: Event) => void;
+}
+
+export interface BeObservantVirtualProps{
+    eventHandlers: EventHandler[];
+}
+
 export interface BeObservantProps{
-    proxy: Element;
+    proxy: Element & BeObservantVirtualProps;
 }
 
 export interface BeObservantActions{
