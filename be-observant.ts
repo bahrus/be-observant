@@ -42,6 +42,7 @@ define<BeObservantProps & BeDecoratedProps<BeObservantProps, BeObservantActions>
             noParse: true,
             forceVisible: true,
             intro: 'intro',
+            finale: 'finale',
             virtualProps: ['eventHandlers']
         }
     },
