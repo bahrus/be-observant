@@ -1,54 +1,49 @@
-import {define, BeDecoratedProps} from 'be-decorated/be-decorated.js';
-import {BeObservantProps, BeObservantActions, IObserve} from './types';
-import {nudge} from 'trans-render/lib/nudge.js';
-import { convert, getProp, splitExt } from 'on-to-me/prop-mixin.js';
-import { upSearch } from 'trans-render/lib/upSearch.js';
+import {XtalDecor, XtalDecorCore} from 'xtal-decor/xtal-decor.js';
+import { XtalDecorProps } from 'xtal-decor/types';
+import {CE} from 'trans-render/lib/CE.js';
 import { camelToLisp } from 'trans-render/lib/camelToLisp.js';
+import { IObserve } from './types';
+import { convert, getProp, splitExt } from 'on-to-me/prop-mixin.js';
 import { structuralClone } from 'trans-render/lib/structuralClone.js';
+import { upSearch } from 'trans-render/lib/upSearch.js';
 
-export class BeObservantController {
-    intro(self: Element, target: Element, beDecorProps: BeDecoratedProps){
-        const params = JSON.parse(self.getAttribute('is-' + beDecorProps.ifWantsToBe!)!);
-        for(const propKey in params){
-            const parm = params[propKey];
-            const observeParams = ((typeof parm === 'string') ? {vft: parm} : parm) as IObserve;
-            const elementToObserve = getElementToObserve(self, observeParams);
-            if(elementToObserve === null){
-                console.warn({msg:'404',observeParams});
-                continue;
-            }
-            addListener(elementToObserve, observeParams, propKey, self);
-            
-        }        
-    }
-    finale(self: Element, target:Element){
-        const eventHandlers = (<any>self).eventHandlers;
-        for(const eh of eventHandlers){
-            eh.elementToObserve.removeEventListener(eh.onz, eh.fn);
-        }
-    }
-}
-
-export interface BeObservantController extends BeObservantProps{}
-
-const tagName = 'be-observant';
-
-define<BeObservantProps & BeDecoratedProps, BeObservantActions>({
+const ce = new CE<XtalDecorCore<Element>>({
     config:{
-        tagName,
+        tagName: 'be-observant',
         propDefaults:{
             upgrade: '*',
             ifWantsToBe: 'observant',
             noParse: true,
             forceVisible: true,
-            intro: 'intro'
+            virtualProps: ['eventHandlers']
         }
     },
     complexPropDefaults:{
-        controller: BeObservantController
-    }
+        actions:[],
+        on:{},
+        init: (self: Element, decor: XtalDecorProps<Element>) => {
+            const params = JSON.parse(self.getAttribute('is-' + decor.ifWantsToBe!)!);
+            for(const propKey in params){
+                const parm = params[propKey];
+                const observeParams = ((typeof parm === 'string') ? {vft: parm} : parm) as IObserve;
+                const elementToObserve = getElementToObserve(self, observeParams);
+                if(elementToObserve === null){
+                    console.warn({msg:'404',observeParams});
+                    continue;
+                }
+                addListener(elementToObserve, observeParams, propKey, self);
+                
+            }
+        },
+        finale: (self: Element, target:Element) => {
+            const eventHandlers = (<any>self).eventHandlers;
+            for(const eh of eventHandlers){
+                eh.elementToObserve.removeEventListener(eh.onz, eh.fn);
+            }
+        }
+    },
+    superclass: XtalDecor
 });
-document.head.appendChild(document.createElement(tagName));
 
 export function getElementToObserve(self:Element, 
     {observeClosest, observe}: IObserve)
@@ -174,3 +169,35 @@ function getHost(self:Element): HTMLElement{
     }
     return host;
 }
+
+
+
+// /**
+// * get previous sibling
+// */
+// function getPreviousSib(self: Element, observe: string) : Element | null{
+//     let prevSib: Element | null = self;
+//     while(prevSib && !prevSib.matches(observe)){
+//         const nextPrevSib: Element | null = prevSib.previousElementSibling || prevSib.parentElement;
+//         prevSib = nextPrevSib;
+//     }
+//     return prevSib;
+//  }
+
+ /**
+ * Decrement "disabled" counter, remove when reaches 0
+ * @param prevSib 
+ */
+function nudge(prevSib: Element) {
+    const da = prevSib.getAttribute('disabled');
+    if (da !== null) {
+        if (da.length === 0 || da === "1") {
+            prevSib.removeAttribute('disabled');
+            (<any>prevSib).disabled = false;
+        }
+        else {
+            prevSib.setAttribute('disabled', (parseInt(da) - 1).toString());
+        }
+    }
+}
+document.head.appendChild(document.createElement('be-observant'));

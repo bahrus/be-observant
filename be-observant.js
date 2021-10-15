@@ -1,45 +1,47 @@
-import { XtalDecor } from 'xtal-decor/xtal-decor.js';
-import { CE } from 'trans-render/lib/CE.js';
-import { camelToLisp } from 'trans-render/lib/camelToLisp.js';
+import { define } from 'be-decorated/be-decorated.js';
+import { nudge } from 'trans-render/lib/nudge.js';
 import { convert, getProp, splitExt } from 'on-to-me/prop-mixin.js';
-import { structuralClone } from 'trans-render/lib/structuralClone.js';
 import { upSearch } from 'trans-render/lib/upSearch.js';
-const ce = new CE({
+import { camelToLisp } from 'trans-render/lib/camelToLisp.js';
+import { structuralClone } from 'trans-render/lib/structuralClone.js';
+export class BeObservantController {
+    intro(self, target, beDecorProps) {
+        const params = JSON.parse(self.getAttribute('is-' + beDecorProps.ifWantsToBe));
+        for (const propKey in params) {
+            const parm = params[propKey];
+            const observeParams = ((typeof parm === 'string') ? { vft: parm } : parm);
+            const elementToObserve = getElementToObserve(self, observeParams);
+            if (elementToObserve === null) {
+                console.warn({ msg: '404', observeParams });
+                continue;
+            }
+            addListener(elementToObserve, observeParams, propKey, self);
+        }
+    }
+    finale(self, target) {
+        const eventHandlers = self.eventHandlers;
+        for (const eh of eventHandlers) {
+            eh.elementToObserve.removeEventListener(eh.onz, eh.fn);
+        }
+    }
+}
+const tagName = 'be-observant';
+define({
     config: {
-        tagName: 'be-observant',
+        tagName,
         propDefaults: {
             upgrade: '*',
             ifWantsToBe: 'observant',
             noParse: true,
             forceVisible: true,
-            virtualProps: ['eventHandlers']
+            intro: 'intro'
         }
     },
     complexPropDefaults: {
-        actions: [],
-        on: {},
-        init: (self, decor) => {
-            const params = JSON.parse(self.getAttribute('is-' + decor.ifWantsToBe));
-            for (const propKey in params) {
-                const parm = params[propKey];
-                const observeParams = ((typeof parm === 'string') ? { vft: parm } : parm);
-                const elementToObserve = getElementToObserve(self, observeParams);
-                if (elementToObserve === null) {
-                    console.warn({ msg: '404', observeParams });
-                    continue;
-                }
-                addListener(elementToObserve, observeParams, propKey, self);
-            }
-        },
-        finale: (self, target) => {
-            const eventHandlers = self.eventHandlers;
-            for (const eh of eventHandlers) {
-                eh.elementToObserve.removeEventListener(eh.onz, eh.fn);
-            }
-        }
-    },
-    superclass: XtalDecor
+        controller: BeObservantController
+    }
 });
+document.head.appendChild(document.createElement(tagName));
 export function getElementToObserve(self, { observeClosest, observe }) {
     let elementToObserve = null;
     if (observeClosest !== undefined) {
@@ -168,31 +170,3 @@ function getHost(self) {
     }
     return host;
 }
-// /**
-// * get previous sibling
-// */
-// function getPreviousSib(self: Element, observe: string) : Element | null{
-//     let prevSib: Element | null = self;
-//     while(prevSib && !prevSib.matches(observe)){
-//         const nextPrevSib: Element | null = prevSib.previousElementSibling || prevSib.parentElement;
-//         prevSib = nextPrevSib;
-//     }
-//     return prevSib;
-//  }
-/**
-* Decrement "disabled" counter, remove when reaches 0
-* @param prevSib
-*/
-function nudge(prevSib) {
-    const da = prevSib.getAttribute('disabled');
-    if (da !== null) {
-        if (da.length === 0 || da === "1") {
-            prevSib.removeAttribute('disabled');
-            prevSib.disabled = false;
-        }
-        else {
-            prevSib.setAttribute('disabled', (parseInt(da) - 1).toString());
-        }
-    }
-}
-document.head.appendChild(document.createElement('be-observant'));
