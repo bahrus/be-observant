@@ -52,7 +52,7 @@ export interface IObserve{
 }
 
 export interface BeObservantProps{
-
+    proxy: Element;
 }
 
 export interface BeObservantActions{

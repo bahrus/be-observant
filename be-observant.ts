@@ -41,7 +41,8 @@ define<BeObservantProps & BeDecoratedProps, BeObservantActions>({
             ifWantsToBe: 'observant',
             noParse: true,
             forceVisible: true,
-            intro: 'intro'
+            intro: 'intro',
+            virtualProps: ['eventHandlers']
         }
     },
     complexPropDefaults:{
