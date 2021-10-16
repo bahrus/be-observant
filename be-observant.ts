@@ -6,6 +6,8 @@ import { upSearch } from 'trans-render/lib/upSearch.js';
 import { camelToLisp } from 'trans-render/lib/camelToLisp.js';
 import { structuralClone } from 'trans-render/lib/structuralClone.js';
 
+export {IObserve} from './types';
+
 export class BeObservantController {
     intro(proxy: Element & BeObservantVirtualProps, target: Element, beDecorProps: BeDecoratedProps){
         const params = JSON.parse(proxy.getAttribute('is-' + beDecorProps.ifWantsToBe!)!);
