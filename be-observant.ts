@@ -35,6 +35,10 @@ export interface BeObservantController extends BeObservantProps{}
 
 const tagName = 'be-observant';
 
+const ifWantsToBe = 'observant';
+
+const upgrade = '*';
+
 define<BeObservantProps & BeDecoratedProps<BeObservantProps, BeObservantActions>, BeObservantActions>({
     config:{
         tagName,
@@ -52,7 +56,20 @@ define<BeObservantProps & BeDecoratedProps<BeObservantProps, BeObservantActions>
         controller: BeObservantController
     }
 });
-document.head.appendChild(document.createElement(tagName));
+
+const beHive = document.querySelector('be-hive') as any;
+if(beHive !== null){
+    customElements.whenDefined(beHive.localName).then(() => {
+        beHive.register({
+            ifWantsToBe,
+            upgrade,
+            localName: tagName,
+        })
+    })
+}else{
+    document.head.appendChild(document.createElement(tagName));
+}
+
 
 export function getElementToObserve(self:Element, 
     {observeClosest, observe}: IObserve)

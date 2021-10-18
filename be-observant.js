@@ -26,6 +26,8 @@ export class BeObservantController {
     }
 }
 const tagName = 'be-observant';
+const ifWantsToBe = 'observant';
+const upgrade = '*';
 define({
     config: {
         tagName,
@@ -43,7 +45,19 @@ define({
         controller: BeObservantController
     }
 });
-document.head.appendChild(document.createElement(tagName));
+const beHive = document.querySelector('be-hive');
+if (beHive !== null) {
+    customElements.whenDefined(beHive.localName).then(() => {
+        beHive.register({
+            ifWantsToBe,
+            upgrade,
+            localName: tagName,
+        });
+    });
+}
+else {
+    document.head.appendChild(document.createElement(tagName));
+}
 export function getElementToObserve(self, { observeClosest, observe }) {
     let elementToObserve = null;
     if (observeClosest !== undefined) {
