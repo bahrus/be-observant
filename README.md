@@ -98,7 +98,7 @@ These searches all stop at any ShadowDOM boundary.
 
 ## [Configuration Parameters](types.d.ts)
 
-## Inserting dynamic settings [TODO]
+## Pass to another proxy on the same element[TODO]
 
 Suppose we have a list-sorter element decorator:
 
@@ -145,7 +145,6 @@ Proposed syntax:
 
 ```html
 <list-sorter  upgrade=* if-wants-to-be=sorted with-binding></list-sorter>
-<be-observant upgrade=* if-wants-to-be=sorted-with-binding proxy-to=list-sorter></be-observant>
 
 ...
 
@@ -154,7 +153,31 @@ Proposed syntax:
 ...
 
 <ul be-sorted='{"nodeSelectorToSortOn":"span"}' be-sorted-with-binding='{
-    "direction": {"observe": "toggle-button", "vft": "on", "valIfTrue": "asc", "valIfFalse": "desc"}
+    "direction": {"observe": "toggle-button", "vft": "on", "valIfTrue": "asc", "valIfFalse": "desc", "to-proxy": "sorted"}
+}'>
+    <li>
+        <span>Zorse</span>
+    </li>
+    <li>
+        <span>Aardvark</span>
+    </li>
+</ul>
+
+```
+
+## Observe another proxy [TODO]
+
+```html
+<list-sorter  upgrade=* if-wants-to-be=sorted with-binding></list-sorter>
+
+...
+
+<button be-toggled></button>
+
+...
+
+<ul be-sorted='{"nodeSelectorToSortOn":"span"}' be-sorted-with-binding='{
+    "direction": {"observe": "button", "from-proxy":"toggled", "vft": "on", "valIfTrue": "asc", "valIfFalse": "desc", "to-proxy": "sorted"}
 }'>
     <li>
         <span>Zorse</span>
