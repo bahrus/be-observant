@@ -1,4 +1,4 @@
-import {BeDecoratedProps, EventHandler} from 'be-decorated/types';
+import {BeDecoratedProps, EventHandler, MinimalController} from 'be-decorated/types';
 
 export interface IObserve{
     /**
@@ -55,7 +55,7 @@ export interface IObserve{
 
 
 
-export interface BeObservantVirtualProps{
+export interface BeObservantVirtualProps extends MinimalController{
     eventHandlers: EventHandler[];
 }
 
