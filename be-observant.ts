@@ -1,4 +1,4 @@
-import {define, BeDecoratedProps} from 'be-decorated/be-decorated.js';
+import {define, BeDecoratedProps, MinimalController} from 'be-decorated/be-decorated.js';
 import {BeObservantProps, BeObservantActions, IObserve, BeObservantVirtualProps} from './types';
 import {nudge} from 'trans-render/lib/nudge.js';
 import { convert, getProp, splitExt } from 'on-to-me/prop-mixin.js';
@@ -8,7 +8,7 @@ import { structuralClone } from 'trans-render/lib/structuralClone.js';
 
 export {IObserve} from './types';
 
-export class BeObservantController {
+export class BeObservantController implements MinimalController {
     intro(proxy: Element & BeObservantVirtualProps, target: Element, beDecorProps: BeDecoratedProps){
         const params = JSON.parse(proxy.getAttribute('is-' + beDecorProps.ifWantsToBe!)!);
         for(const propKey in params){
