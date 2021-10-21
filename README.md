@@ -165,7 +165,7 @@ Proposed syntax:
 
 ```
 
-## Observe another proxy [WIP]
+## Observe another proxy
 
 ```html
 <list-sorter  upgrade=* if-wants-to-be=sorted with-binding></list-sorter>
