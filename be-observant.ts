@@ -88,6 +88,16 @@ export function getElementToObserve(self:Element,
     return elementToObserve;
 }
 
+export function getProxy(observedElement: Element, fromProxy: string){
+    const beProxy = 'be-' + fromProxy;
+    const decorator = (observedElement.getRootNode() as DocumentFragment).querySelector(`[if-wants-to-be="${beProxy}"],${beProxy}`);
+    if(decorator === null) return;
+    const map = (<any>decorator).targetToController as WeakMap<Element, any>;
+    if(map === undefined) return;
+    if(!map.has(observedElement)) return;
+    return map.get(observedElement).proxy;
+}
+
 export function addListener(elementToObserve: Element, observeParams: IObserve, propKey: string, self: Element){
     const {on, vft, valFromTarget, valFromEvent, vfe, skipInit, onSet, fromProxy} = observeParams;
     const valFT = vft || valFromTarget;
@@ -103,7 +113,8 @@ export function addListener(elementToObserve: Element, observeParams: IObserve, 
             if((<any>self).debug){
                 console.log({e, valFT, valFE, propKey, observeParams});
             }
-            setProp(valFT, valFE, propKey, e.target! as Element, observeParams, self, e);
+            const src = (fromProxy !== undefined ? getProxy(elementToObserve, fromProxy) : e.target!) as Element
+            setProp(valFT, valFE, propKey, src, observeParams, self, e);
         }
         elementToObserve.addEventListener(onz, fn);
         if((<any>self).debug){
@@ -156,17 +167,11 @@ export function setProp(valFT: string | undefined, valFE: string | undefined, pr
             console.log({val, split, observedElement});
         }
     }else{
-        const beProxy = 'be-' + fromProxy;
-        const decorator = document.querySelector(`[if-wants-to-be="${beProxy}"],${beProxy}`);
-        if(decorator === null) return;
-        const map = (<any>decorator).targetToController as WeakMap<Element, any>;
-        if(map === undefined) return;
-        if(!map.has(observedElement)) return;
-        const proxy = map.get(observedElement).proxy;
-        val = getProp(src, split, proxy);
+        const proxy = getProxy(observedElement, fromProxy);
+        if(proxy === undefined) val = getProp(src, split, proxy);
         if((<any>self).debug){
             console.log({
-                val, split, proxy, beProxy, observedElement
+                val, split, proxy, fromProxy, observedElement
             });
         }
     }
