@@ -137,13 +137,25 @@ export function addListener(elementToObserve: Element, observeParams: IObserve, 
     }
 }
 export function setProp(valFT: string | undefined, valFE: string | undefined, propKey: string, observedElement: Element, 
-    {parseValAs, clone, as, trueVal, falseVal}: IObserve, self: Element, event?: Event){
+    {parseValAs, clone, as, trueVal, falseVal, fromProxy}: IObserve, self: Element, event?: Event){
     if(event === undefined && valFE !== undefined) return;
     const valPath = event !== undefined && valFE ? valFE : valFT;
     if(valPath === undefined) throw 'NI';//not implemented;
     const split = splitExt(valPath);
-    let src: any = valFE !== undefined ? ( event ? event : observedElement) : observedElement; 
-    let val = getProp(src, split, observedElement);
+    let src: any = valFE !== undefined ? ( event ? event : observedElement) : observedElement;
+    let val: any;
+    if(fromProxy === undefined){
+        val = getProp(src, split, observedElement);
+    }else{
+        const beProxy = 'be-' + fromProxy;
+        const decorator = document.querySelector(`[if-wants-to-be="${beProxy}"],${beProxy}`);
+        if(decorator === null) return;
+        const map = (<any>decorator).targetToController as WeakMap<Element, any>;
+        if(map === undefined) return;
+        if(!map.has(observedElement)) return;
+        const proxy = map.get(observedElement).proxy;
+        val = getProp(src, split, proxy);
+    }
     if(val === undefined) return;
     if(clone) val = structuralClone(val);
     if(parseValAs !== undefined){

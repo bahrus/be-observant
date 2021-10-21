@@ -51,6 +51,8 @@ export interface IObserve{
     trueVal?: any,
     /** If val is false, set property to this value. */
     falseVal?: any,
+
+    fromProxy?: string,
 }
 
 

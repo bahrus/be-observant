@@ -125,7 +125,7 @@ export function addListener(elementToObserve, observeParams, propKey, self) {
         throw 'NI'; // not implemented
     }
 }
-export function setProp(valFT, valFE, propKey, observedElement, { parseValAs, clone, as, trueVal, falseVal }, self, event) {
+export function setProp(valFT, valFE, propKey, observedElement, { parseValAs, clone, as, trueVal, falseVal, fromProxy }, self, event) {
     if (event === undefined && valFE !== undefined)
         return;
     const valPath = event !== undefined && valFE ? valFE : valFT;
@@ -133,7 +133,23 @@ export function setProp(valFT, valFE, propKey, observedElement, { parseValAs, cl
         throw 'NI'; //not implemented;
     const split = splitExt(valPath);
     let src = valFE !== undefined ? (event ? event : observedElement) : observedElement;
-    let val = getProp(src, split, observedElement);
+    let val;
+    if (fromProxy === undefined) {
+        val = getProp(src, split, observedElement);
+    }
+    else {
+        const beProxy = 'be-' + fromProxy;
+        const decorator = document.querySelector(`[if-wants-to-be="${beProxy}"],${beProxy}`);
+        if (decorator === null)
+            return;
+        const map = decorator.targetToController;
+        if (map === undefined)
+            return;
+        if (!map.has(observedElement))
+            return;
+        const proxy = map.get(observedElement).proxy;
+        val = getProp(src, split, proxy);
+    }
     if (val === undefined)
         return;
     if (clone)
