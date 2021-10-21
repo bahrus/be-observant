@@ -100,9 +100,15 @@ export function addListener(elementToObserve: Element, observeParams: IObserve, 
     if(onz !== undefined){
         const fn = (e: Event) => {
             e.stopPropagation();
+            if((<any>self).debug){
+                console.log({e, valFT, valFE, propKey, observeParams});
+            }
             setProp(valFT, valFE, propKey, e.target! as Element, observeParams, self, e);
         }
         elementToObserve.addEventListener(onz, fn);
+        if((<any>self).debug){
+            console.log({onz, elementToObserve, fn});
+        }
         if((<any>self).eventHandlers === undefined) (<any>self).eventHandlers = [];
         (<any>self).eventHandlers.push({onz, elementToObserve, fn});
         nudge(elementToObserve);
@@ -146,6 +152,9 @@ export function setProp(valFT: string | undefined, valFE: string | undefined, pr
     let val: any;
     if(fromProxy === undefined){
         val = getProp(src, split, observedElement);
+        if((<any>self).debug){
+            console.log({val, split, observedElement});
+        }
     }else{
         const beProxy = 'be-' + fromProxy;
         const decorator = document.querySelector(`[if-wants-to-be="${beProxy}"],${beProxy}`);
@@ -155,6 +164,11 @@ export function setProp(valFT: string | undefined, valFE: string | undefined, pr
         if(!map.has(observedElement)) return;
         const proxy = map.get(observedElement).proxy;
         val = getProp(src, split, proxy);
+        if((<any>self).debug){
+            console.log({
+                val, split, proxy, beProxy, observedElement
+            });
+        }
     }
     if(val === undefined) return;
     if(clone) val = structuralClone(val);

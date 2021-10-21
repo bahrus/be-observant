@@ -86,9 +86,15 @@ export function addListener(elementToObserve, observeParams, propKey, self) {
     if (onz !== undefined) {
         const fn = (e) => {
             e.stopPropagation();
+            if (self.debug) {
+                console.log({ e, valFT, valFE, propKey, observeParams });
+            }
             setProp(valFT, valFE, propKey, e.target, observeParams, self, e);
         };
         elementToObserve.addEventListener(onz, fn);
+        if (self.debug) {
+            console.log({ onz, elementToObserve, fn });
+        }
         if (self.eventHandlers === undefined)
             self.eventHandlers = [];
         self.eventHandlers.push({ onz, elementToObserve, fn });
@@ -136,6 +142,9 @@ export function setProp(valFT, valFE, propKey, observedElement, { parseValAs, cl
     let val;
     if (fromProxy === undefined) {
         val = getProp(src, split, observedElement);
+        if (self.debug) {
+            console.log({ val, split, observedElement });
+        }
     }
     else {
         const beProxy = 'be-' + fromProxy;
@@ -149,6 +158,11 @@ export function setProp(valFT, valFE, propKey, observedElement, { parseValAs, cl
             return;
         const proxy = map.get(observedElement).proxy;
         val = getProp(src, split, proxy);
+        if (self.debug) {
+            console.log({
+                val, split, proxy, beProxy, observedElement
+            });
+        }
     }
     if (val === undefined)
         return;
