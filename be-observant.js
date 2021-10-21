@@ -125,7 +125,7 @@ export function addListener(elementToObserve, observeParams, propKey, self) {
         throw 'NI'; // not implemented
     }
 }
-function setProp(valFT, valFE, propKey, observedElement, { parseValAs, clone, as, trueVal, falseVal }, self, event) {
+export function setProp(valFT, valFE, propKey, observedElement, { parseValAs, clone, as, trueVal, falseVal }, self, event) {
     if (event === undefined && valFE !== undefined)
         return;
     const valPath = event !== undefined && valFE ? valFE : valFT;

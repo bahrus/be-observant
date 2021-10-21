@@ -88,7 +88,7 @@ export function getElementToObserve(self:Element,
     return elementToObserve;
 }
 
-export function addListener(elementToObserve: Element, observeParams: IObserve, propKey: string, self: Element & BeObservantVirtualProps){
+export function addListener(elementToObserve: Element, observeParams: IObserve, propKey: string, self: Element){
     const {on, vft, valFromTarget, valFromEvent, vfe, skipInit, onSet} = observeParams;
     const valFT = vft || valFromTarget;
     const onz = onSet !== undefined ? undefined :
@@ -136,7 +136,7 @@ export function addListener(elementToObserve: Element, observeParams: IObserve, 
         throw 'NI'; // not implemented
     }
 }
-function setProp(valFT: string | undefined, valFE: string | undefined, propKey: string, observedElement: Element, 
+export function setProp(valFT: string | undefined, valFE: string | undefined, propKey: string, observedElement: Element, 
     {parseValAs, clone, as, trueVal, falseVal}: IObserve, self: Element, event?: Event){
     if(event === undefined && valFE !== undefined) return;
     const valPath = event !== undefined && valFE ? valFE : valFT;
