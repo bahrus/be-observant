@@ -89,10 +89,10 @@ export function getElementToObserve(self:Element,
 }
 
 export function addListener(elementToObserve: Element, observeParams: IObserve, propKey: string, self: Element){
-    const {on, vft, valFromTarget, valFromEvent, vfe, skipInit, onSet} = observeParams;
+    const {on, vft, valFromTarget, valFromEvent, vfe, skipInit, onSet, fromProxy} = observeParams;
     const valFT = vft || valFromTarget;
     const onz = onSet !== undefined ? undefined :
-         on || (valFT ? camelToLisp(valFT) + '-changed' : undefined); 
+         on || (valFT ? (fromProxy ? fromProxy + '::'  : '') + camelToLisp(valFT) + '-changed' : undefined); 
     const valFE = vfe || valFromEvent;
     if(valFT !== undefined && !skipInit){
         setProp(valFT, valFE, propKey, elementToObserve, observeParams, self);
