@@ -171,7 +171,13 @@ Next we specify what to pass from the element we are observing and possibly from
         </tr>
         <tr>
             <td>valFromEvent</td>
-            <td>Specify a path from the event to "pull" when the event fires
+            <td>Specify a path from the event to "pull" when the event fires</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>fromProxy</td>
+            <td>Specify the name of a proxy ("ifWantsToBe") from another may-it-be decorator</td>
+            <td></td>
         </tr>
     </tbody>
 </table>
