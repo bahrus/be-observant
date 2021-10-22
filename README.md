@@ -126,6 +126,55 @@ First we need to choose *what* to observe.  This is done via a number of alterna
     </tbody>
 </table>
 
+Once we find the element to observe, next we need to specify what property or event to listen to on that element.
+
+<table>
+    <caption>When to react</caption>
+    <thead>
+        <th>Key</th>
+        <th>Meaning</th>
+        <th>Notes</th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>on</td>
+            <td>Name (or "type") of event to listen for.  Uses the standard el.addEventListener([on])</td>
+            <td>If not specified, will be set to the value of valFromTarget, after turning it into lisp case and appending with -changed.</td> 
+        </tr>
+        <tr>
+            <td>onSet</td>
+            <td>Watches for property changes made via invoking the setter of the property.</td>
+            <td></td>
+        </tr>
+    </tbody>
+</table>
+
+Next we specify what to pass from the element we are observing and possibly from the vent.
+
+<table>
+    <caption>Getting the value</caption>
+    <thead>
+        <th>Key</th>
+        <th>Meaning</th>
+        <th>Notes</th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>valFromTarget</td>
+            <td>Specify a path from the target to "pull" when the event is raised or the property changes, using "." notation.</td>
+            <td>Aliased by "vft".  Can also be used to auto-set the "on" value as described above.</td>
+        </tr>
+        <tr>
+            <td>vft</td>
+            <td>Abbrev. for valFromTarget</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>valFromEvent</td>
+            <td>Specify a path from the event to "pull" when the event fires
+        </tr>
+    </tbody>
+</table>
 
 ## [Configuration Parameters](types.d.ts)
 
