@@ -117,7 +117,7 @@ First we need to choose *what* to observe.  This is done via a number of alterna
         </tr>
         <tr>
             <td>observe</td>
-            <td>Do an "up-search" -- previous siblings, parent, previous siblings of parent, etc, until an element "css matching" the value of "observe" is found</td>
+            <td>Do an "up-search" -- previous siblings, parent, previous siblings of parent, etc, until an element "css matching" the value of "observe" is found.  Stop at any ShadowDOM boundary.</td>
         </tr>
         <tr>
             <td>observeClosest</td>
