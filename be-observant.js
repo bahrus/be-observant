@@ -1,9 +1,7 @@
 import { define } from 'be-decorated/be-decorated.js';
-import { nudge } from 'trans-render/lib/nudge.js';
-import { convert, getProp, splitExt } from 'on-to-me/prop-mixin.js';
-import { upSearch } from 'trans-render/lib/upSearch.js';
-import { camelToLisp } from 'trans-render/lib/camelToLisp.js';
-import { structuralClone } from 'trans-render/lib/structuralClone.js';
+import { getElementToObserve } from './getElementToObserve.js';
+import { addListener } from './addListener.js';
+import { register } from "be-hive/be-hive.js";
 export class BeObservantController {
     intro(proxy, target, beDecorProps) {
         const params = JSON.parse(proxy.getAttribute('is-' + beDecorProps.ifWantsToBe));
@@ -32,8 +30,8 @@ define({
     config: {
         tagName,
         propDefaults: {
-            upgrade: '*',
-            ifWantsToBe: 'observant',
+            upgrade,
+            ifWantsToBe,
             noParse: true,
             forceVisible: true,
             intro: 'intro',
@@ -45,172 +43,7 @@ define({
         controller: BeObservantController
     }
 });
-const beHive = document.querySelector('be-hive');
-if (beHive !== null) {
-    customElements.whenDefined(beHive.localName).then(() => {
-        beHive.register({
-            ifWantsToBe,
-            upgrade,
-            localName: tagName,
-        });
-    });
-}
-else {
-    document.head.appendChild(document.createElement(tagName));
-}
-export function getElementToObserve(self, { observeClosest, observe }) {
-    let elementToObserve = null;
-    if (observeClosest !== undefined) {
-        elementToObserve = self.closest(observeClosest);
-        if (elementToObserve !== null && observe) {
-            elementToObserve = upSearch(elementToObserve, observe);
-        }
-    }
-    else if (observe !== undefined) {
-        elementToObserve = upSearch(self, observe);
-    }
-    else {
-        elementToObserve = getHost(self);
-    }
-    return elementToObserve;
-}
-export function getProxy(observedElement, fromProxy) {
-    const beProxy = 'be-' + fromProxy;
-    const decorator = observedElement.getRootNode().querySelector(`[if-wants-to-be="${beProxy}"],${beProxy}`);
-    if (decorator === null)
-        return;
-    const map = decorator.targetToController;
-    if (map === undefined)
-        return;
-    if (!map.has(observedElement))
-        return;
-    return map.get(observedElement).proxy;
-}
-export function addListener(elementToObserve, observeParams, propKey, self) {
-    const { on, vft, valFromTarget, valFromEvent, vfe, skipInit, onSet, fromProxy } = observeParams;
-    const valFT = vft || valFromTarget;
-    const onz = onSet !== undefined ? undefined :
-        on || (valFT ? (fromProxy ? fromProxy + '::' : '') + camelToLisp(valFT) + '-changed' : undefined);
-    const valFE = vfe || valFromEvent;
-    if (valFT !== undefined && !skipInit) {
-        setProp(valFT, valFE, propKey, elementToObserve, observeParams, self);
-    }
-    if (onz !== undefined) {
-        const fn = (e) => {
-            e.stopPropagation();
-            if (self.debug) {
-                console.log({ e, valFT, valFE, propKey, observeParams });
-            }
-            const src = (fromProxy !== undefined ? getProxy(elementToObserve, fromProxy) : e.target);
-            setProp(valFT, valFE, propKey, src, observeParams, self, e);
-        };
-        elementToObserve.addEventListener(onz, fn);
-        if (self.debug) {
-            console.log({ onz, elementToObserve, fn });
-        }
-        if (self.eventHandlers === undefined)
-            self.eventHandlers = [];
-        self.eventHandlers.push({ onz, elementToObserve, fn });
-        nudge(elementToObserve);
-    }
-    else if (onSet !== undefined) {
-        let proto = elementToObserve;
-        let prop = Object.getOwnPropertyDescriptor(proto, onSet);
-        while (proto && !prop) {
-            proto = Object.getPrototypeOf(proto);
-            prop = Object.getOwnPropertyDescriptor(proto, onSet);
-        }
-        if (prop === undefined) {
-            throw { elementToObserve, onSet, message: "Can't find property." };
-        }
-        const setter = prop.set.bind(elementToObserve);
-        const getter = prop.get.bind(elementToObserve);
-        Object.defineProperty(elementToObserve, onSet, {
-            get() {
-                return getter();
-            },
-            set(nv) {
-                setter(nv);
-                const event = {
-                    target: this
-                };
-                setProp(valFT, valFE, propKey, elementToObserve, observeParams, self);
-            },
-            enumerable: true,
-            configurable: true,
-        });
-    }
-    else {
-        throw 'NI'; // not implemented
-    }
-}
-export function setProp(valFT, valFE, propKey, observedElement, { parseValAs, clone, as, trueVal, falseVal, fromProxy }, self, event) {
-    if (event === undefined && valFE !== undefined)
-        return;
-    const valPath = event !== undefined && valFE ? valFE : valFT;
-    if (valPath === undefined)
-        throw 'NI'; //not implemented;
-    const split = splitExt(valPath);
-    let src = valFE !== undefined ? (event ? event : observedElement) : observedElement;
-    let val;
-    if (fromProxy === undefined) {
-        val = getProp(src, split, observedElement);
-        if (self.debug) {
-            console.log({ val, split, observedElement });
-        }
-    }
-    else {
-        const proxy = getProxy(observedElement, fromProxy);
-        if (proxy === undefined)
-            val = getProp(src, split, proxy);
-        if (self.debug) {
-            console.log({
-                val, split, proxy, fromProxy, observedElement
-            });
-        }
-    }
-    if (val === undefined)
-        return;
-    if (clone)
-        val = structuralClone(val);
-    if (parseValAs !== undefined) {
-        val = convert(val, parseValAs);
-    }
-    if (trueVal && val) {
-        val = trueVal;
-    }
-    else if (falseVal && !val) {
-        val = falseVal;
-    }
-    if (as !== undefined) {
-        //const propKeyLispCase = camelToLisp(propKey);
-        switch (as) {
-            case 'str-attr':
-                self.setAttribute(propKey, val.toString());
-                break;
-            case 'obj-attr':
-                self.setAttribute(propKey, JSON.stringify(val));
-                break;
-            case 'bool-attr':
-                if (val) {
-                    self.setAttribute(propKey, '');
-                }
-                else {
-                    self.removeAttribute(propKey);
-                }
-                break;
-            // default:
-            //     if(toProp === '...'){
-            //         Object.assign(subMatch, val);
-            //     }else{
-            //         (<any>subMatch)[toProp] = val;
-            //     }
-        }
-    }
-    else {
-        self[propKey] = val;
-    }
-}
+register(ifWantsToBe, upgrade, tagName);
 function getHost(self) {
     let host = self.getRootNode().host;
     if (host === undefined) {

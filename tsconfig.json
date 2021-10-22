@@ -9,7 +9,12 @@
 		"strict": true,
 	},
 	"files":[
-		"be-observant.ts"
+		"addListener.ts",
+		"be-observant.ts",
+		"getElementToObserve.ts",
+		"getProxy.ts",
+		"setProp.ts"
+		
 	],
 	"exclude":[
 		"build",

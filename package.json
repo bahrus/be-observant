@@ -15,10 +15,12 @@
   "module": "be-observant.js",
   "exports": {
     ".": "./be-observant.js",
-    "./be-observant.js": "./be-observant.js"
+    "./be-observant.js": "./be-observant.js",
+    "./add-listener.js": "./add-listener.js"
   },
   "files": [
-    "be*.*",
+    "*.js",
+    "*.ts",
     "types.d.ts"
   ],
   "types": "types.d.ts",
@@ -31,7 +33,8 @@
   "dependencies": {
     "trans-render": "0.0.425",
     "xtal-element": "0.0.450",
-    "be-decorated": "0.0.28",
+    "be-decorated": "0.0.30",
+    "be-hive": "0.0.5",
     "on-to-me": "0.0.49"
   },
   "devDependencies": {
