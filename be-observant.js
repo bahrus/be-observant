@@ -1,7 +1,7 @@
 import { define } from 'be-decorated/be-decorated.js';
 import { getElementToObserve } from './getElementToObserve.js';
 import { addListener } from './addListener.js';
-import { register } from "be-hive/be-hive.js";
+import { register } from "be-hive/register.js";
 export class BeObservantController {
     intro(proxy, target, beDecorProps) {
         const params = JSON.parse(proxy.getAttribute('is-' + beDecorProps.ifWantsToBe));

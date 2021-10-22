@@ -1,5 +1,5 @@
 import { convert, getProp, splitExt } from 'on-to-me/prop-mixin.js';
-import {BeObservantProps, BeObservantActions, IObserve, BeObservantVirtualProps} from './types';
+import {IObserve} from './types';
 import { structuralClone } from 'trans-render/lib/structuralClone.js';
 import { getProxy } from './getProxy.js';
 
