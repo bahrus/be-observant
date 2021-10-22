@@ -2,7 +2,7 @@
 
 [![Actions Status](https://github.com/bahrus/be-observant/workflows/CI/badge.svg)](https://github.com/bahrus/be-observant/actions?query=workflow%3ACI)
 
-be-observant is a member of the [may-it-be](https://github.com/bahrus/may-it-be) family of web components.
+be-observant is a member of the [may-it-be](https://github.com/bahrus/may-it-be) family of web components.  It allows one DOM element to observe another element,  where that element came "before it".
 
 It strives to accomplish the same thing as the [pass-down](https://github.com/bahrus/pass-down) custom element, but in a possibly more performant way in many circumstances.  It uses attributes rather than elements to bind things together.  So instead of:
 
@@ -64,7 +64,9 @@ which is a shorthand / more readable version (based on overridable assumptions) 
 
 **NB II:** Whilst the first example involves more tags, and may often impose a slightly higher performance penalty, it is (subjectively) a bit more pleasant to type, and to reason about, add comments to, and to debug.  Perhaps starting with the former approach, and then moving to this approach when it is close to being ready for production may be the way to reconcile this.  Other approaches could be to transform one into the other during build time, or sometime during template processing (pre- or post- cloning).
 
-**NB III:**  The attribute name "be-observant" is configurable.  "data-be-observant" also works, with the default configuration. 
+To make debugging easier, set JSON key "debug" to true.
+
+**NB III:**  The attribute name "be-observant" is configurable.  "data-be-observant" also works, with the default configuration.  The only limitation as far as naming is the attribute must start with be- (which also guarenttes data-be as well).
 
 ## Assumptions, shortcuts
 
@@ -84,17 +86,17 @@ So, for example:
 }'></xtal-editor>
 ```
 
-is interpreted to mean: "any time the host's expandAll property changes, set this instance's "open" property to the same value.  Likewise with the other two lhs/rhs pairs.
+is interpreted to mean: "any time the host's expandAll property changes (communicated via expand-all-changed event), set this instance's "open" property to the same value.  Likewise with the other two lhs/rhs pairs.
 
-The host is obtained by calling the native function .getRootNode().  If that is a miss, it searches for the closest parent containing a dash.
+The host is obtained by calling the native function el.getRootNode().  If that is a miss, it searches for the closest parent containing a dash.
 
 To specify a different source to observe other than the host, we use "observe", or "observe-closest" as we saw in the previous example.
 
-"observe" does an "upsearch" -- previous siblings, parent, previous siblings of parent, etc, until an element "css matching" the value of "observe" is found.
+"observe" does an "up-search" -- previous siblings, parent, previous siblings of parent, etc, until an element "css matching" the value of "observe" is found.
 
 "observe-closest" uses the native function call "closest" for this purpose.
 
-These searches all stop at any ShadowDOM boundary.
+These searches all stop at any Shadow DOM boundary.
 
 ## [Configuration Parameters](types.d.ts)
 
