@@ -120,9 +120,12 @@ First we need to choose *what* to observe.  This is done via a number of alterna
             <td>Do an "up-search" -- previous siblings, parent, previous siblings of parent, etc, until an element "css matching" the value of "observe" is found</td>
         </tr>
         <tr>
-            <td>observe-closest</td>
+            <td>observeClosest</td>
             <td>Use the native function call "closest" to find the elemnt to observe.</td>
         </tr>
+        <tr>
+            <td>observeWindow [TODO]</td>
+            <td>The rhs of this key is interpreted like the [target](https://www.w3schools.com/tags/att_a_target.asp) attribute of hyperlinks or forms.  Event listener added to that window</td> 
     </tbody>
 </table>
 
@@ -184,73 +187,6 @@ Next we specify what to pass from the element we are observing and possibly from
 
 ## [Configuration Parameters](types.d.ts)
 
-## Pass to another proxy on the same element[TODO]
-
-Suppose we have a list-sorter element decorator:
-
-```html
-<list-sorter upgrade=* if-wants-to-be=sorted></list-sorter>
-
-...
-
-<ul be-sorted='{"direction":"asc","nodeSelectorToSortOn":"span"}'>
-    <li>
-        <span>Zorse</span>
-    </li>
-    <li>
-        <span>Aardvark</span>
-    </li>
-</ul>
-
-```
-
-resulting in:
-
-```html
-
-<ul is-sorted='{"direction":"asc","nodeSelectorToSortOn":"span"}'>
-    <li>
-        <span>Aardvark</span>
-    </li>
-    <li>
-        <span>Zorse</span>
-    </li>
-</ul>
-
-```
-
-But we want to make the direction of sorting bound to a nearby toggle button:
-
-```html
-<toggle-button></toggle-button>
-```
-
-be-observant should be able to hook-up to that list-sorter proxy, passing in the direction property changes as the toggle button changes.
-
-Proposed syntax:
-
-```html
-<list-sorter  upgrade=* if-wants-to-be=sorted with-binding></list-sorter>
-
-...
-
-<toggle-button></toggle-button>
-
-...
-
-<ul be-sorted='{"nodeSelectorToSortOn":"span"}' be-sorted-with-binding='{
-    "direction": {"observe": "toggle-button", "vft": "on", "valIfTrue": "asc", "valIfFalse": "desc", "to-proxy": "sorted"}
-}'>
-    <li>
-        <span>Zorse</span>
-    </li>
-    <li>
-        <span>Aardvark</span>
-    </li>
-</ul>
-
-```
-
 ## Observe another proxy
 
 ```html
@@ -274,6 +210,12 @@ Proposed syntax:
 </ul>
 
 ```
+
+## Pass to another proxy on the same element[TODO]
+
+use to-proxy
+
+
 
  
 
