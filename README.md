@@ -185,6 +185,26 @@ Next we specify what to pass from the element we are observing and possibly from
     </tbody>
 </table>
 
+## Big time short cuts. [TODO]
+
+When working with be-observant, we will likely encounter the following patterns rather frequently:
+
+```html
+<my-element be-observant='{
+    "typicalProp1": {"vft": "myHostProp1"},
+    "typicalProp2": {"onSet": "myHostProp2", "vft": "myHostProp2"}
+}'>
+```
+
+The shortcut for these two scenarios is shown below:
+
+```html
+<my-element be-observant='{
+    "typicalProp1": "myHostProp1",
+    ".typicalProp2": "myHostProp2"
+}'>
+```
+
 ## [Configuration Parameters](types.d.ts)
 
 ## Observe another proxy
