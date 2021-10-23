@@ -196,6 +196,8 @@ When working with be-observant, we will likely encounter the following patterns 
 }'>
 ```
 
+These are already shortcuts for a number of configurable atomic operations, but even these shortcuts get to feeling rather repetitive in many circumstances.
+
 The shortcut for these two scenarios is shown below:
 
 ```html

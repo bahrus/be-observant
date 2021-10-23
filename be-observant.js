@@ -7,7 +7,18 @@ export class BeObservantController {
         const params = JSON.parse(proxy.getAttribute('is-' + beDecorProps.ifWantsToBe));
         for (const propKey in params) {
             const parm = params[propKey];
-            const observeParams = ((typeof parm === 'string') ? { vft: parm } : parm);
+            let observeParams = parm;
+            switch (typeof parm) {
+                case 'string':
+                    if (parm.startsWith('.')) {
+                        const vft = parm.substr(1);
+                        observeParams = { 'onSet': vft, vft };
+                    }
+                    else {
+                        observeParams = { vft: parm };
+                    }
+            }
+            //const observeParams = ((typeof parm === 'string') ? {vft: parm} : parm) as IObserve;
             const elementToObserve = getElementToObserve(proxy, observeParams);
             if (elementToObserve === null) {
                 console.warn({ msg: '404', observeParams });
