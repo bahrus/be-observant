@@ -16,7 +16,10 @@
   "exports": {
     ".": "./be-observant.js",
     "./be-observant.js": "./be-observant.js",
-    "./add-listener.js": "./add-listener.js"
+    "./add-listener.js": "./addListener.js",
+    "./getElementToObserve.js": "./getElementToObserve.js",
+    "./getProxy.js": "./getProxy.js",
+    "./setProp.js": "./setProp.js"
   },
   "files": [
     "*.js",
