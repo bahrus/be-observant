@@ -19,3 +19,17 @@ export function getElementToObserve(self:Element,
     }
     return elementToObserve;
 }
+
+export function getObserve(param: any){
+    let observeParams = param as IObserve;
+    switch(typeof param){
+        case 'string':
+            if(param.startsWith('.')){
+                const vft = param.substr(1);
+                observeParams = {'onSet': vft, vft};
+            }else{
+                observeParams = {vft: param};
+            }
+    }
+    return observeParams;
+}

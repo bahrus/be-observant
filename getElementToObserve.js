@@ -16,3 +16,17 @@ export function getElementToObserve(self, { observeClosest, observe }) {
     }
     return elementToObserve;
 }
+export function getObserve(param) {
+    let observeParams = param;
+    switch (typeof param) {
+        case 'string':
+            if (param.startsWith('.')) {
+                const vft = param.substr(1);
+                observeParams = { 'onSet': vft, vft };
+            }
+            else {
+                observeParams = { vft: param };
+            }
+    }
+    return observeParams;
+}

@@ -1,6 +1,6 @@
 import {define, BeDecoratedProps} from 'be-decorated/be-decorated.js';
 import {BeObservantProps, BeObservantActions, IObserve, BeObservantVirtualProps} from './types';
-import {getElementToObserve} from './getElementToObserve.js';
+import {getElementToObserve, getObserve} from './getElementToObserve.js';
 import {addListener} from './addListener.js';
 import {register} from "be-hive/register.js";
 
@@ -11,17 +11,7 @@ export class BeObservantController {
         const params = JSON.parse(proxy.getAttribute('is-' + beDecorProps.ifWantsToBe!)!);
         for(const propKey in params){
             const parm = params[propKey];
-            let observeParams = parm as IObserve;
-            switch(typeof parm){
-                case 'string':
-                    if(parm.startsWith('.')){
-                        const vft = parm.substr(1);
-                        observeParams = {'onSet': vft, vft};
-                    }else{
-                        observeParams = {vft: parm};
-                    }
-            }
-            //const observeParams = ((typeof parm === 'string') ? {vft: parm} : parm) as IObserve;
+            let observeParams = getObserve(parm);
             const elementToObserve = getElementToObserve(proxy, observeParams);
             if(elementToObserve === null){
                 console.warn({msg:'404',observeParams});
