@@ -24,7 +24,7 @@ export function getObserve(param: any){
     let observeParams = param as IObserve;
     switch(typeof param){
         case 'string':
-            if(param.startsWith('.')){
+            if(param[0] === '.'){
                 const vft = param.substr(1);
                 observeParams = {'onSet': vft, vft};
             }else{
