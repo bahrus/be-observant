@@ -6,7 +6,7 @@ export function getElementToObserve(self, { observeClosest, observe, observeClos
     if (oc !== undefined) {
         elementToObserve = self.closest(oc);
         if (elementToObserve === null) {
-            elementToObserve = self.getRootNode();
+            elementToObserve = self.getRootNode().host;
         }
     }
     else if (observeClosest !== undefined) {

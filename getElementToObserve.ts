@@ -11,7 +11,7 @@ export function getElementToObserve(self:Element,
     if(oc !== undefined){
         elementToObserve = self.closest(oc);
         if(elementToObserve === null){
-            elementToObserve = self.getRootNode() as Element;
+            elementToObserve = (<any>self.getRootNode()).host as Element;
         }
     }else if(observeClosest !== undefined){
         elementToObserve = self.closest(observeClosest);
