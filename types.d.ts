@@ -9,6 +9,10 @@ export interface IObserve{
      * Observe first ancestoer DOM element matching this string
      */
     observeClosest?: string,
+
+    observeClosestOrHost?: string,
+    ocoho?: string,
+    
     /**
      * Event name to watch for
      */

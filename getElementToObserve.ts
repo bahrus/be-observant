@@ -4,10 +4,16 @@ import {IObserve} from './types';
 export {IObserve} from './types';
 
 export function getElementToObserve(self:Element, 
-    {observeClosest, observe}: IObserve)
+    {observeClosest, observe, observeClosestOrHost, ocoho}: IObserve)
 {
     let elementToObserve: Element | null = null;
-    if(observeClosest !== undefined){
+    const oc = ocoho || observeClosestOrHost;
+    if(oc !== undefined){
+        elementToObserve = self.closest(oc);
+        if(elementToObserve === null){
+            elementToObserve = self.getRootNode() as Element;
+        }
+    }else if(observeClosest !== undefined){
         elementToObserve = self.closest(observeClosest);
         if(elementToObserve !== null && observe){
             elementToObserve = upSearch(elementToObserve, observe) as Element;
@@ -24,9 +30,10 @@ export function getObserve(param: any){
     let observeParams = param as IObserve;
     switch(typeof param){
         case 'string':
+            const ocoho = '[data-is-hostish]';
             if(param[0] === '.'){
                 const vft = param.substr(1);
-                observeParams = {'onSet': vft, vft};
+                observeParams = {'onSet': vft, vft, ocoho};
             }else{
                 observeParams = {vft: param};
             }

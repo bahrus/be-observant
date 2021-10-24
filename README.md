@@ -213,7 +213,7 @@ Sometimes there are scenarios where we would like to benefit from the shortcuts 
 
 An element can declare itself to be a host for these purposes by adding attribute "data-is-hostish.". Be-observant searches for such an element before doing the getRootNode() call. 
 
-Under the hood, this scenario will use another option:  observeClosestOrHost, which tries closest query first, and if that fails, does getRootNode()
+Under the hood, this scenario will use another option:  observeClosestOrHost (ocoho for short), which tries closest query first, and if that fails, does getRootNode()
 
 ## [Configuration Parameters](types.d.ts)
 
