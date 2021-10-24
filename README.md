@@ -211,7 +211,9 @@ The shortcut for these two scenarios is shown below:
 
 Sometimes there are scenarios where we would like to benefit from the shortcuts above, but don't want to use Shadow DOM on a containing component just for the benefit of the shortcut.
 
-An element can declare itself to be a host for these purposes by adding attribute "data-is-hostish.". Be-observant searches for such an element before doing the getRootNode() call.  
+An element can declare itself to be a host for these purposes by adding attribute "data-is-hostish.". Be-observant searches for such an element before doing the getRootNode() call. 
+
+Under the hood, this scenario will use another option:  observe-closest-or-host, which tries closest query first, and if that fails, does getRootNode()
 
 ## [Configuration Parameters](types.d.ts)
 
