@@ -19,7 +19,7 @@ export function setProp(valFT, valFE, propKey, observedElement, { parseValAs, cl
     else {
         const proxy = getProxy(observedElement, fromProxy);
         if (proxy !== undefined)
-            val = getProp(src, split, proxy);
+            val = getProp(proxy, split, proxy);
         if (self.debug) {
             console.log({
                 val, split, proxy, fromProxy, observedElement

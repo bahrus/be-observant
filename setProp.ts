@@ -18,7 +18,7 @@ export function setProp(valFT: string | undefined, valFE: string | undefined, pr
         }
     }else{
         const proxy = getProxy(observedElement, fromProxy);
-        if(proxy !== undefined) val = getProp(src, split, proxy);
+        if(proxy !== undefined) val = getProp(proxy, split, proxy);
         if((<any>self).debug){
             console.log({
                 val, split, proxy, fromProxy, observedElement
