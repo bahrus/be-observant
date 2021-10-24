@@ -207,6 +207,12 @@ The shortcut for these two scenarios is shown below:
 }'>
 ```
 
+## Being hostish [TODO]
+
+Sometimes there are scenarios where we would like to benefit from the shortcuts above, but don't want to use Shadow DOM on a containing component just for the benefit of the shortcut.
+
+An element can declare itself to be a host for these purposes by adding attribute "data-is-hostish.". Be-observant searches for such an element before doing the getRootNode() call.  
+
 ## [Configuration Parameters](types.d.ts)
 
 ## Observe another proxy
