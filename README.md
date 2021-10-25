@@ -125,12 +125,8 @@ First we need to choose *what* to observe.  This is done via a number of alterna
         </tr>
         <tr>
             <td>observeWindow [TODO]</td>
-            <td>
-                The rhs of this key is an object.  
-
-                Can specify an api 
-                Event listener added to that window
-            </td> 
+            <td>The rhs of this key is an object.  Can specify an api.  Event listener added to that window</td>
+        </tr> 
     </tbody>
 </table>
 
