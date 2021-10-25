@@ -125,7 +125,21 @@ First we need to choose *what* to observe.  This is done via a number of alterna
         </tr>
         <tr>
             <td>observeWindow [TODO]</td>
-            <td>The rhs of this key is interpreted like the [target](https://www.w3schools.com/tags/att_a_target.asp) attribute of hyperlinks or forms.  Event listener added to that window</td> 
+            <td>
+                The rhs of this key is an object.  For [example](https://wicg.github.io/app-history/#dom-apphistory-oncurrentchange)
+```html
+<nav be-observant='{
+    "observeWindow": {
+        "target": "_self",
+        "api": "AppHistory",
+        "on" : "currentchange"
+    }
+}'>...
+</nav>
+```
+                Can specify an api 
+                Event listener added to that window
+            </td> 
     </tbody>
 </table>
 
