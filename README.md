@@ -2,7 +2,9 @@
 
 [![Actions Status](https://github.com/bahrus/be-observant/workflows/CI/badge.svg)](https://github.com/bahrus/be-observant/actions?query=workflow%3ACI)
 
-be-observant is a member of the [may-it-be](https://github.com/bahrus/may-it-be) family of web components.  It allows one DOM element to observe another element,  where that element came "before it".  It is much like how Javascript closures can access variables defined outside the closure, as long as it came before.
+be-observant is a key member of the [may-it-be](https://github.com/bahrus/may-it-be) family of web components.  It allows one DOM element to observe another element,  where that element came "before it".  It is much like how Javascript closures can access variables defined outside the closure, as long as it came before.
+
+It is also a trend-setting member of the family -- many of the other may-it-be components piggy-back both on the code as well as the syntax for adding "environment aware" bindings to their configuration properties.
 
 It strives to accomplish the same thing as the [pass-down](https://github.com/bahrus/pass-down) custom element, but in a possibly more performant way in many circumstances.  It uses attributes rather than elements to bind things together.  So instead of:
 
@@ -80,13 +82,7 @@ is interpreted to mean: "any time the host's expandAll property changes (communi
 
 The host is obtained by calling the native function el.getRootNode().  If that is a miss, it searches for the closest parent containing a dash.
 
-To specify a different source to observe other than the host, we use "observe", or "observe-closest" as we saw in the previous example.
-
-"observe" does an "up-search" -- previous siblings, parent, previous siblings of parent, etc, until an element "css matching" the value of "observe" is found.
-
-"observe-closest" uses the native function call "closest" for this purpose.
-
-These searches all stop at any Shadow DOM boundary.
+To specify a different source to observe other than the host, there are numerous other options, which are catalogued below.
 
 ## NB's
 
