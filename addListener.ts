@@ -19,8 +19,8 @@ export function addListener(elementToObserve: Element, observeParams: IObserve, 
             if((<any>self).debug){
                 console.log({e, valFT, valFE, propKey, observeParams});
             }
-            const src = (fromProxy !== undefined ? getProxy(elementToObserve, fromProxy) : e.target!) as Element
-            setProp(valFT, valFE, propKey, src, observeParams, self, e);
+            //const src = (fromProxy !== undefined ? getProxy(elementToObserve, fromProxy) : e.target!) as Element
+            setProp(valFT, valFE, propKey, elementToObserve, observeParams, self, e);
         }
         elementToObserve.addEventListener(onz, fn);
         if((<any>self).debug){

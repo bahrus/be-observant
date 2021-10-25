@@ -1,5 +1,4 @@
 import { setProp } from './setProp.js';
-import { getProxy } from "./getProxy.js";
 import { camelToLisp } from 'trans-render/lib/camelToLisp.js';
 import { nudge } from 'trans-render/lib/nudge.js';
 export function addListener(elementToObserve, observeParams, propKey, self) {
@@ -17,8 +16,8 @@ export function addListener(elementToObserve, observeParams, propKey, self) {
             if (self.debug) {
                 console.log({ e, valFT, valFE, propKey, observeParams });
             }
-            const src = (fromProxy !== undefined ? getProxy(elementToObserve, fromProxy) : e.target);
-            setProp(valFT, valFE, propKey, src, observeParams, self, e);
+            //const src = (fromProxy !== undefined ? getProxy(elementToObserve, fromProxy) : e.target!) as Element
+            setProp(valFT, valFE, propKey, elementToObserve, observeParams, self, e);
         };
         elementToObserve.addEventListener(onz, fn);
         if (self.debug) {
