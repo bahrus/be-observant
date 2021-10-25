@@ -4,9 +4,28 @@
 
 be-observant is a key member of the [may-it-be](https://github.com/bahrus/may-it-be) family of web components.  It allows one DOM element to observe another element,  where that element came "before it".  It is much like how Javascript closures can access variables defined outside the closure, as long as it came before.
 
-It is also a trend-setting member of the family -- many of the other may-it-be components piggy-back both on the code as well as the syntax for adding "environment aware" bindings to their configuration properties.
+be-observant is also a trend-setting member of the family -- many of the other may-it-be components piggy-back both on the code as well as the syntax for adding "environment-aware" bindings to their configuration properties.
 
-It strives to accomplish the same thing as the [pass-down](https://github.com/bahrus/pass-down) custom element, but in a possibly more performant way in many circumstances.  It uses attributes rather than elements to bind things together.  So instead of:
+## Now hold on just a minute... 
+
+<details>
+    <summary>A personal statement</summary>
+
+Have I learned nothing, you may be asking?  "Don't you know props are passed down, events passed up?"  Yes, the approach be-observant follows has been declared an "anti-pattern" by many.  However, this anti-pattern is somewhat forced on us, when we use custom attributes, and when in addition we want to adhere to the principle of not attaching unrecognized properties on the element adorned by the attribute.  Yes, there is an unreliable (so far) [protocol](https://github.com/bahrus/be-observant/blob/baseline/getProxy.ts) for extracting the proxy corresponding to an attribute, which theoretically the host could use to pass props down.  But be-observant encourages uni-directional data flow, which to me is the more important goal, if these goals are designed to make reasoning about the code easier. (Of course what makes things easier to reason about is quite subjective).  On top of which the intention of these custom attribute / decorators / behaviors is that they be usable within any framework, but especially within any web component library (without having to modify / extend the code), avoiding tight-coupling as much as possible.  Providing a specific protocol for "passing props down,"  and insisting on allowing no alternative would get in the way of achieving that goal.  
+
+Another benefit of this "anti-pattern" is that it works quite nicely when lazy loading content.  The hosting element doesn't need to be micro-managing internal elements coming and going.  It is a less "planned" component economic model :-).  Underlying this idea is the concept that web components and custom decorators / attributes / behaviors, have a sense of "identity", capable of reacting spontaneously to user events, and able to "think independently and spontaneously" when interacting with the user, or with peer components, without bogging the host element down in minutae.  Reasoning about them may be easier if we can relate to the way they work together in a similar pattern to how human organizations function -- or at least non-North Korean Military organizations :-).  This approach also seems to be more natural when striving for more declarative, markup-centric, less code-centric environments.  be-observant is closely "observing" whether there are any signs of life as far as HTML Modules.  Oh, and JQuery, still the most popular framework out there, doesn't follow such a strict hierarchy either, am I right?
+
+An alternative approach might be to use the "context api" to develop a connection between custom attribute and host -- the custom-attribute-based DOM decorator emits a bubbling event -- "how can I help?".  But this may depend on timing considerations -- with declarative custom elements (includng now declarative ShadowDOM), the host may become upgraded *after* the attribute does.  Why insist the element can't be interactive until that happens?
+
+Nevertheless, that approach will be considered once the api is stabilized, especially if there is a significant performance benefit on the context api's side.
+
+Just as custom elements becoming activated relies on css features of the markup (registered tag names), here we also rely on CSS recognizing the attribute, without permission from any host component (though the host has to "opt-in" in a rather light-touch way if using Shadow DOM). 
+
+</details>
+
+## Priors
+
+be-observant strives to accomplish the same thing as the [pass-down](https://github.com/bahrus/pass-down) custom element, but in a possibly more performant way in many circumstances.  It uses attributes rather than elements to bind things together.  So instead of:
 
 ```html
 <ways-of-science>
@@ -92,7 +111,7 @@ To specify a different source to observe other than the host, there are numerous
 
 To make debugging easier, set JSON key "debug" to true.
 
-**NB III:**  The attribute name "be-observant" is configurable.  "data-be-observant" also works, with the default configuration.  The only limitation as far as naming is the attribute must start with be- (which also guarenttes data-be as well).
+**NB III:**  The attribute name "be-observant" is configurable.  "data-be-observant" also works, with the default configuration.  The only limitation as far as naming is the attribute must start with be-* (which also guarentees data-be-* as well).
 
 **NB IV:** The syntax, and the core code behind be-observant is also used by a fair number of other web components in the may-it-be family of web components, so it is worthwhile expounding on exactly what that syntax means.
 
@@ -197,7 +216,7 @@ Next we specify what to pass from the element we are observing and possibly from
     </tbody>
 </table>
 
-## Big time short cuts. [TODO]
+## Big time short cuts.
 
 When working with be-observant, we will likely encounter the following patterns rather frequently:
 
@@ -215,7 +234,7 @@ The shortcut for these two scenarios is shown below:
 ```html
 <my-element be-observant='{
     "typicalProp1": "myHostProp1",
-    ".typicalProp2": "myHostProp2"
+    "typicalProp2": ".myHostProp2"
 }'>
 ```
 
@@ -225,7 +244,7 @@ Sometimes there are scenarios where we would like to benefit from the shortcuts 
 
 An element can declare itself to be a host for these purposes by adding attribute "data-is-hostish.". Be-observant searches for such an element before doing the getRootNode() call. 
 
-Under the hood, this scenario will use another option:  observeClosestOrHost (ocoho for short), which tries closest query first, and if that fails, does getRootNode()
+Under the hood, this scenario will use another option:  observeClosestOrHost (ocoho for short), which tries using the native "closest" query first, and if that fails, does getRootNode()
 
 ## [Configuration Parameters](types.d.ts)
 
