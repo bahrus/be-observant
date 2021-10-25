@@ -126,7 +126,18 @@ First we need to choose *what* to observe.  This is done via a number of alterna
         <tr>
             <td>observeWindow [TODO]</td>
             <td>
-                The rhs of this key is an object.  For [example](https://wicg.github.io/app-history/#dom-apphistory-oncurrentchange)
+                The rhs of this key is an object.  
+
+                Can specify an api 
+                Event listener added to that window
+            </td> 
+    </tbody>
+</table>
+
+## Example of window / api observing [TODO]
+
+[See basis of example](https://wicg.github.io/app-history/#dom-apphistory-oncurrentchange)
+
 ```html
 <nav be-observant='{
     "observeWindow": {
@@ -137,11 +148,6 @@ First we need to choose *what* to observe.  This is done via a number of alterna
 }'>...
 </nav>
 ```
-                Can specify an api 
-                Event listener added to that window
-            </td> 
-    </tbody>
-</table>
 
 Once we find the element to observe, next we need to specify what property or event to listen to on that element.
 
