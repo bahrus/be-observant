@@ -15,7 +15,7 @@ be-observant is also a trend-setting member of the family -- many of the other m
 
 Have I learned nothing, you may be asking?  "Don't you know props are passed down, events passed up?"  Yes, the approach be-observant follows has been declared an "anti-pattern" by many.  However, this anti-pattern is somewhat forced on us, when we use custom attributes, and when in addition we want to adhere to the principle of not attaching unrecognized properties on the element adorned by the attribute.  Yes, there is an unreliable (so far) [protocol](https://github.com/bahrus/be-observant/blob/baseline/getProxy.ts) for extracting the proxy corresponding to an attribute, which theoretically the host could use to pass props down.  But be-observant encourages uni-directional data flow, which to me is the more important goal, if these goals are designed to make reasoning about the code easier. (Of course what makes things easier to reason about is quite subjective).  On top of which the intention of these custom attribute / decorators / behaviors is that they be usable within any framework, but especially within any web component library (without having to modify / extend the code), avoiding tight-coupling as much as possible.  Providing a specific protocol for "passing props down,"  and insisting on allowing no alternative would get in the way of achieving that goal.  
 
-Another benefit of this "anti-pattern" is that it works quite nicely when lazy loading content.  The hosting element doesn't need to be micro-managing internal elements coming and going.  It is a less "planned" component economic model :-).  Underlying this idea is the concept that web components and custom decorators / attributes / behaviors, have a sense of "identity", capable of reacting spontaneously to user events, and able to "think independently" when interacting with peer components, without bogging the host element down in minutia.  Reasoning about them may be easier if we can relate to the way they work together in a similar pattern to how human organizations function -- or at least non-North Korean Military organizations :-).  This approach also seems to be more natural when striving for more declarative, markup-centric, less code-centric environments.  be-observant is closely "observing" whether there are any signs of life as far as HTML Modules.  Oh, and JQuery, still the most popular framework out there, doesn't follow such a strict hierarchy either, am I right?
+Another benefit of this "anti-pattern" is that it works quite nicely when lazy loading content.  The hosting element doesn't need to be micro-managing internal elements coming and going.  It is a less "planned" component economic model :-).  Underlying this idea is the concept that web components and custom decorators / attributes / behaviors, have a sense of "identity", capable of reacting spontaneously to user events, and able to "think independently" when interacting with peer components, event able to spawn children when the conditions are right, without bogging the host element down in minutia.  Reasoning about them may be easier if we can relate to the way they work together in a similar pattern to how human organizations function -- or at least non-North Korean Military organizations :-).  This approach also seems to be more natural when striving for more declarative, markup-centric, less code-centric environments.  be-observant is closely "observing" whether there are any signs of life as far as HTML Modules.  Oh, and JQuery, still the most popular framework out there, doesn't follow such a strict hierarchy either, am I right?
 
 An alternative approach might be to use the "context api" to develop a connection between custom attribute and host -- the custom-attribute-based DOM decorator emits a bubbling event -- "how can I help?".  But this may depend on timing considerations -- with declarative custom elements (including now declarative ShadowDOM), the host may become upgraded *after* the attribute does.  Why insist the element can't be interactive until that happens?
 
@@ -140,27 +140,8 @@ First we need to choose *what* to observe.  This is done via a number of alterna
             <td>observeClosest</td>
             <td>Use the native function call "closest" to find the elemnt to observe.</td>
         </tr>
-        <tr>
-            <td>observeWindow [TODO]</td>
-            <td>The rhs of this key is an object.  Can specify an api.  Event listener added to that window</td>
-        </tr> 
     </tbody>
 </table>
-
-## Example of window / api observing [TODO]
-
-[See basis of example](https://wicg.github.io/app-history/#dom-apphistory-oncurrentchange)
-
-```html
-<nav be-observant='{
-    "observeWindow": {
-        "target": "_self",
-        "api": "AppHistory",
-        "on" : "currentchange"
-    }
-}'>...
-</nav>
-```
 
 Once we find the element to observe, next we need to specify what property or event to listen to on that element.
 
