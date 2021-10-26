@@ -2,6 +2,8 @@
 
 [![Actions Status](https://github.com/bahrus/be-observant/workflows/CI/badge.svg)](https://github.com/bahrus/be-observant/actions?query=workflow%3ACI)
 
+<a href="https://nodei.co/npm/be-observant/"><img src="https://nodei.co/npm/be-observant.png"></a>
+
 be-observant is a key member of the [may-it-be](https://github.com/bahrus/may-it-be) family of web components.  It allows one DOM element to observe another element,  where that element came "before it".  It is much like how Javascript closures can access variables defined outside the closure, as long as it came before.
 
 be-observant is also a trend-setting member of the family -- many of the other may-it-be components piggy-back both on the code as well as the syntax for adding "environment-aware" bindings to their configuration properties.
