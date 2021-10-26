@@ -1,6 +1,7 @@
 import { setProp } from './setProp.js';
 import { camelToLisp } from 'trans-render/lib/camelToLisp.js';
 import { nudge } from 'trans-render/lib/nudge.js';
+import { getElementToObserve } from './getElementToObserve.js';
 export function addListener(elementToObserve, observeParams, propKey, self) {
     const { on, vft, valFromTarget, valFromEvent, vfe, skipInit, onSet, fromProxy } = observeParams;
     const valFT = vft || valFromTarget;
@@ -57,5 +58,45 @@ export function addListener(elementToObserve, observeParams, propKey, self) {
     }
     else {
         throw 'NI'; // not implemented
+    }
+}
+export function hookUp(fromParam, proxy, toParam) {
+    switch (typeof fromParam) {
+        case 'object':
+            {
+                if (Array.isArray(fromParam)) {
+                    //assume for now is a string array
+                    const arr = fromParam;
+                    if (arr.length !== 1)
+                        throw 'NI';
+                    //assume for now only one element in the array
+                    //TODO:  support alternating array with binding instructions in every odd element -- interpolation
+                    proxy[toParam] = fromParam;
+                }
+                else {
+                    const observeParams = fromParam;
+                    const elementToObserve = getElementToObserve(proxy, observeParams);
+                    if (elementToObserve === null) {
+                        console.warn({ msg: '404', observeParams });
+                        return;
+                    }
+                    addListener(elementToObserve, observeParams, toParam, proxy);
+                }
+            }
+            break;
+        case 'string':
+            {
+                const isProp = fromParam[0];
+                const vft = isProp ? fromParam.substr(1) : fromParam;
+                const observeParams = isProp ? { onSet: vft, vft } : { vft };
+                const elementToObserve = getElementToObserve(proxy, observeParams);
+                if (elementToObserve === null) {
+                    console.warn({ msg: '404', observeParams });
+                    return;
+                }
+                addListener(elementToObserve, observeParams, toParam, proxy);
+            }
+        default:
+            proxy[toParam] = fromParam;
     }
 }
