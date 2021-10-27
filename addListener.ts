@@ -97,7 +97,7 @@ export function hookUp(fromParam: any, proxy: any, toParam: string){
                 }
                 addListener(elementToObserve, observeParams, toParam, proxy);
             }
-            
+            break;
         default:
             proxy[toParam] = fromParam;
     }
