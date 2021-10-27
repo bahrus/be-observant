@@ -23,18 +23,3 @@ export function getElementToObserve(self, { observeClosest, observe, observeClos
     }
     return elementToObserve;
 }
-export function getObserve(param) {
-    let observeParams = param;
-    switch (typeof param) {
-        case 'string':
-            const ocoho = '[data-is-hostish]';
-            if (param[0] === '.') {
-                const vft = param.substr(1);
-                observeParams = { 'onSet': vft, vft, ocoho };
-            }
-            else {
-                observeParams = { vft: param };
-            }
-    }
-    return observeParams;
-}

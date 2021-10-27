@@ -1,7 +1,7 @@
 import {define, BeDecoratedProps} from 'be-decorated/be-decorated.js';
 import {BeObservantProps, BeObservantActions, IObserve, BeObservantVirtualProps} from './types';
-import {getElementToObserve, getObserve} from './getElementToObserve.js';
-import {addListener} from './addListener.js';
+import {getElementToObserve} from './getElementToObserve.js';
+import {addListener, hookUp} from './addListener.js';
 import {register} from "be-hive/register.js";
 
 export {IObserve} from './types';
@@ -11,14 +11,7 @@ export class BeObservantController {
         const params = JSON.parse(proxy.getAttribute('is-' + beDecorProps.ifWantsToBe!)!);
         for(const propKey in params){
             const parm = params[propKey];
-            let observeParams = getObserve(parm);
-            const elementToObserve = getElementToObserve(proxy, observeParams);
-            if(elementToObserve === null){
-                console.warn({msg:'404',observeParams});
-                continue;
-            }
-            addListener(elementToObserve, observeParams, propKey, proxy);
-            
+            hookUp(parm, proxy, propKey);
         }        
     }
     finale(proxy: Element & BeObservantVirtualProps, target:Element){

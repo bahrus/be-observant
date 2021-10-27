@@ -26,17 +26,3 @@ export function getElementToObserve(self:Element,
     return elementToObserve;
 }
 
-export function getObserve(param: any){
-    let observeParams = param as IObserve;
-    switch(typeof param){
-        case 'string':
-            const ocoho = '[data-is-hostish]';
-            if(param[0] === '.'){
-                const vft = param.substr(1);
-                observeParams = {'onSet': vft, vft, ocoho};
-            }else{
-                observeParams = {vft: param};
-            }
-    }
-    return observeParams;
-}

@@ -1,19 +1,12 @@
 import { define } from 'be-decorated/be-decorated.js';
-import { getElementToObserve, getObserve } from './getElementToObserve.js';
-import { addListener } from './addListener.js';
+import { hookUp } from './addListener.js';
 import { register } from "be-hive/register.js";
 export class BeObservantController {
     intro(proxy, target, beDecorProps) {
         const params = JSON.parse(proxy.getAttribute('is-' + beDecorProps.ifWantsToBe));
         for (const propKey in params) {
             const parm = params[propKey];
-            let observeParams = getObserve(parm);
-            const elementToObserve = getElementToObserve(proxy, observeParams);
-            if (elementToObserve === null) {
-                console.warn({ msg: '404', observeParams });
-                continue;
-            }
-            addListener(elementToObserve, observeParams, propKey, proxy);
+            hookUp(parm, proxy, propKey);
         }
     }
     finale(proxy, target) {
