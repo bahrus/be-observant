@@ -9,7 +9,7 @@
 		"strict": true,
 	},
 	"files":[
-		"addListener.ts",
+		"hookUp.ts",
 		"be-observant.ts",
 		"getElementToObserve.ts",
 		"getProxy.ts",

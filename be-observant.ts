@@ -1,7 +1,7 @@
 import {define, BeDecoratedProps} from 'be-decorated/be-decorated.js';
 import {BeObservantProps, BeObservantActions, IObserve, BeObservantVirtualProps} from './types';
 import {getElementToObserve} from './getElementToObserve.js';
-import {addListener, hookUp} from './addListener.js';
+import {addListener, hookUp} from './hookUp.js';
 import {register} from "be-hive/register.js";
 
 export {IObserve} from './types';
