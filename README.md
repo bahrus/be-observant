@@ -138,7 +138,15 @@ First we need to choose *what* to observe.  This is done via a number of alterna
         </tr>
         <tr>
             <td>observeClosest</td>
-            <td>Use the native function call "closest" to find the elemnt to observe.</td>
+            <td>Use the native function call "closest" to find the element to observe.</td>
+        </tr>
+        <tr>
+            <td>observeClosestOrHost</td>
+            <td>Use the native function call "closest".  If that's null, do el.getRootNode()</td>
+        </td>
+        <tr>
+            <td>observeSelf [TODO]</td>
+            <td>Observe self</td>
         </tr>
     </tbody>
 </table>
