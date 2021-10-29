@@ -74,8 +74,8 @@ which is a shorthand / more readable version (based on overridable assumptions) 
         <a-duck></a-duck>
     </largest-scale>
     <iff-diff iff not-equals set-attr=hidden be-observant='{
-        "lhs": {"observe": "[-lhs]", "on":"value-changed", "value-from-target": "value"}, 
-        "rhs": {"observe": "[-rhs]", "on":"value-changed", "value-from-target": "value"} 
+        "lhs": {"observe": "[-lhs]", "on":"value-changed", "valueFromTarget": "value"}, 
+        "rhs": {"observe": "[-rhs]", "on":"value-changed", "valueFromTarget": "value"} 
     }'></iff-diff>
     <div hidden>A witch!</div>
 </ways-of-science>
@@ -115,7 +115,7 @@ To make debugging easier, set JSON key "debug" to true.
 
 **NB III:**  The attribute name "be-observant" is configurable.  "data-be-observant" also works, with the default configuration.  The only limitation as far as naming is the attribute must start with be-* (which also guarentees data-be-* as well).
 
-**NB IV:** The syntax, and the core code behind be-observant is also used by a fair number of other web components in the may-it-be family of web components, so it is worthwhile expounding on exactly what that syntax means.
+**NB IV:** The syntax, and the core code behind be-observant, is also used by a fair number of other web components in the may-it-be family of web components, so it is worthwhile expounding on exactly what that syntax means.
 
 ## Syntax in depth
 
@@ -174,7 +174,7 @@ Once we find the element to observe, next we need to specify what property or ev
     </tbody>
 </table>
 
-Next we specify what to pass from the element we are observing and possibly from the vent.
+Next we specify what to pass from the element we are observing and possibly from the event.
 
 <table>
     <caption>Getting the value</caption>
@@ -241,6 +241,8 @@ Under the hood, this scenario will use another option:  observeClosestOrHost (oc
 
 ## Observe another proxy
 
+"fromProxy" can be added, indicating that the data we want referenced or copied from the target element should actually come from a virtual property of the proxy.
+
 ```html
 <list-sorter  upgrade=* if-wants-to-be=sorted with-binding></list-sorter>
 
@@ -251,7 +253,7 @@ Under the hood, this scenario will use another option:  observeClosestOrHost (oc
 ...
 
 <ul be-sorted='{"nodeSelectorToSortOn":"span"}' be-sorted-with-binding='{
-    "direction": {"observe": "button", "from-proxy":"toggled", "vft": "on", "valIfTrue": "asc", "valIfFalse": "desc", "to-proxy": "sorted"}
+    "direction": {"observe": "button", "fromProxy":"toggled", "vft": "on", "valIfTrue": "asc", "valIfFalse": "desc", "to-proxy": "sorted"}
 }'>
     <li>
         <span>Zorse</span>
