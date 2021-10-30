@@ -86,7 +86,7 @@ export function hookUp(fromParam: any, proxy: any, toParam: string){
         case 'string':
             {
                 const ocoho = '[data-is-hostish]';
-                const isProp = fromParam[0];
+                const isProp = fromParam[0] === '.';
                 const vft = isProp ? fromParam.substr(1) : fromParam;
                 const observeParams = isProp ? {onSet: vft, vft, ocoho} as IObserve : {vft, ocoho} as IObserve;
                 
