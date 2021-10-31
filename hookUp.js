@@ -91,7 +91,7 @@ export function hookUp(fromParam, proxy, toParam) {
                 const vft = isProp ? fromParam.substr(1) : fromParam;
                 const observeParams = isProp ? { onSet: vft, vft, ocoho } : { vft, ocoho };
                 const elementToObserve = getElementToObserve(proxy, observeParams);
-                if (elementToObserve === null) {
+                if (!elementToObserve) {
                     console.warn({ msg: '404', observeParams });
                     return;
                 }
