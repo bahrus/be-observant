@@ -9,6 +9,8 @@ export function addListener(elementToObserve, observeParams, propKey, self) {
         on || (valFT ? (fromProxy ? fromProxy + '::' : '') + camelToLisp(valFT) + '-changed' : undefined);
     const valFE = vfe || valFromEvent;
     if (valFT !== undefined && !skipInit) {
+        if (observeParams.debug)
+            debugger;
         setProp(valFT, valFE, propKey, elementToObserve, observeParams, self);
     }
     if (onz !== undefined) {
