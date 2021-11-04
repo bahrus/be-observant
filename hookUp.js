@@ -50,6 +50,8 @@ export function addListener(elementToObserve, observeParams, propKey, self) {
                 const event = {
                     target: this
                 };
+                if (observeParams.debug)
+                    debugger;
                 setProp(valFT, valFE, propKey, elementToObserve, observeParams, self);
             },
             enumerable: true,

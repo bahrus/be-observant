@@ -57,6 +57,8 @@ export interface IObserve{
     falseVal?: any,
 
     fromProxy?: string,
+
+    debug?: boolean,
 }
 
 
