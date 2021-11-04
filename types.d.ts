@@ -2,16 +2,16 @@ import {BeDecoratedProps, EventHandler, MinimalController} from 'be-decorated/ty
 
 export interface IObserve{
     /**
-     * A css match criteria, used in an "upsearch" for the element to observe.
+     * A css match criteria, used in an "upSearch" for the element to observe.
      */
     observe?: string,
     /**
-     * Observe first ancestoer DOM element matching this string
+     * Observe first ancestor DOM element matching this string
      */
     observeClosest?: string,
 
-    observeClosestOrHost?: string,
-    ocoho?: string,
+    observeClosestOrHost?: string | boolean,
+    ocoho?: string | boolean,
     
     /**
      * Event name to watch for
