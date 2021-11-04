@@ -9,7 +9,7 @@ export function getElementToObserve(self:Element,
     let elementToObserve: Element | null = null;
     const oc = ocoho || observeClosestOrHost;
     if(oc !== undefined){
-        const closest = oc === true ? 'data-is-hostish' : oc.toString();
+        const closest = oc === true ? '[data-is-hostish]' : oc.toString();
         elementToObserve = self.closest(closest);
         if(elementToObserve === null){
             elementToObserve = (<any>self.getRootNode()).host as Element;
