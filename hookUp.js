@@ -2,7 +2,7 @@ import { setProp } from './setProp.js';
 import { camelToLisp } from 'trans-render/lib/camelToLisp.js';
 import { nudge } from 'trans-render/lib/nudge.js';
 import { getElementToObserve } from './getElementToObserve.js';
-export function addListener(elementToObserve, observeParams, propKey, self) {
+export async function addListener(elementToObserve, observeParams, propKey, self) {
     const { on, vft, valFromTarget, valFromEvent, vfe, skipInit, onSet, fromProxy } = observeParams;
     const valFT = vft || valFromTarget;
     const onz = onSet !== undefined ? undefined :
@@ -11,7 +11,7 @@ export function addListener(elementToObserve, observeParams, propKey, self) {
     if (valFT !== undefined && !skipInit) {
         if (observeParams.debug)
             debugger;
-        setProp(valFT, valFE, propKey, elementToObserve, observeParams, self);
+        await setProp(valFT, valFE, propKey, elementToObserve, observeParams, self);
     }
     if (onz !== undefined) {
         const fn = (e) => {
@@ -19,7 +19,6 @@ export function addListener(elementToObserve, observeParams, propKey, self) {
             if (self.debug) {
                 console.log({ e, valFT, valFE, propKey, observeParams });
             }
-            //const src = (fromProxy !== undefined ? getProxy(elementToObserve, fromProxy) : e.target!) as Element
             setProp(valFT, valFE, propKey, elementToObserve, observeParams, self, e);
         };
         elementToObserve.addEventListener(onz, fn);
@@ -64,7 +63,7 @@ export function addListener(elementToObserve, observeParams, propKey, self) {
         throw 'NI'; // not implemented
     }
 }
-export function hookUp(fromParam, proxy, toParam) {
+export async function hookUp(fromParam, proxy, toParam) {
     switch (typeof fromParam) {
         case 'object':
             {
@@ -84,7 +83,7 @@ export function hookUp(fromParam, proxy, toParam) {
                         console.warn({ msg: '404', observeParams });
                         return;
                     }
-                    addListener(elementToObserve, observeParams, toParam, proxy);
+                    await addListener(elementToObserve, observeParams, toParam, proxy);
                 }
             }
             break;
@@ -99,7 +98,7 @@ export function hookUp(fromParam, proxy, toParam) {
                     console.warn({ msg: '404', observeParams });
                     return;
                 }
-                addListener(elementToObserve, observeParams, toParam, proxy);
+                await addListener(elementToObserve, observeParams, toParam, proxy);
             }
             break;
         default:

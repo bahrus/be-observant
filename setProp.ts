@@ -3,7 +3,7 @@ import {IObserve} from './types';
 import { structuralClone } from 'trans-render/lib/structuralClone.js';
 import { getProxy } from './getProxy.js';
 
-export function setProp(valFT: string | undefined, valFE: string | undefined, propKey: string, observedElement: Element, 
+export async function setProp(valFT: string | undefined, valFE: string | undefined, propKey: string, observedElement: Element, 
     {parseValAs, clone, as, trueVal, falseVal, fromProxy}: IObserve, self: Element, event?: Event){
     if(event === undefined && valFE !== undefined) return;
     const valPath = event !== undefined && valFE ? valFE : valFT;
@@ -17,7 +17,7 @@ export function setProp(valFT: string | undefined, valFE: string | undefined, pr
             console.log({val, split, observedElement});
         }
     }else{
-        const proxy = getProxy(observedElement, fromProxy);
+        const proxy = await getProxy(observedElement, fromProxy);
         if(proxy !== undefined) val = getProp(proxy, split, proxy);
         if((<any>self).debug){
             console.log({

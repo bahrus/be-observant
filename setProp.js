@@ -1,7 +1,7 @@
 import { convert, getProp, splitExt } from 'on-to-me/prop-mixin.js';
 import { structuralClone } from 'trans-render/lib/structuralClone.js';
 import { getProxy } from './getProxy.js';
-export function setProp(valFT, valFE, propKey, observedElement, { parseValAs, clone, as, trueVal, falseVal, fromProxy }, self, event) {
+export async function setProp(valFT, valFE, propKey, observedElement, { parseValAs, clone, as, trueVal, falseVal, fromProxy }, self, event) {
     if (event === undefined && valFE !== undefined)
         return;
     const valPath = event !== undefined && valFE ? valFE : valFT;
@@ -17,7 +17,7 @@ export function setProp(valFT, valFE, propKey, observedElement, { parseValAs, cl
         }
     }
     else {
-        const proxy = getProxy(observedElement, fromProxy);
+        const proxy = await getProxy(observedElement, fromProxy);
         if (proxy !== undefined)
             val = getProp(proxy, split, proxy);
         if (self.debug) {
