@@ -2,6 +2,7 @@ import { setProp } from './setProp.js';
 import { camelToLisp } from 'trans-render/lib/camelToLisp.js';
 import { nudge } from 'trans-render/lib/nudge.js';
 import { getElementToObserve } from './getElementToObserve.js';
+const propSubscribers = new WeakMap();
 export async function addListener(elementToObserve, observeParams, propKey, self) {
     const { on, vft, valFromTarget, valFromEvent, vfe, skipInit, onSet, fromProxy } = observeParams;
     const valFT = vft || valFromTarget;
@@ -31,33 +32,53 @@ export async function addListener(elementToObserve, observeParams, propKey, self
         nudge(elementToObserve);
     }
     else if (onSet !== undefined) {
-        let proto = elementToObserve;
-        let prop = Object.getOwnPropertyDescriptor(proto, onSet);
-        while (proto && !prop) {
-            proto = Object.getPrototypeOf(proto);
-            prop = Object.getOwnPropertyDescriptor(proto, onSet);
+        if (!propSubscribers.has(elementToObserve)) {
+            propSubscribers.set(elementToObserve, {});
         }
-        if (prop === undefined) {
-            throw { elementToObserve, onSet, message: "Can't find property." };
+        const subscribers = propSubscribers.get(elementToObserve);
+        if (subscribers[onSet] === undefined) {
+            subscribers[onSet] = [{ observeParams, propKey }];
+            let proto = elementToObserve;
+            let prop = Object.getOwnPropertyDescriptor(proto, onSet);
+            while (proto && !prop) {
+                proto = Object.getPrototypeOf(proto);
+                prop = Object.getOwnPropertyDescriptor(proto, onSet);
+            }
+            if (prop === undefined) {
+                throw { elementToObserve, onSet, message: "Can't find property." };
+            }
+            const setter = prop.set.bind(elementToObserve);
+            const getter = prop.get.bind(elementToObserve);
+            Object.defineProperty(elementToObserve, onSet, {
+                get() {
+                    return getter();
+                },
+                set(nv) {
+                    setter(nv);
+                    // const event = {
+                    //     target: this
+                    // } as Event;
+                    if (observeParams.debug)
+                        debugger;
+                    const observers = propSubscribers.get(elementToObserve)[onSet];
+                    for (const observer of observers) {
+                        const { vft, valFromTarget, valFromEvent, vfe } = observer.observeParams;
+                        const valFT = vft || valFromTarget;
+                        const valFE = vfe || valFromEvent;
+                        //console.log({observer, valFE, event);
+                        setProp(valFT, valFE, observer.propKey, elementToObserve, observer.observeParams, self);
+                    }
+                    //setProp(valFT, valFE, propKey, elementToObserve, observeParams, self);
+                },
+                enumerable: true,
+                configurable: true,
+            });
         }
-        const setter = prop.set.bind(elementToObserve);
-        const getter = prop.get.bind(elementToObserve);
-        Object.defineProperty(elementToObserve, onSet, {
-            get() {
-                return getter();
-            },
-            set(nv) {
-                setter(nv);
-                const event = {
-                    target: this
-                };
-                if (observeParams.debug)
-                    debugger;
-                setProp(valFT, valFE, propKey, elementToObserve, observeParams, self);
-            },
-            enumerable: true,
-            configurable: true,
-        });
+        else {
+            //console.log({elementToObserve, observeParams, propKey});
+            const subscriberSeq = propSubscribers.get(elementToObserve)[onSet];
+            subscriberSeq.push({ observeParams, propKey });
+        }
     }
     else {
         throw 'NI'; // not implemented
