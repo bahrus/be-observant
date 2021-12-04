@@ -231,7 +231,7 @@ The shortcut for these two scenarios is shown below:
 }'>
 ```
 
-## Being host-ish [TODO]
+## Being host-ish
 
 Sometimes there are scenarios where we would like to benefit from the shortcuts above, but don't want to use Shadow DOM on a containing component just for the benefit of the shortcut.
 
