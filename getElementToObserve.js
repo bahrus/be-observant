@@ -4,7 +4,7 @@ export function getElementToObserve(self, { observeClosest, observe, observeClos
     let elementToObserve = null;
     const oc = ocoho || observeClosestOrHost;
     if (oc !== undefined) {
-        const closest = oc === true ? '[data-is-hostish]' : oc.toString();
+        const closest = oc === true ? '[itemscope]' : oc.toString();
         const parent = self.parentElement;
         elementToObserve = parent === null ? null : parent.closest(closest);
         if (elementToObserve === null) {

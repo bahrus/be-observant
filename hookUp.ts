@@ -113,7 +113,7 @@ export async function hookUp(fromParam: any, proxy: any, toParam: string){
             break;
         case 'string':
             {
-                const ocoho = '[data-is-hostish]';
+                const ocoho = '[itemscope]';
                 const isProp = fromParam[0] === '.';
                 const vft = isProp ? fromParam.substr(1) : fromParam;
                 const observeParams = isProp ? {onSet: vft, vft, ocoho} as IObserve : {vft, ocoho} as IObserve;
