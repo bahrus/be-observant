@@ -59,6 +59,11 @@ export interface IObserve{
     fromProxy?: string,
 
     debug?: boolean,
+
+    fire?: {
+        type: string,
+        init: CustomEventInit,
+    }
 }
 
 
