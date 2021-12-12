@@ -4,7 +4,7 @@ import {IObserve} from './types';
 export {IObserve} from './types';
 
 export function getElementToObserve(self:Element, 
-    {observeClosest, observe, observeClosestOrHost, ocoho}: IObserve)
+    {observeClosest, observe, observeClosestOrHost, ocoho, observeSelf}: IObserve)
 {
     let elementToObserve: Element | null = null;
     const oc = ocoho || observeClosestOrHost;
@@ -22,6 +22,8 @@ export function getElementToObserve(self:Element,
         }
     }else if(observe !== undefined) {
         elementToObserve = upSearch(self, observe) as Element;
+    }else if(observeSelf){
+        elementToObserve = self;
     }else{
         elementToObserve = getHost(self);
     }

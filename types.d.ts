@@ -12,6 +12,8 @@ export interface IObserve{
 
     observeClosestOrHost?: string | boolean,
     ocoho?: string | boolean,
+
+    observeSelf?: boolean,
     
     /**
      * Event name to watch for

@@ -147,7 +147,7 @@ First we need to choose *what* to observe.  This is done via a number of alterna
             <td>Use the native function call "closest".  If that's null, do el.getRootNode()</td>
         </td>
         <tr>
-            <td>observeSelf [TODO]</td>
+            <td>observeSelf</td>
             <td>Observe self</td>
         </tr>
     </tbody>
