@@ -36,7 +36,7 @@ define<BeObservantProps & BeDecoratedProps<BeObservantProps, BeObservantActions>
             upgrade,
             ifWantsToBe,
             noParse: true,
-            forceVisible: true,
+            forceVisible: ['template', 'script', 'style'],
             intro: 'intro',
             finale: 'finale',
             virtualProps: ['eventHandlers']
