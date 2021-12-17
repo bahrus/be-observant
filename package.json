@@ -36,7 +36,7 @@
   "dependencies": {
     "trans-render": "0.0.433",
     "xtal-element": "0.0.453",
-    "be-decorated": "0.0.51",
+    "be-decorated": "0.0.52",
     "be-hive": "0.0.13",
     "on-to-me": "0.0.49"
   },
@@ -44,7 +44,7 @@
     "xtal-test": "0.0.54",
     "@skypack/package-check": "0.2.2",
     "@custom-elements-manifest/analyzer": "0.5.7",
-    "xtal-editor": "0.0.100",
+    "xtal-editor": "0.0.108",
     "xtal-shell": "0.0.25",
     "if-diff": "0.0.123"
   },
