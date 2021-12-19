@@ -68,7 +68,7 @@ export interface IObserve{
     }
 }
 
-
+export type IObserveMap<TElement = Element> = {[key in keyof TElement]: IObserve | string};
 
 export interface BeObservantVirtualProps extends MinimalController{
     eventHandlers: EventHandler[];
