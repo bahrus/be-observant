@@ -11,6 +11,9 @@ export interface IObserve{
     observeClosest?: string,
 
     observeClosestOrHost?: string | boolean,
+    /**
+     * observe closest or host
+     */
     ocoho?: string | boolean,
 
     observeSelf?: boolean,
