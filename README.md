@@ -267,6 +267,15 @@ Under the hood, this scenario will use another option:  observeClosestOrHost (oc
 
 ```
 
+## Add filter
+
+If array, allow when to follow xtal notation:
+
+where:{
+    ifAllOf:[],
+    ifNoneOf:[]
+}
+
 ## Pass to another proxy on the same element[TODO]
 
 use to-proxy
