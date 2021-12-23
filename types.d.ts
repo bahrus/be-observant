@@ -53,7 +53,7 @@ export interface IObserve<Props = any, Actions = Props>{
     /**
      * Subscribe to property changes rather to events.
      */
-    onSet?: keyof Self & string,
+    onSet?: keyof Props & string,
     /** Set attribute rather than property. */
     as?: 'str-attr' | 'bool-attr' | 'obj-attr',
     /** If val is true, set property to this value. */
@@ -71,7 +71,7 @@ export interface IObserve<Props = any, Actions = Props>{
     }
 }
 
-export type IObserveMap<Self = any, Props = any, Actions = Props> = {[key in keyof Self]: IObserve<Props> | string};
+export type IObserveMap<Self = any, Props = any, Actions = Props> = {[key in keyof Self]: IObserve<Props, Actions> | string};
 
 export interface BeObservantVirtualProps extends MinimalController{
     eventHandlers?: EventHandler[];
