@@ -14,7 +14,7 @@ export class BeObservantController {
         }        
     }
     finale(proxy: Element & BeObservantVirtualProps, target:Element){
-        const eventHandlers = proxy.eventHandlers;
+        const eventHandlers = proxy.eventHandlers!;
         for(const eh of eventHandlers){
             eh.elementToObserve.removeEventListener(eh.on, eh.fn);
         }
