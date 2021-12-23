@@ -1,6 +1,6 @@
 import {BeDecoratedProps, EventHandler, MinimalController} from 'be-decorated/types';
 
-export interface IObserve<T = any>{
+export interface IObserve<Props = any, Actions = Props>{
     /**
      * A css match criteria, used in an "upSearch" for the element to observe.
      */
@@ -30,7 +30,7 @@ export interface IObserve<T = any>{
     /**
      * Abbreviation for valFromTarget.  Does the same thing
      */
-    vft?: keyof T & string,
+    vft?: keyof Props & string,
     /**
      * The path to the place in the event we want to use as the value to set.  
      * For example:  detail.value
@@ -53,7 +53,7 @@ export interface IObserve<T = any>{
     /**
      * Subscribe to property changes rather to events.
      */
-    onSet?: keyof T & string,
+    onSet?: keyof Self & string,
     /** Set attribute rather than property. */
     as?: 'str-attr' | 'bool-attr' | 'obj-attr',
     /** If val is true, set property to this value. */
@@ -71,7 +71,7 @@ export interface IObserve<T = any>{
     }
 }
 
-export type IObserveMap<TElement = Element, TProps = any> = {[key in keyof TElement]: IObserve<TProps> | string};
+export type IObserveMap<Self = any, Props = any, Actions = Props> = {[key in keyof Self]: IObserve<Props> | string};
 
 export interface BeObservantVirtualProps extends MinimalController{
     eventHandlers?: EventHandler[];
