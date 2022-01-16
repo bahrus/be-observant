@@ -32,6 +32,9 @@ export async function addListener(elementToObserve, observeParams, propKey, self
         nudge(elementToObserve);
     }
     else if (onSet !== undefined) {
+        if (elementToObserve.localName.includes('-')) {
+            await customElements.whenDefined(elementToObserve.localName);
+        }
         if (!propSubscribers.has(elementToObserve)) {
             propSubscribers.set(elementToObserve, {});
         }
