@@ -44,7 +44,7 @@
     "xtal-test": "0.0.54",
     "@skypack/package-check": "0.2.2",
     "@custom-elements-manifest/analyzer": "0.5.7",
-    "xtal-editor": "0.0.116",
+    "xtal-editor": "0.0.122",
     "xtal-shell": "0.0.25",
     "if-diff": "0.0.123"
   },
