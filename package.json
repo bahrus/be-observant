@@ -22,9 +22,7 @@
     "./setProp.js": "./setProp.js"
   },
   "files": [
-    "*.js",
-    "*.ts",
-    "types.d.ts"
+    "*.*"
   ],
   "types": "types.d.ts",
   "scripts": {

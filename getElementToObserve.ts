@@ -2,9 +2,10 @@ import {getHost} from 'trans-render/lib/getHost.js';
 import { upSearch } from 'trans-render/lib/upSearch.js';
 import {IObserve} from './types';
 export {IObserve} from './types';
+declare const appHistory: any;
 
 export function getElementToObserve(self:Element, 
-    {observeClosest, observe, observeClosestOrHost, ocoho, observeSelf}: IObserve)
+    {observeClosest, observe, observeClosestOrHost, ocoho, observeSelf, observeAppHistory}: IObserve)
 {
     let elementToObserve: Element | null = null;
     const oc = ocoho || observeClosestOrHost;
@@ -24,6 +25,8 @@ export function getElementToObserve(self:Element,
         elementToObserve = upSearch(self, observe) as Element;
     }else if(observeSelf){
         elementToObserve = self;
+    }else if(observeAppHistory){
+        elementToObserve = appHistory;
     }else{
         elementToObserve = getHost(self);
     }
