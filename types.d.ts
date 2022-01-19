@@ -51,7 +51,7 @@ export interface IObserve<Props = any, Actions = Props>{
     /**
      *  'int' | 'float' | 'bool' | 'date' | 'truthy' | 'falsy' | '' | 'string' | 'object';  
      */
-    parseValAs?: string,
+    parseValAs?: 'int' | 'float' | 'bool' | 'date' | 'truthy' | 'falsy' | '' | 'string' | 'object',
     /**
      * Subscribe to property changes rather to events.
      */
@@ -71,6 +71,8 @@ export interface IObserve<Props = any, Actions = Props>{
         type: string,
         init: CustomEventInit,
     }
+
+    translate?: number;
 }
 
 export type IObserveMap<Self = any, Props = any, Actions = Props> = {[key in keyof Self]: IObserve<Props, Actions> | string};

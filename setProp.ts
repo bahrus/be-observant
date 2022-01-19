@@ -4,7 +4,7 @@ import { structuralClone } from 'trans-render/lib/structuralClone.js';
 import { getProxy } from './getProxy.js';
 
 export async function setProp(valFT: string | undefined, valFE: string | undefined, propKey: string, observedElement: Element, 
-    {parseValAs, clone, as, trueVal, falseVal, fromProxy, fire}: IObserve, self: Element, event?: Event){
+    {parseValAs, clone, as, trueVal, falseVal, fromProxy, fire, translate}: IObserve, self: Element, event?: Event){
     if(event === undefined && valFE !== undefined) return;
     const valPath = event !== undefined && valFE ? valFE : valFT;
     if(valPath === undefined) throw 'NI';//not implemented;
@@ -29,6 +29,9 @@ export async function setProp(valFT: string | undefined, valFE: string | undefin
     if(clone) val = structuralClone(val);
     if(parseValAs !== undefined){
         val = convert(val, parseValAs);
+    }
+    if(typeof val === 'number' && translate !== undefined){
+        val += translate;
     }
     if(trueVal && val){
         val = trueVal;
