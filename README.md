@@ -150,6 +150,10 @@ First we need to choose *what* to observe.  This is done via a number of alterna
             <td>observeSelf</td>
             <td>Observe self</td>
         </tr>
+        <tr>
+            <td>observeAppHistory</td>
+            <td>Observe appHistory [name subject to change]</td>
+        </tr>
     </tbody>
 </table>
 
@@ -188,7 +192,10 @@ Next we specify what to pass from the element we are observing and possibly from
     <tbody>
         <tr>
             <td>valFromTarget</td>
-            <td>Specify a path from the target to "pull" when the event is raised or the property changes, using "." notation.</td>
+            <td>
+                Specify a path from the target to "pull" when the event is raised or the property changes, using "." notation.
+                Use | for limited support for method invocation.  E.g. "current.getState|" will invoke the getState method on the current object.
+            </td>
             <td>Aliased by "vft".  Can also be used to auto-set the "on" value as described above.</td>
         </tr>
         <tr>
