@@ -36,7 +36,7 @@ export async function addListener(elementToObserve, observeParams, propKey, self
         subscribe(elementToObserve, onSet, (el, propName, nv) => {
             const valFT = vft || valFromTarget;
             const valFE = vfe || valFromEvent;
-            setProp(valFT, valFE, propName, elementToObserve, observeParams, self);
+            setProp(valFT, valFE, propKey, elementToObserve, observeParams, self);
         });
     }
     else {

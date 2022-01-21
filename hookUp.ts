@@ -35,7 +35,7 @@ export async function addListener(elementToObserve: Element, observeParams: IObs
         subscribe(elementToObserve, onSet, (el: Element, propName, nv) => {
             const valFT = vft || valFromTarget;
             const valFE = vfe || valFromEvent;
-            setProp(valFT, valFE, propName, elementToObserve, observeParams, self);
+            setProp(valFT, valFE, propKey, elementToObserve, observeParams, self);
         });
     }else{
         throw 'NI'; // not implemented
