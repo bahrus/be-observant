@@ -30,7 +30,7 @@ export async function addListener(elementToObserve: Element, observeParams: IObs
         }
         if((<any>self).eventHandlers === undefined) (<any>self).eventHandlers = [];
         (<any>self).eventHandlers.push({onz, elementToObserve, fn});
-        nudge(elementToObserve);
+        if(elementToObserve.getAttribute !== undefined) nudge(elementToObserve);
     }else if(onSet !== undefined){
         subscribe(elementToObserve, onSet, (el: Element, propName, nv) => {
             const valFT = vft || valFromTarget;

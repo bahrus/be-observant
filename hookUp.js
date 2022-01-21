@@ -29,7 +29,8 @@ export async function addListener(elementToObserve, observeParams, propKey, self
         if (self.eventHandlers === undefined)
             self.eventHandlers = [];
         self.eventHandlers.push({ onz, elementToObserve, fn });
-        nudge(elementToObserve);
+        if (elementToObserve.getAttribute !== undefined)
+            nudge(elementToObserve);
     }
     else if (onSet !== undefined) {
         subscribe(elementToObserve, onSet, (el, propName, nv) => {
