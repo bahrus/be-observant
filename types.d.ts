@@ -18,7 +18,7 @@ export interface IObserve<Props = any, Actions = Props>{
 
     observeSelf?: boolean,
 
-    observeAppHistory?: boolean,
+    observeWinObj?: string,
     
     /**
      * Event name to watch for

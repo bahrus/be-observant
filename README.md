@@ -151,8 +151,8 @@ First we need to choose *what* to observe.  This is done via a number of alterna
             <td>Observe self</td>
         </tr>
         <tr>
-            <td>observeAppHistory</td>
-            <td>Observe appHistory [name subject to change]</td>
+            <td>observeWinObj</td>
+            <td>Observe window object.  Example:  observeWinObj:appHistory</td>
         </tr>
     </tbody>
 </table>
