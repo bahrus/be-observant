@@ -75,7 +75,7 @@ export interface IObserve<Props = any, Actions = Props>{
     translate?: number;
 }
 
-export type InterpolatingObserveParams<T> = T | IObserve | InterpolatingObserveParams<T>[];
+export type InterpolatingObserveParams<T = string> = string | [T] | IObserve | InterpolatingObserveParams<T>[];
 
 export type IObserveMap<Self = any, Props = any, Actions = Props> = {[key in keyof Self]: IObserve<Props, Actions> | string};
 
