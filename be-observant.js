@@ -1,6 +1,7 @@
 import { define } from 'be-decorated/be-decorated.js';
 import { hookUp } from './hookUp.js';
 import { register } from "be-hive/register.js";
+import { unsubscribe } from 'trans-render/lib/subscribe';
 export class BeObservantController {
     intro(proxy, target, beDecorProps) {
         const params = JSON.parse(proxy.getAttribute('is-' + beDecorProps.ifWantsToBe));
@@ -14,6 +15,7 @@ export class BeObservantController {
         for (const eh of eventHandlers) {
             eh.elementToObserve.removeEventListener(eh.on, eh.fn);
         }
+        unsubscribe(proxy);
     }
 }
 const tagName = 'be-observant';

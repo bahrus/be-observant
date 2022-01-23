@@ -2,6 +2,7 @@ import {define, BeDecoratedProps} from 'be-decorated/be-decorated.js';
 import {BeObservantProps, BeObservantActions, IObserve, BeObservantVirtualProps} from './types';
 import {hookUp} from './hookUp.js';
 import {register} from "be-hive/register.js";
+import { unsubscribe } from 'trans-render/lib/subscribe.js';
 
 export {IObserve} from './types';
 
@@ -18,6 +19,7 @@ export class BeObservantController {
         for(const eh of eventHandlers){
             eh.elementToObserve.removeEventListener(eh.on, eh.fn);
         }
+        unsubscribe(proxy);
     }
 }
 
