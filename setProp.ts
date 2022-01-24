@@ -2,16 +2,10 @@ import { convert, getProp, splitExt } from 'on-to-me/prop-mixin.js';
 import {IObserve} from './types';
 import { structuralClone } from 'trans-render/lib/structuralClone.js';
 import { getProxy } from './getProxy.js';
-import { unsubscribe } from 'trans-render/lib/subscribe.js';
 
 export async function setProp(valFT: string | undefined, valFE: string | undefined, propKey: string, observedElement: Element, 
     {parseValAs, clone, as, trueVal, falseVal, fromProxy, fire, translate}: IObserve, self: Element, event?: Event){
     if(event === undefined && valFE !== undefined) return;
-    // try{
-    //     const isConnected = self.isConnected;
-    // }catch(e){
-    //     return;
-    // }
     const valPath = event !== undefined && valFE ? valFE : valFT;
     if(valPath === undefined) throw 'NI';//not implemented;
     const split = splitExt(valPath);

@@ -43,14 +43,14 @@ export async function addListener(elementToObserve, observeParams, propKey, self
             self.subscriptions = [];
         self.subscriptions.push(elementToObserve);
         subscribe(elementToObserve, onSet, (el, propName, nv) => {
-            const valFT = vft || valFromTarget;
-            const valFE = vfe || valFromEvent;
             try {
                 const isConnected = self.isConnected;
             }
             catch (e) {
                 return;
             }
+            const valFT = vft || valFromTarget;
+            const valFE = vfe || valFromEvent;
             setProp(valFT, valFE, propKey, elementToObserve, observeParams, self);
         });
     }
