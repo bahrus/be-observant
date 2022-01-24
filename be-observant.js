@@ -14,6 +14,13 @@ export class BeObservantController {
         const eventHandlers = proxy.eventHandlers;
         for (const eh of eventHandlers) {
             eh.elementToObserve.removeEventListener(eh.on, eh.fn);
+            unsubscribe(eh.elementToObserve);
+        }
+        const subscriptions = proxy.subscriptions;
+        if (subscriptions !== undefined) {
+            for (const el of subscriptions) {
+                unsubscribe(el);
+            }
         }
         unsubscribe(proxy);
     }
@@ -31,7 +38,7 @@ define({
             forceVisible: ['template', 'script', 'style'],
             intro: 'intro',
             finale: 'finale',
-            virtualProps: ['eventHandlers']
+            virtualProps: ['eventHandlers', 'subscriptions']
         }
     },
     complexPropDefaults: {

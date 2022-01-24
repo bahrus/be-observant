@@ -28,11 +28,14 @@ export async function addListener(elementToObserve, observeParams, propKey, self
         }
         if (self.eventHandlers === undefined)
             self.eventHandlers = [];
-        self.eventHandlers.push({ onz, elementToObserve, fn });
+        self.eventHandlers.push({ on: onz, elementToObserve, fn });
         if (elementToObserve.getAttribute !== undefined)
             nudge(elementToObserve);
     }
     else if (onSet !== undefined) {
+        if (self.subscriptions === undefined)
+            self.subscriptions = [];
+        self.subscriptions.push(elementToObserve);
         subscribe(elementToObserve, onSet, (el, propName, nv) => {
             const valFT = vft || valFromTarget;
             const valFE = vfe || valFromEvent;

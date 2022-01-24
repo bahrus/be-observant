@@ -81,6 +81,7 @@ export type IObserveMap<Self = any, Props = any, Actions = Props> = {[key in key
 
 export interface BeObservantVirtualProps extends MinimalController{
     eventHandlers?: EventHandler[];
+    subscriptions?: Element[];
 }
 
 export interface BeObservantProps extends BeObservantVirtualProps{
