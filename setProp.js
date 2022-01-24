@@ -4,6 +4,12 @@ import { getProxy } from './getProxy.js';
 export async function setProp(valFT, valFE, propKey, observedElement, { parseValAs, clone, as, trueVal, falseVal, fromProxy, fire, translate }, self, event) {
     if (event === undefined && valFE !== undefined)
         return;
+    try {
+        const isConnected = self.isConnected;
+    }
+    catch (e) {
+        return;
+    }
     const valPath = event !== undefined && valFE ? valFE : valFT;
     if (valPath === undefined)
         throw 'NI'; //not implemented;
