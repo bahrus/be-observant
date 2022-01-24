@@ -19,6 +19,11 @@ export async function addListener(elementToObserve: Element, observeParams: IObs
     if(onz !== undefined){
         const fn = (e: Event) => {
             e.stopPropagation();
+            try{
+                const isConnected = self.isConnected;
+            }catch(e){
+                return;
+            }
             if((<any>self).debug){
                 console.log({e, valFT, valFE, propKey, observeParams});
             }

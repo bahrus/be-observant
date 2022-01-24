@@ -17,6 +17,12 @@ export async function addListener(elementToObserve, observeParams, propKey, self
     if (onz !== undefined) {
         const fn = (e) => {
             e.stopPropagation();
+            try {
+                const isConnected = self.isConnected;
+            }
+            catch (e) {
+                return;
+            }
             if (self.debug) {
                 console.log({ e, valFT, valFE, propKey, observeParams });
             }
