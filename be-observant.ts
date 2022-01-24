@@ -26,6 +26,7 @@ export class BeObservantController {
                 unsubscribe(el);
             }
         }
+        unsubscribe(target);
         unsubscribe(proxy);
     }
 }
