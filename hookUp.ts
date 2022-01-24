@@ -42,6 +42,11 @@ export async function addListener(elementToObserve: Element, observeParams: IObs
         subscribe(elementToObserve, onSet, (el: Element, propName, nv) => {
             const valFT = vft || valFromTarget;
             const valFE = vfe || valFromEvent;
+            try{
+                const isConnected = self.isConnected;
+            }catch(e){
+                return;
+            }
             setProp(valFT, valFE, propKey, elementToObserve, observeParams, self);
         });
     }else{

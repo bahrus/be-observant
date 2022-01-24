@@ -7,11 +7,11 @@ import { unsubscribe } from 'trans-render/lib/subscribe.js';
 export async function setProp(valFT: string | undefined, valFE: string | undefined, propKey: string, observedElement: Element, 
     {parseValAs, clone, as, trueVal, falseVal, fromProxy, fire, translate}: IObserve, self: Element, event?: Event){
     if(event === undefined && valFE !== undefined) return;
-    try{
-        const isConnected = self.isConnected;
-    }catch(e){
-        return;
-    }
+    // try{
+    //     const isConnected = self.isConnected;
+    // }catch(e){
+    //     return;
+    // }
     const valPath = event !== undefined && valFE ? valFE : valFT;
     if(valPath === undefined) throw 'NI';//not implemented;
     const split = splitExt(valPath);

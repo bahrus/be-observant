@@ -45,6 +45,12 @@ export async function addListener(elementToObserve, observeParams, propKey, self
         subscribe(elementToObserve, onSet, (el, propName, nv) => {
             const valFT = vft || valFromTarget;
             const valFE = vfe || valFromEvent;
+            try {
+                const isConnected = self.isConnected;
+            }
+            catch (e) {
+                return;
+            }
             setProp(valFT, valFE, propKey, elementToObserve, observeParams, self);
         });
     }
