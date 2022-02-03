@@ -70,7 +70,7 @@ export async function hookUp(fromParam: any, proxy: Element & BeObservantVirtual
                     return true;
                 }else{
                     const observeParams = fromParam as IObserve;
-                    const elementToObserve = getElementToObserve(proxy, observeParams);
+                    const elementToObserve = getElementToObserve(proxy, observeParams, host);
                     if(elementToObserve === null){
                         console.warn({msg:'404',observeParams});
                         return false;
@@ -87,7 +87,7 @@ export async function hookUp(fromParam: any, proxy: Element & BeObservantVirtual
                 const vft = isProp ? fromParam.substr(1) : fromParam;
                 const observeParams = isProp ? {onSet: vft, vft, ocoho} as IObserve : {vft, ocoho} as IObserve;
                 
-                const elementToObserve = getElementToObserve(proxy, observeParams);
+                const elementToObserve = getElementToObserve(proxy, observeParams, host);
                 if(!elementToObserve){
                     console.warn({msg:'404',observeParams});
                     return false;

@@ -1,6 +1,6 @@
 import { getHost } from 'trans-render/lib/getHost.js';
 import { upSearch } from 'trans-render/lib/upSearch.js';
-export function getElementToObserve(self, { observeClosest, observe, observeClosestOrHost, ocoho, observeSelf, observeWinObj }) {
+export function getElementToObserve(self, { observeClosest, observe, observeClosestOrHost, ocoho, observeSelf, observeWinObj }, host) {
     let elementToObserve = null;
     const oc = ocoho || observeClosestOrHost;
     if (oc !== undefined) {
@@ -8,7 +8,7 @@ export function getElementToObserve(self, { observeClosest, observe, observeClos
         const parent = self.parentElement;
         elementToObserve = parent === null ? null : parent.closest(closest);
         if (elementToObserve === null) {
-            elementToObserve = self.getRootNode().host;
+            elementToObserve = host || self.getRootNode().host;
         }
     }
     else if (observeClosest !== undefined) {
@@ -27,7 +27,7 @@ export function getElementToObserve(self, { observeClosest, observe, observeClos
         elementToObserve = window[observeWinObj];
     }
     else {
-        elementToObserve = getHost(self);
+        elementToObserve = host || getHost(self);
     }
     return elementToObserve;
 }

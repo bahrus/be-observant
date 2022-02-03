@@ -13,7 +13,8 @@
 		"be-observant.ts",
 		"getElementToObserve.ts",
 		"getProxy.ts",
-		"setProp.ts"
+		"setProp.ts",
+		"trPlugin.ts"
 		
 	],
 	"exclude":[

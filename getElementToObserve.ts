@@ -5,7 +5,7 @@ export {IObserve} from './types';
 declare const appHistory: any;
 
 export function getElementToObserve(self:Element, 
-    {observeClosest, observe, observeClosestOrHost, ocoho, observeSelf, observeWinObj}: IObserve)
+    {observeClosest, observe, observeClosestOrHost, ocoho, observeSelf, observeWinObj}: IObserve, host?: Element): Element | null
 {
     let elementToObserve: Element | null = null;
     const oc = ocoho || observeClosestOrHost;
@@ -14,7 +14,7 @@ export function getElementToObserve(self:Element,
         const parent = self.parentElement;
         elementToObserve = parent === null ? null : parent.closest(closest);
         if(elementToObserve === null){
-            elementToObserve = (<any>self.getRootNode()).host as Element;
+            elementToObserve = host || (<any>self.getRootNode()).host as Element;
         }
     }else if(observeClosest !== undefined){
         elementToObserve = self.closest(observeClosest);
@@ -28,7 +28,7 @@ export function getElementToObserve(self:Element,
     }else if(observeWinObj !== undefined){
         elementToObserve = (<any>window)[observeWinObj];
     }else{
-        elementToObserve = getHost(self);
+        elementToObserve = host || getHost(self);
     }
     return elementToObserve;
 }

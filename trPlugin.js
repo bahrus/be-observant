@@ -1,29 +1,26 @@
-import {RenderContext, TransformPluginSettings} from 'trans-render/lib/types';
-import {register} from 'trans-render/lib/pluginMgr.js';
+import { register } from 'trans-render/lib/pluginMgr.js';
 import { hookUp } from './hookUp';
 //import {lispToCamel} from 'trans-render/lib/lispToCamel.js';
-
-export const trPlugin: TransformPluginSettings = {
+export const trPlugin = {
     selector: 'beObservantAttribs',
-    processor: async ({target, val, attrib, host}: RenderContext) => {
+    processor: async ({ target, val, attrib, host }) => {
         //const ce = customElements.get('be-observant-attribs') as any as TransformPluginStates<Element, any, any>;
-        const params = JSON.parse(attrib!);
+        const params = JSON.parse(attrib);
         const fulfilled = [];
-        for(const propKey in params){
+        for (const propKey in params) {
             const parm = params[propKey];
-            if(await hookUp(parm, target!, propKey, true, host)){
+            if (await hookUp(parm, target, propKey, true, host)) {
                 fulfilled.push(propKey);
-            };
+            }
+            ;
         }
-        if(fulfilled.length > 0){
-            target?.setAttribute(attrib!.replace('is-', 'be-'), val!);
-            
-        }else{
-
-        }        
+        if (fulfilled.length > 0) {
+            target?.setAttribute(attrib.replace('is-', 'be-'), val);
+        }
+        else {
+        }
     }
-}
-
+};
 // export function hookUp(fromParam: any, target: Element, toParam: string, ce: TransformPluginStates<Element, any, any>){
 //     switch(typeof fromParam){
 //         case 'object':
@@ -50,7 +47,6 @@ export const trPlugin: TransformPluginSettings = {
 //                 const isProp = fromParam[0] === '.';
 //                 const vft = isProp ? fromParam.substr(1) : fromParam;
 //                 const observeParams = isProp ? {onSet: vft, vft, ocoho} as IObserve : {vft, ocoho} as IObserve;
-                
 //                 const elementToObserve = getElementToObserve(proxy, observeParams);
 //                 if(!elementToObserve){
 //                     console.warn({msg:'404',observeParams});
@@ -62,8 +58,6 @@ export const trPlugin: TransformPluginSettings = {
 //         }
 //         default:
 //             (<any>proxy)[toParam] = fromParam;
-    
 //     }
 // }
-
 register(trPlugin);

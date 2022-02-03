@@ -79,7 +79,7 @@ export async function hookUp(fromParam, proxy, toParam, noAwait = false, host) {
                 }
                 else {
                     const observeParams = fromParam;
-                    const elementToObserve = getElementToObserve(proxy, observeParams);
+                    const elementToObserve = getElementToObserve(proxy, observeParams, host);
                     if (elementToObserve === null) {
                         console.warn({ msg: '404', observeParams });
                         return false;
@@ -94,7 +94,7 @@ export async function hookUp(fromParam, proxy, toParam, noAwait = false, host) {
                 const isProp = fromParam[0] === '.';
                 const vft = isProp ? fromParam.substr(1) : fromParam;
                 const observeParams = isProp ? { onSet: vft, vft, ocoho } : { vft, ocoho };
-                const elementToObserve = getElementToObserve(proxy, observeParams);
+                const elementToObserve = getElementToObserve(proxy, observeParams, host);
                 if (!elementToObserve) {
                     console.warn({ msg: '404', observeParams });
                     return false;

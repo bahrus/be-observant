@@ -19,7 +19,8 @@
     "./hookUp.js": "./hookUp.js",
     "./getElementToObserve.js": "./getElementToObserve.js",
     "./getProxy.js": "./getProxy.js",
-    "./setProp.js": "./setProp.js"
+    "./setProp.js": "./setProp.js",
+    "./trPlugin.js": "./trPlugin.js"
   },
   "files": [
     "*.*"
