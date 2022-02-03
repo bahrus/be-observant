@@ -8,6 +8,30 @@ be-observant is a key member of the [may-it-be](https://github.com/bahrus/may-it
 
 be-observant is also a trend-setting member of the family -- many of the other may-it-be components piggy-back both on the code as well as the syntax for adding "environment-aware" bindings to their configuration properties.
 
+be-observant also provides an experimental declarative [trans-render plugin](https://github.com/bahrus/trans-render#declarative-trans-render-syntax-via-plugins), so the binding can be done while instantiating a template, rather than after the DOM has been added to the live DOM tree.
+
+
+## Sample syntax
+
+```html
+<ways-of-science>
+    <largest-scale -lhs>
+        <woman-with-carrot-attached-to-nose></woman-with-carrot-attached-to-nose>
+    </largest-scale>
+    <largest-scale -rhs>
+        <a-duck></a-duck>
+    </largest-scale>
+    <if-diff iff not-equals set-attr=hidden be-observant='{
+        "lhs": {"observe": "[-lhs]", "on":"value-changed", "valueFromTarget": "value"}, 
+        "rhs": {"observe": "[-rhs]", "on":"value-changed", "valueFromTarget": "value"} 
+    }'>
+        <template>
+            <div hidden>A witch!</div>
+        </template>
+    </if-diff>
+</ways-of-science>
+```
+
 ## Now hold on just a minute... 
 
 <details>
@@ -26,62 +50,6 @@ Nevertheless, that approach will be considered once the api is stabilized, espec
 Just as custom elements becoming activated relies on css features of the markup (registered tag names), here we also rely on CSS recognizing the attribute, without permission from any host component (though the host has to "opt-in" in a rather light-touch way if using Shadow DOM). 
 
 </details>
-
-## Priors
-
-be-observant strives to accomplish the same thing as the [pass-down](https://github.com/bahrus/pass-down) custom element, but in a possibly more performant way in many circumstances.  It uses attributes rather than elements to bind things together.  So instead of:
-
-```html
-<ways-of-science>
-    <largest-scale>
-        <woman-with-carrot-attached-to-nose></woman-with-carrot-attached-to-nose>
-    </largest-scale>
-    <p-d vft to=[-lhs] m=1></p-d>
-    <largest-scale>
-        <a-duck></a-duck>
-    </largest-scale>
-    <p-d vft to=[-rhs] m=1 ></p-d>
-    <iff-diff iff -lhs not-equals -rhs set-attr=hidden></iff-diff>
-    <div hidden>A witch!</div>
-</ways-of-science>
-```
-
-We have 
-
-<!--
-
-```html
-<ways-of-science>
-    <largest-scale -lhs>
-        <woman-with-carrot-attached-to-nose></woman-with-carrot-attached-to-nose>
-    </largest-scale>
-    <largest-scale -rhs>
-        <a-duck></a-duck>
-    </largest-scale>
-    <iff-diff iff -lhs=largest-scale[-lhs] not-equals -rhs=largest-scale[-rhs] set-attr=hidden be-observant></iff-diff>
-    <div hidden>A witch!</div>
-</ways-of-science>
-```
-
-which is a shorthand / more readable version (based on overridable assumptions) of:
-
--->
-
-```html
-<ways-of-science>
-    <largest-scale -lhs>
-        <woman-with-carrot-attached-to-nose></woman-with-carrot-attached-to-nose>
-    </largest-scale>
-    <largest-scale -rhs>
-        <a-duck></a-duck>
-    </largest-scale>
-    <iff-diff iff not-equals set-attr=hidden be-observant='{
-        "lhs": {"observe": "[-lhs]", "on":"value-changed", "valueFromTarget": "value"}, 
-        "rhs": {"observe": "[-rhs]", "on":"value-changed", "valueFromTarget": "value"} 
-    }'></iff-diff>
-    <div hidden>A witch!</div>
-</ways-of-science>
-```
 
 ## Assumptions, shortcuts
 
