@@ -3,11 +3,12 @@ import {getProxy} from "./getProxy.js";
 import {IObserve, BeObservantVirtualProps} from './types';
 import { camelToLisp } from 'trans-render/lib/camelToLisp.js';
 import {nudge} from 'trans-render/lib/nudge.js';
-import {subscribe} from 'trans-render/lib/subscribe.js';
+import {subscribe, tooSoon} from 'trans-render/lib/subscribe.js';
 import {getElementToObserve} from './getElementToObserve.js';
 
-export async function addListener(elementToObserve: Element, observeParams: IObserve, propKey: string, self: Element & BeObservantVirtualProps){
+export async function addListener(elementToObserve: Element, observeParams: IObserve, propKey: string, self: Element & BeObservantVirtualProps, noAwait = false): Promise<boolean>{
     const {on, vft, valFromTarget, valFromEvent, vfe, skipInit, onSet, fromProxy} = observeParams;
+    if(noAwait && fromProxy) return false;
     const valFT = vft || valFromTarget;
     const onz = onSet !== undefined ? undefined :
          on || (valFT ? (fromProxy ? fromProxy + '::'  : '') + camelToLisp(valFT) + '-changed' : undefined); 
@@ -37,6 +38,7 @@ export async function addListener(elementToObserve: Element, observeParams: IObs
         self.eventHandlers!.push({on: onz, elementToObserve, fn});
         if(elementToObserve.getAttribute !== undefined) nudge(elementToObserve);
     }else if(onSet !== undefined){
+        if(noAwait && tooSoon(elementToObserve)) return false;
         if(self.subscriptions === undefined) self.subscriptions = [];
         self.subscriptions.push(elementToObserve);
         subscribe(elementToObserve, onSet, (el: Element, propName, nv) => {
@@ -52,9 +54,10 @@ export async function addListener(elementToObserve: Element, observeParams: IObs
     }else{
         throw 'NI'; // not implemented
     }
+    return true;
 }
 
-export async function hookUp(fromParam: any, proxy: Element & BeObservantVirtualProps, toParam: string){
+export async function hookUp(fromParam: any, proxy: Element & BeObservantVirtualProps, toParam: string, noAwait = false, host?: Element): Promise<boolean>{
     switch(typeof fromParam){
         case 'object':{
                 if(Array.isArray(fromParam)){
@@ -63,15 +66,16 @@ export async function hookUp(fromParam: any, proxy: Element & BeObservantVirtual
                     if(arr.length !== 1) throw 'NI';
                     //assume for now only one element in the array
                     //TODO:  support alternating array with binding instructions in every odd element -- interpolation
-                    (<any>proxy)[toParam] = fromParam;
+                    (<any>proxy)[toParam] = fromParam[0];
+                    return true;
                 }else{
                     const observeParams = fromParam as IObserve;
                     const elementToObserve = getElementToObserve(proxy, observeParams);
                     if(elementToObserve === null){
                         console.warn({msg:'404',observeParams});
-                        return;
+                        return false;
                     }
-                    await addListener(elementToObserve, observeParams, toParam, proxy);
+                    return await addListener(elementToObserve, observeParams, toParam, proxy, noAwait);
                 }
 
             }
@@ -86,12 +90,13 @@ export async function hookUp(fromParam: any, proxy: Element & BeObservantVirtual
                 const elementToObserve = getElementToObserve(proxy, observeParams);
                 if(!elementToObserve){
                     console.warn({msg:'404',observeParams});
-                    return;
+                    return false;
                 }
-                await addListener(elementToObserve, observeParams, toParam, proxy);
+                return await addListener(elementToObserve, observeParams, toParam, proxy, noAwait);
             }
             break;
         default:
             (<any>proxy)[toParam] = fromParam;
+            return true;
     }
 }

@@ -1,10 +1,12 @@
 import { setProp } from './setProp.js';
 import { camelToLisp } from 'trans-render/lib/camelToLisp.js';
 import { nudge } from 'trans-render/lib/nudge.js';
-import { subscribe } from 'trans-render/lib/subscribe.js';
+import { subscribe, tooSoon } from 'trans-render/lib/subscribe.js';
 import { getElementToObserve } from './getElementToObserve.js';
-export async function addListener(elementToObserve, observeParams, propKey, self) {
+export async function addListener(elementToObserve, observeParams, propKey, self, noAwait = false) {
     const { on, vft, valFromTarget, valFromEvent, vfe, skipInit, onSet, fromProxy } = observeParams;
+    if (noAwait && fromProxy)
+        return false;
     const valFT = vft || valFromTarget;
     const onz = onSet !== undefined ? undefined :
         on || (valFT ? (fromProxy ? fromProxy + '::' : '') + camelToLisp(valFT) + '-changed' : undefined);
@@ -39,6 +41,8 @@ export async function addListener(elementToObserve, observeParams, propKey, self
             nudge(elementToObserve);
     }
     else if (onSet !== undefined) {
+        if (noAwait && tooSoon(elementToObserve))
+            return false;
         if (self.subscriptions === undefined)
             self.subscriptions = [];
         self.subscriptions.push(elementToObserve);
@@ -57,8 +61,9 @@ export async function addListener(elementToObserve, observeParams, propKey, self
     else {
         throw 'NI'; // not implemented
     }
+    return true;
 }
-export async function hookUp(fromParam, proxy, toParam) {
+export async function hookUp(fromParam, proxy, toParam, noAwait = false, host) {
     switch (typeof fromParam) {
         case 'object':
             {
@@ -69,16 +74,17 @@ export async function hookUp(fromParam, proxy, toParam) {
                         throw 'NI';
                     //assume for now only one element in the array
                     //TODO:  support alternating array with binding instructions in every odd element -- interpolation
-                    proxy[toParam] = fromParam;
+                    proxy[toParam] = fromParam[0];
+                    return true;
                 }
                 else {
                     const observeParams = fromParam;
                     const elementToObserve = getElementToObserve(proxy, observeParams);
                     if (elementToObserve === null) {
                         console.warn({ msg: '404', observeParams });
-                        return;
+                        return false;
                     }
-                    await addListener(elementToObserve, observeParams, toParam, proxy);
+                    return await addListener(elementToObserve, observeParams, toParam, proxy, noAwait);
                 }
             }
             break;
@@ -91,12 +97,13 @@ export async function hookUp(fromParam, proxy, toParam) {
                 const elementToObserve = getElementToObserve(proxy, observeParams);
                 if (!elementToObserve) {
                     console.warn({ msg: '404', observeParams });
-                    return;
+                    return false;
                 }
-                await addListener(elementToObserve, observeParams, toParam, proxy);
+                return await addListener(elementToObserve, observeParams, toParam, proxy, noAwait);
             }
             break;
         default:
             proxy[toParam] = fromParam;
+            return true;
     }
 }
