@@ -7,17 +7,30 @@ export const trPlugin = {
         //const ce = customElements.get('be-observant-attribs') as any as TransformPluginStates<Element, any, any>;
         const params = JSON.parse(attrib);
         const fulfilled = [];
+        const unfulfilled = [];
         for (const propKey in params) {
             const parm = params[propKey];
             if (await hookUp(parm, target, propKey, true, host)) {
                 fulfilled.push(propKey);
             }
-            ;
+            else {
+                unfulfilled.push(propKey);
+            }
         }
-        if (fulfilled.length > 0) {
-            target?.setAttribute(attrib.replace('is-', 'be-'), val);
+        if (unfulfilled.length === 0) {
+            target.setAttribute(attrib.replace('be-', 'is-'), val);
         }
         else {
+            const isObj = {};
+            const beObj = {};
+            for (const propKey of fulfilled) {
+                isObj[propKey] = params[propKey];
+            }
+            for (const propKey of unfulfilled) {
+                beObj[propKey] = params[propKey];
+            }
+            target.setAttribute(attrib, JSON.stringify(beObj));
+            target.setAttribute(attrib.replace('be-', 'is-'), JSON.stringify(isObj));
         }
     }
 };
