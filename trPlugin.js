@@ -18,6 +18,7 @@ export const trPlugin = {
         }
         if (unfulfilled.length === 0) {
             target.setAttribute(attrib.replace('be-', 'is-'), val);
+            target.removeAttribute(attrib);
         }
         else {
             const isObj = {};
