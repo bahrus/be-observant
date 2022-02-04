@@ -21,6 +21,11 @@
         </template>
     </if-diff>
     <button onclick="removeIfDiff()">Remove IfDiff</button>
+    <style>
+        if-diff[be-observant] {
+            display: block;
+        }
+    </style>
     <script>
         function removeIfDiff(){
             document.querySelector('if-diff').remove();

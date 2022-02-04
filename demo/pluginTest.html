@@ -8,12 +8,18 @@
 </head>
 <body>
     <template id="templ">
-        <details>
-            <summary>Hello</summary>
-        </details>
-        <div be-observant='{
-            "textContent": {"observe": "details", "onSet": "open", "vft": "open"}
-        }'></div>
+        <label for=lhs>LHS:</label><input id=lhs>
+        <label for=rhs>RHS:</label><input id=rhs>
+        <if-diff iff equals lazy-display be-observant='
+        {
+            "lhs": {"observe": "#lhs", "on": "input", "vft": "value"},
+            "rhs": {"observe": "#rhs", "on": "input", "vft": "value"}
+        }
+        '>
+            <template>
+            <div>LHS == RHS</div>
+            </template>
+        </if-diff>
     </template>
     <div id="target"></div>
     <script type=importmap>
@@ -32,6 +38,8 @@
         </script>
         <script type=module>
             import '../trPlugin.js';
+            //import '../be-observant.js';
+            import 'if-diff/if-diff.js';
             import {DTR} from 'trans-render/lib/DTR.js';
             DTR.transform(templ, {
                 plugins: {
