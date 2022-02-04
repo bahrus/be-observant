@@ -216,6 +216,16 @@ Under the hood, this scenario will use another option:  observeClosestOrHost (oc
 
 ## [Configuration Parameters](types.d.ts)
 
+## Performed during template instantiation
+
+be-observant also provides a declarative trans-rendering plugin, trPlugin.js.
+
+During instantiation of the template, *if* the trPlugin library is loaded in memory, it can bind the initial values prior to the HTML landing in the live DOM tree.  If not, no problemo. 
+
+Just have the be-observant library described above, and it will, using almost completely shared code, achieve the same result.
+
+[Sample Markup](https://github.com/bahrus/be-observant/blob/baseline/demo/pluginTest.html).
+
 ## Observe another proxy
 
 "fromProxy" can be added, indicating that the data we want referenced or copied from the target element should actually come from a virtual property of the proxy.
