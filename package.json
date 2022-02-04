@@ -14,7 +14,8 @@
   "main": "be-observant.js",
   "module": "be-observant.js",
   "exports": {
-    ".": "./be-observant.js",
+    ".": "./index.js",
+    "./index.js": "./index.js",
     "./be-observant.js": "./be-observant.js",
     "./hookUp.js": "./hookUp.js",
     "./getElementToObserve.js": "./getElementToObserve.js",
