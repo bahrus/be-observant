@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <template id="templ">
+        <details>
+            <summary>Hello</summary>
+        </details>
+        <div be-observant='{
+            "textContent": {"observe": "details", "onSet": "open", "vft": "open"}
+        }'></div>
+    </template>
+    <div id="target"></div>
+    <script type=importmap>
+        {
+            "imports": {
+                "trans-render/": "../node_modules/trans-render/",
+                "xtal-element/": "../node_modules/xtal-element/",
+                "be-decorated/": "../node_modules/be-decorated/",
+                "be-hive/": "../node_modules/be-hive/",
+                "if-diff/": "../node_modules/if-diff/",
+                "mut-obs/": "../node_modules/mut-obs/",
+                "on-to-me/": "../node_modules/on-to-me/",
+                "lazy-mt/": "../node_modules/lazy-mt/"
+            }
+        }
+        </script>
+        <script type=module>
+            import '../trPlugin.js';
+            import {DTR} from 'trans-render/lib/DTR.js';
+            DTR.transform(templ, {
+                plugins: {
+                    beObservant: {
+                        selector: 'beObservantAttribs'
+                    }
+                }
+            }, target)
+        </script>
+</body>
+</html>

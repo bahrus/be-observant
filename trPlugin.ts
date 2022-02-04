@@ -1,11 +1,12 @@
 import {RenderContext, TransformPluginSettings} from 'trans-render/lib/types';
 import {register} from 'trans-render/lib/pluginMgr.js';
-import { hookUp } from './hookUp';
+import { hookUp } from './hookUp.js';
 
 export const trPlugin: TransformPluginSettings = {
     selector: 'beObservantAttribs',
+    ready: true,
     processor: async ({target, val, attrib, host}: RenderContext) => {
-        const params = JSON.parse(attrib!);
+        const params = JSON.parse(val!);
         const fulfilled = [];
         const unfulfilled = [];
         for(const propKey in params){

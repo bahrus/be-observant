@@ -1,9 +1,10 @@
 import { register } from 'trans-render/lib/pluginMgr.js';
-import { hookUp } from './hookUp';
+import { hookUp } from './hookUp.js';
 export const trPlugin = {
     selector: 'beObservantAttribs',
+    ready: true,
     processor: async ({ target, val, attrib, host }) => {
-        const params = JSON.parse(attrib);
+        const params = JSON.parse(val);
         const fulfilled = [];
         const unfulfilled = [];
         for (const propKey in params) {
