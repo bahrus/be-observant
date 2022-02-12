@@ -5,6 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel=preload as=script id="xtal-editor/theme.css" href="../node_modules/xtal-editor/theme.css" crossorigin="anonymous">
+    <link rel=preload as=script id="xtal-editor/xef-config.json" href="../node_modules/xtal-editor/xef-config.json" crossorigin="anonymous">
 </head>
 <body>
     <xtal-editor key=abc>
@@ -36,12 +38,12 @@
                 "@power-elements/": "../node_modules/@power-elements/",
                 "be-active/": "../node_modules/be-active/",
                 "be-definitive/": "../node_modules/be-definitive/",
-                "be-decorated/": "../node_modules/be-decorated/",
                 "be-deslotted/": "../node_modules/be-deslotted/",
                 "be-intersectional/": "../node_modules/be-intersectional/",
                 "be-loaded/": "../node_modules/be-loaded/",
                 "be-observant/": "../",
                 "be-noticed/": "../node_modules/be-noticed/",
+                "be-decorated/": "../node_modules/be-decorated/",
                 "css-observe/": "../node_modules/css-observe/",
                 "be-transformative/": "../node_modules/be-transformative/",
                 "be-switched/": "../node_modules/be-switched/",
@@ -76,7 +78,7 @@
         }, 2000);
     </script>
     <script type=module>
-        import '../node_modules/xtal-editor/xtal-editor.js';
+        import 'xtal-editor/xtal-editor.js';
         import '../node_modules/xtal-shell/$hell.js'
     </script>
     <be-hive></be-hive>
