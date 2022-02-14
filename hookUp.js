@@ -1,4 +1,3 @@
-import { subscribe, tooSoon } from 'trans-render/lib/subscribe.js';
 export async function addListener(elementToObserve, observeParams, propKey, self, noAwait = false) {
     const { on, vft, valFromTarget, valFromEvent, vfe, skipInit, onSet, fromProxy } = observeParams;
     if (noAwait && fromProxy)
@@ -41,6 +40,7 @@ export async function addListener(elementToObserve, observeParams, propKey, self
         }
     }
     else if (onSet !== undefined) {
+        const { subscribe, tooSoon } = await import('trans-render/lib/subscribe.js');
         if (noAwait && tooSoon(elementToObserve))
             return false;
         if (self.subscriptions === undefined)

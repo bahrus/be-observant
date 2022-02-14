@@ -1,5 +1,5 @@
 import {IObserve, BeObservantVirtualProps} from './types';
-import {subscribe, tooSoon} from 'trans-render/lib/subscribe.js';
+
 
 export async function addListener(elementToObserve: Element, observeParams: IObserve, propKey: string, self: Element & BeObservantVirtualProps, noAwait = false): Promise<boolean>{
     const {on, vft, valFromTarget, valFromEvent, vfe, skipInit, onSet, fromProxy} = observeParams;
@@ -38,6 +38,7 @@ export async function addListener(elementToObserve: Element, observeParams: IObs
             nudge(elementToObserve);
         }
     }else if(onSet !== undefined){
+        const {subscribe, tooSoon} = await import('trans-render/lib/subscribe.js');
         if(noAwait && tooSoon(elementToObserve)) return false;
         if(self.subscriptions === undefined) self.subscriptions = [];
         self.subscriptions.push(elementToObserve);
