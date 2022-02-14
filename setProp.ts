@@ -1,7 +1,7 @@
 import { convert, getProp, splitExt } from 'on-to-me/prop-mixin.js';
 import {IObserve} from './types';
-import { structuralClone } from 'trans-render/lib/structuralClone.js';
 import { getProxy } from './getProxy.js';
+declare function structuredClone(val: any): any;
 
 export async function setProp(valFT: string | undefined, valFE: string | undefined, propKey: string, observedElement: Element, 
     {parseValAs, clone, as, trueVal, falseVal, fromProxy, fire, translate}: IObserve, self: Element, event?: Event){
@@ -26,7 +26,7 @@ export async function setProp(valFT: string | undefined, valFE: string | undefin
         }
     }
     if(val === undefined) return;
-    if(clone) val = structuralClone(val);
+    if(clone) val = structuredClone(val);
     if(parseValAs !== undefined){
         val = convert(val, parseValAs);
     }
