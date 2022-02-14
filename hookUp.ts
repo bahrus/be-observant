@@ -1,6 +1,5 @@
 import {IObserve, BeObservantVirtualProps} from './types';
 import {subscribe, tooSoon} from 'trans-render/lib/subscribe.js';
-import {getElementToObserve} from './getElementToObserve.js';
 
 export async function addListener(elementToObserve: Element, observeParams: IObserve, propKey: string, self: Element & BeObservantVirtualProps, noAwait = false): Promise<boolean>{
     const {on, vft, valFromTarget, valFromEvent, vfe, skipInit, onSet, fromProxy} = observeParams;
@@ -71,6 +70,7 @@ export async function hookUp(fromParam: any, proxy: Element & BeObservantVirtual
                     return true;
                 }else{
                     const observeParams = fromParam as IObserve;
+                    const {getElementToObserve} = await import('./getElementToObserve.js');
                     const elementToObserve = getElementToObserve(proxy, observeParams, host);
                     if(elementToObserve === null){
                         console.warn({msg:'404',observeParams});
@@ -87,7 +87,7 @@ export async function hookUp(fromParam: any, proxy: Element & BeObservantVirtual
                 const isProp = fromParam[0] === '.';
                 const vft = isProp ? fromParam.substr(1) : fromParam;
                 const observeParams = isProp ? {onSet: vft, vft, ocoho} as IObserve : {vft, ocoho} as IObserve;
-                
+                const {getElementToObserve} = await import('./getElementToObserve.js');
                 const elementToObserve = getElementToObserve(proxy, observeParams, host);
                 if(!elementToObserve){
                     console.warn({msg:'404',observeParams});

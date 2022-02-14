@@ -1,5 +1,4 @@
 import { subscribe, tooSoon } from 'trans-render/lib/subscribe.js';
-import { getElementToObserve } from './getElementToObserve.js';
 export async function addListener(elementToObserve, observeParams, propKey, self, noAwait = false) {
     const { on, vft, valFromTarget, valFromEvent, vfe, skipInit, onSet, fromProxy } = observeParams;
     if (noAwait && fromProxy)
@@ -80,6 +79,7 @@ export async function hookUp(fromParam, proxy, toParam, noAwait = false, host) {
                 }
                 else {
                     const observeParams = fromParam;
+                    const { getElementToObserve } = await import('./getElementToObserve.js');
                     const elementToObserve = getElementToObserve(proxy, observeParams, host);
                     if (elementToObserve === null) {
                         console.warn({ msg: '404', observeParams });
@@ -95,6 +95,7 @@ export async function hookUp(fromParam, proxy, toParam, noAwait = false, host) {
                 const isProp = fromParam[0] === '.';
                 const vft = isProp ? fromParam.substr(1) : fromParam;
                 const observeParams = isProp ? { onSet: vft, vft, ocoho } : { vft, ocoho };
+                const { getElementToObserve } = await import('./getElementToObserve.js');
                 const elementToObserve = getElementToObserve(proxy, observeParams, host);
                 if (!elementToObserve) {
                     console.warn({ msg: '404', observeParams });
