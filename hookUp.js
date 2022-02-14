@@ -1,4 +1,3 @@
-import { camelToLisp } from 'trans-render/lib/camelToLisp.js';
 import { subscribe, tooSoon } from 'trans-render/lib/subscribe.js';
 import { getElementToObserve } from './getElementToObserve.js';
 export async function addListener(elementToObserve, observeParams, propKey, self, noAwait = false) {
@@ -6,6 +5,7 @@ export async function addListener(elementToObserve, observeParams, propKey, self
     if (noAwait && fromProxy)
         return false;
     const valFT = vft || valFromTarget;
+    const { camelToLisp } = await import('trans-render/lib/camelToLisp.js');
     const onz = onSet !== undefined ? undefined :
         on || (valFT ? (fromProxy ? fromProxy + '::' : '') + camelToLisp(valFT) + '-changed' : undefined);
     const valFE = vfe || valFromEvent;
