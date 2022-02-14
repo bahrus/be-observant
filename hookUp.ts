@@ -1,8 +1,5 @@
-import {setProp} from './setProp.js';
-import {getProxy} from "./getProxy.js";
 import {IObserve, BeObservantVirtualProps} from './types';
 import { camelToLisp } from 'trans-render/lib/camelToLisp.js';
-import {nudge} from 'trans-render/lib/nudge.js';
 import {subscribe, tooSoon} from 'trans-render/lib/subscribe.js';
 import {getElementToObserve} from './getElementToObserve.js';
 
@@ -13,6 +10,7 @@ export async function addListener(elementToObserve: Element, observeParams: IObs
     const onz = onSet !== undefined ? undefined :
          on || (valFT ? (fromProxy ? fromProxy + '::'  : '') + camelToLisp(valFT) + '-changed' : undefined); 
     const valFE = vfe || valFromEvent;
+    const {setProp} = await import('./setProp.js');
     if(valFT !== undefined && !skipInit){
         if(observeParams.debug) debugger;
         await setProp(valFT, valFE, propKey, elementToObserve, observeParams, self);
@@ -36,7 +34,10 @@ export async function addListener(elementToObserve: Element, observeParams: IObs
         }
         if(self.eventHandlers === undefined) self.eventHandlers = [];
         self.eventHandlers!.push({on: onz, elementToObserve, fn});
-        if(elementToObserve.getAttribute !== undefined) nudge(elementToObserve);
+        if(elementToObserve.getAttribute !== undefined) {
+            const {nudge} = await import('trans-render/lib/nudge.js');
+            nudge(elementToObserve);
+        }
     }else if(onSet !== undefined){
         if(noAwait && tooSoon(elementToObserve)) return false;
         if(self.subscriptions === undefined) self.subscriptions = [];
