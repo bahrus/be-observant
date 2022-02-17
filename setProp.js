@@ -19,7 +19,7 @@ export async function setProp(valFT, valFE, propKey, observedElement, { parseVal
         const { getProxy } = await import('./getProxy.js');
         const proxy = await getProxy(observedElement, fromProxy);
         if (proxy !== undefined)
-            val = getProp(proxy, split, proxy);
+            val = getProp(proxy, split);
         if (self.debug) {
             console.log({
                 val, split, proxy, fromProxy, observedElement
