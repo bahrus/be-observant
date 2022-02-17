@@ -1,5 +1,4 @@
 import { convert, getProp, splitExt } from 'on-to-me/prop-mixin.js';
-import { getProxy } from './getProxy.js';
 export async function setProp(valFT, valFE, propKey, observedElement, { parseValAs, clone, as, trueVal, falseVal, fromProxy, fire, translate }, self, event) {
     if (event === undefined && valFE !== undefined)
         return;
@@ -16,6 +15,7 @@ export async function setProp(valFT, valFE, propKey, observedElement, { parseVal
         }
     }
     else {
+        const { getProxy } = await import('./getProxy.js');
         const proxy = await getProxy(observedElement, fromProxy);
         if (proxy !== undefined)
             val = getProp(proxy, split, proxy);

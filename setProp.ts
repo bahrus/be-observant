@@ -1,6 +1,5 @@
 import { convert, getProp, splitExt } from 'on-to-me/prop-mixin.js';
 import {IObserve} from './types';
-import { getProxy } from './getProxy.js';
 declare function structuredClone(val: any): any;
 
 export async function setProp(valFT: string | undefined, valFE: string | undefined, propKey: string, observedElement: Element, 
@@ -17,6 +16,7 @@ export async function setProp(valFT: string | undefined, valFE: string | undefin
             console.log({val, split, observedElement});
         }
     }else{
+        const {getProxy} = await import('./getProxy.js');
         const proxy = await getProxy(observedElement, fromProxy);
         if(proxy !== undefined) val = getProp(proxy, split, proxy);
         if((<any>self).debug){
