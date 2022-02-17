@@ -1,4 +1,3 @@
-import { splitExt } from 'on-to-me/prop-mixin.js';
 import {IObserve} from './types';
 declare function structuredClone(val: any): any;
 
@@ -7,6 +6,7 @@ export async function setProp(valFT: string | undefined, valFE: string | undefin
     if(event === undefined && valFE !== undefined) return;
     const valPath = event !== undefined && valFE ? valFE : valFT;
     if(valPath === undefined) throw 'NI';//not implemented;
+    const {splitExt} = await import('trans-render/lib/splitExt.js';
     const split = splitExt(valPath);
     let src: any = valFE !== undefined ? ( event ? event : observedElement) : observedElement;
     let val: any;

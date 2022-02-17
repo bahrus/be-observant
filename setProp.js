@@ -1,10 +1,10 @@
-import { splitExt } from 'on-to-me/prop-mixin.js';
 export async function setProp(valFT, valFE, propKey, observedElement, { parseValAs, clone, as, trueVal, falseVal, fromProxy, fire, translate }, self, event) {
     if (event === undefined && valFE !== undefined)
         return;
     const valPath = event !== undefined && valFE ? valFE : valFT;
     if (valPath === undefined)
         throw 'NI'; //not implemented;
+    const { splitExt } = await import('trans-render/lib/splitExt.js');
     const split = splitExt(valPath);
     let src = valFE !== undefined ? (event ? event : observedElement) : observedElement;
     let val;
