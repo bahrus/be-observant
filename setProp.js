@@ -1,4 +1,4 @@
-import { convert, getProp, splitExt } from 'on-to-me/prop-mixin.js';
+import { getProp, splitExt } from 'on-to-me/prop-mixin.js';
 export async function setProp(valFT, valFE, propKey, observedElement, { parseValAs, clone, as, trueVal, falseVal, fromProxy, fire, translate }, self, event) {
     if (event === undefined && valFE !== undefined)
         return;
@@ -30,6 +30,7 @@ export async function setProp(valFT, valFE, propKey, observedElement, { parseVal
     if (clone)
         val = structuredClone(val);
     if (parseValAs !== undefined) {
+        const { convert } = await import('trans-render/lib/convert.js');
         val = convert(val, parseValAs);
     }
     if (typeof val === 'number' && translate !== undefined) {

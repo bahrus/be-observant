@@ -1,4 +1,4 @@
-import { convert, getProp, splitExt } from 'on-to-me/prop-mixin.js';
+import { getProp, splitExt } from 'on-to-me/prop-mixin.js';
 import {IObserve} from './types';
 declare function structuredClone(val: any): any;
 
@@ -28,6 +28,7 @@ export async function setProp(valFT: string | undefined, valFE: string | undefin
     if(val === undefined) return;
     if(clone) val = structuredClone(val);
     if(parseValAs !== undefined){
+        const {convert} = await import('trans-render/lib/convert.js');
         val = convert(val, parseValAs);
     }
     if(typeof val === 'number' && translate !== undefined){
