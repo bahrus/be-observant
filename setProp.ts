@@ -1,4 +1,4 @@
-import { getProp, splitExt } from 'on-to-me/prop-mixin.js';
+import { splitExt } from 'on-to-me/prop-mixin.js';
 import {IObserve} from './types';
 declare function structuredClone(val: any): any;
 
@@ -10,8 +10,9 @@ export async function setProp(valFT: string | undefined, valFE: string | undefin
     const split = splitExt(valPath);
     let src: any = valFE !== undefined ? ( event ? event : observedElement) : observedElement;
     let val: any;
+    const {getProp} = await import('trans-render/lib/getProp.js');
     if(fromProxy === undefined){
-        val = getProp(src, split, observedElement);
+        val = getProp(src, split);
         if((<any>self).debug){
             console.log({val, split, observedElement});
         }

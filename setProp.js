@@ -1,4 +1,4 @@
-import { getProp, splitExt } from 'on-to-me/prop-mixin.js';
+import { splitExt } from 'on-to-me/prop-mixin.js';
 export async function setProp(valFT, valFE, propKey, observedElement, { parseValAs, clone, as, trueVal, falseVal, fromProxy, fire, translate }, self, event) {
     if (event === undefined && valFE !== undefined)
         return;
@@ -8,8 +8,9 @@ export async function setProp(valFT, valFE, propKey, observedElement, { parseVal
     const split = splitExt(valPath);
     let src = valFE !== undefined ? (event ? event : observedElement) : observedElement;
     let val;
+    const { getProp } = await import('trans-render/lib/getProp.js');
     if (fromProxy === undefined) {
-        val = getProp(src, split, observedElement);
+        val = getProp(src, split);
         if (self.debug) {
             console.log({ val, split, observedElement });
         }
