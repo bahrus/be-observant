@@ -2,7 +2,7 @@ import {IObserve, BeObservantVirtualProps} from './types';
 
 
 export async function addListener(elementToObserve: Element, observeParams: IObserve, propKey: string, self: Element & BeObservantVirtualProps, noAwait = false): Promise<boolean>{
-    const {on, vft, valFromTarget, valFromEvent, vfe, skipInit, onSet, fromProxy} = observeParams;
+    const {on, vft, valFromTarget, valFromEvent, vfe, skipInit, onSet, fromProxy, nudge} = observeParams;
     if(noAwait && fromProxy) return false;
     const valFT = vft || valFromTarget;
     const { camelToLisp } = await import('trans-render/lib/camelToLisp.js');
@@ -33,7 +33,7 @@ export async function addListener(elementToObserve: Element, observeParams: IObs
         }
         if(self.eventHandlers === undefined) self.eventHandlers = [];
         self.eventHandlers!.push({on: onz, elementToObserve, fn});
-        if(elementToObserve.getAttribute !== undefined) {
+        if(nudge && elementToObserve.getAttribute !== undefined) {
             const {nudge} = await import('trans-render/lib/nudge.js');
             nudge(elementToObserve);
         }
@@ -87,7 +87,8 @@ export async function hookUp(fromParam: any, proxy: Element & BeObservantVirtual
                 const ocoho = '[itemscope]';
                 const isProp = fromParam[0] === '.';
                 const vft = isProp ? fromParam.substr(1) : fromParam;
-                const observeParams = isProp ? {onSet: vft, vft, ocoho} as IObserve : {vft, ocoho} as IObserve;
+                const nudge = true;
+                const observeParams = isProp ? {onSet: vft, vft, ocoho, nudge} as IObserve : {vft, ocoho, nudge} as IObserve;
                 const {getElementToObserve} = await import('./getElementToObserve.js');
                 const elementToObserve = getElementToObserve(proxy, observeParams, host);
                 if(!elementToObserve){

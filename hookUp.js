@@ -1,5 +1,5 @@
 export async function addListener(elementToObserve, observeParams, propKey, self, noAwait = false) {
-    const { on, vft, valFromTarget, valFromEvent, vfe, skipInit, onSet, fromProxy } = observeParams;
+    const { on, vft, valFromTarget, valFromEvent, vfe, skipInit, onSet, fromProxy, nudge } = observeParams;
     if (noAwait && fromProxy)
         return false;
     const valFT = vft || valFromTarget;
@@ -34,7 +34,7 @@ export async function addListener(elementToObserve, observeParams, propKey, self
         if (self.eventHandlers === undefined)
             self.eventHandlers = [];
         self.eventHandlers.push({ on: onz, elementToObserve, fn });
-        if (elementToObserve.getAttribute !== undefined) {
+        if (nudge && elementToObserve.getAttribute !== undefined) {
             const { nudge } = await import('trans-render/lib/nudge.js');
             nudge(elementToObserve);
         }
@@ -94,7 +94,8 @@ export async function hookUp(fromParam, proxy, toParam, noAwait = false, host) {
                 const ocoho = '[itemscope]';
                 const isProp = fromParam[0] === '.';
                 const vft = isProp ? fromParam.substr(1) : fromParam;
-                const observeParams = isProp ? { onSet: vft, vft, ocoho } : { vft, ocoho };
+                const nudge = true;
+                const observeParams = isProp ? { onSet: vft, vft, ocoho, nudge } : { vft, ocoho, nudge };
                 const { getElementToObserve } = await import('./getElementToObserve.js');
                 const elementToObserve = getElementToObserve(proxy, observeParams, host);
                 if (!elementToObserve) {
