@@ -51,6 +51,44 @@ Just as custom elements becoming activated relies on css features of the markup 
 
 </details>
 
+## Alternatives
+
+be-observant shares similar syntax / concepts to [be-noticed](https://github.com/bahrus/be-noticed) and to [pass-down](https://github.com/bahrus/pass-down).
+
+However, there are some subtle differences in spirit between what these three components are trying to achieve.  In many cases, more than one of these components can solve the same problem, so it becomes a matter of "taste" which one solves it better.  The general guidelines between these three elements:
+
+<table>
+    <caption>General guidelines</caption>
+    <thead>
+        <tr>
+            <th>Element</th>
+            <th>Basic Purpose</th>
+            <th>Current Limitations</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>be-observant</td>
+            <td>Pull down values from previously defined elements as they change, to the element be-observant adorns.</td>
+            <td>Can't attach to non-viewable elements</td>
+        </tr>
+        <tr>
+            <td>be-noticed</td>
+            <td>Push up values to previously defined elements as the element be-noticed adorns changes.</td>
+            <td>
+                <ul>
+                    <li>Can't attach to non-viewable elements</li>
+                    <li>Can only pass values to a single element.</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td>pass-down</td>
+            <td>Acts as a mediator between an observed element and one or more downstream elements (usually).</td>
+            <td></td> 
+    </tbody>
+</table>
+
 ## Assumptions, shortcuts
 
 Whereas the pass-down component may be more fitting for a 30,000 ft above the ground environment outside any web component (rather, as part of a "web composition" of Native DOM and custom DOM elements), be-observant is more tailored for markup within a web component.  The overlap between them, functionally, is considerable though.
@@ -163,6 +201,7 @@ Next we specify what to pass from the element we are observing and possibly from
             <td>
                 Specify a path from the target to "pull" when the event is raised or the property changes, using "." notation.
                 Use | for limited support for method invocation.  E.g. "current.getState|" will invoke the getState method on the current object.
+                Common use case:  querySelector|selector
             </td>
             <td>Aliased by "vft".  Can also be used to auto-set the "on" value as described above.</td>
         </tr>
