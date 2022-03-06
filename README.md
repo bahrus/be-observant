@@ -85,7 +85,7 @@ However, there are some subtle differences in spirit between what these three co
         <tr>
             <td>pass-down</td>
             <td>Acts as a mediator between an observed element and one or more downstream elements (usually).</td>
-            <td></td> 
+            <td>Because it becomes active regardless of visibility, doesn't provide built-in "lazy loading" support.</td> 
     </tbody>
 </table>
 
