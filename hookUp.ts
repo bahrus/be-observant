@@ -1,9 +1,11 @@
-import {IObserve, BeObservantVirtualProps} from './types';
+import {IObserve, BeObservantVirtualProps, HookUpInfo} from './types';
 
 
-export async function addListener(elementToObserve: Element, observeParams: IObserve, propKey: string, self: Element & BeObservantVirtualProps, noAwait = false): Promise<boolean>{
+export async function addListener(elementToObserve: Element, observeParams: IObserve, propKey: string, self: Element & BeObservantVirtualProps, noAwait = false): Promise<HookUpInfo>{
     const {on, vft, valFromTarget, valFromEvent, vfe, skipInit, onSet, fromProxy, nudge} = observeParams;
-    if(noAwait && fromProxy) return false;
+    if(noAwait && fromProxy) return {
+        success: false,
+    };
     const valFT = vft || valFromTarget;
     const { camelToLisp } = await import('trans-render/lib/camelToLisp.js');
     const onz = onSet !== undefined ? undefined :
@@ -39,7 +41,9 @@ export async function addListener(elementToObserve: Element, observeParams: IObs
         }
     }else if(onSet !== undefined){
         const {subscribe, tooSoon} = await import('trans-render/lib/subscribe.js');
-        if(noAwait && tooSoon(elementToObserve)) return false;
+        if(noAwait && tooSoon(elementToObserve)) return {
+            success: false
+        };
         if(self.subscriptions === undefined) self.subscriptions = [];
         self.subscriptions.push(elementToObserve);
         subscribe(elementToObserve, onSet, (el: Element, propName, nv) => {
@@ -55,10 +59,13 @@ export async function addListener(elementToObserve: Element, observeParams: IObs
     }else{
         throw 'NI'; // not implemented
     }
-    return true;
+    return {
+        success: true,
+        element: elementToObserve,
+    };
 }
 
-export async function hookUp(fromParam: any, proxy: Element & BeObservantVirtualProps, toParam: string, noAwait = false, host?: Element): Promise<boolean>{
+export async function hookUp(fromParam: any, proxy: Element & BeObservantVirtualProps, toParam: string, noAwait = false, host?: Element): Promise<HookUpInfo>{
     switch(typeof fromParam){
         case 'object':{
                 if(Array.isArray(fromParam)){
@@ -68,14 +75,18 @@ export async function hookUp(fromParam: any, proxy: Element & BeObservantVirtual
                     //assume for now only one element in the array
                     //TODO:  support alternating array with binding instructions in every odd element -- interpolation
                     (<any>proxy)[toParam] = fromParam[0];
-                    return true;
+                    return {
+                        success: true,
+                    };
                 }else{
                     const observeParams = fromParam as IObserve;
                     const {getElementToObserve} = await import('./getElementToObserve.js');
                     const elementToObserve = getElementToObserve(proxy, observeParams, host);
                     if(elementToObserve === null){
                         console.warn({msg:'404',observeParams});
-                        return false;
+                        return {
+                            success: false,
+                        };
                     }
                     return await addListener(elementToObserve, observeParams, toParam, proxy, noAwait);
                 }
@@ -93,13 +104,17 @@ export async function hookUp(fromParam: any, proxy: Element & BeObservantVirtual
                 const elementToObserve = getElementToObserve(proxy, observeParams, host);
                 if(!elementToObserve){
                     console.warn({msg:'404',observeParams});
-                    return false;
+                    return {
+                        success: false,
+                    };
                 }
                 return await addListener(elementToObserve, observeParams, toParam, proxy, noAwait);
             }
             break;
         default:
             (<any>proxy)[toParam] = fromParam;
-            return true;
+            return {
+                success: true,
+            };
     }
 }

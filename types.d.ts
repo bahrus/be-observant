@@ -90,6 +90,11 @@ export interface BeObservantProps extends BeObservantVirtualProps{
     proxy: Element & BeObservantVirtualProps;
 }
 
+export interface HookUpInfo{
+    success: boolean;
+    element?: Element;
+}
+
 export interface BeObservantActions{
     intro(proxy: Element & BeObservantVirtualProps, target: Element, beDecorProps: BeDecoratedProps): void;
     finale(proxy: Element & BeObservantVirtualProps, target:Element): void;

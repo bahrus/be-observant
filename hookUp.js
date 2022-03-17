@@ -1,7 +1,9 @@
 export async function addListener(elementToObserve, observeParams, propKey, self, noAwait = false) {
     const { on, vft, valFromTarget, valFromEvent, vfe, skipInit, onSet, fromProxy, nudge } = observeParams;
     if (noAwait && fromProxy)
-        return false;
+        return {
+            success: false,
+        };
     const valFT = vft || valFromTarget;
     const { camelToLisp } = await import('trans-render/lib/camelToLisp.js');
     const onz = onSet !== undefined ? undefined :
@@ -42,7 +44,9 @@ export async function addListener(elementToObserve, observeParams, propKey, self
     else if (onSet !== undefined) {
         const { subscribe, tooSoon } = await import('trans-render/lib/subscribe.js');
         if (noAwait && tooSoon(elementToObserve))
-            return false;
+            return {
+                success: false
+            };
         if (self.subscriptions === undefined)
             self.subscriptions = [];
         self.subscriptions.push(elementToObserve);
@@ -61,7 +65,10 @@ export async function addListener(elementToObserve, observeParams, propKey, self
     else {
         throw 'NI'; // not implemented
     }
-    return true;
+    return {
+        success: true,
+        element: elementToObserve,
+    };
 }
 export async function hookUp(fromParam, proxy, toParam, noAwait = false, host) {
     switch (typeof fromParam) {
@@ -75,7 +82,9 @@ export async function hookUp(fromParam, proxy, toParam, noAwait = false, host) {
                     //assume for now only one element in the array
                     //TODO:  support alternating array with binding instructions in every odd element -- interpolation
                     proxy[toParam] = fromParam[0];
-                    return true;
+                    return {
+                        success: true,
+                    };
                 }
                 else {
                     const observeParams = fromParam;
@@ -83,7 +92,9 @@ export async function hookUp(fromParam, proxy, toParam, noAwait = false, host) {
                     const elementToObserve = getElementToObserve(proxy, observeParams, host);
                     if (elementToObserve === null) {
                         console.warn({ msg: '404', observeParams });
-                        return false;
+                        return {
+                            success: false,
+                        };
                     }
                     return await addListener(elementToObserve, observeParams, toParam, proxy, noAwait);
                 }
@@ -100,13 +111,17 @@ export async function hookUp(fromParam, proxy, toParam, noAwait = false, host) {
                 const elementToObserve = getElementToObserve(proxy, observeParams, host);
                 if (!elementToObserve) {
                     console.warn({ msg: '404', observeParams });
-                    return false;
+                    return {
+                        success: false,
+                    };
                 }
                 return await addListener(elementToObserve, observeParams, toParam, proxy, noAwait);
             }
             break;
         default:
             proxy[toParam] = fromParam;
-            return true;
+            return {
+                success: true,
+            };
     }
 }
