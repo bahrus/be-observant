@@ -101,7 +101,12 @@ export async function hookUp(fromParam: any, proxy: Element & BeObservantVirtual
                 const nudge = true;
                 const observeParams = isProp ? {onSet: vft, vft, ocoho, nudge} as IObserve : {vft, ocoho, nudge} as IObserve;
                 const {getElementToObserve} = await import('./getElementToObserve.js');
-                const elementToObserve = getElementToObserve(proxy, observeParams, host);
+                let elementToObserve = getElementToObserve(proxy, observeParams, host);
+                if(elementToObserve === null && observeParams.observeInward !== undefined){
+                    //wait for element to fill up hopefully
+                    await sleep(50);
+                    elementToObserve = proxy.querySelector(observeParams.observeInward);
+                }
                 if(!elementToObserve){
                     console.warn({msg:'404',observeParams});
                     return {
@@ -117,4 +122,10 @@ export async function hookUp(fromParam: any, proxy: Element & BeObservantVirtual
                 success: true,
             };
     }
+}
+
+export async function sleep(ms: number): Promise<void>{
+    return new Promise(resolve => {
+        setTimeout(() => { resolve() }, ms);
+    })
 }
