@@ -1,6 +1,6 @@
 import { getHost } from 'trans-render/lib/getHost.js';
 import { upSearch } from 'trans-render/lib/upSearch.js';
-export function getElementToObserve(self, { observeClosest, observe, observeClosestOrHost, ocoho, observeSelf, observeWinObj, observeInward, observeHost }, host) {
+export function getElementToObserve(self, { observeClosest, observe, observeClosestOrHost, ocoho, observeSelf, observeWinObj, observeInward }, host) {
     let elementToObserve = null;
     const oc = ocoho || observeClosestOrHost;
     if (oc !== undefined) {
@@ -28,12 +28,6 @@ export function getElementToObserve(self, { observeClosest, observe, observeClos
     }
     else if (observeWinObj !== undefined) {
         elementToObserve = window[observeWinObj];
-    }
-    else if (observeHost !== undefined) {
-        let host = getHost(self);
-        while (host && host.localName !== observeHost) {
-            host = getHost(host);
-        }
     }
     else {
         elementToObserve = host || getHost(self);

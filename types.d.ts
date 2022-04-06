@@ -16,8 +16,6 @@ export interface IObserve<Props = any, Actions = Props>{
      */
     ocoho?: string | boolean,
 
-    observeHost?: string,
-
     observeSelf?: boolean,
 
     observeWinObj?: string,
