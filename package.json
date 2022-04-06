@@ -19,6 +19,7 @@
     "./be-observant.js": "./be-observant.js",
     "./hookUp.js": "./hookUp.js",
     "./getElementToObserve.js": "./getElementToObserve.js",
+    "./getElementWithProp.js": "./getElementWithProp.js",
     "./getProxy.js": "./getProxy.js",
     "./setProp.js": "./setProp.js",
     "./trPlugin.js": "./trPlugin.js"
