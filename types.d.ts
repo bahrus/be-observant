@@ -18,6 +18,8 @@ export interface IObserve<Props = any, Actions = Props>{
 
     observeSelf?: boolean,
 
+    observeProp?: string,
+
     observeWinObj?: string,
 
     observeInward?: string,

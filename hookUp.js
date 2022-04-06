@@ -1,12 +1,13 @@
 export async function addListener(elementToObserve, observeParams, propKey, self, noAwait = false) {
-    const { on, vft, valFromTarget, valFromEvent, vfe, skipInit, onSet, fromProxy, nudge } = observeParams;
+    const { on, vft, valFromTarget, valFromEvent, vfe, skipInit, onSet, fromProxy, nudge, observeProp } = observeParams;
     if (noAwait && fromProxy)
         return {
             success: false,
         };
     const valFT = vft || valFromTarget;
     const { camelToLisp } = await import('trans-render/lib/camelToLisp.js');
-    const onz = onSet !== undefined ? undefined :
+    const onSetX = onSet || observeProp;
+    const onz = onSetX !== undefined ? undefined :
         on || (valFT ? (fromProxy ? fromProxy + '::' : '') + camelToLisp(valFT) + '-changed' : undefined);
     const valFE = vfe || valFromEvent;
     const { setProp } = await import('./setProp.js');
@@ -41,7 +42,7 @@ export async function addListener(elementToObserve, observeParams, propKey, self
             nudge(elementToObserve);
         }
     }
-    else if (onSet !== undefined) {
+    else if (onSetX !== undefined) {
         const { subscribe, tooSoon } = await import('trans-render/lib/subscribe.js');
         if (noAwait && tooSoon(elementToObserve))
             return {
@@ -50,7 +51,7 @@ export async function addListener(elementToObserve, observeParams, propKey, self
         if (self.subscriptions === undefined)
             self.subscriptions = [];
         self.subscriptions.push(elementToObserve);
-        subscribe(elementToObserve, onSet, (el, propName, nv) => {
+        subscribe(elementToObserve, onSetX, (el, propName, nv) => {
             try {
                 const isConnected = self.isConnected;
             }

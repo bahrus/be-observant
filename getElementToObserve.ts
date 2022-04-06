@@ -5,7 +5,7 @@ export {IObserve} from './types';
 declare const appHistory: any;
 
 export async function getElementToObserve(self:Element, 
-    {observeClosest, observe, observeClosestOrHost, ocoho, observeSelf, observeWinObj, observeInward}: IObserve, host?: Element): Promise<Element | null>
+    {observeClosest, observe, observeClosestOrHost, ocoho, observeSelf, observeWinObj, observeInward, observeProp}: IObserve, host?: Element): Promise<Element | null>
 {
     let elementToObserve: Element | null = null;
     const oc = ocoho || observeClosestOrHost;
@@ -29,6 +29,9 @@ export async function getElementToObserve(self:Element,
         elementToObserve = self.querySelector(observeInward);
     }else if(observeWinObj !== undefined){
         elementToObserve = (<any>window)[observeWinObj];
+    }else if(observeProp !== undefined){
+        const {getElementWithProp} = await import('./getElementWithProp.js');
+        elementToObserve = await getElementWithProp(self, observeProp);
     }else{
         elementToObserve = host || getHost(self);
     }
