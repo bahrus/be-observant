@@ -1,12 +1,12 @@
 export async function addListener(elementToObserve, observeParams, propKey, self, noAwait = false) {
-    const { on, vft, valFromTarget, valFromEvent, vfe, skipInit, onSet, fromProxy, nudge, observeProp } = observeParams;
+    const { on, vft, valFromTarget, valFromEvent, vfe, skipInit, onSet, fromProxy, nudge, observeHostProp } = observeParams;
     if (noAwait && fromProxy)
         return {
             success: false,
         };
     const valFT = vft || valFromTarget;
     const { camelToLisp } = await import('trans-render/lib/camelToLisp.js');
-    const onSetX = onSet || observeProp;
+    const onSetX = onSet || observeHostProp;
     const onz = onSetX !== undefined ? undefined :
         on || (valFT ? (fromProxy ? fromProxy + '::' : '') + camelToLisp(valFT) + '-changed' : undefined);
     const valFE = vfe || valFromEvent;

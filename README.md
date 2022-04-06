@@ -164,6 +164,10 @@ First we need to choose *what* to observe.  This is done via a number of alterna
             <td>observeWinObj</td>
             <td>Observe window object.  Example:  observeWinObj:appHistory</td>
         </tr>
+        <tr>
+            <td>observeHostProp</td>
+            <td>Find the nearest host parent that has the property defined, and observe it for property changes with the name provided by observeHostProp</td>
+        </tr>
     </tbody>
 </table>
 
