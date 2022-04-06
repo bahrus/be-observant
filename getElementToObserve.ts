@@ -4,8 +4,8 @@ import {IObserve} from './types';
 export {IObserve} from './types';
 declare const appHistory: any;
 
-export function getElementToObserve(self:Element, 
-    {observeClosest, observe, observeClosestOrHost, ocoho, observeSelf, observeWinObj, observeInward}: IObserve, host?: Element): Element | null
+export async function getElementToObserve(self:Element, 
+    {observeClosest, observe, observeClosestOrHost, ocoho, observeSelf, observeWinObj, observeInward}: IObserve, host?: Element): Promise<Element | null>
 {
     let elementToObserve: Element | null = null;
     const oc = ocoho || observeClosestOrHost;

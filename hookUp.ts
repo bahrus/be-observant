@@ -81,7 +81,7 @@ export async function hookUp(fromParam: any, proxy: Element & BeObservantVirtual
                 }else{
                     const observeParams = fromParam as IObserve;
                     const {getElementToObserve} = await import('./getElementToObserve.js');
-                    const elementToObserve = getElementToObserve(proxy, observeParams, host);
+                    const elementToObserve = await getElementToObserve(proxy, observeParams, host);
                     if(elementToObserve === null){
                         console.warn({msg:'404',observeParams});
                         return {
@@ -101,7 +101,7 @@ export async function hookUp(fromParam: any, proxy: Element & BeObservantVirtual
                 const nudge = true;
                 const observeParams = isProp ? {onSet: vft, vft, ocoho, nudge} as IObserve : {vft, ocoho, nudge} as IObserve;
                 const {getElementToObserve} = await import('./getElementToObserve.js');
-                let elementToObserve = getElementToObserve(proxy, observeParams, host);
+                let elementToObserve = await getElementToObserve(proxy, observeParams, host);
                 if(elementToObserve === null && observeParams.observeInward !== undefined){
                     //wait for element to fill up hopefully
                     await sleep(50);
