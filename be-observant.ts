@@ -14,7 +14,7 @@ export class BeObservantController {
         if(params === undefined){
             const val = getVal(target, beDecorProps.ifWantsToBe);
             const attr = val[0]!;
-            const params = JSON.parse(attr);
+            params = JSON.parse(attr);
             beDecorProps.virtualPropsMap.set(target, params);
         }
         const {hookUp} = await import('./hookUp.js');
