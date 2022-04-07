@@ -1,4 +1,5 @@
 import {define, BeDecoratedProps} from 'be-decorated/be-decorated.js';
+import {getVal} from 'be-decorated/upgrade.js';
 import {BeObservantProps, BeObservantActions, IObserve, BeObservantVirtualProps} from './types';
 import {register} from "be-hive/register.js";
 
@@ -6,7 +7,9 @@ export {IObserve} from './types';
 
 export class BeObservantController {
     async intro(proxy: Element & BeObservantVirtualProps, target: Element, beDecorProps: BeDecoratedProps){
-        const params = JSON.parse(proxy.getAttribute('is-' + beDecorProps.ifWantsToBe!)!);
+        const val = getVal(target, beDecorProps.ifWantsToBe);
+        const attr = val[0]!;
+        const params = JSON.parse(attr);
         const {hookUp} = await import('./hookUp.js');
         for(const propKey in params){
             const parm = params[propKey];
