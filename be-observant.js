@@ -7,7 +7,7 @@ export class BeObservantController {
         if (beDecorProps.virtualPropsMap.has(target) !== undefined) {
             params = beDecorProps.virtualPropsMap.get(target);
         }
-        else {
+        if (params === undefined) {
             const val = getVal(target, beDecorProps.ifWantsToBe);
             const attr = val[0];
             const params = JSON.parse(attr);
