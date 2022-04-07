@@ -1,5 +1,5 @@
 import {define, BeDecoratedProps} from 'be-decorated/be-decorated.js';
-import {getVal} from 'be-decorated/upgrade.js';
+import {doParse} from 'be-decorated/doParse.js';
 import {BeObservantProps, BeObservantActions, IObserve, BeObservantVirtualProps} from './types';
 import {register} from "be-hive/register.js";
 
@@ -7,16 +7,7 @@ export {IObserve} from './types';
 
 export class BeObservantController {
     async intro(proxy: Element & BeObservantVirtualProps, target: Element, beDecorProps: BeDecoratedProps){
-        let params: any;
-        if(beDecorProps.virtualPropsMap.has(target) !== undefined){
-            params = beDecorProps.virtualPropsMap.get(target);
-        }
-        if(params === undefined){
-            const val = getVal(target, beDecorProps.ifWantsToBe);
-            const attr = val[0]!;
-            params = JSON.parse(attr);
-            beDecorProps.virtualPropsMap.set(target, params);
-        }
+        const params = doParse(target, beDecorProps);
         const {hookUp} = await import('./hookUp.js');
         for(const propKey in params){
             const parm = params[propKey];
