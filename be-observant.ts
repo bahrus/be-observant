@@ -16,12 +16,13 @@ export class BeObservantController {
     async finale(proxy: Element & BeObservantVirtualProps, target:Element){
         const eventHandlers = proxy.eventHandlers!;
         const {unsubscribe} = await import('trans-render/lib/subscribe.js');
-        for(const eh of eventHandlers){
-            eh.elementToObserve.removeEventListener(eh.on, eh.fn);
-            unsubscribe(eh.elementToObserve);
+        if(eventHandlers !== undefined){
+            for(const eh of eventHandlers){
+                eh.elementToObserve.removeEventListener(eh.on, eh.fn);
+                unsubscribe(eh.elementToObserve);
+            }
         }
         const subscriptions = proxy.subscriptions;
-        
         if(subscriptions !== undefined){
             for(const el of subscriptions){
                 unsubscribe(el);
