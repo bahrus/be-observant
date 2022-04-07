@@ -7,9 +7,15 @@ export {IObserve} from './types';
 
 export class BeObservantController {
     async intro(proxy: Element & BeObservantVirtualProps, target: Element, beDecorProps: BeDecoratedProps){
-        const val = getVal(target, beDecorProps.ifWantsToBe);
-        const attr = val[0]!;
-        const params = JSON.parse(attr);
+        let params: any;
+        if(beDecorProps.virtualPropsMap.has(target) !== undefined){
+            params = beDecorProps.virtualPropsMap.get(target);
+        }else{
+            const val = getVal(target, beDecorProps.ifWantsToBe);
+            const attr = val[0]!;
+            const params = JSON.parse(attr);
+            beDecorProps.virtualPropsMap.set(target, params);
+        }
         const {hookUp} = await import('./hookUp.js');
         for(const propKey in params){
             const parm = params[propKey];
