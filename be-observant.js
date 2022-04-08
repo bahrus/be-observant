@@ -1,11 +1,8 @@
 import { define } from 'be-decorated/be-decorated.js';
-import { getVal } from 'be-decorated/upgrade.js';
 import { register } from "be-hive/register.js";
 export class BeObservantController {
     async intro(proxy, target, beDecorProps) {
-        const val = getVal(target, beDecorProps.ifWantsToBe);
-        const attr = val[0];
-        const params = JSON.parse(attr);
+        const params = JSON.parse(proxy.getAttribute('is-' + beDecorProps.ifWantsToBe));
         const { hookUp } = await import('./hookUp.js');
         for (const propKey in params) {
             const parm = params[propKey];
