@@ -35,10 +35,10 @@
     "doc": "custom-elements-manifest analyze"
   },
   "dependencies": {
-    "trans-render": "0.0.521",
-    "xtal-element": "0.0.486",
-    "be-decorated": "0.0.101",
-    "be-hive": "0.0.38"
+    "trans-render": "0.0.524",
+    "xtal-element": "0.0.487",
+    "be-decorated": "0.0.106",
+    "be-hive": "0.0.39"
   },
   "devDependencies": {
     "xtal-test": "0.0.56",
