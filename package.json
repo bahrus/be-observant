@@ -35,16 +35,16 @@
     "doc": "custom-elements-manifest analyze"
   },
   "dependencies": {
-    "trans-render": "0.0.527",
-    "xtal-element": "0.0.490",
-    "be-decorated": "0.0.109",
-    "be-hive": "0.0.42"
+    "trans-render": "0.0.528",
+    "xtal-element": "0.0.491",
+    "be-decorated": "0.0.110",
+    "be-hive": "0.0.43"
   },
   "devDependencies": {
     "xtal-test": "0.0.56",
     "@skypack/package-check": "0.2.2",
     "@custom-elements-manifest/analyzer": "0.5.7",
-    "xtal-editor": "0.0.138",
+    "xtal-editor": "0.0.160",
     "xtal-shell": "0.0.25",
     "if-diff": "0.0.123"
   },
