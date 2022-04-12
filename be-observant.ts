@@ -8,10 +8,20 @@ export class BeObservantController {
     async intro(proxy: Element & BeObservantVirtualProps, target: Element, beDecorProps: BeDecoratedProps){
         const params = JSON.parse(proxy.getAttribute('is-' + beDecorProps.ifWantsToBe!)!);
         const {hookUp} = await import('./hookUp.js');
+        if(Array.isArray(params)){
+            for(const parm of params){
+                this.#doParams(parm, hookUp, proxy);
+            }
+        }else{
+            this.#doParams(params, hookUp, proxy);
+        }
+      
+    }
+    #doParams(params: any, hookUp: any, proxy: Element & BeObservantVirtualProps){
         for(const propKey in params){
             const parm = params[propKey];
             hookUp(parm, proxy, propKey);
-        }        
+        }  
     }
     async finale(proxy: Element & BeObservantVirtualProps, target:Element){
         const eventHandlers = proxy.eventHandlers!;

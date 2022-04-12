@@ -125,6 +125,8 @@ To make debugging easier, set JSON key "debug" to true.
 
 **NB IV:** The syntax, and the core code behind be-observant, is also used by a fair number of other web components in the may-it-be family of web components, so it is worthwhile expounding on exactly what that syntax means.
 
+**NB V:**  The be-observant attribute can also be an array, allowing for grouping of observers, and observing duplicate events or properties.
+
 ## Syntax in depth
 
 First we need to choose *what* to observe.  This is done via a number of alternative keys:
@@ -299,7 +301,7 @@ Just have the be-observant library described above, and it will, using almost co
 
 ```
 
-## Add filter
+## Add filter [TODO]
 
 If array, allow when to follow xtal notation:
 
@@ -307,6 +309,7 @@ where:{
     ifAllOf:[],
     ifNoneOf:[]
 }
+
 
 ## Pass to another proxy on the same element[TODO]
 

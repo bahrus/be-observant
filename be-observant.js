@@ -4,6 +4,16 @@ export class BeObservantController {
     async intro(proxy, target, beDecorProps) {
         const params = JSON.parse(proxy.getAttribute('is-' + beDecorProps.ifWantsToBe));
         const { hookUp } = await import('./hookUp.js');
+        if (Array.isArray(params)) {
+            for (const parm of params) {
+                this.#doParams(parm, hookUp, proxy);
+            }
+        }
+        else {
+            this.#doParams(params, hookUp, proxy);
+        }
+    }
+    #doParams(params, hookUp, proxy) {
         for (const propKey in params) {
             const parm = params[propKey];
             hookUp(parm, proxy, propKey);
