@@ -289,7 +289,7 @@ Just have the be-observant library described above, and it will, using almost co
 
 [Sample Markup](https://github.com/bahrus/be-observant/blob/baseline/demo/pluginTest.html).
 
-## Observe another proxy
+## Observe another proxy [TODO]
 
 "fromProxy" can be added, indicating that the data we want referenced or copied from the target element should actually come from a virtual property of the proxy.
 
