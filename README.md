@@ -61,9 +61,9 @@ What all these components share in common is they do not assume that there is a 
 
 For example, the preceding example does not yet assume King Arthur has fully established his kingdom -- it works regardless of a containing component managing state.
 
-The overlap between these four components, functionally.
+The overlap between these four components, functionally, is considerable.
 
-The general guidelines between these four elements:
+The general guidelines for choosing between these four elements:
 
 <table>
     <caption>General guidelines</caption>
