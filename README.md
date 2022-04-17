@@ -109,7 +109,7 @@ Another subtle difference in emphasis between pass-down and be-observant:
 
 Whereas the pass-down component may be more fitting for a 30,000 ft above the ground environment outside any web component (rather, as part of a "web composition" of Native DOM and custom DOM elements), be-observant is more tailored for markup within a web component.  
 
-In particular, with be-observant, the shortcuts we provide are based on the assumption that there is such a component container.
+In particular, with be-observant, the shortcuts we provide are based on the assumption that there is such a component container managing (some amount of) state.
 
 So, for example:  
 
@@ -178,7 +178,7 @@ First we need to choose *what* to observe.  This is done via a number of alterna
         </tr>
         <tr>
             <td>observeWinObj</td>
-            <td>Observe window object.  Example:  observeWinObj:appHistory</td>
+            <td>Observe window object.  Example:  observeWinObj:'navigation'</td>
         </tr>
         <tr>
             <td>observeHostProp</td>
