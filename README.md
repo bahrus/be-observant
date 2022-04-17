@@ -37,7 +37,7 @@ be-observant also provides an experimental declarative [trans-render plugin](htt
 <details>
     <summary>A personal statement</summary>
 
-Have I learned nothing, you may be asking?  "Don't you know props are passed down, events passed up?"  Yes, the approach be-observant follows has been declared an "anti-pattern" by many.  However, this anti-pattern is somewhat forced on us, when we use custom attributes, and when in addition we want to adhere to the principle of not attaching unrecognized properties on the element adorned by the attribute.  Yes, there is a [protocol](https://github.com/bahrus/be-observant/blob/baseline/getProxy.ts) for extracting the proxy corresponding to an attribute, which theoretically the host could use to pass props down.  But the intention of these custom attribute / decorators / behaviors is that they be usable within any framework, but especially within any web component library (without having to modify / extend the code), avoiding tight-coupling as much as possible.  Providing a specific protocol for "passing props down,"  and insisting on allowing no alternative would get in the way of achieving that goal.  
+Have I learned nothing, you may be asking?  "Don't you know props are passed down, events passed up?"  Yes, the approach be-observant follows has been declared an "anti-pattern" by many.  However, this anti-pattern is somewhat forced on us, when we use custom attributes, and when in addition we want to adhere to the principle of not attaching unrecognized properties on the element adorned by the attribute.  Yes, [there is an approach](https://github.com/bahrus/be-decorated#setting-properties-of-the-proxy-externally), which theoretically the host could use to pass props down.  But the intention of these custom attribute / decorators / behaviors is that they be usable within any framework, but especially within any web component library (without having to modify / extend the code), avoiding tight-coupling as much as possible.  Requiring this approach for "passing props down,"  and insisting on allowing no alternative would get in the way of achieving that goal.  
 
 Anyway, be-observant encourages uni-directional data flow, which to me is the more important goal, if these goals are designed to make reasoning about the code easier. (Of course what makes things easier to reason about is quite subjective).  
 
@@ -47,15 +47,23 @@ An alternative approach might be to use the "context api" to develop a connectio
 
 Nevertheless, that approach will be considered once the api is stabilized, especially if there is a significant performance benefit on the context api's side.
 
-Just as custom elements becoming activated relies on css features of the markup (registered tag names), here we also rely on CSS recognizing the attribute, without permission from any host component (though the host has to "opt-in" in a rather light-touch way if using Shadow DOM). 
+Just as custom elements becoming activated relies on css features of the markup (registered tag names), here we also rely on CSS recognizing the attribute, without permission from any host component (though the host has to "opt-in" in a rather light-touch way if using Shadow DOM - by plotting a be-hive element somewhere inside the Shadow DOM realm). 
 
 </details>
 
 ## Alternatives
 
-be-observant shares similar syntax / concepts to [be-noticed](https://github.com/bahrus/be-noticed) and to [pass-down](https://github.com/bahrus/pass-down).
+be-observant shares similar syntax / concepts to [be-noticed](https://github.com/bahrus/be-noticed) and to [pass-down](https://github.com/bahrus/pass-down) and [pass-up](https://github.com/bahrus/pass-down).
 
-However, there are some subtle differences in spirit between what these three components are trying to achieve.  In many cases, more than one of these components can solve the same problem, so it becomes a matter of "taste" which one solves it better.  The general guidelines between these three elements:
+However, there are some subtle differences in spirit between what these three components are trying to achieve.  In many cases, more than one of these components can solve the same problem, so it becomes a matter of "taste" which one solves it better. 
+
+What all these components share in common is they do not assume that there is a host component managing state.
+
+For example, the preceding example does not yet assume King Arthur has fully established his kingdom -- it works regardless of a containing component managing state.
+
+The overlap between these four components, functionally.
+
+The general guidelines between these three elements:
 
 <table>
     <caption>General guidelines</caption>
@@ -70,7 +78,7 @@ However, there are some subtle differences in spirit between what these three co
         <tr>
             <td>be-observant</td>
             <td>Pull down values from previously defined elements as they change, to the element be-observant adorns.</td>
-            <td>Can't attach to non-viewable elements</td>
+            <td>Can't attach to non-viewable elements.</td>
         </tr>
         <tr>
             <td>be-noticed</td>
@@ -85,17 +93,23 @@ However, there are some subtle differences in spirit between what these three co
         <tr>
             <td>pass-down</td>
             <td>Acts as a mediator between an observed element and one or more downstream elements (usually).</td>
-            <td>Because it becomes active regardless of visibility, doesn't provide built-in "lazy loading" support.</td> 
+            <td>Because it becomes active regardless of visibility, doesn't provide built-in "lazy loading" support.</td>
+        </tr>
+        <tr>
+            <td>pass-up</td>
+            <td>Push-up values up the DOM hierarchy</td>
+            <td>Because it becomes active regardless of visibility, doesn't provide built-in "lazy loading" support.</td>
+        </tr>
     </tbody>
 </table>
 
 ## Assumptions, shortcuts
 
-Whereas the pass-down component may be more fitting for a 30,000 ft above the ground environment outside any web component (rather, as part of a "web composition" of Native DOM and custom DOM elements), be-observant is more tailored for markup within a web component.  The overlap between them, functionally, is considerable though.
+Another subtle difference in emphasis between pass-down and be-observant: 
 
-For example, the preceding example does not yet assume King Arthur has fully established his kingdom -- it works regardless of a containing component managing state.
+Whereas the pass-down component may be more fitting for a 30,000 ft above the ground environment outside any web component (rather, as part of a "web composition" of Native DOM and custom DOM elements), be-observant is more tailored for markup within a web component.  
 
-But with be-observant, the shortcuts we provide are based on the assumption that there is such a component container.
+In particular, with be-observant, the shortcuts we provide are based on the assumption that there is such a component container.
 
 So, for example:  
 
