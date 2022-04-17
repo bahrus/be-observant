@@ -63,7 +63,7 @@ For example, the preceding example does not yet assume King Arthur has fully est
 
 The overlap between these four components, functionally.
 
-The general guidelines between these three elements:
+The general guidelines between these four elements:
 
 <table>
     <caption>General guidelines</caption>
