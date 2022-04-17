@@ -173,7 +173,7 @@ First we need to choose *what* to observe.  This is done via a number of alterna
             <td>Observe self</td>
         </tr>
         <tr>
-            <td>observeInward [TODO]</td>
+            <td>observeInward</td>
             <td>Use the native function call "querySelector" to find the first matching element to observe within the adorned element.</td>
         </tr>
         <tr>
