@@ -2,7 +2,7 @@ import {IObserve, BeObservantVirtualProps, HookUpInfo} from './types';
 
 
 export async function addListener(elementToObserve: Element, observeParams: IObserve, propKey: string, self: Element & BeObservantVirtualProps, noAwait = false): Promise<HookUpInfo>{
-    const {on, vft, valFromTarget, valFromEvent, vfe, skipInit, onSet, fromProxy, nudge, observeHostProp} = observeParams;
+    const {on, vft, valFromTarget, valFromEvent, vfe, skipInit, onSet, fromProxy, nudge, observeHostProp, eventListenerOptions} = observeParams;
     if(noAwait && fromProxy) return {
         success: false,
     };
@@ -30,7 +30,7 @@ export async function addListener(elementToObserve: Element, observeParams: IObs
             }
             setProp(valFT, valFE, propKey, elementToObserve, observeParams, self, e);
         }
-        elementToObserve.addEventListener(onz, fn);
+        elementToObserve.addEventListener(onz, fn, eventListenerOptions);
         if((<any>self).debug){
             console.log({onz, elementToObserve, fn});
         }
