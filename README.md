@@ -1,6 +1,6 @@
 # be-observant
 
-[![Actions Status](https://github.com/bahrus/be-observant/workflows/CI/badge.svg)](https://github.com/bahrus/be-observant/actions?query=workflow%3ACI)
+[![Playwright Tests](https://github.com/bahrus/be-observant/actions/workflows/CI.yml/badge.svg?branch=baseline)](https://github.com/bahrus/be-observant/actions/workflows/CI.yml)
 
 <a href="https://nodei.co/npm/be-observant/"><img src="https://nodei.co/npm/be-observant.png"></a>
 
