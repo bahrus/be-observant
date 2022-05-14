@@ -67,8 +67,6 @@ export interface IObserve<Props = any, Actions = Props>{
     /** If val is false, set property to this value. */
     falseVal?: any,
 
-    fromProxy?: string,
-
     debug?: boolean,
 
     fire?: {

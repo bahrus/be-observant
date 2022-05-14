@@ -2,7 +2,7 @@ import {IObserve} from './types';
 declare function structuredClone(val: any): any;
 
 export async function setProp(valFT: string | undefined, valFE: string | undefined, propKey: string, observedElement: Element, 
-    {parseValAs, clone, as, trueVal, falseVal, fromProxy, fire, translate}: IObserve, self: Element, event?: Event){
+    {parseValAs, clone, as, trueVal, falseVal, fire, translate}: IObserve, self: Element, event?: Event){
     if(event === undefined && valFE !== undefined) return;
     const valPath = event !== undefined && valFE ? valFE : valFT;
     if(valPath === undefined) throw 'NI';//not implemented;
@@ -11,21 +11,11 @@ export async function setProp(valFT: string | undefined, valFE: string | undefin
     let src: any = valFE !== undefined ? ( event ? event : observedElement) : observedElement;
     let val: any;
     const {getProp} = await import('trans-render/lib/getProp.js');
-    if(fromProxy === undefined){
-        val = getProp(src, split);
-        if((<any>self).debug){
-            console.log({val, split, observedElement});
-        }
-    }else{
-        const {getProxy} = await import('./getProxy.js');
-        const proxy = await getProxy(observedElement, fromProxy);
-        if(proxy !== undefined) val = getProp(proxy, split);
-        if((<any>self).debug){
-            console.log({
-                val, split, proxy, fromProxy, observedElement
-            });
-        }
+    val = getProp(src, split);
+    if((<any>self).debug){
+        console.log({val, split, observedElement});
     }
+   
     if(val === undefined) return;
     if(clone) val = structuredClone(val);
     if(parseValAs !== undefined){

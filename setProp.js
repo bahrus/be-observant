@@ -1,4 +1,4 @@
-export async function setProp(valFT, valFE, propKey, observedElement, { parseValAs, clone, as, trueVal, falseVal, fromProxy, fire, translate }, self, event) {
+export async function setProp(valFT, valFE, propKey, observedElement, { parseValAs, clone, as, trueVal, falseVal, fire, translate }, self, event) {
     if (event === undefined && valFE !== undefined)
         return;
     const valPath = event !== undefined && valFE ? valFE : valFT;
@@ -9,22 +9,9 @@ export async function setProp(valFT, valFE, propKey, observedElement, { parseVal
     let src = valFE !== undefined ? (event ? event : observedElement) : observedElement;
     let val;
     const { getProp } = await import('trans-render/lib/getProp.js');
-    if (fromProxy === undefined) {
-        val = getProp(src, split);
-        if (self.debug) {
-            console.log({ val, split, observedElement });
-        }
-    }
-    else {
-        const { getProxy } = await import('./getProxy.js');
-        const proxy = await getProxy(observedElement, fromProxy);
-        if (proxy !== undefined)
-            val = getProp(proxy, split);
-        if (self.debug) {
-            console.log({
-                val, split, proxy, fromProxy, observedElement
-            });
-        }
+    val = getProp(src, split);
+    if (self.debug) {
+        console.log({ val, split, observedElement });
     }
     if (val === undefined)
         return;
