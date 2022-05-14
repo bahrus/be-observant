@@ -37,8 +37,8 @@
   "dependencies": {
     "trans-render": "0.0.536",
     "xtal-element": "0.0.493",
-    "be-decorated": "0.0.113",
-    "be-hive": "0.0.45"
+    "be-decorated": "0.0.114",
+    "be-hive": "0.0.46"
   },
   "devDependencies": {
     "@playwright/test": "1.21.1",
