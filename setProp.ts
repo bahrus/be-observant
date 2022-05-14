@@ -56,6 +56,7 @@ export async function setProp(valFT: string | undefined, valFE: string | undefin
     
         }
     }else{
+        //TODO optimize to minimize penalty for props with no dot separators.
         const {setProp} = await import('trans-render/lib/setProp.js');
         setProp(self, propKey, val);
     }
