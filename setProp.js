@@ -56,9 +56,13 @@ export async function setProp(valFT, valFE, propKey, observedElement, { parseVal
         }
     }
     else {
-        //TODO optimize to minimize penalty for props with no dot separators.
-        const { setProp } = await import('trans-render/lib/setProp.js');
-        setProp(self, propKey, val);
+        if (propKey[0] === '.') {
+            const { setProp } = await import('trans-render/lib/setProp.js');
+            setProp(self, propKey, val);
+        }
+        else {
+            self[propKey] = val;
+        }
     }
     if (fire !== undefined) {
         self.dispatchEvent(new CustomEvent(fire.type, fire.init));
