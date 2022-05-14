@@ -15,15 +15,15 @@ be-observant also provides an experimental declarative [trans-render plugin](htt
 
 ```html
 <ways-of-science>
-    <largest-scale -lhs>
+    <largest-scale>
         <woman-with-carrot-attached-to-nose></woman-with-carrot-attached-to-nose>
     </largest-scale>
-    <largest-scale -rhs>
+    <largest-scale>
         <a-duck></a-duck>
     </largest-scale>
     <if-diff iff not-equals set-attr=hidden be-observant='{
-        "lhs": {"observe": "[-lhs]", "on":"value-changed", "valueFromTarget": "value"}, 
-        "rhs": {"observe": "[-rhs]", "on":"value-changed", "valueFromTarget": "value"} 
+        "lhs": {"observe": "largest-scale:has(> woman-with-carrot-attached-to-nose", "on":"value-changed", "valueFromTarget": "value"}, 
+        "rhs": {"observe": "largest-scale:has(> a-duck)", "on":"value-changed", "valueFromTarget": "value"} 
     }'>
         <template>
             <div hidden>A witch!</div>
@@ -37,7 +37,7 @@ be-observant also provides an experimental declarative [trans-render plugin](htt
 <details>
     <summary>A personal statement</summary>
 
-Have I learned nothing, you may be asking?  "Don't you know props are passed down, events passed up?"  Yes, the approach be-observant follows has been declared an "anti-pattern" by many.  However, this anti-pattern is somewhat forced on us, when we use custom attributes, and when in addition we want to adhere to the principle of not attaching unrecognized properties on the element adorned by the attribute.  Yes, [there is an approach](https://github.com/bahrus/be-decorated#setting-properties-of-the-proxy-externally), which theoretically the host could use to pass props down.  But the intention of these custom attribute / decorators / behaviors is that they be usable within any framework, but especially within any web component library (without having to modify / extend the code), avoiding tight-coupling as much as possible.  Requiring this approach for "passing props down,"  and insisting on allowing no alternative would get in the way of achieving that goal.  
+Have I learned nothing, you may be asking?  "Don't you know props are passed down, events passed up?"  Yes, the approach be-observant follows has been declared an "anti-pattern" by many.  However, this anti-pattern is somewhat forced on us, when we use custom attributes, and when in addition we want to adhere to the principle of not attaching unrecognized properties on the element adorned by the attribute.  Yes, [there is an approach](https://github.com/bahrus/be-decorated#setting-properties-of-the-proxy-externally), which theoretically the host could use to pass props down.  But the intention of these custom attribute / decorators / behaviors is that they be usable within any framework, but especially within any web component library (without having to modify / extend the code), avoiding tight-coupling as much as possible.  Requiring this approach for "passing props down,"  and insisting on allowing no alternative, would get in the way of achieving that goal.  
 
 Anyway, be-observant encourages uni-directional data flow, which to me is the more important goal, if these goals are designed to make reasoning about the code easier. (Of course what makes things easier to reason about is quite subjective).  
 
@@ -47,7 +47,7 @@ An alternative approach might be to use the "context api" to develop a connectio
 
 Nevertheless, that approach will be considered once the api is stabilized, especially if there is a significant performance benefit on the context api's side.
 
-Just as custom elements becoming activated relies on css features of the markup (registered tag names), here we also rely on CSS recognizing the attribute, without permission from any host component (though the host has to "opt-in" in a rather light-touch way if using Shadow DOM - by plotting a be-hive element somewhere inside the Shadow DOM realm). 
+Just as custom elements becoming activated relies on css features of the markup (registered tag names), here we also rely on CSS recognizing the attribute, without permission from any host component (though the host has to "opt-in" in a rather light-touch way if using Shadow DOM - by plopping a be-hive element somewhere inside the Shadow DOM realm). 
 
 </details>
 
@@ -129,17 +129,14 @@ To specify a different source to observe other than the host, there are numerous
 
 ## NB's
 
-**NB I:** Editing large JSON attributes like this is quite error-prone, if you are like me.  The [json-in-html](https://marketplace.visualstudio.com/items?itemName=andersonbruceb.json-in-html) VSCode extension can help with this issue.  That extension is compatible with [pressing "." on the github page](https://github.dev/bahrus/be-observant) and with the [web version of vs-code](https://vscode.dev/). 
+**NB I:** Editing large JSON attributes like this is quite error-prone, if you are like me.  The [json-in-html](https://marketplace.visualstudio.com/items?itemName=andersonbruceb.json-in-html) VSCode extension can help with this issue.  That extension is compatible with [pressing "." on the github page](https://github.dev/bahrus/be-observant) and with the [web version of vs-code](https://vscode.dev/). Am even better editing experience can be had by using *.mts/*.mjs files to define the html, with the help of a transpiler such as the [may-it-be[(https://github.com/bahrus/may-it-be)] transpiler.
 
-**NB II:** Whilst the first example involves more tags, and may often impose a slightly higher performance penalty, it is (subjectively) a bit more pleasant to type, and to reason about, add comments to, and to debug.  Perhaps starting with the former approach, and then moving to this approach when it is close to being ready for production may be the way to reconcile this.  Other approaches could be to transform one into the other during build time, or sometime during template processing (pre- or post- cloning).
 
-To make debugging easier, set JSON key "debug" to true.
+**NB II:**  The attribute name "be-observant" is configurable.  "data-be-observant" also works, with the default configuration.  The only limitation as far as naming is the attribute must start with be-* (which also guarantees data-be-* as well).
 
-**NB III:**  The attribute name "be-observant" is configurable.  "data-be-observant" also works, with the default configuration.  The only limitation as far as naming is the attribute must start with be-* (which also guarentees data-be-* as well).
+**NB III:** The syntax, and the core code behind be-observant, is also used by a fair number of other web components in the may-it-be family of web components, so it is worthwhile expounding on / understanding exactly what that syntax means, if we wish to be fluent in be-speak.
 
-**NB IV:** The syntax, and the core code behind be-observant, is also used by a fair number of other web components in the may-it-be family of web components, so it is worthwhile expounding on exactly what that syntax means.
-
-**NB V:**  The be-observant attribute can also be an array, allowing for grouping of observers, and observing duplicate events or properties.
+**NB IV:**  The be-observant attribute can also be an array, allowing for grouping of observers, and observing duplicate events or properties.
 
 ## Syntax in depth
 
