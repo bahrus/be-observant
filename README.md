@@ -291,17 +291,14 @@ Just have the be-observant library described above, and it will, using almost co
 
 ## Add filter [TODO]
 
-If array, allow when to follow xtal notation:
+If the property we are observing resolves to an array, allow filtering the array based on some conditions (like mongodb query).
 
 where:{
     ifAllOf:[],
-    ifNoneOf:[]
+    ifNoneOf:[],
+    ifEquals:[],
 }
 
-
-## Pass to another proxy on the same element[TODO]
-
-use to-proxy
 
 
 
