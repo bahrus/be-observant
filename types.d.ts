@@ -81,6 +81,8 @@ export interface IObserve<Props = any, Actions = Props>{
     nudge?: boolean;
 
     eventListenerOptions?: boolean | AddEventListenerOptions,
+
+    capture?: boolean,
 }
 
 export type InterpolatingObserveParams<TString = string, TProps = any, TActions = TProps> = string | [TString] | IObserve | InterpolatingObserveParams<TString>[];

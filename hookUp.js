@@ -1,5 +1,5 @@
 export async function addListener(elementToObserve, observeParams, propKey, self, noAwait = false) {
-    const { on, vft, valFromTarget, valFromEvent, vfe, skipInit, onSet, fromProxy, nudge, observeHostProp, eventListenerOptions } = observeParams;
+    const { on, vft, valFromTarget, valFromEvent, vfe, skipInit, onSet, fromProxy, nudge, observeHostProp, eventListenerOptions, capture } = observeParams;
     if (noAwait && fromProxy)
         return {
             success: false,
@@ -30,7 +30,7 @@ export async function addListener(elementToObserve, observeParams, propKey, self
             }
             setProp(valFT, valFE, propKey, elementToObserve, observeParams, self, e);
         };
-        elementToObserve.addEventListener(onz, fn, eventListenerOptions);
+        elementToObserve.addEventListener(onz, fn, eventListenerOptions || capture);
         if (self.debug) {
             console.log({ onz, elementToObserve, fn });
         }
