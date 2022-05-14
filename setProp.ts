@@ -56,7 +56,8 @@ export async function setProp(valFT: string | undefined, valFE: string | undefin
     
         }
     }else{
-        (<any>self)[propKey] = val;
+        const {setProp} = await import('trans-render/lib/setProp.js');
+        setProp(self, propKey, val);
     }
     if(fire !== undefined){
         self.dispatchEvent(new CustomEvent(fire.type, fire.init));

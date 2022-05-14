@@ -56,7 +56,8 @@ export async function setProp(valFT, valFE, propKey, observedElement, { parseVal
         }
     }
     else {
-        self[propKey] = val;
+        const { setProp } = await import('trans-render/lib/setProp.js');
+        setProp(self, propKey, val);
     }
     if (fire !== undefined) {
         self.dispatchEvent(new CustomEvent(fire.type, fire.init));
