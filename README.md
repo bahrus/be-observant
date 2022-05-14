@@ -138,6 +138,8 @@ To specify a different source to observe other than the host, there are numerous
 
 **NB IV:**  The be-observant attribute can also be an array, allowing for grouping of observers, and observing duplicate events or properties.
 
+**NB V:**  If a property key (lhs) starts with ^, then the previous key that didn't start with a ^ is substituted. This provides for a more compact way to avoid use of arrays.
+
 ## Syntax in depth
 
 First we need to choose *what* to observe.  This is done via a number of alternative keys:
@@ -286,31 +288,6 @@ Just have the be-observant library described above, and it will, using almost co
 
 [Sample Markup](https://github.com/bahrus/be-observant/blob/baseline/demo/pluginTest.html).
 
-## Observe another proxy [TODO]
-
-"fromProxy" can be added, indicating that the data we want referenced or copied from the target element should actually come from a virtual property of the proxy.
-
-```html
-<list-sorter  upgrade=* if-wants-to-be=sorted with-binding></list-sorter>
-
-...
-
-<button be-toggled></button>
-
-...
-
-<ul be-sorted='{"nodeSelectorToSortOn":"span"}' be-sorted-with-binding='{
-    "direction": {"observe": "button", "fromProxy":"toggled", "vft": "on", "valIfTrue": "asc", "valIfFalse": "desc", "to-proxy": "sorted"}
-}'>
-    <li>
-        <span>Zorse</span>
-    </li>
-    <li>
-        <span>Aardvark</span>
-    </li>
-</ul>
-
-```
 
 ## Add filter [TODO]
 

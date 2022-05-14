@@ -14,9 +14,14 @@ export class BeObservantController {
         }
     }
     #doParams(params, hookUp, proxy) {
+        let lastKey = '';
         for (const propKey in params) {
             const parm = params[propKey];
-            hookUp(parm, proxy, propKey);
+            const startsWithHat = propKey[0] === '^';
+            const key = startsWithHat ? lastKey : propKey;
+            hookUp(parm, proxy, key);
+            if (!startsWithHat)
+                lastKey = propKey;
         }
     }
     async finale(proxy, target) {
