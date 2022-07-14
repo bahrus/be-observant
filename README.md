@@ -138,7 +138,7 @@ To specify a different source to observe other than the host, there are numerous
 
 > **Note**:  The be-observant attribute can also be an array, allowing for grouping of observers, and observing duplicate events or properties.
 
-> **NB**:  If a property key (lhs) starts with ^, then the previous key that didn't start with a ^ is substituted. This provides for a more compact way to avoid use of arrays.
+> **Note**:  If a property key (lhs) starts with ^, then the previous key that didn't start with a ^ is substituted. This provides for a more compact way to avoid use of arrays.
 
 ## Syntax in depth
 
