@@ -239,6 +239,11 @@ Next we specify what to pass from the element we are observing and possibly from
             <td></td>
         </tr>
         <tr>
+            <td>vfe</td>
+            <td>Abbrev. for val from event</td>
+            <td></td>
+        </tr>
+        <tr>
             <td>fromProxy</td>
             <td>Specify the name of a proxy ("ifWantsToBe") from another may-it-be decorator</td>
             <td></td>
