@@ -127,7 +127,7 @@ The host is obtained by calling the native function el.getRootNode().  If that i
 
 To specify a different source to observe other than the host, there are numerous other options, which are catalogued below.
 
-## NB's
+> **Notes**
 
 **NB I:** Editing large JSON attributes like this is quite error-prone, if you are like me.  The [json-in-html](https://marketplace.visualstudio.com/items?itemName=andersonbruceb.json-in-html) VSCode extension can help with this issue.  That extension is compatible with [pressing "." on the github page](https://github.dev/bahrus/be-observant) and with the [web version of vs-code](https://vscode.dev/). Am even better editing experience can be had by using *.mts/*.mjs files to define the html, with the help of a transpiler such as the [may-it-be[(https://github.com/bahrus/may-it-be)] transpiler.
 
