@@ -166,7 +166,11 @@ First we need to choose *what* to observe.  This is done via a number of alterna
         <tr>
             <td>observeClosestOrHost</td>
             <td>Use the native function call "closest".  If that's null, do el.getRootNode()</td>
-        </td>
+        </tr>
+        <tr>
+            <td>ocoho</td>
+            <td>Abbrev. for observeClosestOrHost</td>
+        </tr>
         <tr>
             <td>observeSelf</td>
             <td>Observe self</td>
