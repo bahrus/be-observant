@@ -127,18 +127,18 @@ The host is obtained by calling the native function el.getRootNode().  If that i
 
 To specify a different source to observe other than the host, there are numerous other options, which are catalogued below.
 
-##> **Notes**
+## Notes
 
-**NB I:** Editing large JSON attributes like this is quite error-prone, if you are like me.  The [json-in-html](https://marketplace.visualstudio.com/items?itemName=andersonbruceb.json-in-html) VSCode extension can help with this issue.  That extension is compatible with [pressing "." on the github page](https://github.dev/bahrus/be-observant) and with the [web version of vs-code](https://vscode.dev/). Am even better editing experience can be had by using *.mts/*.mjs files to define the html, with the help of a transpiler such as the [may-it-be[(https://github.com/bahrus/may-it-be)] transpiler.
+> **Note I** Editing large JSON attributes like this is quite error-prone, if you are like me.  The [json-in-html](https://marketplace.visualstudio.com/items?itemName=andersonbruceb.json-in-html) VSCode extension can help with this issue.  That extension is compatible with [pressing "." on the github page](https://github.dev/bahrus/be-observant) and with the [web version of vs-code](https://vscode.dev/). An even better editing experience can be had by using *.mts/*.mjs files to define the html, with the help of a transpiler such as the [may-it-be](https://github.com/bahrus/may-it-be) transpiler.
 
 
-**NB II:**  The attribute name "be-observant" is configurable.  "data-be-observant" also works, with the default configuration.  The only limitation as far as naming is the attribute must start with be-* (which also guarantees data-be-* as well).
+> **Note II**   The attribute name "be-observant" is configurable.  "data-be-observant" also works, with the default configuration.  The only limitation as far as naming is the attribute must start with be-* (which also guarantees data-be-* as well).
 
-**NB III:** The syntax, and the core code behind be-observant, is also used by a fair number of other web components in the may-it-be family of web components, so it is worthwhile expounding on / understanding exactly what that syntax means, if we wish to be fluent in be-speak.
+> **Note III** The syntax, and the core code behind be-observant, is also used by a fair number of other web components in the may-it-be family of web components, so it is worthwhile expounding on / understanding exactly what that syntax means, if we wish to be fluent in be-speak.
 
-**NB IV:**  The be-observant attribute can also be an array, allowing for grouping of observers, and observing duplicate events or properties.
+> **Note IV**  The be-observant attribute can also be an array, allowing for grouping of observers, and observing duplicate events or properties.
 
-**NB V:**  If a property key (lhs) starts with ^, then the previous key that didn't start with a ^ is substituted. This provides for a more compact way to avoid use of arrays.
+> **NB V**  If a property key (lhs) starts with ^, then the previous key that didn't start with a ^ is substituted. This provides for a more compact way to avoid use of arrays.
 
 ## Syntax in depth
 
