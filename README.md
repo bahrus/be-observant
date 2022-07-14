@@ -8,7 +8,7 @@ be-observant is a key member of the [may-it-be](https://github.com/bahrus/may-it
 
 be-observant is also a trend-setting member of the family -- many of the other may-it-be components piggy-back both on the code as well as the syntax for adding "environment-aware" bindings to their configuration properties.
 
-be-observant also provides an experimental declarative [trans-render plugin](https://github.com/bahrus/trans-render#declarative-trans-render-syntax-via-plugins), so the binding can be done while instantiating a template, rather than after the DOM has been added to the live DOM tree.
+be-observant also provides an experimental declarative [trans-render plugin](https://github.com/bahrus/be-decorated#isomorphic-logic----baton-passing), so the binding can be done while instantiating a template, rather than after the DOM has been added to the live DOM tree.
 
 
 ## Sample syntax
@@ -77,8 +77,23 @@ The general guidelines for choosing between these four elements:
     <tbody>
         <tr>
             <td>be-observant</td>
-            <td>Pull down values from previously defined elements as they change, to the element be-observant adorns.</td>
-            <td>Can't attach to non-viewable elements.</td>
+            <td>Pulls down values from previously defined elements as they change, to the element be-observant adorns.</td>
+            <td>
+                <ul>
+                    <li>Can't attach to non-viewable elements.</li>
+                    <li>Can only pass values to a single (adorned) element.</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td>pass-down</td>
+            <td>Acts as a mediator between an observed element and one or more downstream elements (usually).</td>
+            <td>
+                <ul>
+                    <li>Because it becomes active regardless of visibility, doesn't provide built-in "lazy loading" support.</li>
+                    <li>Some HTML markup syntax isn't amenable to custom or unknown elements being placed in the mix (for example, tables are quite finicky about allowed child elements)</li>
+                </ul>
+            </td>
         </tr>
         <tr>
             <td>be-noticed</td>
@@ -91,14 +106,15 @@ The general guidelines for choosing between these four elements:
             </td>
         </tr>
         <tr>
-            <td>pass-down</td>
-            <td>Acts as a mediator between an observed element and one or more downstream elements (usually).</td>
-            <td>Because it becomes active regardless of visibility, doesn't provide built-in "lazy loading" support.</td>
-        </tr>
-        <tr>
             <td>pass-up</td>
             <td>Push-up values up the DOM hierarchy</td>
-            <td>Because it becomes active regardless of visibility, doesn't provide built-in "lazy loading" support.</td>
+            <td>
+                <ul>
+                    <li>Because it becomes active regardless of visibility, doesn't provide built-in "lazy loading" support.</li>
+                     <li>Some HTML markup syntax isn't amenable to custom or unknown elements being placed in the mix (for example, tables are quite finicky about allowed child elements)</li>
+                     <li>Can only pass values to a single element.</li>
+                </ul>
+            </td>
         </tr>
     </tbody>
 </table>
