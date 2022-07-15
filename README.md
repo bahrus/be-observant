@@ -101,7 +101,7 @@ The general guidelines for choosing between these four elements:
             <td>
                 <ul>
                     <li>Can't attach to non-viewable elements</li>
-                    <li>Can only pass values to a single element.</li>
+                    <li>Can only pass values to one element per event subscription.</li>
                 </ul>
             </td>
         </tr>
