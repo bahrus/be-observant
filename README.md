@@ -271,6 +271,24 @@ Next we specify what to pass from the element we are observing and possibly from
     </tbody>
 </table>
 
+## NB
+
+<details>
+    <summary>Come clean with me, you've created some declarative loopholes you could drive a truck through.</summary>
+
+Good catch...
+
+> Doesn't supporting "." notation in the object path allow for unexpected side effects when accessing getters from a custom element?
+
+First, this isn't a risk if the data source is JSON, but it is a bit of a risk here.  However, I think it's considered a good practice not to allow getters to have side effects, and this component is assuming it is running in an environment where are the neighboring have been vetted in some way for following good practices.
+
+>  What about allowing the invocation of methods via the | separator.
+
+Now you got me.  So to support this concern, we provide an optional setting:  allowedMethods -- an array of strings that will only permit methods from that list to be invoked.  This could be set in bulk during a build process, and/or highlighted in red with the help of an IDE tool like a (de)linter. [TODO]
+
+
+</details>
+
 ## Big time short cuts.
 
 When working with be-observant, we will likely encounter the following patterns rather frequently:
