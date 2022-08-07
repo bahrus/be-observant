@@ -92,6 +92,7 @@ The general guidelines for choosing between these four elements:
                 <ul>
                     <li>Because it becomes active regardless of visibility, doesn't provide built-in "lazy loading" support.</li>
                     <li>Some HTML markup syntax isn't amenable to custom or unknown elements being placed in the mix (for example, tables are quite finicky about allowed child elements)</li>
+                    <li>Perfect match scenario:  A markup centric, declarative(ish) web component, where the "brains" of the web component is not in the main web component itself, but in a reusable "ViewModel" component.</li>
                 </ul>
             </td>
         </tr>
