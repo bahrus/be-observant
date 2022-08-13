@@ -4,6 +4,10 @@
 
 <a href="https://nodei.co/npm/be-observant/"><img src="https://nodei.co/npm/be-observant.png"></a>
 
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/be-observant?style=for-the-badge)](https://bundlephobia.com/result?p=be-observant)
+
+<img src="http://img.badgesize.io/https://cdn.jsdelivr.net/npm/be-observant?compression=gzip">
+
 be-observant is a key member of the [may-it-be](https://github.com/bahrus/may-it-be) family of web components.  It allows one DOM element to observe another element,  where that element typically comes "before it".  It is much like how Javascript closures can access variables defined outside the closure, as long as it came before.
 
 be-observant is also a trend-setting member of the family -- many of the other may-it-be components piggy-back both on the code as well as the syntax for adding "environment-aware" bindings to their configuration properties.
