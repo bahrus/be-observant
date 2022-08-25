@@ -61,9 +61,9 @@ define<BeObservantProps & BeDecoratedProps<BeObservantProps, BeObservantActions>
         propDefaults:{
             upgrade,
             ifWantsToBe,
+            intro: 'intro',
             noParse: true,
             forceVisible: ['template', 'script', 'style'],
-            intro: 'intro',
             finale: 'finale',
             virtualProps: ['eventHandlers', 'subscriptions']
         }
