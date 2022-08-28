@@ -1,25 +1,26 @@
 import { define } from 'be-decorated/be-decorated.js';
 import { register } from "be-hive/register.js";
-export class BeObservantController {
+export class BeObservantController extends EventTarget {
     async intro(proxy, target, beDecorProps) {
         const params = JSON.parse(proxy.getAttribute('is-' + beDecorProps.ifWantsToBe));
         const { hookUp } = await import('./hookUp.js');
         if (Array.isArray(params)) {
             for (const parm of params) {
-                this.#doParams(parm, hookUp, proxy);
+                await this.#doParams(parm, hookUp, proxy);
             }
         }
         else {
-            this.#doParams(params, hookUp, proxy);
+            await this.#doParams(params, hookUp, proxy);
         }
+        proxy.resolved = true;
     }
-    #doParams(params, hookUp, proxy) {
+    async #doParams(params, hookUp, proxy) {
         let lastKey = '';
         for (const propKey in params) {
             const parm = params[propKey];
             const startsWithHat = propKey[0] === '^';
             const key = startsWithHat ? lastKey : propKey;
-            hookUp(parm, proxy, key);
+            await hookUp(parm, proxy, key);
             if (!startsWithHat)
                 lastKey = propKey;
         }

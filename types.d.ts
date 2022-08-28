@@ -1,4 +1,4 @@
-import {BeDecoratedProps, EventHandler, MinimalController} from 'be-decorated/types';
+import {BeDecoratedProps, EventHandler, MinimalController, MinimalProxy} from 'be-decorated/types';
 
 export interface IObserve<Props = any, Actions = Props>{
     /**
@@ -87,7 +87,7 @@ export type InterpolatingObserveParams<TString = string, TProps = any, TActions 
 
 export type IObserveMap<Self = any, Props = any, Actions = Props> = {[key in keyof Self]: InterpolatingObserveParams<String, Props, Actions>};
 
-export interface BeObservantVirtualProps extends MinimalController{
+export interface BeObservantVirtualProps extends MinimalProxy{
     eventHandlers?: EventHandler[];
     subscriptions?: Element[];
 }
