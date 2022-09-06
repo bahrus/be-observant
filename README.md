@@ -185,19 +185,15 @@ First we need to choose *what* to observe.  This is done via a number of alterna
             <td>Use the native function call "closest" to find the element to observe.</td>
         </tr>
         <tr>
-            <td>observeClosestOrHost</td>
+            <td>observeClosestOrHost (abbrev ocoho)</td>
             <td>Use the native function call "closest".  If that's null, do el.getRootNode()</td>
         </tr>
         <tr>
-            <td>ocoho</td>
-            <td>Abbrev. for observeClosestOrHost</td>
-        </tr>
-        <tr>
-            <td>observeSelf</td>
+            <td>observeSelf (abbrev os)</td>
             <td>Observe self</td>
         </tr>
         <tr>
-            <td>observeInward</td>
+            <td>observeInward (abbrev oi)</td>
             <td>Use the native function call "querySelector" to find the first matching element to observe within the adorned element.</td>
         </tr>
         <tr>
@@ -205,17 +201,18 @@ First we need to choose *what* to observe.  This is done via a number of alterna
             <td>Do a querySelector from the root host</td>
         </tr>
         <tr>
-            <td>observeWinObj</td>
+            <td>observeWinObj (abbrev owo)</td>
             <td>Observe window object.  Example:  observeWinObj:'navigation'</td>
         </tr>
         <tr>
-            <td>observeHostProp</td>
+            <td>observeHostProp (abbrev ohop)</td>
             <td>Find the nearest host parent that has the property defined, and observe it for property changes with the name provided by observeHostProp</td>
         </tr>
         <tr>
-            <td>observePropObject</td>
+            <td>observeHostPropObject (abbrev ohopo)</td>
             <td>Observe the nearest host parent, assume the property will appear if it hasn't already, and when it does, assume it is a class instance, with getters/setters it can subscribe to, and/or it
             is an instance of a class that extends EventTarget, so can know when to update the element it adorns every time the event fires</td>
+        </tr>
     </tbody>
 </table>
 
@@ -255,9 +252,15 @@ Next we specify what to pass from the element we are observing and possibly from
         <tr>
             <td>valFromTarget</td>
             <td>
+                If a string is specified:
+
                 Specify a path from the target to "pull" when the event is raised or the property changes, using "." notation.
                 Use | for limited support for method invocation.  E.g. "current.getState|" will invoke the getState method on the current object.
                 Common use case:  querySelector|selector
+
+                If an array is specified:
+
+                Perform interpolation between constants and dynamic values from the target [TODO].  Use range when appropriate [TODO]
             </td>
             <td>Aliased by "vft".  Can also be used to auto-set the "on" value as described above.</td>
         </tr>
