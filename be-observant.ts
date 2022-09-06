@@ -1,11 +1,11 @@
 import {define, BeDecoratedProps} from 'be-decorated/be-decorated.js';
-import {BeObservantProps, BeObservantActions, IObserve, BeObservantVirtualProps} from './types';
+import {Actions, IObserve, VirtualProps} from './types';
 import {register} from "be-hive/register.js";
 
 export {IObserve} from './types';
 
 export class BeObservantController extends EventTarget {
-    async intro(proxy: Element & BeObservantVirtualProps, target: Element, beDecorProps: BeDecoratedProps){
+    async intro(proxy: Element & VirtualProps, target: Element, beDecorProps: BeDecoratedProps){
         const params = JSON.parse(proxy.getAttribute('is-' + beDecorProps.ifWantsToBe!)!);
         const {hookUp} = await import('./hookUp.js');
         if(Array.isArray(params)){
@@ -17,7 +17,7 @@ export class BeObservantController extends EventTarget {
         }
         proxy.resolved = true;
     }
-    async #doParams(params: any, hookUp: any, proxy: Element & BeObservantVirtualProps){
+    async #doParams(params: any, hookUp: any, proxy: Element & VirtualProps){
         let lastKey = '';
         for(const propKey in params){
             const parm = params[propKey];
@@ -27,7 +27,7 @@ export class BeObservantController extends EventTarget {
             if(!startsWithHat) lastKey = propKey;
         }  
     }
-    async finale(proxy: Element & BeObservantVirtualProps, target:Element){
+    async finale(proxy: Element & VirtualProps, target:Element){
         const eventHandlers = proxy.eventHandlers!;
         const {unsubscribe} = await import('trans-render/lib/subscribe.js');
         if(eventHandlers !== undefined){
@@ -47,7 +47,6 @@ export class BeObservantController extends EventTarget {
     }
 }
 
-export interface BeObservantController extends BeObservantProps{}
 
 const tagName = 'be-observant';
 
@@ -55,7 +54,7 @@ const ifWantsToBe = 'observant';
 
 const upgrade = '*';
 
-define<BeObservantProps & BeDecoratedProps<BeObservantProps, BeObservantActions>, BeObservantActions>({
+define<VirtualProps & BeDecoratedProps<VirtualProps, Actions>, Actions>({
     config:{
         tagName,
         propDefaults:{

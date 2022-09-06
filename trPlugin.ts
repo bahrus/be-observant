@@ -1,7 +1,7 @@
 import {RenderContext, TransformPluginSettings} from 'trans-render/lib/types';
 import {register} from 'trans-render/lib/pluginMgr.js';
 import { hookUp } from './hookUp.js';
-import { BeObservantVirtualProps } from './types.js';
+import { VirtualProps } from './types.js';
 
 export const trPlugin: TransformPluginSettings = {
     selector: 'beObservantAttribs',
@@ -12,7 +12,7 @@ export const trPlugin: TransformPluginSettings = {
         const unfulfilled = [];
         for(const propKey in params){
             const parm = params[propKey];
-            if(await hookUp(parm, target! as Element & BeObservantVirtualProps, propKey, true, host)){
+            if(await hookUp(parm, target! as Element & VirtualProps, propKey, true, host)){
                 fulfilled.push(propKey);
             }else{
                 unfulfilled.push(propKey);

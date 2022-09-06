@@ -1,7 +1,7 @@
-import {IObserve, BeObservantVirtualProps, HookUpInfo} from './types';
+import {IObserve, VirtualProps, HookUpInfo} from './types';
 
 
-export async function addListener(elementToObserve: Element, observeParams: IObserve, propKey: string, self: Element & BeObservantVirtualProps, noAwait = false): Promise<HookUpInfo>{
+export async function addListener(elementToObserve: Element, observeParams: IObserve, propKey: string, self: Element & VirtualProps, noAwait = false): Promise<HookUpInfo>{
     const {on, vft, valFromTarget, valFromEvent, vfe, skipInit, onSet, nudge, observeHostProp, eventListenerOptions, capture} = observeParams;
     const valFT = vft || valFromTarget;
     const { camelToLisp } = await import('trans-render/lib/camelToLisp.js');
@@ -63,7 +63,7 @@ export async function addListener(elementToObserve: Element, observeParams: IObs
     };
 }
 
-export async function hookUp(fromParam: any, proxy: Element & BeObservantVirtualProps, toParam: string, noAwait = false, host?: Element): Promise<HookUpInfo>{
+export async function hookUp(fromParam: any, proxy: Element & VirtualProps, toParam: string, noAwait = false, host?: Element): Promise<HookUpInfo>{
     switch(typeof fromParam){
         case 'object':{
                 if(Array.isArray(fromParam)){

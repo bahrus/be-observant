@@ -87,21 +87,25 @@ export type InterpolatingObserveParams<TString = string, TProps = any, TActions 
 
 export type IObserveMap<Self = any, Props = any, Actions = Props> = {[key in keyof Self]: InterpolatingObserveParams<String, Props, Actions>};
 
-export interface BeObservantVirtualProps extends MinimalProxy{
+export interface VirtualProps extends MinimalProxy{
     eventHandlers?: EventHandler[];
     subscriptions?: Element[];
 }
 
-export interface BeObservantProps extends BeObservantVirtualProps{
-    proxy: Element & BeObservantVirtualProps;
+export type Proxy = Element & VirtualProps;
+
+export interface ProxyProps extends VirtualProps{
+    proxy: Proxy
 }
+
+export type PP = ProxyProps;
 
 export interface HookUpInfo{
     success: boolean;
     element?: Element;
 }
 
-export interface BeObservantActions{
-    intro(proxy: Element & BeObservantVirtualProps, target: Element, beDecorProps: BeDecoratedProps): void;
-    finale(proxy: Element & BeObservantVirtualProps, target:Element): void;
+export interface Actions{
+    intro(proxy: Element & VirtualProps, target: Element, beDecorProps: BeDecoratedProps): void;
+    finale(proxy: Element & VirtualProps, target:Element): void;
 }
