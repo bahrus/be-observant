@@ -212,6 +212,10 @@ First we need to choose *what* to observe.  This is done via a number of alterna
             <td>observeHostProp</td>
             <td>Find the nearest host parent that has the property defined, and observe it for property changes with the name provided by observeHostProp</td>
         </tr>
+        <tr>
+            <td>observePropObject</td>
+            <td>Observe the nearest host parent, assume the property will appear if it hasn't already, and when it does, assume it is a class instance, with getters/setters it can subscribe to, and/or it
+            is an instance of a class that extends EventTarget, so can know when to update the element it adorns every time the event fires</td>
     </tbody>
 </table>
 
