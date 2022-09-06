@@ -201,6 +201,10 @@ First we need to choose *what* to observe.  This is done via a number of alterna
             <td>Use the native function call "querySelector" to find the first matching element to observe within the adorned element.</td>
         </tr>
         <tr>
+            <td>observeAtLarge [TODO]</td>
+            <td>Do a querySelector from the root host</td>
+        </tr>
+        <tr>
             <td>observeWinObj</td>
             <td>Observe window object.  Example:  observeWinObj:'navigation'</td>
         </tr>
