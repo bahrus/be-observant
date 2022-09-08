@@ -33,8 +33,6 @@ export interface IObserve<Props = any, Actions = Props>{
     observeInward?: string,
     oi?: string;
 
-    observeHostPropObject?: string,
-    ohopo?: string;
     
     /**
      * Event name to watch for
@@ -45,6 +43,8 @@ export interface IObserve<Props = any, Actions = Props>{
     * Subscribe to property changes rather than events.
     */
     onSet?: keyof Props & string,
+
+    homeInOn?: keyof Props & string,
     /**
      * The path to the (sub) property of the element being observed.
      * 

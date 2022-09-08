@@ -214,9 +214,9 @@ First we need to choose *what* to observe.  This is done via a number of alterna
 
 #### Homing in [TODO]
 
-Having selected a DOM element to observe, we may optionally want to observe a sub object as our "container" to observe from.  These sub objects might extend EventTarget, meaning they have events we can subscribe to.
+Having selected a DOM element to observe, we may optionally want to observe a sub object as our "container" to observe from.  These sub objects might extend EventTarget, meaning they have events we can subscribe to.  The assumption here is that unlike other typical properties of the DOM element, which might be transient, properties we would want to home in on are "stable, permanent" properties that may, for example, point to a store (MobX, for example).
 
-This is done via parameter HomeInOn
+This is done via parameter homeInOn
 
 ### When
 
