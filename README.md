@@ -163,6 +163,8 @@ To specify a different source to observe other than the host, there are numerous
 
 ## Syntax in depth
 
+### What
+
 First we need to choose *what* to observe.  This is done via a number of alternative keys:
 
 <table>
@@ -207,19 +209,18 @@ First we need to choose *what* to observe.  This is done via a number of alterna
             <td>observeWinObj (abbrev owo)</td>
             <td>Observe window object.  Example:  observeWinObj:'navigation'</td>
         </tr>
-        <tr>
-            <td>observeHostProp (abbrev ohop)</td>
-            <td>Find the nearest host parent that has the property defined, and observe it for property changes with the name provided by observeHostProp</td>
-        </tr>
-        <tr>
-            <td>observeHostPropObject (abbrev ohopo)</td>
-            <td>Observe the nearest host parent, assume the property will appear if it hasn't already, and when it does, assume it is a class instance, with getters/setters it can subscribe to, and/or it
-            is an instance of a class that extends EventTarget, so can know when to update the element it adorns every time the event fires</td>
-        </tr>
     </tbody>
 </table>
 
-Once we find the element to observe, next we need to specify what property or event to listen to on that element.
+#### Homing in [TODO]
+
+Having selected a DOM element to observe, we may optionally want to observe a sub object as our "container" to observe from.  These sub objects might extend EventTarget, meaning they have events we can subscribe to.
+
+This is done via parameter HomeInOn
+
+### When
+
+Once we find the element to observe, next we need to specify what property or event to listen to on that element / Event Target.
 
 <table>
     <caption>When to react</caption>
