@@ -6,9 +6,14 @@ export interface IObserve<Props = any, Actions = Props>{
      */
     observe?: string,
     /**
+     * Abbrev for observe
+     */
+    o?: string,
+    /**
      * Observe first ancestor DOM element matching this string
      */
     observeClosest?: string,
+    oc?: string,
 
     observeClosestOrHost?: string | boolean,
     /**
@@ -17,17 +22,26 @@ export interface IObserve<Props = any, Actions = Props>{
     ocoho?: string | boolean,
 
     observeSelf?: boolean,
+    os?: boolean,
 
     observeHostProp?: string,
+    ohop?: string,
 
     observeWinObj?: string,
+    owo?: string,
 
     observeInward?: string,
+    oi?: string;
     
     /**
      * Event name to watch for
      */
     on?: string,
+
+    /**
+    * Subscribe to property changes rather than events.
+    */
+    onSet?: keyof Props & string,
     /**
      * The path to the (sub) property of the element being observed.
      * 
@@ -50,16 +64,13 @@ export interface IObserve<Props = any, Actions = Props>{
      * Perform a structural clone before passing the observed value.
      */
     clone?: boolean,
-    /** Do not hook the initial value prior to any events being fired. */
+    /** Do not pass in the initial value prior to any events being fired. */
     skipInit?: boolean,
     /**
      *  'int' | 'float' | 'bool' | 'date' | 'truthy' | 'falsy' | '' | 'string' | 'object';  
      */
     parseValAs?: 'int' | 'float' | 'bool' | 'date' | 'truthy' | 'falsy' | '' | 'string' | 'object',
-    /**
-     * Subscribe to property changes rather to events.
-     */
-    onSet?: keyof Props & string,
+
     /** Set attribute rather than property. */
     as?: 'str-attr' | 'bool-attr' | 'obj-attr',
     /** If val is true, set property to this value. */

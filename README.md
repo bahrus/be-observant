@@ -194,11 +194,14 @@ First we need to choose *what* to observe.  This is done via a number of alterna
         </tr>
         <tr>
             <td>observeInward (abbrev oi)</td>
-            <td>Use the native function call "querySelector" to find the first matching element to observe within the adorned element.</td>
+            <td>
+                Use the native function call "querySelector" to find the first matching element to observe within the adorned element.
+                If element not found, expect a be-a-beacon, verify instance of be-a-beacon
+            </td>
         </tr>
         <tr>
-            <td>observeAtLarge [TODO]</td>
-            <td>Do a querySelector from the root host</td>
+            <td>observeAtLarge [TODO] (abbrev oal)</td>
+            <td>Do a querySelector from the root host.  If element not found, expect a be-a-beacon, verify instance of be-a-beacon</td>
         </tr>
         <tr>
             <td>observeWinObj (abbrev owo)</td>
@@ -250,33 +253,20 @@ Next we specify what to pass from the element we are observing and possibly from
     </thead>
     <tbody>
         <tr>
-            <td>valFromTarget</td>
+            <td>valFromTarget (abbrev vft)</td>
             <td>
-                If a string is specified:
-
-                Specify a path from the target to "pull" when the event is raised or the property changes, using "." notation.
-                Use | for limited support for method invocation.  E.g. "current.getState|" will invoke the getState method on the current object.
-                Common use case:  querySelector|selector
-
-                If an array is specified:
-
-                Perform interpolation between constants and dynamic values from the target [TODO].  Use range when appropriate [TODO]
+                <ol>
+                    <li>If a string is specified: Specify a path from the target to "pull" when the event is raised or the property changes, using "." notation.
+                        Use | for limited support for method invocation.  E.g. "current.getState|" will invoke the getState method on the current object.
+                        Common use case:  querySelector|selector.
+                    </li>
+                    <li>If an array is specified:  Perform interpolation between constants and dynamic values from the target [TODO].  Use range when appropriate [TODO:  Example]</li>
             </td>
-            <td>Aliased by "vft".  Can also be used to auto-set the "on" value as described above.</td>
+            <td>Can also be used to auto-set the "on" value as described above.</td>
         </tr>
         <tr>
-            <td>vft</td>
-            <td>Abbrev. for valFromTarget</td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>valFromEvent</td>
+            <td>valFromEvent (abbrev vfe)</td>
             <td>Specify a path from the event to "pull" when the event fires</td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>vfe</td>
-            <td>Abbrev. for val from event</td>
             <td></td>
         </tr>
         <tr>
@@ -296,7 +286,7 @@ Good catch...
 
 > Doesn't supporting "." notation in the object path allow for unexpected side effects when accessing getters from a custom element?
 
-First, this isn't a risk if the data source is JSON, but it is a bit of a risk here.  However, I think it's considered a good practice not to allow getters to have side effects, and this component is assuming it is running in an environment where are the neighboring have been vetted in some way for following good practices.
+First, this isn't a risk if the data source is JSON, but it is a bit of a risk here.  However, I think it's considered a good practice not to allow getters to have side effects, and this component is assuming it is running in an environment where all the neighboring elements have been vetted in some way for following good practices via opt-in.
 
 >  What about allowing the invocation of methods via the | separator.
 

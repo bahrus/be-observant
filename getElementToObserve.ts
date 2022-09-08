@@ -5,36 +5,50 @@ export {IObserve} from './types';
 declare const appHistory: any;
 
 export async function getElementToObserve(self:Element, 
-    {observeClosest, observe, observeClosestOrHost, ocoho, observeSelf, observeWinObj, observeInward, observeHostProp}: IObserve, host?: Element): Promise<Element | null>
+    {observeClosest, oc, observe, o, observeClosestOrHost, ocoho, observeSelf, os, observeWinObj, owo, observeInward, oi, observeHostProp, ohop}: IObserve, host?: Element): Promise<Element | null>
 {
     let elementToObserve: Element | null = null;
-    const oc = ocoho || observeClosestOrHost;
-    if(oc !== undefined){
-        const closest = oc === true ? '[itemscope]' : oc.toString();
+    const coho = ocoho || observeClosestOrHost;
+    if(coho !== undefined){
+        const closest = coho === true ? '[itemscope]' : coho.toString();
         const parent = self.parentElement;
         elementToObserve = parent === null ? null : parent.closest(closest);
         if(elementToObserve === null){
             elementToObserve = host || (<any>self.getRootNode()).host as Element;
         }
-    }else if(observeClosest !== undefined){
-        elementToObserve = self.closest(observeClosest);
+        return elementToObserve;
+    }
+    const c = oc || observeClosest;
+    if(c !== undefined){
+        elementToObserve = self.closest(c);
         if(elementToObserve !== null && observe){
             elementToObserve = upSearch(elementToObserve, observe) as Element;
         }
-    }else if(observe !== undefined) {
-        elementToObserve = upSearch(self, observe) as Element;
-    }else if(observeSelf){
-        elementToObserve = self;
-    }else if (observeInward !== undefined){
-        elementToObserve = self.querySelector(observeInward);
-    }else if(observeWinObj !== undefined){
-        elementToObserve = (<any>window)[observeWinObj];
-    }else if(observeHostProp !== undefined){
-        const {getElementWithProp} = await import('./getElementWithProp.js');
-        elementToObserve = await getElementWithProp(self, observeHostProp);
-    }else{
-        elementToObserve = host || getHost(self);
+        return elementToObserve;
     }
-    return elementToObserve;
+    const _ = o || observe;
+    if(_ !== undefined){
+        return upSearch(self, _) as Element;
+    }
+    const s = os || observeSelf;
+    if(s){
+        return self;
+    }
+    const i = oi || observeInward;
+    if(i !== undefined){
+        //TODO: beacon
+        return self.querySelector(i);
+    }
+    const wo = owo || observeWinObj;
+    if(wo !== undefined){
+        return (<any>window)[wo];
+    }
+    const hop = ohop || observeHostProp;
+    if(hop !== undefined){
+        const {getElementWithProp} = await import('./getElementWithProp.js');
+        return await getElementWithProp(self, hop);
+    }
+    return host || getHost(self);
+    
 }
 
