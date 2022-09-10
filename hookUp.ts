@@ -86,7 +86,7 @@ export async function hookUp(fromParam: any, proxy: Element & VirtualProps, toPa
                             success: false,
                         };
                     }
-                    const hio = observeParams.homeInOn;
+                    const {homeInOn: hio} = observeParams;
                     if(hio !== undefined){
                         const {homeInOn} = await import('trans-render/lib/homeInOn.js');
                         elementToObserve = await homeInOn(elementToObserve, hio) as Element;

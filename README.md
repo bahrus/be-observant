@@ -220,7 +220,7 @@ This is done via parameter homeInOn, which specifies a "dot" delimited path from
 
 ### When
 
-Once we find the element to observe, next we need to specify what property or event to listen to on that element / Event Target.
+Once we find the element (or Event Target) to observe, next we need to specify what property or event to listen to on that element / Event Target.
 
 <table>
     <caption>When to react</caption>
