@@ -1,6 +1,7 @@
 import { define } from 'be-decorated/be-decorated.js';
 import { register } from "be-hive/register.js";
 export class BeObservantController extends EventTarget {
+    #controllers;
     async intro(proxy, target, beDecorProps) {
         const params = JSON.parse(proxy.getAttribute('is-' + beDecorProps.ifWantsToBe));
         const { hookUp } = await import('./hookUp.js');
@@ -15,33 +16,28 @@ export class BeObservantController extends EventTarget {
         proxy.resolved = true;
     }
     async #doParams(params, hookUp, proxy) {
+        this.disconnect();
+        this.#controllers = [];
         let lastKey = '';
         for (const propKey in params) {
             const parm = params[propKey];
             const startsWithHat = propKey[0] === '^';
             const key = startsWithHat ? lastKey : propKey;
-            await hookUp(parm, proxy, key);
+            const info = await hookUp(parm, proxy, key);
+            this.#controllers.push(info.controller);
             if (!startsWithHat)
                 lastKey = propKey;
         }
     }
+    disconnect() {
+        if (this.#controllers !== undefined) {
+            for (const c of this.#controllers) {
+                c.abort();
+            }
+        }
+    }
     async finale(proxy, target) {
-        const eventHandlers = proxy.eventHandlers;
-        const { unsubscribe } = await import('trans-render/lib/subscribe.js');
-        if (eventHandlers !== undefined) {
-            for (const eh of eventHandlers) {
-                eh.elementToObserve.removeEventListener(eh.on, eh.fn);
-                unsubscribe(eh.elementToObserve);
-            }
-        }
-        const subscriptions = proxy.subscriptions;
-        if (subscriptions !== undefined) {
-            for (const el of subscriptions) {
-                unsubscribe(el);
-            }
-        }
-        unsubscribe(target);
-        unsubscribe(proxy);
+        this.disconnect();
     }
 }
 const tagName = 'be-observant';
@@ -57,7 +53,7 @@ define({
             noParse: true,
             forceVisible: ['template', 'script', 'style'],
             finale: 'finale',
-            virtualProps: ['eventHandlers', 'subscriptions']
+            virtualProps: []
         }
     },
     complexPropDefaults: {

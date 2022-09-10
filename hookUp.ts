@@ -14,6 +14,7 @@ export async function addListener(elementToObserve: Element, observeParams: IObs
         if(observeParams.debug) debugger;
         await setProp(valFT, valFE, propKey, elementToObserve, observeParams, self);
     }
+    const controller = new AbortController;
     if(onz !== undefined){
         const fn = (e: Event) => {
             e.stopPropagation();
@@ -27,98 +28,95 @@ export async function addListener(elementToObserve: Element, observeParams: IObs
             }
             setProp(valFT, valFE, propKey, elementToObserve, observeParams, self, e);
         }
-        elementToObserve.addEventListener(onz, fn, eventListenerOptions || capture);
+        let options: AddEventListenerOptions | undefined;
+        switch(typeof eventListenerOptions){
+            case 'boolean':
+                options = {capture: eventListenerOptions}
+                break;
+            case 'object':
+                options = eventListenerOptions;
+                break;
+            default:
+                options = {}
+        } 
+        options.signal = controller.signal;
+        elementToObserve.addEventListener(onz, fn, options);
         if((<any>self).debug){
             console.log({onz, elementToObserve, fn});
         }
-        if(self.eventHandlers === undefined) self.eventHandlers = [];
-        self.eventHandlers!.push({on: onz, elementToObserve, fn});
         if(nudge && elementToObserve.getAttribute !== undefined) {
             const {nudge} = await import('trans-render/lib/nudge.js');
             nudge(elementToObserve);
         }
     }else if(onSetX !== undefined){
-        const {subscribe, tooSoon} = await import('trans-render/lib/subscribe.js');
-        if(noAwait && tooSoon(elementToObserve)) return {
-            success: false
-        };
-        if(self.subscriptions === undefined) self.subscriptions = [];
-        self.subscriptions.push(elementToObserve);
-        subscribe(elementToObserve, onSetX, (el: Element, propName, nv) => {
-            try{
-                const isConnected = self.isConnected;
-            }catch(e){
-                return;
-            }
-            const valFT = vft || valFromTarget;
-            const valFE = vfe || valFromEvent;
+        const {bePropagating} = await import('trans-render/lib/bePropagating.js');
+        const et = await bePropagating(elementToObserve, propKey);
+        et.addEventListener(propKey, () => {
             setProp(valFT, valFE, propKey, elementToObserve, observeParams, self);
-        });
+        }, {signal: controller.signal});
     }else{
-        throw 'NI'; // not implemented
+        throw 'bO.hU.NI'; // not implemented
     }
     return {
         success: true,
         element: elementToObserve,
+        controller
     };
 }
 
 export async function hookUp(fromParam: any, proxy: Element & VirtualProps, toParam: string, noAwait = false, host?: Element): Promise<HookUpInfo>{
     switch(typeof fromParam){
         case 'object':{
-                if(Array.isArray(fromParam)){
-                    //assume for now is a string array
-                    const arr = fromParam as string[];
-                    if(arr.length !== 1) throw 'NI';
-                    //assume for now only one element in the array
-                    //TODO:  support alternating array with binding instructions in every odd element -- interpolation
-                    (<any>proxy)[toParam] = fromParam[0];
-                    return {
-                        success: true,
-                    };
-                }else{
-                    const observeParams = fromParam as IObserve;
-                    const {getElementToObserve} = await import('./getElementToObserve.js');
-                    let elementToObserve = await getElementToObserve(proxy, observeParams, host);
-                    if(elementToObserve === null){
-                        console.warn({msg:'404',observeParams});
-                        return {
-                            success: false,
-                        };
-                    }
-                    const {homeInOn: hio} = observeParams;
-                    if(hio !== undefined){
-                        const {homeInOn} = await import('trans-render/lib/homeInOn.js');
-                        elementToObserve = await homeInOn(elementToObserve, hio) as Element;
-                    }
-                    return await addListener(elementToObserve, observeParams, toParam, proxy, noAwait);
-                }
-
-            }
-            break;
-        case 'string':
-            {
-                const ocoho = '[itemscope]';
-                const isProp = fromParam[0] === '.';
-                const vft = isProp ? fromParam.substr(1) : fromParam;
-                const nudge = true;
-                const observeParams = isProp ? {onSet: vft, vft, ocoho, nudge} as IObserve : {vft, ocoho, nudge} as IObserve;
+            if(Array.isArray(fromParam)){
+                //assume for now is a string array
+                const arr = fromParam as string[];
+                if(arr.length !== 1) throw 'NI';
+                //assume for now only one element in the array
+                //TODO:  support alternating array with binding instructions in every odd element -- interpolation
+                (<any>proxy)[toParam] = fromParam[0];
+                return {
+                    success: true,
+                };
+            }else{
+                const observeParams = fromParam as IObserve;
                 const {getElementToObserve} = await import('./getElementToObserve.js');
                 let elementToObserve = await getElementToObserve(proxy, observeParams, host);
-                if(elementToObserve === null && observeParams.observeInward !== undefined){
-                    //wait for element to fill up hopefully
-                    await sleep(50);
-                    elementToObserve = proxy.querySelector(observeParams.observeInward);
-                }
-                if(!elementToObserve){
+                if(elementToObserve === null){
                     console.warn({msg:'404',observeParams});
                     return {
                         success: false,
                     };
                 }
+                const {homeInOn: hio} = observeParams;
+                if(hio !== undefined){
+                    const {homeInOn} = await import('trans-render/lib/homeInOn.js');
+                    elementToObserve = await homeInOn(elementToObserve, hio) as Element;
+                }
                 return await addListener(elementToObserve, observeParams, toParam, proxy, noAwait);
             }
-            break;
+
+        }
+        case 'string':{
+            const ocoho = '[itemscope]';
+            const isProp = fromParam[0] === '.';
+            const vft = isProp ? fromParam.substr(1) : fromParam;
+            const nudge = true;
+            const observeParams = isProp ? {onSet: vft, vft, ocoho, nudge} as IObserve : {vft, ocoho, nudge} as IObserve;
+            const {getElementToObserve} = await import('./getElementToObserve.js');
+            let elementToObserve = await getElementToObserve(proxy, observeParams, host);
+            if(elementToObserve === null && observeParams.observeInward !== undefined){
+                //wait for element to fill up hopefully
+                await sleep(50);
+                elementToObserve = proxy.querySelector(observeParams.observeInward);
+            }
+            if(!elementToObserve){
+                console.warn({msg:'404',observeParams});
+                return {
+                    success: false,
+                };
+            }
+            return await addListener(elementToObserve, observeParams, toParam, proxy, noAwait);
+        }
         default:
             (<any>proxy)[toParam] = fromParam;
             return {

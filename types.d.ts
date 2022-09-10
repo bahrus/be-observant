@@ -102,8 +102,8 @@ export type InterpolatingObserveParams<TString = string, TProps = any, TActions 
 export type IObserveMap<Self = any, Props = any, Actions = Props> = {[key in keyof Self]: InterpolatingObserveParams<String, Props, Actions>};
 
 export interface VirtualProps extends MinimalProxy{
-    eventHandlers?: EventHandler[];
-    subscriptions?: Element[];
+    // eventHandlers?: EventHandler[];
+    // subscriptions?: Element[];
 }
 
 export type Proxy = Element & VirtualProps;
@@ -117,6 +117,7 @@ export type PP = ProxyProps;
 export interface HookUpInfo{
     success: boolean;
     element?: Element;
+    controller?: AbortController;
 }
 
 export interface Actions{
