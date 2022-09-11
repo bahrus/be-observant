@@ -2,7 +2,6 @@ import {getHost} from 'trans-render/lib/getHost.js';
 import { upSearch } from 'trans-render/lib/upSearch.js';
 import {IObserve} from './types';
 export {IObserve} from './types';
-declare const appHistory: any;
 
 export async function getElementToObserve(self:Element, 
     {

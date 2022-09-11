@@ -50,8 +50,8 @@ export async function addListener(elementToObserve: Element, observeParams: IObs
         }
     }else if(onSetX !== undefined){
         const {bePropagating} = await import('trans-render/lib/bePropagating.js');
-        const et = await bePropagating(elementToObserve, propKey);
-        et.addEventListener(propKey, () => {
+        const et = await bePropagating(elementToObserve, onSetX);
+        et.addEventListener(onSetX, () => {
             setProp(valFT, valFE, propKey, elementToObserve, observeParams, self);
         }, {signal: controller.signal});
     }else{

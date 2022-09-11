@@ -1,6 +1,6 @@
 import {BeDecoratedProps, EventHandler, MinimalController, MinimalProxy} from 'be-decorated/types';
 
-export interface IObserve<Props = any, Actions = Props>{
+export interface IObserve<Props = any, Actions = Props, TEvent = Event>{
     /**
      * A css match criteria, used in an "upSearch" for the element to observe.
      */
@@ -88,13 +88,15 @@ export interface IObserve<Props = any, Actions = Props>{
         init: CustomEventInit,
     }
 
-    translate?: number;
+    translate?: number,
 
-    nudge?: boolean;
+    nudge?: boolean,
 
     eventListenerOptions?: boolean | AddEventListenerOptions,
 
     capture?: boolean,
+
+    eventFilter: Partial<TEvent>,
 }
 
 export type InterpolatingObserveParams<TString = string, TProps = any, TActions = TProps> = string | [TString] | IObserve | InterpolatingObserveParams<TString>[];
