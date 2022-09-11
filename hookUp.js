@@ -71,18 +71,15 @@ export async function addListener(elementToObserve, observeParams, propKey, self
         controller
     };
 }
+export function toIObserve(s) {
+    const ocoho = '[itemscope]';
+    const isProp = s[0] === '.';
+    const vft = isProp ? s.substr(1) : s;
+    const nudge = true;
+    return isProp ? { onSet: vft, vft, ocoho, nudge } : { vft, ocoho, nudge };
+}
 export async function hookUp(fromParam, proxy, toParam, noAwait = false, host) {
-    let observeParam;
-    if (typeof fromParam === 'string') {
-        const ocoho = '[itemscope]';
-        const isProp = fromParam[0] === '.';
-        const vft = isProp ? fromParam.substr(1) : fromParam;
-        const nudge = true;
-        observeParam = isProp ? { onSet: vft, vft, ocoho, nudge } : { vft, ocoho, nudge };
-    }
-    else {
-        observeParam = fromParam;
-    }
+    const observeParam = (typeof fromParam === 'string') ? toIObserve(fromParam) : fromParam;
     if (Array.isArray(observeParam)) {
         //assume for now is a string array
         const arr = fromParam;

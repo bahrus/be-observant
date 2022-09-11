@@ -69,17 +69,16 @@ export async function addListener(elementToObserve: Element, observeParams: IObs
     };
 }
 
+export function toIObserve(s: string): IObserve{
+    const ocoho = '[itemscope]';
+    const isProp = s[0] === '.';
+    const vft = isProp ? s.substr(1) : s;
+    const nudge = true;
+    return isProp ? {onSet: vft, vft, ocoho, nudge} as IObserve : {vft, ocoho, nudge} as IObserve;
+}
+
 export async function hookUp(fromParam: string | IObserve | (string | IObserve)[], proxy: Element & VirtualProps, toParam: string, noAwait = false, host?: Element): Promise<HookUpInfo>{
-    let observeParam: IObserve | (string | IObserve)[];
-    if(typeof fromParam === 'string'){
-        const ocoho = '[itemscope]';
-        const isProp = fromParam[0] === '.';
-        const vft = isProp ? fromParam.substr(1) : fromParam;
-        const nudge = true;
-        observeParam = isProp ? {onSet: vft, vft, ocoho, nudge} as IObserve : {vft, ocoho, nudge} as IObserve;
-    }else{
-        observeParam = fromParam;
-    }
+    const observeParam = (typeof fromParam === 'string') ? toIObserve(fromParam) : fromParam;
     if(Array.isArray(observeParam)){
         //assume for now is a string array
         const arr = fromParam as string[];
