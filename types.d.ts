@@ -94,9 +94,12 @@ export interface IObserve<Props = any, Actions = Props, TEvent = Event>{
 
     eventListenerOptions?: boolean | AddEventListenerOptions,
 
-    capture?: boolean,
+    //capture?: boolean,
 
-    eventFilter: Partial<TEvent>,
+    eventFilter?: Partial<TEvent>,
+
+    stopPropagation?: boolean,
+
 }
 
 export type InterpolatingObserveParams<TString = string, TProps = any, TActions = TProps> = string | [TString] | IObserve | InterpolatingObserveParams<TString>[];

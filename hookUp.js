@@ -1,5 +1,5 @@
 export async function addListener(elementToObserve, observeParams, propKey, self, noAwait = false) {
-    const { on, vft, valFromTarget, valFromEvent, vfe, skipInit, onSet, nudge, observeHostProp, eventListenerOptions, capture } = observeParams;
+    const { on, vft, valFromTarget, valFromEvent, vfe, skipInit, onSet, nudge, observeHostProp, eventListenerOptions, } = observeParams;
     const valFT = vft || valFromTarget;
     const { camelToLisp } = await import('trans-render/lib/camelToLisp.js');
     const onSetX = onSet || observeHostProp;
@@ -14,8 +14,15 @@ export async function addListener(elementToObserve, observeParams, propKey, self
     }
     const controller = new AbortController;
     if (onz !== undefined) {
-        const fn = (e) => {
-            e.stopPropagation();
+        const fn = async (e) => {
+            const { eventFilter, stopPropagation } = observeParams;
+            if (eventFilter !== undefined) {
+                const { isContainedIn } = await import('trans-render/lib/isContainedIn.js');
+                if (!isContainedIn(eventFilter, e))
+                    return;
+            }
+            if (stopPropagation)
+                e.stopPropagation();
             try {
                 const isConnected = self.isConnected;
             }

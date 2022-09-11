@@ -2,7 +2,7 @@ import {IObserve, VirtualProps, HookUpInfo} from './types';
 
 
 export async function addListener(elementToObserve: Element, observeParams: IObserve, propKey: string, self: Element & VirtualProps, noAwait = false): Promise<HookUpInfo>{
-    const {on, vft, valFromTarget, valFromEvent, vfe, skipInit, onSet, nudge, observeHostProp, eventListenerOptions, capture} = observeParams;
+    const {on, vft, valFromTarget, valFromEvent, vfe, skipInit, onSet, nudge, observeHostProp, eventListenerOptions,} = observeParams;
     const valFT = vft || valFromTarget;
     const { camelToLisp } = await import('trans-render/lib/camelToLisp.js');
     const onSetX = onSet || observeHostProp;
@@ -16,8 +16,13 @@ export async function addListener(elementToObserve: Element, observeParams: IObs
     }
     const controller = new AbortController;
     if(onz !== undefined){
-        const fn = (e: Event) => {
-            e.stopPropagation();
+        const fn = async (e: Event) => {
+            const { eventFilter, stopPropagation} = observeParams;
+            if(eventFilter !== undefined){
+                const {isContainedIn} = await import('trans-render/lib/isContainedIn.js');
+                if(!isContainedIn(eventFilter, e)) return;
+            }
+            if(stopPropagation) e.stopPropagation();
             try{
                 const isConnected = self.isConnected;
             }catch(e){
