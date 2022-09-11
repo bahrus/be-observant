@@ -4,8 +4,8 @@ import {register} from "be-hive/register.js";
 
 export {IObserve} from './types';
 
-export class BeObservantController extends EventTarget {
-    #controllers: AbortController[] | undefined;
+export class BeObservant extends EventTarget implements Actions {
+    #controllers: AbortController[] = [];
     async intro(proxy: Element & VirtualProps, target: Element, beDecorProps: BeDecoratedProps){
         const params = JSON.parse(proxy.getAttribute('is-' + beDecorProps.ifWantsToBe!)!);
         const {hookUp} = await import('./hookUp.js');
@@ -19,10 +19,7 @@ export class BeObservantController extends EventTarget {
         proxy.resolved = true;
     }
     async #doParams(params: any, hookUp: (fromParam: any, proxy: Element & VirtualProps, toParam: string, noAwait?: boolean, host?: Element) => Promise<HookUpInfo>, proxy: Element & VirtualProps){
-        this.disconnect();
-        this.#controllers = [];
         let lastKey = '';
-
         for(const propKey in params){
             const parm = params[propKey];
             const startsWithHat = propKey[0] === '^';
@@ -33,10 +30,8 @@ export class BeObservantController extends EventTarget {
         }  
     }
     disconnect(){
-        if(this.#controllers !== undefined){
-            for(const c of this.#controllers){
-                c.abort();
-            }
+        for(const c of this.#controllers){
+            c.abort();
         }
     }
     async finale(proxy: Element & VirtualProps, target:Element){
@@ -65,7 +60,7 @@ define<VirtualProps & BeDecoratedProps<VirtualProps, Actions>, Actions>({
         }
     },
     complexPropDefaults:{
-        controller: BeObservantController
+        controller: BeObservant
     }
 });
 

@@ -1,7 +1,7 @@
 import { define } from 'be-decorated/be-decorated.js';
 import { register } from "be-hive/register.js";
-export class BeObservantController extends EventTarget {
-    #controllers;
+export class BeObservant extends EventTarget {
+    #controllers = [];
     async intro(proxy, target, beDecorProps) {
         const params = JSON.parse(proxy.getAttribute('is-' + beDecorProps.ifWantsToBe));
         const { hookUp } = await import('./hookUp.js');
@@ -16,8 +16,6 @@ export class BeObservantController extends EventTarget {
         proxy.resolved = true;
     }
     async #doParams(params, hookUp, proxy) {
-        this.disconnect();
-        this.#controllers = [];
         let lastKey = '';
         for (const propKey in params) {
             const parm = params[propKey];
@@ -30,10 +28,8 @@ export class BeObservantController extends EventTarget {
         }
     }
     disconnect() {
-        if (this.#controllers !== undefined) {
-            for (const c of this.#controllers) {
-                c.abort();
-            }
+        for (const c of this.#controllers) {
+            c.abort();
         }
     }
     async finale(proxy, target) {
@@ -57,7 +53,7 @@ define({
         }
     },
     complexPropDefaults: {
-        controller: BeObservantController
+        controller: BeObservant
     }
 });
 register(ifWantsToBe, upgrade, tagName);
