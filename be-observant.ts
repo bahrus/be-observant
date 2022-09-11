@@ -6,6 +6,11 @@ export {IObserve} from './types';
 
 export class BeObservant extends EventTarget implements Actions {
     #controllers: AbortController[] = [];
+
+    async toIObserve(s: string){
+        const {toIObserve} = await import('./hookUp.js');
+        return toIObserve(s);
+    }
     async intro(proxy: Element & VirtualProps, target: Element, beDecorProps: BeDecoratedProps){
         const params = JSON.parse(proxy.getAttribute('is-' + beDecorProps.ifWantsToBe!)!);
         const {hookUp} = await import('./hookUp.js');
@@ -21,7 +26,8 @@ export class BeObservant extends EventTarget implements Actions {
     async #doParams(params: any, hookUp: (fromParam: any, proxy: Element & VirtualProps, toParam: string, noAwait?: boolean, host?: Element) => Promise<HookUpInfo>, proxy: Element & VirtualProps){
         let lastKey = '';
         for(const propKey in params){
-            const parm = params[propKey];
+            let parm = params[propKey] as string | IObserve | (string | IObserve)[];
+            if(typeof parm === 'string') parm = await this.toIObserve(parm);
             const startsWithHat = propKey[0] === '^';
             const key = startsWithHat ? lastKey : propKey;
             const info = await hookUp(parm, proxy, key);
