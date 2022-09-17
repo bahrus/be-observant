@@ -13,7 +13,7 @@ export class BeObservant extends EventTarget implements Actions {
     }
 
     async onProps({props, proxy}: PP) {
-        this.disconnect();
+        this.#disconnect();
         const {hookUp} = await import('./hookUp.js');
         if(Array.isArray(props)){
             for(const parm of props){
@@ -36,13 +36,13 @@ export class BeObservant extends EventTarget implements Actions {
             if(!startsWithHat) lastKey = propKey;
         }  
     }
-    disconnect(){
+    #disconnect(){
         for(const c of this.#controllers){
             c.abort();
         }
     }
     async finale(proxy: Proxy, target:Element){
-        this.disconnect();
+        this.#disconnect();
     }
 }
 
@@ -59,7 +59,6 @@ define<Proxy & BeDecoratedProps<Proxy, Actions>, Actions>({
         propDefaults:{
             upgrade,
             ifWantsToBe,
-            //intro: 'intro',
             forceVisible: ['template', 'script', 'style'],
             finale: 'finale',
             virtualProps: ['props'],
