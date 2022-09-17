@@ -1,7 +1,7 @@
 import {IObserve, VirtualProps, HookUpInfo} from './types';
 
 
-export async function addListener(elementToObserve: Element, observeParams: IObserve, propKey: string, self: Element & VirtualProps, noAwait = false): Promise<HookUpInfo>{
+export async function addListener(elementToObserve: Element, observeParams: IObserve, propKey: string, self: Element, noAwait = false): Promise<HookUpInfo>{
     const {on, vft, valFromTarget, valFromEvent, vfe, skipInit, onSet, nudge, observeHostProp, eventListenerOptions,} = observeParams;
     const valFT = vft || valFromTarget;
     const { camelToLisp } = await import('trans-render/lib/camelToLisp.js');
@@ -77,16 +77,16 @@ export function toIObserve(s: string): IObserve{
     return isProp ? {onSet: vft, vft, ocoho, nudge} as IObserve : {vft, ocoho, nudge} as IObserve;
 }
 
-export async function hookUp(fromParam: string | IObserve, proxy: Element & VirtualProps, toParam: string, noAwait = false, host?: Element): Promise<HookUpInfo>{
+export async function hookUp(fromParam: string | IObserve, self: Element, toParam: string, noAwait = false, host?: Element): Promise<HookUpInfo>{
     const observeParam = (typeof fromParam === 'string') ? toIObserve(fromParam) : fromParam;
 
     const {getElementToObserve} = await import('./getElementToObserve.js');
-    let elementToObserve = await getElementToObserve(proxy, observeParam, host);
+    let elementToObserve = await getElementToObserve(self, observeParam, host);
     if(elementToObserve === null){
         if(observeParam.observeInward !== undefined){
             const {childrenParsed} = await import ('be-a-beacon/childrenParsed.js');
-            await childrenParsed(proxy.self);
-            elementToObserve = proxy.querySelector(observeParam.observeInward);
+            await childrenParsed(self);
+            elementToObserve = self.querySelector(observeParam.observeInward);
         }
 
     }
@@ -101,7 +101,7 @@ export async function hookUp(fromParam: string | IObserve, proxy: Element & Virt
         const {homeInOn} = await import('trans-render/lib/homeInOn.js');
         elementToObserve = await homeInOn(elementToObserve, hio) as Element;
     }
-    return await addListener(elementToObserve, observeParam, toParam, proxy, noAwait);
+    return await addListener(elementToObserve, observeParam, toParam, self, noAwait);
 }
     
 

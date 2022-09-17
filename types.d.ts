@@ -1,4 +1,4 @@
-import {BeDecoratedProps, EventHandler, MinimalController, MinimalProxy} from 'be-decorated/types';
+import {BeDecoratedProps, MinimalProxy} from 'be-decorated/types';
 
 export interface IObserve<Props = any, Actions = Props, TEvent = Event>{
     /**
@@ -132,7 +132,6 @@ export interface HookUpInfo{
 }
 
 export interface Actions{
-    //intro(proxy: Element & VirtualProps, target: Element, beDecorProps: BeDecoratedProps): void;
     finale(proxy: Element & VirtualProps, target:Element): void;
     onProps(pp: PP): void;
 }

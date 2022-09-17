@@ -78,15 +78,15 @@ export function toIObserve(s) {
     const nudge = true;
     return isProp ? { onSet: vft, vft, ocoho, nudge } : { vft, ocoho, nudge };
 }
-export async function hookUp(fromParam, proxy, toParam, noAwait = false, host) {
+export async function hookUp(fromParam, self, toParam, noAwait = false, host) {
     const observeParam = (typeof fromParam === 'string') ? toIObserve(fromParam) : fromParam;
     const { getElementToObserve } = await import('./getElementToObserve.js');
-    let elementToObserve = await getElementToObserve(proxy, observeParam, host);
+    let elementToObserve = await getElementToObserve(self, observeParam, host);
     if (elementToObserve === null) {
         if (observeParam.observeInward !== undefined) {
             const { childrenParsed } = await import('be-a-beacon/childrenParsed.js');
-            await childrenParsed(proxy.self);
-            elementToObserve = proxy.querySelector(observeParam.observeInward);
+            await childrenParsed(self);
+            elementToObserve = self.querySelector(observeParam.observeInward);
         }
     }
     if (elementToObserve === null) {
@@ -100,7 +100,7 @@ export async function hookUp(fromParam, proxy, toParam, noAwait = false, host) {
         const { homeInOn } = await import('trans-render/lib/homeInOn.js');
         elementToObserve = await homeInOn(elementToObserve, hio);
     }
-    return await addListener(elementToObserve, observeParam, toParam, proxy, noAwait);
+    return await addListener(elementToObserve, observeParam, toParam, self, noAwait);
 }
 export async function sleep(ms) {
     return new Promise(resolve => {

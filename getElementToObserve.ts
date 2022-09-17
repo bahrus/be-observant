@@ -56,7 +56,7 @@ export async function getElementToObserve(self:Element, observeParam:IObserve, h
     const nm = onm || observeName;
     if(nm !== undefined){
         const form = self.closest('form');
-        if(form !== null{
+        if(form !== null){
             const el = form.elements[nm as any as number];
             if(el) return el;
         }
