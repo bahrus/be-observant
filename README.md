@@ -261,7 +261,7 @@ Next we specify what to pass from the element we are observing and possibly from
                         Use | for limited support for method invocation.  E.g. "current.getState|" will invoke the getState method on the current object.
                         Common use case:  querySelector|selector.
                     </li>
-                    <li>If an array is specified:  Perform interpolation between constants and dynamic values from the target [TODO].  Use range when appropriate [TODO:  Example]</li>
+                </ol>
             </td>
             <td>Can also be used to auto-set the "on" value as described above.</td>
         </tr>
