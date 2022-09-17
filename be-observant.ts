@@ -1,5 +1,5 @@
 import {define, BeDecoratedProps} from 'be-decorated/be-decorated.js';
-import {Actions, IObserve, VirtualProps, HookUpInfo} from './types';
+import {Actions, IObserve, VirtualProps, HookUpInfo, PP, Proxy} from './types';
 import {register} from "be-hive/register.js";
 
 export {IObserve} from './types';
@@ -11,19 +11,19 @@ export class BeObservant extends EventTarget implements Actions {
         const {toIObserve} = await import('./hookUp.js');
         return toIObserve(s);
     }
-    async intro(proxy: Element & VirtualProps, target: Element, beDecorProps: BeDecoratedProps){
-        const params = JSON.parse(proxy.getAttribute('is-' + beDecorProps.ifWantsToBe!)!);
+
+    async onProps({props, proxy}: PP) {
         const {hookUp} = await import('./hookUp.js');
-        if(Array.isArray(params)){
-            for(const parm of params){
+        if(Array.isArray(props)){
+            for(const parm of props){
                 await this.#doParams(parm, hookUp, proxy);
             }
         }else{
-            await this.#doParams(params, hookUp, proxy);
+            await this.#doParams(props, hookUp, proxy);
         }
         proxy.resolved = true;
     }
-    async #doParams(params: any, hookUp: (fromParam: any, proxy: Element & VirtualProps, toParam: string, noAwait?: boolean, host?: Element) => Promise<HookUpInfo>, proxy: Element & VirtualProps){
+    async #doParams(params: any, hookUp: (fromParam: any, proxy: Proxy, toParam: string, noAwait?: boolean, host?: Element) => Promise<HookUpInfo>, proxy: Proxy){
         let lastKey = '';
         for(const propKey in params){
             let parm = params[propKey] as string | IObserve | (string | IObserve)[];
@@ -40,7 +40,7 @@ export class BeObservant extends EventTarget implements Actions {
             c.abort();
         }
     }
-    async finale(proxy: Element & VirtualProps, target:Element){
+    async finale(proxy: Proxy, target:Element){
         this.disconnect();
     }
 }
@@ -52,17 +52,21 @@ const ifWantsToBe = 'observant';
 
 const upgrade = '*';
 
-define<VirtualProps & BeDecoratedProps<VirtualProps, Actions>, Actions>({
+define<Proxy & BeDecoratedProps<Proxy, Actions>, Actions>({
     config:{
         tagName,
         propDefaults:{
             upgrade,
             ifWantsToBe,
-            intro: 'intro',
-            noParse: true,
+            //intro: 'intro',
             forceVisible: ['template', 'script', 'style'],
             finale: 'finale',
-            virtualProps: []
+            virtualProps: ['props'],
+            primaryProp: 'props',
+            primaryPropReq: true,
+        },
+        actions: {
+            onProps: 'props',
         }
     },
     complexPropDefaults:{

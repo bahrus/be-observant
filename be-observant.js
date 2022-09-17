@@ -6,16 +6,15 @@ export class BeObservant extends EventTarget {
         const { toIObserve } = await import('./hookUp.js');
         return toIObserve(s);
     }
-    async intro(proxy, target, beDecorProps) {
-        const params = JSON.parse(proxy.getAttribute('is-' + beDecorProps.ifWantsToBe));
+    async onProps({ props, proxy }) {
         const { hookUp } = await import('./hookUp.js');
-        if (Array.isArray(params)) {
-            for (const parm of params) {
+        if (Array.isArray(props)) {
+            for (const parm of props) {
                 await this.#doParams(parm, hookUp, proxy);
             }
         }
         else {
-            await this.#doParams(params, hookUp, proxy);
+            await this.#doParams(props, hookUp, proxy);
         }
         proxy.resolved = true;
     }
@@ -51,11 +50,15 @@ define({
         propDefaults: {
             upgrade,
             ifWantsToBe,
-            intro: 'intro',
-            noParse: true,
+            //intro: 'intro',
             forceVisible: ['template', 'script', 'style'],
             finale: 'finale',
-            virtualProps: []
+            virtualProps: ['props'],
+            primaryProp: 'props',
+            primaryPropReq: true,
+        },
+        actions: {
+            onProps: 'props',
         }
     },
     complexPropDefaults: {

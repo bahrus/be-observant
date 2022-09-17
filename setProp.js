@@ -3,7 +3,7 @@ export async function setProp(valFT, valFE, propKey, observedElement, { parseVal
         return;
     const valPath = event !== undefined && valFE ? valFE : valFT;
     if (valPath === undefined)
-        throw 'NI'; //not implemented;
+        throw 'bO.sP.NI'; //not implemented;
     const { splitExt } = await import('trans-render/lib/splitExt.js');
     const split = splitExt(valPath);
     let src = valFE !== undefined ? (event ? event : observedElement) : observedElement;

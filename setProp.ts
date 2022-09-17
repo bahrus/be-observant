@@ -5,7 +5,7 @@ export async function setProp(valFT: string | undefined, valFE: string | undefin
     {parseValAs, clone, as, trueVal, falseVal, fire, translate}: IObserve, self: Element, event?: Event){
     if(event === undefined && valFE !== undefined) return;
     const valPath = event !== undefined && valFE ? valFE : valFT;
-    if(valPath === undefined) throw 'NI';//not implemented;
+    if(valPath === undefined) throw 'bO.sP.NI';//not implemented;
     const {splitExt} = await import('trans-render/lib/splitExt.js');
     const split = splitExt(valPath);
     let src: any = valFE !== undefined ? ( event ? event : observedElement) : observedElement;

@@ -102,11 +102,17 @@ export interface IObserve<Props = any, Actions = Props, TEvent = Event>{
 
 }
 
-export type InterpolatingObserveParams<TString = string, TProps = any, TActions = TProps> = string | [TString] | IObserve | InterpolatingObserveParams<TString>[];
+//export type InterpolatingObserveParams<TString = string, TProps = any, TActions = TProps> = string | [TString] | IObserve | InterpolatingObserveParams<TString>[];
 
-export type IObserveMap<Self = any, Props = any, Actions = Props> = {[key in keyof Self]: InterpolatingObserveParams<String, Props, Actions>};
+//export type IObserveMap<Self = any, Props = any, Actions = Props> = {[key in keyof Self]: InterpolatingObserveParams<String, Props, Actions>};
 
-export interface VirtualProps extends MinimalProxy{}
+export type PropObserveMap<Props = any, Actions = Props, TEvent = Event> = {[key: string]: IObserve<Props, Actions, TEvent> | string}
+
+export interface EndUserProps<Props = any, Actions = Props, TEvent = Event> {
+    props: PropObserveMap<Props, Actions, TEvent> | PropObserveMap<Props, Actions, TEvent>[];
+}
+
+export interface VirtualProps extends EndUserProps, MinimalProxy{}
 
 export type Proxy = Element & VirtualProps;
 
@@ -123,6 +129,7 @@ export interface HookUpInfo{
 }
 
 export interface Actions{
-    intro(proxy: Element & VirtualProps, target: Element, beDecorProps: BeDecoratedProps): void;
+    //intro(proxy: Element & VirtualProps, target: Element, beDecorProps: BeDecoratedProps): void;
     finale(proxy: Element & VirtualProps, target:Element): void;
+    onProps(pp: PP): void;
 }
