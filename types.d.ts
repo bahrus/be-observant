@@ -33,6 +33,9 @@ export interface IObserve<Props = any, Actions = Props, TEvent = Event>{
     observeInward?: string,
     oi?: string;
 
+    observeName?: string,
+    oN?: string;
+
     
     /**
      * Event name to watch for
