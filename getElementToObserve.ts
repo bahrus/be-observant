@@ -1,5 +1,3 @@
-import {getHost} from 'trans-render/lib/getHost.js';
-import { upSearch } from 'trans-render/lib/upSearch.js';
 import {IObserve} from './types';
 export {IObserve} from './types';
 
@@ -23,11 +21,13 @@ export async function getElementToObserve(self:Element, observeParam:IObserve, h
     if(c !== undefined){
         elementToObserve = self.closest(c);
         if(elementToObserve !== null && _){
+            const {upSearch} = await import('trans-render/lib/upSearch.js');
             elementToObserve = upSearch(elementToObserve, _) as Element;
         }
         return elementToObserve;
     }
     if(_ !== undefined){
+        const {upSearch} = await import('trans-render/lib/upSearch.js');
         return upSearch(self, _) as Element;
     }
     const {observeSelf, os} = observeParam;
@@ -52,6 +52,18 @@ export async function getElementToObserve(self:Element, observeParam:IObserve, h
         const {getElementWithProp} = await import('./getElementWithProp.js');
         return await getElementWithProp(self, hop);
     }
+    const {observeName, onm} = observeParam;
+    const nm = onm || observeName;
+    if(nm !== undefined){
+        const form = self.closest('form');
+        if(form !== null{
+            const el = form.elements[nm as any as number];
+            if(el) return el;
+        }
+        const {upSearch} = await import('trans-render/lib/upSearch.js');
+        return upSearch(self, `[name="${nm}"]`, true);
+    }
+    const {getHost} = await import('trans-render/lib/getHost.js');
     return host || getHost(self);
     
 }
