@@ -13,6 +13,7 @@ export class BeObservant extends EventTarget implements Actions {
     }
 
     async onProps({props, proxy}: PP) {
+        this.disconnect();
         const {hookUp} = await import('./hookUp.js');
         if(Array.isArray(props)){
             for(const parm of props){

@@ -7,6 +7,7 @@ export class BeObservant extends EventTarget {
         return toIObserve(s);
     }
     async onProps({ props, proxy }) {
+        this.disconnect();
         const { hookUp } = await import('./hookUp.js');
         if (Array.isArray(props)) {
             for (const parm of props) {
