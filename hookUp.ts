@@ -1,7 +1,7 @@
 import {IObserve, VirtualProps, HookUpInfo} from './types';
 
 
-export async function addListener(elementToObserve: Element, observeParams: IObserve, propKey: string, self: Element, noAwait = false): Promise<HookUpInfo>{
+export async function addListener(elementToObserve: Element, observeParams: IObserve, propKey: string, target: EventTarget, noAwait = false): Promise<HookUpInfo>{
     const {on, vft, valFromTarget, valFromEvent, vfe, skipInit, onSet, nudge, observeHostProp, eventListenerOptions,} = observeParams;
     const valFT = vft || valFromTarget;
     const { camelToLisp } = await import('trans-render/lib/camelToLisp.js');
@@ -12,7 +12,7 @@ export async function addListener(elementToObserve: Element, observeParams: IObs
     const {setProp} = await import('./setProp.js');
     if(valFT !== undefined && !skipInit){
         if(observeParams.debug) debugger;
-        await setProp(valFT, valFE, propKey, elementToObserve, observeParams, self);
+        await setProp(valFT, valFE, propKey, elementToObserve, observeParams, target);
     }
     const controller = new AbortController;
     if(onz !== undefined){
@@ -24,14 +24,14 @@ export async function addListener(elementToObserve: Element, observeParams: IObs
             }
             if(stopPropagation) e.stopPropagation();
             try{
-                const isConnected = self.isConnected;
+                const isConnected = (<any>target).isConnected;
             }catch(e){
                 return;
             }
-            if((<any>self).debug){
+            if((<any>target).debug){
                 console.log({e, valFT, valFE, propKey, observeParams});
             }
-            setProp(valFT, valFE, propKey, elementToObserve, observeParams, self, e);
+            setProp(valFT, valFE, propKey, elementToObserve, observeParams, target, e);
         }
         let options: AddEventListenerOptions | undefined;
         switch(typeof eventListenerOptions){
@@ -46,7 +46,7 @@ export async function addListener(elementToObserve: Element, observeParams: IObs
         } 
         options.signal = controller.signal;
         elementToObserve.addEventListener(onz, fn, options);
-        if((<any>self).debug){
+        if((<any>target).debug){
             console.log({onz, elementToObserve, fn});
         }
         if(nudge && elementToObserve.getAttribute !== undefined) {
@@ -57,7 +57,7 @@ export async function addListener(elementToObserve: Element, observeParams: IObs
         const {bePropagating} = await import('trans-render/lib/bePropagating.js');
         const et = await bePropagating(elementToObserve, onSetX);
         et.addEventListener(onSetX, () => {
-            setProp(valFT, valFE, propKey, elementToObserve, observeParams, self);
+            setProp(valFT, valFE, propKey, elementToObserve, observeParams, target);
         }, {signal: controller.signal});
     }else{
         throw 'bO.hU.NI'; // not implemented
@@ -77,10 +77,11 @@ export function toIObserve(s: string): IObserve{
     return isProp ? {onSet: vft, vft, ocoho, nudge} as IObserve : {vft, ocoho, nudge} as IObserve;
 }
 
-export async function hookUp(fromParam: string | IObserve, self: Element, toParam: string, noAwait = false, host?: Element): Promise<HookUpInfo>{
+export async function hookUp(fromParam: string | IObserve, ref: Element | [Element, EventTarget], toParam: string, noAwait = false, host?: Element): Promise<HookUpInfo>{
     const observeParam = (typeof fromParam === 'string') ? toIObserve(fromParam) : fromParam;
 
     const {getElementToObserve} = await import('./getElementToObserve.js');
+    const self = Array.isArray(ref) ? ref[0] : ref;
     let elementToObserve = await getElementToObserve(self, observeParam, host);
     if(elementToObserve === null){
         if(observeParam.observeInward !== undefined){
@@ -101,7 +102,8 @@ export async function hookUp(fromParam: string | IObserve, self: Element, toPara
         const {homeInOn} = await import('trans-render/lib/homeInOn.js');
         elementToObserve = await homeInOn(elementToObserve, hio) as Element;
     }
-    return await addListener(elementToObserve, observeParam, toParam, self, noAwait);
+    const target = Array.isArray(ref) ? ref[1] : ref;
+    return await addListener(elementToObserve, observeParam, toParam, target, noAwait);
 }
     
 

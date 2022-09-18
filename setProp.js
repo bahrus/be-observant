@@ -1,4 +1,4 @@
-export async function setProp(valFT, valFE, propKey, observedElement, { parseValAs, clone, as, trueVal, falseVal, fire, translate }, self, event) {
+export async function setProp(valFT, valFE, propKey, observedElement, { parseValAs, clone, as, trueVal, falseVal, fire, translate }, target, event) {
     if (event === undefined && valFE !== undefined)
         return;
     const valPath = event !== undefined && valFE ? valFE : valFT;
@@ -10,7 +10,7 @@ export async function setProp(valFT, valFE, propKey, observedElement, { parseVal
     let val;
     const { getProp } = await import('trans-render/lib/getProp.js');
     val = getProp(src, split);
-    if (self.debug) {
+    if (target.debug) {
         console.log({ val, split, observedElement });
     }
     if (val === undefined)
@@ -30,21 +30,21 @@ export async function setProp(valFT, valFE, propKey, observedElement, { parseVal
     else if (falseVal && !val) {
         val = falseVal;
     }
-    if (as !== undefined) {
+    if (as !== undefined && target instanceof Element) {
         //const propKeyLispCase = camelToLisp(propKey);
         switch (as) {
             case 'str-attr':
-                self.setAttribute(propKey, val.toString());
+                target.setAttribute(propKey, val.toString());
                 break;
             case 'obj-attr':
-                self.setAttribute(propKey, JSON.stringify(val));
+                target.setAttribute(propKey, JSON.stringify(val));
                 break;
             case 'bool-attr':
                 if (val) {
-                    self.setAttribute(propKey, '');
+                    target.setAttribute(propKey, '');
                 }
                 else {
-                    self.removeAttribute(propKey);
+                    target.removeAttribute(propKey);
                 }
                 break;
             // default:
@@ -58,13 +58,13 @@ export async function setProp(valFT, valFE, propKey, observedElement, { parseVal
     else {
         if (propKey[0] === '.') {
             const { setProp } = await import('trans-render/lib/setProp.js');
-            setProp(self, propKey, val);
+            setProp(target, propKey, val);
         }
         else {
-            self[propKey] = val;
+            target[propKey] = val;
         }
     }
     if (fire !== undefined) {
-        self.dispatchEvent(new CustomEvent(fire.type, fire.init));
+        target.dispatchEvent(new CustomEvent(fire.type, fire.init));
     }
 }

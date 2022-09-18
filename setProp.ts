@@ -2,7 +2,7 @@ import {IObserve} from './types';
 declare function structuredClone(val: any): any;
 
 export async function setProp(valFT: string | undefined, valFE: string | undefined, propKey: string, observedElement: Element, 
-    {parseValAs, clone, as, trueVal, falseVal, fire, translate}: IObserve, self: Element, event?: Event){
+    {parseValAs, clone, as, trueVal, falseVal, fire, translate}: IObserve, target: EventTarget, event?: Event){
     if(event === undefined && valFE !== undefined) return;
     const valPath = event !== undefined && valFE ? valFE : valFT;
     if(valPath === undefined) throw 'bO.sP.NI';//not implemented;
@@ -12,7 +12,7 @@ export async function setProp(valFT: string | undefined, valFE: string | undefin
     let val: any;
     const {getProp} = await import('trans-render/lib/getProp.js');
     val = getProp(src, split);
-    if((<any>self).debug){
+    if((<any>target).debug){
         console.log({val, split, observedElement});
     }
    
@@ -30,20 +30,20 @@ export async function setProp(valFT: string | undefined, valFE: string | undefin
     }else if(falseVal && !val){
         val = falseVal;
     }
-    if(as !== undefined){
+    if(as !== undefined && target instanceof Element){
         //const propKeyLispCase = camelToLisp(propKey);
         switch(as){
             case 'str-attr':
-                self.setAttribute(propKey, val.toString());
+                target.setAttribute(propKey, val.toString());
                 break;
             case 'obj-attr':
-                self.setAttribute(propKey, JSON.stringify(val));
+                target.setAttribute(propKey, JSON.stringify(val));
                 break;
             case 'bool-attr':
                 if(val) {
-                    self.setAttribute(propKey, '');
+                    target.setAttribute(propKey, '');
                 }else{
-                    self.removeAttribute(propKey);
+                    target.removeAttribute(propKey);
                 }
                 break;
             // default:
@@ -58,13 +58,13 @@ export async function setProp(valFT: string | undefined, valFE: string | undefin
     }else{
         if(propKey[0] === '.'){
             const {setProp} = await import('trans-render/lib/setProp.js');
-            setProp(self, propKey, val);
+            setProp(target, propKey, val);
         }else{
-            (<any>self)[propKey] = val;
+            (<any>target)[propKey] = val;
         }
     }
     if(fire !== undefined){
-        self.dispatchEvent(new CustomEvent(fire.type, fire.init));
+        target.dispatchEvent(new CustomEvent(fire.type, fire.init));
     }
 
 }
