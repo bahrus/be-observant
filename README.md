@@ -48,13 +48,15 @@ Anyway, be-observant encourages uni-directional data flow, which to me is the mo
 
 Another benefit of this "anti-pattern" is that it works quite nicely when lazy loading content.  The hosting element doesn't need to be micro-managing internal elements coming and going.  It is a less "planned" component economic model :-).  Underlying this idea is the concept that web components and custom decorators / attributes / behaviors, have a sense of "identity", capable of reacting spontaneously to user events, and able to "think independently" when interacting with peer components, even able to spawn children when the conditions are right, without bogging the host element down in minutia.  Reasoning about them may be easier if we can relate to the way they work together to how human organizations function -- or at least non-North Korean Military organizations :-).  This approach also seems to be more natural when striving for more declarative, markup-centric, less code-centric environments.  be-observant is closely "observing" whether there are any signs of life as far as HTML Modules.  Oh, and JQuery, still the most popular framework out there, doesn't follow such a strict hierarchy either, am I right?
 
-An alternative approach might be to use the "context api" to develop a connection between custom attribute and host -- the custom-attribute-based DOM decorator emits a bubbling event -- "how can I help?".  But this may depend on timing considerations -- with declarative custom elements (including now declarative ShadowDOM), the host may become upgraded *after* the attribute does.  Why insist the element can't be interactive until that happens?
-
-Nevertheless, that approach will be considered once the api is stabilized, especially if there is a significant performance benefit on the context api's side.
-
 Just as custom elements becoming activated relies on css features of the markup (registered tag names), here we also rely on CSS recognizing the attribute, without permission from any host component (though the host has to "opt-in" in a rather light-touch way if using Shadow DOM - by plopping a be-hive element somewhere inside the Shadow DOM realm). 
 
 </details>
+
+## Use Cases
+
+### Web Components as a Democratic Organism
+
+### Progressively Enhancing Server Rendered/Generated content
 
 ## Alternatives
 
@@ -224,7 +226,7 @@ Having selected a DOM element to observe, we may optionally want to observe a su
 
 This is done via parameter homeInOn, which specifies a "dot" delimited path from the element to observe found above.
 
-### When
+### When to act
 
 Once we find the element (or Event Target) to observe, next we need to specify what property or event to listen to on that element / Event Target.
 
@@ -246,10 +248,25 @@ Once we find the element (or Event Target) to observe, next we need to specify w
             <td>Watches for property changes made via invoking the setter of the property.</td>
             <td></td>
         </tr>
+        <tr>
+            <td>skipInit</td>
+            <td>Do not pass in the initial value prior to any events being fired.</td>
+            <td>Needed when it doesn't make sense to do anything until the user has directly interacted with the observed element.</td>
+        </tr>
+        <tr>
+            <td>eventListenerOptions</td>
+            <td>Specify whether to only listen once.  Or to capture events that don't bubble.</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>eventFilter</td>
+            <td>Filter out events if they don't match this object (thinks like keyCode can be specified here).</td>
     </tbody>
 </table>
 
-Next we specify what to pass from the element we are observing and possibly from the event.
+### What to do
+
+Next we specify what to pass to the adorned element from the element we are observing and possibly from the event.
 
 <table>
     <caption>Getting the value</caption>
@@ -276,13 +293,62 @@ Next we specify what to pass from the element we are observing and possibly from
             <td>Specify a path from the event to "pull" when the event fires</td>
             <td></td>
         </tr>
-        <tr>
-            <td>fromProxy</td>
-            <td>Specify the name of a proxy ("ifWantsToBe") from another may-it-be decorator</td>
-            <td></td>
-        </tr>
     </tbody>
 </table>
+
+### Alternative End Point
+
+By default, the lhs of each be-observant setting specifies the name of the property to set.
+
+But we can instead opt to set an attribute.
+
+Possible values are shown below
+
+```TypeScript
+export interface AlternateEndPoint {
+    /** Set attribute rather than property. */
+    as?: 'str-attr' | 'bool-attr' | 'obj-attr' | 'class' | 'part',
+}
+```
+
+### Side Effects
+
+We can apply some "side effects":
+
+<table>
+    <caption>Side Effects</caption>
+    <thead>
+        <th>Key</th>
+        <th>Meaning</th>
+        <th>Notes</th>
+    </thead>
+    <tbody>
+    <tr>
+        <td>debug</td>
+        <td>Pause JS execution when be-observant is invoked</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>fire</td>
+        <td>Emit a custom event after setting the property on the element.</td>
+        <td>Most common use case:   Setting the value of an input element, and want downstream elements to see it as if a user entered the value</td>
+    </td>
+    <tr>
+        <td>nudge</td>
+        <td>Slowly "awaken" a disabled element.  If the disabled attribute is not set to a number, or is set to "1", removes the disabled attribute.  If it is a larger number, decrements the number by 1. 
+        </td>
+        <td>Useful for avoiding elements to appear interactive, but don't function properly until the component is properly hydrated. 
+        </td>
+    </tr>
+    <tr>
+        <td>stopPropagation</td>
+        <td>Prevent event from continuing to bubble</td>
+        <td></td>
+    </tr>
+    </tbody>
+</table>
+
+
 
 ## NB
 

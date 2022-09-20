@@ -31,30 +31,8 @@ export async function setProp(valFT: string | undefined, valFE: string | undefin
         val = falseVal;
     }
     if(as !== undefined && target instanceof Element){
-        //const propKeyLispCase = camelToLisp(propKey);
-        switch(as){
-            case 'str-attr':
-                target.setAttribute(propKey, val.toString());
-                break;
-            case 'obj-attr':
-                target.setAttribute(propKey, JSON.stringify(val));
-                break;
-            case 'bool-attr':
-                if(val) {
-                    target.setAttribute(propKey, '');
-                }else{
-                    target.removeAttribute(propKey);
-                }
-                break;
-            // default:
-            //     if(toProp === '...'){
-            //         Object.assign(subMatch, val);
-            //     }else{
-            //         (<any>subMatch)[toProp] = val;
-            //     }
-                
-    
-        }
+        const {setAttr} = await import('./setAttr.js');
+        setAttr(target, propKey, as, val);
     }else{
         if(propKey[0] === '.'){
             const {setProp} = await import('trans-render/lib/setProp.js');

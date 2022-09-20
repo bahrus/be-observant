@@ -1,53 +1,66 @@
 import {BeDecoratedProps, MinimalProxy} from 'be-decorated/types';
 
-export interface IObserve<Props = any, Actions = Props, TEvent = Event>{
+
+export interface WhatToObserve {
     /**
      * A css match criteria, used in an "upSearch" for the element to observe.
      */
-    observe?: string,
-    /**
-     * Abbrev for observe
-     */
-    o?: string,
-    /**
-     * Observe first ancestor DOM element matching this string
-     */
-    observeClosest?: string,
-    oc?: string,
+     observe?: string,
+     /**
+      * Abbrev for observe
+      */
+     o?: string,
+     /**
+      * Observe first ancestor DOM element matching this string
+      */
+     observeClosest?: string,
+     oc?: string,
+ 
+     observeClosestOrHost?: string | boolean,
+     /**
+      * observe closest or host
+      */
+     ocoho?: string | boolean,
+ 
+     observeSelf?: boolean,
+     os?: boolean,
+ 
+     observeHostProp?: string,
+     ohop?: string,
+ 
+     observeWinObj?: string,
+     owo?: string,
+ 
+     observeInward?: string,
+     oi?: string;
+ 
+     observeName?: string,
+     //onm?: string;
+     ona?: string,
+}
 
-    observeClosestOrHost?: string | boolean,
-    /**
-     * observe closest or host
-     */
-    ocoho?: string | boolean,
-
-    observeSelf?: boolean,
-    os?: boolean,
-
-    observeHostProp?: string,
-    ohop?: string,
-
-    observeWinObj?: string,
-    owo?: string,
-
-    observeInward?: string,
-    oi?: string;
-
-    observeName?: string,
-    //onm?: string;
-    ona?: string,
-
-    
+export interface WhenToAct<Props = any, TEvent = Event>{
     /**
      * Event name to watch for
      */
-    on?: string,
+     on?: string,
 
-    /**
-    * Subscribe to property changes rather than events.
-    */
-    onSet?: keyof Props & string,
+     /**
+     * Subscribe to property changes rather than events.
+     */
+     onSet?: keyof Props & string,
 
+    /** Do not pass in the initial value prior to any events being fired. */
+    skipInit?: boolean,
+
+    eventListenerOptions?: boolean | AddEventListenerOptions,
+
+    //capture?: boolean,
+
+    eventFilter?: Partial<TEvent>,
+}
+
+export interface GetValConfig<Props = any> {
     homeInOn?: keyof Props & string,
     /**
      * The path to the (sub) property of the element being observed.
@@ -70,39 +83,65 @@ export interface IObserve<Props = any, Actions = Props, TEvent = Event>{
     /**
      * Perform a structural clone before passing the observed value.
      */
+}
+
+export interface AdjustValConfig{
     clone?: boolean,
-    /** Do not pass in the initial value prior to any events being fired. */
-    skipInit?: boolean,
+
     /**
      *  'int' | 'float' | 'bool' | 'date' | 'truthy' | 'falsy' | '' | 'string' | 'object';  
      */
     parseValAs?: 'int' | 'float' | 'bool' | 'date' | 'truthy' | 'falsy' | '' | 'string' | 'object',
 
-    /** Set attribute rather than property. */
-    as?: 'str-attr' | 'bool-attr' | 'obj-attr',
     /** If val is true, set property to this value. */
     trueVal?: any,
     /** If val is false, set property to this value. */
     falseVal?: any,
 
+    translate?: number,
+}
+
+export interface SideEffects {
+
+    /**
+     * Pause JS execution when be-observant is invoked<
+     */
     debug?: boolean,
 
+    /**
+     * Emit a custom event after setting the property on the element.
+     */
     fire?: {
         type: string,
         init: CustomEventInit,
     }
 
-    translate?: number,
-
+    
+    /**
+     * Slowly "awaken" a disabled element.  If the disabled attribute is not set to a number, or is set to "1", removes the disabled attribute.  If it is a larger number, decrements the number by 1. 
+     */
     nudge?: boolean,
 
-    eventListenerOptions?: boolean | AddEventListenerOptions,
 
-    //capture?: boolean,
-
-    eventFilter?: Partial<TEvent>,
 
     stopPropagation?: boolean,
+}
+
+export interface AlternateEndPoint {
+    /** Set attribute rather than property. */
+    as?: 'str-attr' | 'bool-attr' | 'obj-attr' | 'class' | 'part',
+    
+
+}
+
+export interface IObserve<Props = any, Actions = Props, TEvent = Event> extends
+    WhatToObserve,
+    WhenToAct<Props, TEvent>,
+    GetValConfig<Props>,
+    AdjustValConfig,
+    SideEffects,
+    AlternateEndPoint
+{
 
 }
 
