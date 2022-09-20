@@ -36,6 +36,7 @@ be-observant also provides an experimental declarative [trans-render plugin](htt
 </ways-of-science>
 ```
 
+
 ## Now hold on just a minute... 
 
 <details>
@@ -190,6 +191,11 @@ First we need to choose *what* to observe.  This is done via a number of alterna
             <td>observeClosestOrHost (abbrev ocoho)</td>
             <td>Use the native function call "closest".  If that's null, do el.getRootNode()</td>
         </tr>
+        <tr>
+            <td>observeName (abbrev ona)</td>
+            <td>
+                Finds the closest containing form using .closest('form') and searches for an element within that form with matching name.  If not found, does an "upSearch" for it, as described above, stopping at any ShadowDOM boundary.
+            </td>
         <tr>
             <td>observeSelf (abbrev os)</td>
             <td>Observe self</td>

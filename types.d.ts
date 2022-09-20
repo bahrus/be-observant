@@ -34,7 +34,8 @@ export interface IObserve<Props = any, Actions = Props, TEvent = Event>{
     oi?: string;
 
     observeName?: string,
-    onm?: string;
+    //onm?: string;
+    ona?: string,
 
     
     /**

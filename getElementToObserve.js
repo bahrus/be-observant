@@ -48,8 +48,8 @@ export async function getElementToObserve(self, observeParam, host) {
         const { getElementWithProp } = await import('./getElementWithProp.js');
         return await getElementWithProp(self, hop);
     }
-    const { observeName, onm } = observeParam;
-    const nm = onm || observeName;
+    const { observeName, ona } = observeParam;
+    const nm = ona || observeName;
     if (nm !== undefined) {
         const form = self.closest('form');
         if (form !== null) {
