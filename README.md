@@ -260,7 +260,8 @@ Once we find the element (or Event Target) to observe, next we need to specify w
         </tr>
         <tr>
             <td>eventFilter</td>
-            <td>Filter out events if they don't match this object (thinks like keyCode can be specified here).</td>
+            <td>Filter out events if they don't match this object (things like keyCode can be specified here).</td>
+            <td></td>
     </tbody>
 </table>
 
@@ -293,6 +294,53 @@ Next we specify what to pass to the adorned element from the element we are obse
             <td>Specify a path from the event to "pull" when the event fires</td>
             <td></td>
         </tr>
+    </tbody>
+</table>
+
+### Adjusting the value
+
+There are some frequent requirements when it comes to adjusting the value obtained from the target / event, prior to passing the value.  The options to do this are listed below:
+
+<table>
+    <caption>Value Adjustments
+        <thead>
+        <th>Key</th>
+        <th>Meaning</th>
+        <th>Notes</th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>clone</td>
+            <td>Do a structuredClone of the value before passing it</td>
+            <td>Makes it almost impossible to experience unexpected side effects from passing an object from one component to another</td>
+        </tr>
+        <tr>
+            <td>parseValAs</td>
+            <td>If the value extracted from the target / event is of type string, often we want to parse the string before passing the value.
+            Options:  'int' | 'float' | 'bool' | 'date' | 'truthy' | 'falsy' | '' | 'string' | 'object'.  The option 'string' is actually the opposite, taking an object and JSON.stringify'ing it.
+            </td>
+            <td></td>  
+        </tr>
+        <tr>
+            <td>trueVal</td>
+            <td>If val is true, set property to the trueVal specified</td>
+            <td></td>  
+        </tr>   
+        <tr>
+            <td>falseVal</td>
+            <td>If val is false, set property to the falseVal specified</td>
+            <td></td>  
+        </tr> 
+        <tr>
+            <td>translate</td>
+            <td>If val is a number add the translate value to it before setting the property</td>
+            <td></td>  
+        </tr> 
+        <tr>
+            <td>asWeakRef</td>
+            <td>Some values of valueFromTarget (vft) can resolve to a DOM element.  For example, setting vft = '.' resolves to the target element itself. This option allows the property to be set to a weak reference to the DOM elementso that garbage collection can release it more effectively when the element goes out of scope.</td>
+            <td></td>  
+        </tr> 
     </tbody>
 </table>
 
@@ -342,7 +390,7 @@ We can apply some "side effects":
     </tr>
     <tr>
         <td>stopPropagation</td>
-        <td>Prevent event from continuing to bubble</td>
+        <td>Prevent event from continuing to bubble.</td>
         <td></td>
     </tr>
     </tbody>

@@ -2,7 +2,7 @@ import {IObserve} from './types';
 declare function structuredClone(val: any): any;
 
 export async function setProp(valFT: string | undefined, valFE: string | undefined, propKey: string, observedElement: Element, 
-    {parseValAs, clone, as, trueVal, falseVal, fire, translate}: IObserve, target: EventTarget, event?: Event){
+    observeConfig: IObserve, target: EventTarget, event?: Event){
     if(event === undefined && valFE !== undefined) return;
     const valPath = event !== undefined && valFE ? valFE : valFT;
     if(valPath === undefined) throw 'bO.sP.NI';//not implemented;
@@ -17,7 +17,12 @@ export async function setProp(valFT: string | undefined, valFE: string | undefin
     }
    
     if(val === undefined) return;
-    if(clone) val = structuredClone(val);
+    const {parseValAs, clone, as, trueVal, falseVal, fire, translate, asWeakRef} = observeConfig;
+    if(clone){
+        val = structuredClone(val);
+    }else if(asWeakRef){
+        val = new WeakRef(val);
+    }
     if(parseValAs !== undefined){
         const {convert} = await import('trans-render/lib/convert.js');
         val = convert(val, parseValAs);

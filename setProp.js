@@ -1,4 +1,4 @@
-export async function setProp(valFT, valFE, propKey, observedElement, { parseValAs, clone, as, trueVal, falseVal, fire, translate }, target, event) {
+export async function setProp(valFT, valFE, propKey, observedElement, observeConfig, target, event) {
     if (event === undefined && valFE !== undefined)
         return;
     const valPath = event !== undefined && valFE ? valFE : valFT;
@@ -15,8 +15,13 @@ export async function setProp(valFT, valFE, propKey, observedElement, { parseVal
     }
     if (val === undefined)
         return;
-    if (clone)
+    const { parseValAs, clone, as, trueVal, falseVal, fire, translate, asWeakRef } = observeConfig;
+    if (clone) {
         val = structuredClone(val);
+    }
+    else if (asWeakRef) {
+        val = new WeakRef(val);
+    }
     if (parseValAs !== undefined) {
         const { convert } = await import('trans-render/lib/convert.js');
         val = convert(val, parseValAs);

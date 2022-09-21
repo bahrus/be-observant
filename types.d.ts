@@ -86,6 +86,10 @@ export interface GetValConfig<Props = any> {
 }
 
 export interface AdjustValConfig{
+
+    /**
+     * Do a structuredClone of the value before passing it
+     */
     clone?: boolean,
 
     /**
@@ -99,6 +103,8 @@ export interface AdjustValConfig{
     falseVal?: any,
 
     translate?: number,
+
+    asWeakRef?: boolean,
 }
 
 export interface SideEffects {
@@ -122,8 +128,9 @@ export interface SideEffects {
      */
     nudge?: boolean,
 
-
-
+    /**
+     * Prevent event from continuing to bubble.
+     */
     stopPropagation?: boolean,
 }
 
