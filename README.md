@@ -56,7 +56,11 @@ Just as custom elements becoming activated relies on css features of the markup 
 
 ### Web Components as a Democratic Organism
 
+*be-observant* works well with web components that are designed like an organism - with an internal non visual "component as a service" acting as the "brain", and *be-observant" aids in transmitting the "thoughts" from this "brain" to peripheral elements (both built-in and custom).
+
 ### Progressively Enhancing Server Rendered/Generated content
+
+Because [this](https://blog.webpagetest.org/posts/will-html-content-make-site-faster/).
 
 ## Alternatives
 
@@ -265,7 +269,7 @@ Once we find the element (or Event Target) to observe, next we need to specify w
     </tbody>
 </table>
 
-### What to do
+### What to pass
 
 Next we specify what to pass to the adorned element from the element we are observing and possibly from the event.
 
@@ -338,7 +342,7 @@ There are some frequent requirements when it comes to adjusting the value obtain
         </tr> 
         <tr>
             <td>asWeakRef</td>
-            <td>Some values of valueFromTarget (vft) can resolve to a DOM element.  For example, setting vft = '.' resolves to the target element itself. This option allows the property to be set to a weak reference to the DOM elementso that garbage collection can release it more effectively when the element goes out of scope.</td>
+            <td>Some values of valueFromTarget (vft) can resolve to a DOM element.  For example, setting vft = '.' resolves to the target element itself. This option allows the property to be set to a weak reference to the DOM element, so that garbage collection can release it more effectively when the element goes out of scope.</td>
             <td></td>  
         </tr> 
     </tbody>
@@ -383,7 +387,7 @@ We can apply some "side effects":
     </td>
     <tr>
         <td>nudge</td>
-        <td>Slowly "awaken" a disabled element.  If the disabled attribute is not set to a number, or is set to "1", removes the disabled attribute.  If it is a larger number, decrements the number by 1. 
+        <td>Slowly "awaken" a disabled element after be-observant has latched on.  If the disabled attribute is not set to a number, or is set to "1", removes the disabled attribute.  If it is a larger number, decrements the number by 1. 
         </td>
         <td>Useful for avoiding elements to appear interactive, but don't function properly until the component is properly hydrated. 
         </td>
@@ -409,7 +413,7 @@ Good catch...
 
 First, this isn't a risk if the data source is JSON, but it is a bit of a risk here.  However, I think it's considered a good practice not to allow getters to have side effects, and this component is assuming it is running in an environment where all the neighboring elements have been vetted in some way for following good practices via opt-in.
 
->  What about allowing the invocation of methods via the | separator.
+>  What about allowing the invocation of methods via the | separator?
 
 Now you got me.  So to support this concern, we provide an optional setting:  allowedMethods -- an array of strings that will only permit methods from that list to be invoked.  This could be set in bulk during a build process, and/or highlighted in red with the help of an IDE tool like a (de)linter. [TODO]
 

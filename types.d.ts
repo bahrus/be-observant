@@ -1,7 +1,7 @@
 import {BeDecoratedProps, MinimalProxy} from 'be-decorated/types';
 
 
-export interface WhatToObserve {
+export interface WhatToObserve<Props = any> {
     /**
      * A css match criteria, used in an "upSearch" for the element to observe.
      */
@@ -37,6 +37,8 @@ export interface WhatToObserve {
      observeName?: string,
      //onm?: string;
      ona?: string,
+
+     homeInOn?: keyof Props & string,
 }
 
 export interface WhenToAct<Props = any, TEvent = Event>{
@@ -61,7 +63,7 @@ export interface WhenToAct<Props = any, TEvent = Event>{
 }
 
 export interface GetValConfig<Props = any> {
-    homeInOn?: keyof Props & string,
+    
     /**
      * The path to the (sub) property of the element being observed.
      * 
@@ -110,7 +112,7 @@ export interface AdjustValConfig{
 export interface SideEffects {
 
     /**
-     * Pause JS execution when be-observant is invoked<
+     * Pause JS execution when be-observant is invoked.
      */
     debug?: boolean,
 
@@ -142,7 +144,7 @@ export interface AlternateEndPoint {
 }
 
 export interface IObserve<Props = any, Actions = Props, TEvent = Event> extends
-    WhatToObserve,
+    WhatToObserve<Props>,
     WhenToAct<Props, TEvent>,
     GetValConfig<Props>,
     AdjustValConfig,
