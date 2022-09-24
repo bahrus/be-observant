@@ -95,9 +95,9 @@ export interface AdjustValConfig{
     clone?: boolean,
 
     /**
-     *  'int' | 'float' | 'bool' | 'date' | 'truthy' | 'falsy' | '' | 'string' | 'object';  
+     *  'int' | 'float' | 'bool' | 'date' | 'truthy' | 'falsy' | '' | 'string' | 'object' | 'regExp' | 'Number';  
      */
-    parseValAs?: 'int' | 'float' | 'bool' | 'date' | 'truthy' | 'falsy' | '' | 'string' | 'object',
+    parseValAs?: 'int' | 'float' | 'number' | 'bool' | 'date' | 'truthy' | 'falsy' | '' | 'string' | 'object' | 'regExp'
 
     /** If val is true, set property to this value. */
     trueVal?: any,

@@ -88,7 +88,7 @@ The general guidelines for choosing between these four elements:
     <tbody>
         <tr>
             <td>be-observant</td>
-            <td>Pulls down values from previously defined elements as they change, to the element be-observant adorns.</td>
+            <td>Pulls down values from previously defined elements (typically) as they change, to the element be-observant adorns.</td>
             <td>
                 <ul>
                     <li>Can't attach to non-viewable elements.</li>
