@@ -56,7 +56,7 @@ Just as custom elements becoming activated relies on css features of the markup 
 
 ### Web Components as a Democratic Organism
 
-*be-observant* works well with web components that are designed like an organism - with an internal non visual "component as a service" acting as the "brain", and *be-observant" aids peripheral elements (both built-in and custom) in reading the "thoughts" from this "brain".
+*be-observant* works well with web components that are designed like an organism - with an internal non visual "component as a service" acting as the "brain", and *be-observant* aids peripheral elements (both built-in and custom) in reading the "thoughts" from this "brain".
 
 ### Progressively Enhancing Server Rendered/Generated content
 
@@ -65,11 +65,13 @@ Because [this](https://blog.webpagetest.org/posts/will-html-content-make-site-fa
 
 ## Assumptions, shortcuts
 
-Another subtle difference in emphasis between pass-down and be-observant: 
+be-observant is an attribute based alternative to the [pass-down](https://github.com/bahrus/pass-down).  A lengthy discussion comparing them is found at the end of this document.
 
-Whereas the pass-down component may be more fitting for a 30,000 ft above the ground environment outside any web component (rather, as part of a "web composition" of Native DOM and custom DOM elements), be-observant is more tailored for markup within a web component.  
+As mentioned there, one subtle difference in emphasis between pass-down and be-observant: 
 
-In particular, with be-observant, the shortcuts we provide are based on the assumption that there is such a component container managing (some amount of) state.
+Whereas the pass-down component may be more fitting for a 30,000 ft above the ground environment outside any web component (rather, as part of a "web composition" of Native DOM and custom DOM elements), be-observant is more tailored for markup within a (SSR/SSG rendered) web component.  
+
+In particular, with be-observant, the shortcuts we provide are based on the assumption that more often than not, there is component container managing (some amount of) state.
 
 So, for example:  
 
