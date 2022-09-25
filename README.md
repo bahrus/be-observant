@@ -146,7 +146,7 @@ First we need to choose *what* to observe.  This is done via a number of alterna
             <td>observeInward (abbrev oi)</td>
             <td>
                 Uses the native function call "querySelector" to find the first matching element to observe within the adorned element.
-                If a matching element is not found, it expects a [be-a-beacon](https://github.com/bahrus/be-a-beacon) element to announce that parsing has complete.
+                If a matching element is not found, it expects a <a href=https://github.com/bahrus/be-a-beacon>be-a-beacon</a> element to announce that parsing has completed.
             </td>
         </tr>
         <tr>
