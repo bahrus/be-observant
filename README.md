@@ -65,13 +65,13 @@ Because [this](https://blog.webpagetest.org/posts/will-html-content-make-site-fa
 
 ## Assumptions, shortcuts
 
-be-observant is an attribute based alternative to the [pass-down](https://github.com/bahrus/pass-down).  A lengthy discussion comparing them is found at the end of this document.
+be-observant is an attribute based alternative to the [pass-down](https://github.com/bahrus/pass-down) web component.  A lengthy discussion comparing them is found at the end of this document.
 
 As mentioned there, one subtle difference in emphasis between pass-down and be-observant: 
 
 Whereas the pass-down component may be more fitting for a 30,000 ft above the ground environment outside any web component (rather, as part of a "web composition" of Native DOM and custom DOM elements), be-observant is more tailored for markup within a (SSR/SSG rendered) web component.  
 
-In particular, with be-observant, the shortcuts we provide are based on the assumption that more often than not, there is component container managing (some amount of) state.
+In particular, with be-observant, the shortcuts we provide are based on the assumption that more often than not, there is a component container managing (some amount of) state.
 
 So, for example:  
 
