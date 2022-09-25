@@ -46,7 +46,7 @@ Have I learned nothing, you may be asking?  "Don't you know props are passed dow
 
 Anyway, be-observant encourages uni-directional data flow, which to me is the more important goal, if these goals are designed to make reasoning about the code easier. (Of course what makes things easier to reason about is quite subjective).  
 
-Another benefit of this "anti-pattern" is that it works quite nicely when lazy loading content.  The hosting element doesn't need to be micro-managing internal elements coming and going.  It is a less "planned" component economic model :-).  Underlying this idea is the concept that web components and custom decorators / attributes / behaviors, have a sense of "identity", capable of reacting spontaneously to user events, and able to "think independently" when interacting with peer components, even able to spawn children when the conditions are right, without bogging the host element down in minutia.  Reasoning about them may be easier if we can relate to the way they work together to how human organizations function -- or at least non-North Korean Military organizations :-).  This approach also seems to be more natural when striving for more declarative, markup-centric, less code-centric environments.  be-observant is closely "observing" whether there are any signs of life as far as HTML Modules.  Oh, and JQuery, still the most popular framework out there, doesn't follow such a strict hierarchy either, am I right?
+Another benefit of this "anti-pattern" is that it works quite nicely when lazy loading content.  The hosting element doesn't need to be micro-managing internal elements coming and going.  It is a less "planned" component economic model :-).  Underlying this idea is the concept that web components and custom decorators / attributes / behaviors, have a sense of "identity", capable of reacting spontaneously to user events, and able to "think independently" when interacting with peer components, even able to spawn children when the conditions are right, without bogging the host element down in minutia.  Reasoning about them may be easier if we can relate to the way they work together to how human organizations function -- or at least non-North Korean Military organizations :-).  This approach also seems to be more natural when striving for more declarative, markup-centric, less code-centric environments.  be-observant is closely "observing" whether there are any [signs of life as far as HTML Modules](https://bugs.chromium.org/p/chromium/issues/detail?id=990978).  Oh, and JQuery, still the most popular framework out there, doesn't follow such a strict hierarchy either, am I right?
 
 Just as custom elements becoming activated relies on css features of the markup (registered tag names), here we also rely on CSS recognizing the attribute, without permission from any host component (though the host has to "opt-in" in a rather light-touch way if using Shadow DOM - by plopping a be-hive element somewhere inside the Shadow DOM realm). 
 
@@ -56,80 +56,12 @@ Just as custom elements becoming activated relies on css features of the markup 
 
 ### Web Components as a Democratic Organism
 
-*be-observant* works well with web components that are designed like an organism - with an internal non visual "component as a service" acting as the "brain", and *be-observant" aids in transmitting the "thoughts" from this "brain" to peripheral elements (both built-in and custom).
+*be-observant* works well with web components that are designed like an organism - with an internal non visual "component as a service" acting as the "brain", and *be-observant" aids peripheral elements (both built-in and custom) in reading the "thoughts" from this "brain".
 
 ### Progressively Enhancing Server Rendered/Generated content
 
 Because [this](https://blog.webpagetest.org/posts/will-html-content-make-site-faster/).
 
-## Alternatives
-
-be-observant shares similar syntax / concepts to [be-noticed](https://github.com/bahrus/be-noticed) and to [pass-down](https://github.com/bahrus/pass-down) and [pass-up](https://github.com/bahrus/pass-down).
-
-However, there are some subtle differences in spirit between what these three components are trying to achieve.  In many cases, more than one of these components can solve the same problem, so it becomes a matter of "taste" which one solves it better. 
-
-What all these components share in common is they do not assume that there is a host component managing state.
-
-For example, the preceding example does not yet assume King Arthur has fully established his kingdom -- it works regardless of a containing component managing state.
-
-The overlap between these four components, functionally, is considerable.
-
-The general guidelines for choosing between these four elements:
-
-<table>
-    <caption>General guidelines</caption>
-    <thead>
-        <tr>
-            <th>Element</th>
-            <th>Basic Purpose</th>
-            <th>Current Limitations</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>be-observant</td>
-            <td>Pulls down values from previously defined elements (typically) as they change, to the element be-observant adorns.</td>
-            <td>
-                <ul>
-                    <li>Can't attach to non-viewable elements.</li>
-                    <li>Can only pass values to a single (adorned) element.</li>
-                </ul>
-            </td>
-        </tr>
-        <tr>
-            <td>pass-down</td>
-            <td>Acts as a mediator between an observed element and one or more downstream elements (usually).</td>
-            <td>
-                <ul>
-                    <li>Because it becomes active regardless of visibility, doesn't provide built-in "lazy loading" support.</li>
-                    <li>Some HTML markup syntax isn't amenable to custom or unknown elements being placed in the mix (for example, tables are quite finicky about allowed child elements)</li>
-                    <li>Perfect match scenario:  A markup centric, declarative(ish) web component, where the "brains" of the web component is not in the main web component itself, but in a reusable "ViewModel" component.  The ViewModel component isn't visible, and as the view model changes, it needs to be passed down to multiple downstream components.</li>
-                </ul>
-            </td>
-        </tr>
-        <tr>
-            <td>be-noticed</td>
-            <td>Push up values to previously defined elements as the element be-noticed adorns changes.</td>
-            <td>
-                <ul>
-                    <li>Can't attach to non-viewable elements</li>
-                    <li>Can only pass values to one element per event subscription.</li>
-                </ul>
-            </td>
-        </tr>
-        <tr>
-            <td>pass-up</td>
-            <td>Push-up values up the DOM hierarchy</td>
-            <td>
-                <ul>
-                    <li>Because it becomes active regardless of visibility, doesn't provide built-in "lazy loading" support.</li>
-                     <li>Some HTML markup syntax isn't amenable to custom or unknown elements being placed in the mix (for example, tables are quite finicky about allowed child elements)</li>
-                     <li>Can only pass values to a single element.</li>
-                </ul>
-            </td>
-        </tr>
-    </tbody>
-</table>
 
 ## Assumptions, shortcuts
 
@@ -167,6 +99,8 @@ To specify a different source to observe other than the host, there are numerous
 > **Note**:  The be-observant attribute can also be an array, allowing for grouping of observers, and observing duplicate events or properties.
 
 > **Note**:  If a property key (lhs) starts with ^, then the previous key that didn't start with a ^ is substituted. This provides for a more compact way to avoid use of arrays.
+
+> **Note**:  As we will see, *be-observant* provides quite a bit of functionality.  As much as possible, *be-observant* attempts to keep it scalable by only loading code on demand -- so if features aren't used, it won't add to the payload.
 
 ## Syntax in depth
 
@@ -224,7 +158,7 @@ First we need to choose *what* to observe.  This is done via a number of alterna
     </tbody>
 </table>
 
-#### Homing in [Untested]
+#### Homing in
 
 Having selected a DOM element to observe, we may optionally want to observe a sub object as our "container" to observe from.  These sub objects might extend EventTarget, meaning they have events we can subscribe to.  The assumption here is that unlike other typical properties of the DOM element, which might be transient, properties we would want to home in on are "stable, permanent" properties that may, for example, point to a store (MobX, for example).
 
@@ -321,7 +255,7 @@ There are some frequent requirements when it comes to adjusting the value obtain
         <tr>
             <td>parseValAs</td>
             <td>If the value extracted from the target / event is of type string, often we want to parse the string before passing the value.
-            Options:  'int' | 'float' | 'bool' | 'date' | 'truthy' | 'falsy' | '' | 'string' | 'object'.  The option 'string' is actually the opposite, taking an object and JSON.stringify'ing it.
+            Options:  'int' | 'float' | 'bool' | 'date' | 'truthy' | 'falsy' | '' | 'string' | 'object' | 'regExp'.  The option 'string' is actually the opposite, taking an object and JSON.stringify'ing it.
             </td>
             <td></td>  
         </tr>
@@ -400,25 +334,75 @@ We can apply some "side effects":
     </tbody>
 </table>
 
+## Alternatives
 
+be-observant shares similar syntax / concepts to [be-noticed](https://github.com/bahrus/be-noticed) and to [pass-down](https://github.com/bahrus/pass-down) and [pass-up](https://github.com/bahrus/pass-down).
 
-## NB
+However, there are some subtle differences in spirit between what these three components are trying to achieve.  In many cases, more than one of these components can solve the same problem, so it becomes a matter of "taste" which one solves it better. 
 
-<details>
-    <summary>Come clean with me, you've created some declarative loopholes you could drive a truck through.</summary>
+What all these components share in common is they do not assume that there is a host component managing state.
 
-Good catch...
+For example, the preceding example does not yet assume King Arthur has fully established his kingdom -- it works regardless of a containing component managing state.
 
-> Doesn't supporting "." notation in the object path allow for unexpected side effects when accessing getters from a custom element?
+The overlap between these four components, functionally, is considerable.
 
-First, this isn't a risk if the data source is JSON, but it is a bit of a risk here.  However, I think it's considered a good practice not to allow getters to have side effects, and this component is assuming it is running in an environment where all the neighboring elements have been vetted in some way for following good practices via opt-in.
+The general guidelines for choosing between these four elements:
 
->  What about allowing the invocation of methods via the | separator?
+<table>
+    <caption>General guidelines</caption>
+    <thead>
+        <tr>
+            <th>Element</th>
+            <th>Basic Purpose</th>
+            <th>Current Limitations</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>be-observant</td>
+            <td>Pulls down values from previously defined elements (typically) as they change, to the element be-observant adorns.</td>
+            <td>
+                <ul>
+                    <li>Can't attach to non-viewable elements.</li>
+                    <li>Can only pass values to a single (adorned) element.</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td>pass-down</td>
+            <td>Acts as a mediator between an observed element and one or more downstream elements (usually).</td>
+            <td>
+                <ul>
+                    <li>Because it becomes active regardless of visibility, doesn't provide built-in "lazy loading" support.</li>
+                    <li>Some HTML markup syntax isn't amenable to custom or unknown elements being placed in the mix (for example, tables are quite finicky about allowed child elements)</li>
+                    <li>Perfect match scenario:  A markup centric, declarative(ish) web component, where the "brains" of the web component is not in the main web component itself, but in a reusable "ViewModel" component.  The ViewModel component isn't visible, and as the view model changes, it needs to be passed down to multiple downstream components.</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td>be-noticed</td>
+            <td>Push up values to previously defined elements as the element be-noticed adorns changes.</td>
+            <td>
+                <ul>
+                    <li>Can't attach to non-viewable elements</li>
+                    <li>Can only pass values to one element per event subscription.</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td>pass-up</td>
+            <td>Push-up values up the DOM hierarchy</td>
+            <td>
+                <ul>
+                    <li>Because it becomes active regardless of visibility, doesn't provide built-in "lazy loading" support.</li>
+                     <li>Some HTML markup syntax isn't amenable to custom or unknown elements being placed in the mix (for example, tables are quite finicky about allowed child elements)</li>
+                     <li>Can only pass values to a single element.</li>
+                </ul>
+            </td>
+        </tr>
+    </tbody>
+</table>
 
-Now you got me.  So to support this concern, we provide an optional setting:  allowedMethods -- an array of strings that will only permit methods from that list to be invoked.  This could be set in bulk during a build process, and/or highlighted in red with the help of an IDE tool like a (de)linter. [TODO]
-
-
-</details>
 
 ## Big time short cuts.
 
@@ -450,7 +434,7 @@ An element can declare itself to be a host for these purposes by adding global a
 
 Under the hood, this scenario will use another option:  observeClosestOrHost (ocoho for short), which tries using the native "closest" query first, and if that fails, does getRootNode()
 
-## [Configuration Parameters](types.d.ts)
+## [Configuration Parameters / API](types.d.ts)
 
 ## Performed during template instantiation
 
@@ -458,20 +442,8 @@ be-observant also provides a declarative trans-rendering plugin, trPlugin.js.
 
 During instantiation of the template, *if* the trPlugin library is loaded in memory, it can bind the initial values prior to the HTML landing in the live DOM tree.  If not, no problemo. 
 
-Just have the be-observant library described above, and it will, using almost completely shared code, achieve the same result.
-
 [Sample Markup](https://github.com/bahrus/be-observant/blob/baseline/demo/pluginTest.html).
 
-
-## Add filter [TODO]
-
-If the property we are observing resolves to an array, allow filtering the array based on some conditions (like mongodb query).
-
-where:{
-    ifAllOf:[],
-    ifNoneOf:[],
-    ifEquals:[],
-}
 
 ## Viewing Locally
 
@@ -487,8 +459,6 @@ where:{
 
 ```JavaScript
 import 'be-observant/be-observant.js';
-
-const {importFromScriptRef} = await import('be-observant/importFromScriptRef.js');
 ```
 
 ## Using from CDN:
