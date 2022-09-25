@@ -65,7 +65,7 @@ Because [this](https://blog.webpagetest.org/posts/will-html-content-make-site-fa
 
 ## Assumptions, shortcuts
 
-be-observant is an attribute based alternative to the [pass-down](https://github.com/bahrus/pass-down) web component.  A lengthy discussion comparing them is found at the end of this document.
+be-observant is an attribute based alternative to the [pass-down](https://github.com/bahrus/pass-down) web component.  A lengthy discussion comparing them is found [here](https://github.com/bahrus/be-observant#alternatives).
 
 As mentioned there, one subtle difference in emphasis between pass-down and be-observant: 
 
@@ -145,13 +145,13 @@ First we need to choose *what* to observe.  This is done via a number of alterna
         <tr>
             <td>observeInward (abbrev oi)</td>
             <td>
-                Use the native function call "querySelector" to find the first matching element to observe within the adorned element.
-                If element not found, expect a be-a-beacon, verify instance of be-a-beacon
+                Uses the native function call "querySelector" to find the first matching element to observe within the adorned element.
+                If a matching element is not found, it expects a [be-a-beacon](https://github.com/bahrus/be-a-beacon) element to announce that parsing has complete.
             </td>
         </tr>
         <tr>
             <td>observeAtLarge [TODO] (abbrev oal)</td>
-            <td>Do a querySelector from the root host.  If element not found, expect a be-a-beacon, verify instance of be-a-beacon</td>
+            <td>Do a querySelector from the root host.  If element not found, expect a be-a-beacon, verify instance of be-a-beacon.  Awaiting a strong use case before implementing.</td>
         </tr>
         <tr>
             <td>observeWinObj (abbrev owo)</td>
