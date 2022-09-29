@@ -124,7 +124,7 @@ Simple example of the syntax:
 
 ```html
 <my-custom-element be-observant='{
-    "of": "parent"
+    "myProp": {"of": "parent"}
 }>
 ```
 
