@@ -80,15 +80,16 @@ export function toIObserve(s) {
 }
 export async function hookUp(fromParam, ref, toParam, noAwait = false, host) {
     const observeParam = (typeof fromParam === 'string') ? toIObserve(fromParam) : fromParam;
-    const { getElementToObserve } = await import('./getElementToObserve.js');
     const self = Array.isArray(ref) ? ref[0] : ref;
-    let elementToObserve = await getElementToObserve(self, observeParam, host);
-    if (elementToObserve === null) {
-        if (observeParam.observeInward !== undefined) {
-            const { childrenParsed } = await import('be-a-beacon/childrenParsed.js');
-            await childrenParsed(self);
-            elementToObserve = self.querySelector(observeParam.observeInward);
-        }
+    let elementToObserve = null;
+    const { of } = observeParam;
+    if (of !== undefined) {
+        const { findRealm } = await import('trans-render/lib/findRealm.js');
+        elementToObserve = await findRealm(self, of);
+    }
+    else {
+        const { getElementToObserve } = await import('./getElementToObserve.js');
+        elementToObserve = await getElementToObserve(self, observeParam, host);
     }
     if (elementToObserve === null) {
         console.warn({ msg: '404', observeParam });

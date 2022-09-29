@@ -118,13 +118,15 @@ The other is more powerful, with more options and has lots of intricate cross-lo
 
 The beautiful thing about dynamic imports is if you choose to use one scheme across the board, there's no penalty from the fact that another supporting another scheme which you never use is present (i.e. it shouldn't show up as unused code by dev tools).
 
-First the simpler common approach: [TODO]
+#### First option: of
+
+First, the simpler common approach: [TODO]
 
 Simple example of the syntax:
 
 ```html
 <my-custom-element be-observant='{
-    "myProp": {"of": "parent"}
+    "myProp": {"on": "click", "of": "parent"}
 }>
 ```
 
@@ -148,7 +150,7 @@ export type Target =
  */ 
 'self' | 
 /**
- * abbrev fir sekf
+ * abbrev fir self
  */ 
 's' |
 /**
@@ -178,6 +180,8 @@ export type Target =
 ['coh', true | string]
 ;
 ```
+
+#### Option 2:  multi-key 
 
 This is done via a number of alternative keys:
 

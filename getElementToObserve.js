@@ -35,7 +35,12 @@ export async function getElementToObserve(self, observeParam, host) {
     const i = oi || observeInward;
     if (i !== undefined) {
         //TODO: beacon
-        return self.querySelector(i);
+        elementToObserve = self.querySelector(i);
+        if (elementToObserve === null) {
+            const { childrenParsed } = await import('be-a-beacon/childrenParsed.js');
+            await childrenParsed(self);
+            elementToObserve = self.querySelector(i);
+        }
     }
     const { observeWinObj, owo } = observeParam;
     const wo = owo || observeWinObj;
