@@ -1,7 +1,13 @@
 import {BeDecoratedProps, MinimalProxy} from 'be-decorated/types';
+import {Scope} from 'trans-render/lib/types';
 
 
 export interface WhatToObserve<Props = any> {
+
+    /**
+     * An alternative, simpler syntax that reuses common functionality
+     */
+    of?: Scope;
     /**
      * A css match criteria, used in an "upSearch" for the element to observe.
      */
@@ -41,6 +47,8 @@ export interface WhatToObserve<Props = any> {
      homeInOn?: keyof Props & string,
 }
 
+
+
 export interface WhenToAct<Props = any, TEvent = Event>{
     /**
      * Event name to watch for
@@ -79,7 +87,7 @@ export interface GetValConfig<Props = any> {
      */
     valFromEvent?: string,
     /**
-     * Abbreviation for vfe.  Does the same thing.
+     * Abbreviation for valFromEvent.  Does the same thing.
      */
     vfe?: string,
     /**

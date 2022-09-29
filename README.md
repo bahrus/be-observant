@@ -110,7 +110,85 @@ To specify a different source to observe other than the host, there are numerous
 
 ### What
 
-First we need to choose *what* to observe.  This is done via a number of alternative keys:
+First we need to choose *what* to observe.  
+
+be-observant supports no less than two alternative schemes for deciding this:  One that reuses common functionality used by many be-decorated elements, with a reduced set of options.
+
+The other is more power and has lots of intricate cross-logic fallbacks from one option to another (should one fail to produce the desired element).
+
+The beautiful thing about dynamic imports is if you choose to use one scheme across the board, there's no penalty from also supporting another scheme which you never use.
+
+First the simpler common approach: [TODO]
+
+Simple example of the syntax:
+
+```html
+<my-custom-element be-observant='{
+    "of": "parent"
+}>
+```
+
+The full list of options for the simple schema is shown below:
+
+```TypeScript
+/**
+ * Target selector in upward direction.
+ */
+export type Scope = 
+    /**
+    * use native function getRootNode() to set the target
+    *
+    */ 
+    'rootNode' | 
+    /**
+    * abbrev for rootNode
+    */ 
+    'rn' |
+    /**
+    * Use the parent element as the target
+    */ 
+    'parent' | 
+    /**
+    * abbrev for parent
+    */
+    'p' |
+    /**
+     * Use the element itself as the target
+     */ 
+    'self' | 
+    /**
+     * abbrev fir sekf
+     */ 
+    's' |
+    /**
+     * Use the native .closest() function to get the target
+     */
+    ['closest', string] |
+    /**
+     * abbrev for closet
+     */
+    ['c', string] | 
+    /**
+     * Find nearest previous sibling, parent, previous sibling of parent, etc that matches this string.
+     */
+    ['upSearch', string] |
+    /**
+     * abbrev for upSearch
+     */
+    ['us', string] |
+    /**
+     * If second element is true, then tries .closest('itemscope').  If string, tries .closest([string value])
+     * If that comes out to null, do .getRootNode
+     */
+    ['closestOrHost', boolean | string] |
+    /**
+     * abbrev for closestOrHost
+     */
+    ['coh', true | string]
+;
+```
+
+This is done via a number of alternative keys:
 
 <table>
     <caption>What to observe</caption>
