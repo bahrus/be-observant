@@ -114,9 +114,9 @@ First we need to choose *what* to observe.
 
 be-observant supports no less than two alternative schemes for deciding this:  One that reuses common functionality used by many be-decorated elements, with a reduced set of options.
 
-The other is more power and has lots of intricate cross-logic fallbacks from one option to another (should one fail to produce the desired element).
+The other is more powerful, with more options and has lots of intricate cross-logic fallbacks from one option to another (should one fail to produce the desired element), which is both a blessing and a curse.
 
-The beautiful thing about dynamic imports is if you choose to use one scheme across the board, there's no penalty from also supporting another scheme which you never use.
+The beautiful thing about dynamic imports is if you choose to use one scheme across the board, there's no penalty from the fact that another supporting another scheme which you never use is present (i.e. it shouldn't show up as unused code by dev tools).
 
 First the simpler common approach: [TODO]
 
