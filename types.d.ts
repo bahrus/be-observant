@@ -68,6 +68,11 @@ export interface WhenToAct<Props = any, TEvent = Event>{
     //capture?: boolean,
 
     eventFilter?: Partial<TEvent>,
+
+    /**
+     * If both the path to the value matches the name of the event (after applying lisp-to-camel), use this string (lisp-case)
+     */
+    eval?: string;
 }
 
 export interface GetValConfig<Props = any> {
