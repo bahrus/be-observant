@@ -167,6 +167,8 @@ export interface IObserve<Props = any, Actions = Props, TEvent = Event> extends
 
 }
 
+export type StringOrIObserve<Props = any, Actions = Props, TEvent = Event> = string | IObserve<Props, Actions, TEvent>;
+
 //export type InterpolatingObserveParams<TString = string, TProps = any, TActions = TProps> = string | [TString] | IObserve | InterpolatingObserveParams<TString>[];
 
 //export type IObserveMap<Self = any, Props = any, Actions = Props> = {[key in keyof Self]: InterpolatingObserveParams<String, Props, Actions>};

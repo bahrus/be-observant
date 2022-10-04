@@ -285,6 +285,11 @@ Once we find the element (or Event Target) to observe, next we need to specify w
             <td>eventFilter</td>
             <td>Filter out events if they don't match this object (things like keyCode can be specified here).</td>
             <td></td>
+        </tr>
+        <tr>
+            <td>eval</td>
+            <td>portmanteau of "event" and "val".  There is a growing number of use cases where the name of the event matches the path to extract from the target, after translating camel to lisp case</td>
+            <td></td>
     </tbody>
 </table>
 

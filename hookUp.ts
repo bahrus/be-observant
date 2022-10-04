@@ -2,12 +2,12 @@ import {IObserve, VirtualProps, HookUpInfo} from './types';
 
 
 export async function addListener(elementToObserve: Element, observeParams: IObserve, propKey: string, target: EventTarget, noAwait = false): Promise<HookUpInfo>{
-    const {on, vft, valFromTarget, valFromEvent, vfe, skipInit, onSet, nudge, observeHostProp, eventListenerOptions,} = observeParams;
-    const valFT = vft || valFromTarget;
+    const {on, vft, valFromTarget, valFromEvent, vfe, skipInit, onSet, nudge, observeHostProp, eventListenerOptions, eval: e} = observeParams;
+    const valFT = vft || valFromTarget || e;
     const { camelToLisp } = await import('trans-render/lib/camelToLisp.js');
     const onSetX = onSet || observeHostProp;
     const onz = onSetX !== undefined ? undefined :
-         on || (valFT ? camelToLisp(valFT) + '-changed' : undefined); 
+         on || (e ? camelToLisp(e) : undefined) || (valFT ? camelToLisp(valFT) + '-changed' : undefined); 
     const valFE = vfe || valFromEvent;
     const {setProp} = await import('./setProp.js');
     if(valFT !== undefined && !skipInit){
@@ -79,8 +79,6 @@ export function toIObserve(s: string): IObserve{
 
 export async function hookUp(fromParam: string | IObserve, ref: Element | [Element, EventTarget], toParam: string, noAwait = false, host?: Element): Promise<HookUpInfo>{
     const observeParam = (typeof fromParam === 'string') ? toIObserve(fromParam) : fromParam;
-
-    
     const self = Array.isArray(ref) ? ref[0] : ref;
     let elementToObserve: Element | null = null;
     const {of} = observeParam;
