@@ -28,7 +28,8 @@ export class BeObservant extends EventTarget {
             const startsWithHat = propKey[0] === '^';
             const key = startsWithHat ? lastKey : propKey;
             const info = await hookUp(parm, proxy, key);
-            this.#controllers.push(info.controller);
+            if (info)
+                this.#controllers.push(info.controller);
             if (!startsWithHat)
                 lastKey = propKey;
         }

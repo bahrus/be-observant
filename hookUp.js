@@ -79,8 +79,20 @@ export function toIObserve(s) {
     return isProp ? { onSet: vft, vft, ocoho, nudge } : { vft, ocoho, nudge };
 }
 export async function hookUp(fromParam, ref, toParam, noAwait = false, host) {
-    const observeParam = (typeof fromParam === 'string') ? toIObserve(fromParam) : fromParam;
     const self = Array.isArray(ref) ? ref[0] : ref;
+    let observeParam = fromParam;
+    switch (typeof fromParam) {
+        case 'undefined':
+            return;
+        case 'string':
+            observeParam = toIObserve(fromParam);
+            break;
+        case 'object':
+            break;
+        default:
+            self[toParam] = fromParam;
+            return;
+    }
     let elementToObserve = null;
     const { of } = observeParam;
     if (of !== undefined) {

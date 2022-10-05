@@ -22,9 +22,9 @@ export function setAttr(target: Element, propKey: string, as: 'str-attr' | 'bool
             break;
         case 'part':
             if(val){
-                target.part.add(propKey);
+                (target as HTMLElement).part.add(propKey);
             }else{
-                target.part.remove(propKey);
+                (target as HTMLElement).part.remove(propKey);
             }
             break;
     }

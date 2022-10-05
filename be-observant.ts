@@ -24,7 +24,7 @@ export class BeObservant extends EventTarget implements Actions {
         }
         proxy.resolved = true;
     }
-    async #doParams(params: any, hookUp: (fromParam: any, proxy: Proxy, toParam: string, noAwait?: boolean, host?: Element) => Promise<HookUpInfo>, proxy: Proxy){
+    async #doParams(params: any, hookUp: (fromParam: any, proxy: Proxy, toParam: string, noAwait?: boolean, host?: Element) => Promise<void | HookUpInfo>, proxy: Proxy){
         let lastKey = '';
         for(const propKey in params){
             let parm = params[propKey] as string | IObserve | (string | IObserve)[];
@@ -32,7 +32,7 @@ export class BeObservant extends EventTarget implements Actions {
             const startsWithHat = propKey[0] === '^';
             const key = startsWithHat ? lastKey : propKey;
             const info = await hookUp(parm, proxy, key);
-            this.#controllers.push(info.controller!);
+            if(info) this.#controllers.push(info.controller!);
             if(!startsWithHat) lastKey = propKey;
         }  
     }

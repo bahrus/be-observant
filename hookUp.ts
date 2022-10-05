@@ -77,17 +77,31 @@ export function toIObserve(s: string): IObserve{
     return isProp ? {onSet: vft, vft, ocoho, nudge} as IObserve : {vft, ocoho, nudge} as IObserve;
 }
 
-export async function hookUp(fromParam: string | IObserve, ref: Element | [Element, EventTarget], toParam: string, noAwait = false, host?: Element): Promise<HookUpInfo>{
-    const observeParam = (typeof fromParam === 'string') ? toIObserve(fromParam) : fromParam;
+export async function hookUp(fromParam: string | IObserve | boolean | number | undefined | Function | BigInt, ref: Element | [Element, EventTarget], toParam: string, noAwait = false, host?: Element):  Promise<void | HookUpInfo>{
     const self = Array.isArray(ref) ? ref[0] : ref;
+    let observeParam = fromParam;
+    switch(typeof fromParam){
+        case 'undefined':
+            return;
+        case 'string':
+            observeParam = toIObserve(fromParam);
+            break;
+        case 'object':
+            break;
+        default:
+            (<any>self)[toParam] = fromParam;
+            return;
+    }
+
+    
     let elementToObserve: Element | null = null;
-    const {of} = observeParam;
+    const {of} = observeParam as IObserve;
     if(of !== undefined){
         const {findRealm} = await import('trans-render/lib/findRealm.js');
         elementToObserve = await findRealm(self, of) as Element;
     }else{
         const {getElementToObserve} = await import('./getElementToObserve.js');
-        elementToObserve = await getElementToObserve(self, observeParam, host);
+        elementToObserve = await getElementToObserve(self, observeParam as IObserve, host);
     }
 
     if(elementToObserve === null){
