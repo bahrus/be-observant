@@ -39,7 +39,7 @@
     "xtal-element": "0.0.530",
     "be-decorated": "0.0.176",
     "be-hive": "0.0.74",
-    "be-a-beacon": "0.0.20"
+    "be-a-beacon": "0.0.21"
   },
   "devDependencies": {
     "@playwright/test": "1.27.1",
