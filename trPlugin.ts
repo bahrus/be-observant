@@ -10,7 +10,7 @@ export const trPlugin: TransformPluginSettings = {
         if(customElements.get('be-observant') === undefined) return;
         const {attach} = await import('be-decorated/upgrade.js');
         const instance = document.createElement('be-observant') as any as DEMethods;
-        attach(target!, 'clonable', ctx, instance.attach.bind(instance));
+        attach(target!, 'observant', instance.attach.bind(instance));
     }
 }
 
