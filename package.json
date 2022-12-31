@@ -14,15 +14,13 @@
   "main": "be-observant.js",
   "module": "be-observant.js",
   "exports": {
-    ".": "./index.js",
-    "./index.js": "./index.js",
+    ".": "./be-observant.js",
     "./be-observant.js": "./be-observant.js",
     "./hookUp.js": "./hookUp.js",
     "./getElementToObserve.js": "./getElementToObserve.js",
     "./getElementWithProp.js": "./getElementWithProp.js",
     "./getProxy.js": "./getProxy.js",
-    "./setProp.js": "./setProp.js",
-    "./trPlugin.js": "./trPlugin.js"
+    "./setProp.js": "./setProp.js"
   },
   "files": [
     "*.*"
@@ -35,13 +33,13 @@
     "doc": "custom-elements-manifest analyze"
   },
   "dependencies": {
-    "trans-render": "0.0.646",
-    "be-decorated": "0.0.198",
-    "be-hive": "0.0.77",
-    "be-a-beacon": "0.0.28"
+    "trans-render": "0.0.654",
+    "be-decorated": "0.0.216",
+    "be-hive": "0.0.79",
+    "be-a-beacon": "0.0.29"
   },
   "devDependencies": {
-    "@playwright/test": "1.27.1",
+    "@playwright/test": "1.29.1",
     "may-it-serve": "0.0.4",
     "@skypack/package-check": "0.2.2",
     "@custom-elements-manifest/analyzer": "0.6.4",

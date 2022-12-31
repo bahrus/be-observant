@@ -522,13 +522,13 @@ Under the hood, this scenario will use another option:  observeClosestOrHost (oc
 
 ## [Configuration Parameters / API](types.d.ts)
 
-## Performed during template instantiation
+<!--## Performed during template instantiation
 
 be-observant also provides a declarative trans-rendering plugin, trPlugin.js.
 
 During instantiation of the template, *if* the trPlugin library is loaded in memory, it can bind the initial values prior to the HTML landing in the live DOM tree.  If not, no problemo. 
 
-[Sample Markup](https://github.com/bahrus/be-observant/blob/baseline/demo/pluginTest.html).
+[Sample Markup](https://github.com/bahrus/be-observant/blob/baseline/demo/pluginTest.html).-->
 
 
 ## Viewing Locally
