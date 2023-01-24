@@ -96,8 +96,21 @@ export interface GetValConfig<Props = any> {
      */
     vfe?: string,
     /**
-     * Perform a structural clone before passing the observed value.
+     * Substitute value path with local props
      */
+    valPathSubstitutions?: ValPathSubstitutions[],
+    /**
+     * Abbrev for valPathSubstitutions
+     */
+    vps?: ValPathSubstitutions
+}
+
+export interface ValPathSubstitutions {
+    name: string,
+    localProp: string,
+    //localPropInterpolation: string[],
+    replaceWith: string | number,
+
 }
 
 export interface AdjustValConfig{
