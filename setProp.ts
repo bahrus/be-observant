@@ -4,8 +4,14 @@ declare function structuredClone(val: any): any;
 export async function setProp(valFT: string | undefined, valFE: string | undefined, propKey: string, observedElement: Element, 
     observeConfig: IObserve, target: EventTarget, event?: Event){
     if(event === undefined && valFE !== undefined) return;
-    const valPath = event !== undefined && valFE ? valFE : valFT;
+    let valPath = event !== undefined && valFE ? valFE : valFT;
     if(valPath === undefined) throw 'bO.sP.NI';//not implemented;
+    const {valPathSubstitutions, vps} = observeConfig;
+    const substitutions = vps || valPathSubstitutions;
+    if(substitutions !== undefined){
+        const {substValPath} = await import('./substValPath.js');
+        valPath = substValPath(substitutions, valPath, target as Element);
+    }
     const {splitExt} = await import('trans-render/lib/splitExt.js');
     const split = splitExt(valPath);
     let src: any = valFE !== undefined ? ( event ? event : observedElement) : observedElement;

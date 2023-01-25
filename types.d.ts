@@ -102,7 +102,7 @@ export interface GetValConfig<Props = any> {
     /**
      * Abbrev for valPathSubstitutions
      */
-    vps?: ValPathSubstitutions
+    vps?: ValPathSubstitutions[]
 }
 
 export interface ValPathSubstitutions {
