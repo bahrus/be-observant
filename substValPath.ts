@@ -1,6 +1,6 @@
 import {ValPathSubstitutions} from './types';
 
-export async function substValPath(vps: ValPathSubstitutions[], valFromTarget: string, self: Element): string{
+export async function substValPath(vps: ValPathSubstitutions[], valFromTarget: string, self: Element): Promise<string>{
     let newValFromTarget = valFromTarget;
     for(const vp of vps){
         const {localProp, name} = vp;
