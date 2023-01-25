@@ -320,7 +320,7 @@ Next we specify what to pass to the adorned element from the element we are obse
         </tr>
         <tr>
             <td>valPathSubstitutions (abbrev vps)</td>
-            <td>(Advanced) -- substitute parts of the path with local props from the target element.  For example, if vft="options{index}.value" means "get the value from the host's options property, and from that, get the index from the local index prop.  Then get the value from that."
+            <td>(Advanced) -- substitute parts of the path with local props from the target element.  For example, if vft="options{index}.value" means "get the value from the host's options property, and from that, get the index from the local index prop.  Then get the value from that."</td>
         </tr>
     </tbody>
 </table>
