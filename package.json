@@ -34,9 +34,9 @@
   },
   "dependencies": {
     "trans-render": "0.0.666",
-    "be-decorated": "0.0.227",
+    "be-decorated": "0.0.228",
     "be-hive": "0.0.82",
-    "be-a-beacon": "0.0.32"
+    "be-a-beacon": "0.0.33"
   },
   "devDependencies": {
     "@playwright/test": "1.31.1",
