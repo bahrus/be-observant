@@ -8,14 +8,14 @@ export async function setProp(valFT, valFE, propKey, observedElement, observeCon
     const substitutions = vps || valPathSubstitutions;
     if (substitutions !== undefined) {
         const { substValPath } = await import('./substValPath.js');
-        valPath = substValPath(substitutions, valPath, target);
+        valPath = await substValPath(substitutions, valPath, target);
     }
     const { splitExt } = await import('trans-render/lib/splitExt.js');
     const split = splitExt(valPath);
     let src = valFE !== undefined ? (event ? event : observedElement) : observedElement;
     let val;
     const { getProp } = await import('trans-render/lib/getProp.js');
-    val = getProp(src, split);
+    val = await getProp(src, split);
     if (target.debug) {
         console.log({ val, split, observedElement });
     }

@@ -10,14 +10,14 @@ export async function setProp(valFT: string | undefined, valFE: string | undefin
     const substitutions = vps || valPathSubstitutions;
     if(substitutions !== undefined){
         const {substValPath} = await import('./substValPath.js');
-        valPath = substValPath(substitutions, valPath, target as Element);
+        valPath = await substValPath(substitutions, valPath, target as Element);
     }
     const {splitExt} = await import('trans-render/lib/splitExt.js');
     const split = splitExt(valPath);
     let src: any = valFE !== undefined ? ( event ? event : observedElement) : observedElement;
     let val: any;
     const {getProp} = await import('trans-render/lib/getProp.js');
-    val = getProp(src, split);
+    val = await getProp(src, split);
     if((<any>target).debug){
         console.log({val, split, observedElement});
     }
