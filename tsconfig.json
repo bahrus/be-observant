@@ -13,10 +13,7 @@
 		"be-observant.ts",
 		"getElementToObserve.ts",
 		"getProxy.ts",
-		"setProp.ts",
-		"trPlugin.ts",
-		//"playwright.config.ts",
-		//"tests/test1.spec.mts"
+		"setProp.ts"
 	],
 	"exclude":[
 		"node_modules"

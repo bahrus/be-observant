@@ -47,7 +47,7 @@ export async function setProp(valFT: string | undefined, valFE: string | undefin
     }else{
         if(propKey[0] === '.'){
             const {setProp} = await import('trans-render/lib/setProp.js');
-            setProp(target, propKey, val);
+            await setProp(target, propKey, val);
         }else{
             (<any>target)[propKey] = val;
         }

@@ -66,5 +66,5 @@ export async function getElementToObserve(self, observeParam, host) {
         return upSearch(self, `[name="${nm}"]`, true);
     }
     const { getHost } = await import('trans-render/lib/getHost.js');
-    return host || getHost(self);
+    return (host || getHost(self));
 }

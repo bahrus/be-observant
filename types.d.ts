@@ -98,14 +98,14 @@ export interface GetValConfig<Props = any> {
     /**
      * Substitute value path with local props
      */
-    valPathSubstitutions?: ValPathSubstitutions[],
+    valPathSubstitutions?: ValPathSubstitution[],
     /**
      * Abbrev for valPathSubstitutions
      */
-    vps?: ValPathSubstitutions[]
+    vps?: ValPathSubstitution[]
 }
 
-export interface ValPathSubstitutions {
+export interface ValPathSubstitution {
     name: string,
     localProp: string,
     //localPropInterpolation: string[],

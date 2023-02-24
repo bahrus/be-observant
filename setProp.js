@@ -1,9 +1,15 @@
 export async function setProp(valFT, valFE, propKey, observedElement, observeConfig, target, event) {
     if (event === undefined && valFE !== undefined)
         return;
-    const valPath = event !== undefined && valFE ? valFE : valFT;
+    let valPath = event !== undefined && valFE ? valFE : valFT;
     if (valPath === undefined)
         throw 'bO.sP.NI'; //not implemented;
+    const { valPathSubstitutions, vps } = observeConfig;
+    const substitutions = vps || valPathSubstitutions;
+    if (substitutions !== undefined) {
+        const { substValPath } = await import('./substValPath.js');
+        valPath = substValPath(substitutions, valPath, target);
+    }
     const { splitExt } = await import('trans-render/lib/splitExt.js');
     const split = splitExt(valPath);
     let src = valFE !== undefined ? (event ? event : observedElement) : observedElement;
@@ -42,7 +48,7 @@ export async function setProp(valFT, valFE, propKey, observedElement, observeCon
     else {
         if (propKey[0] === '.') {
             const { setProp } = await import('trans-render/lib/setProp.js');
-            setProp(target, propKey, val);
+            await setProp(target, propKey, val);
         }
         else {
             target[propKey] = val;
