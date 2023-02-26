@@ -116,7 +116,7 @@ The beautiful thing about dynamic imports is if you choose to use one scheme acr
 
 #### First option: of
 
-First, the simpler common approach: [TODO]
+First, the simpler common approach: 
 
 Simple example of the syntax:
 
@@ -126,9 +126,18 @@ Simple example of the syntax:
 }>
 ```
 
-The full list of options for the simple schema is shown below:
+The full list of options for the "of" values is shown below:
 
 ```TypeScript
+/**
+ * E = element
+ * P = part
+ * C = class
+ * I = itemscope
+ * A = attribute
+ * N = name
+ */
+export type camelQry = `${string}E` | `${string}P` | `${string}C` | `${string}Id` | `${string}I` | `${string}A` | `${string}N`;
 /**
  * Target selector in upward direction.
  */
@@ -142,6 +151,14 @@ export type Target =
 */
 'p' |
 /**
+ * Use the parent.  If no parent, use root node
+ */
+'parentOrRootNode' |
+/**
+ * abbrev for parent or root node
+ */
+'porn' |
+/**
  * Use the element itself as the target
  */ 
 'self' | 
@@ -149,6 +166,7 @@ export type Target =
  * abbrev for self
  */ 
 's' |
+`closest${camelQry}` |
 /**
  * Use the native .closest() function to get the target
  */
@@ -160,20 +178,31 @@ export type Target =
 /**
  * Find nearest previous sibling, parent, previous sibling of parent, etc that matches this string.
  */
+`upSearchFor${camelQry}` |
+/**
+ * Find nearest previous sibling, parent, previous sibling of parent, etc that matches this string.
+ */
 ['upSearch', string] |
 /**
  * abbrev for upSearch
  */
 ['us', string] |
+
 /**
- * If second element is true, then tries .closest('itemscope').  If string, tries .closest([string value])
- * If that comes out to null, do .getRootNode
+ * Tries .closest matching string.  If that's null, does .getRootNode().host
  */
-['closestOrHost', boolean | string] |
+`closest${camelQry}OrHost` |
+
+//'closestOrHost' |
+/**
+ * Tries .closest([string value]).
+ * If that comes out to null, do .getRootNode().host
+ */
+['closestOrHost', string] |
 /**
  * abbrev for closestOrHost
  */
-['coh', true | string] |
+['coh', string] |
 /**
  * get host
  */
@@ -185,7 +214,7 @@ export type Target =
 ;
 ```
 
-#### Option 2:  multi-key 
+#### Option 2:  multi-key (deprecated)
 
 This is done via a number of alternative keys:
 
@@ -526,13 +555,7 @@ Under the hood, this scenario will use another option:  observeClosestOrHost (oc
 
 ## [Configuration Parameters / API](types.d.ts)
 
-<!--## Performed during template instantiation
 
-be-observant also provides a declarative trans-rendering plugin, trPlugin.js.
-
-During instantiation of the template, *if* the trPlugin library is loaded in memory, it can bind the initial values prior to the HTML landing in the live DOM tree.  If not, no problemo. 
-
-[Sample Markup](https://github.com/bahrus/be-observant/blob/baseline/demo/pluginTest.html).-->
 
 
 
