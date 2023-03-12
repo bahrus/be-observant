@@ -44,7 +44,7 @@ Please expand section below.
 
 ```html
 <my-element be-observant='
-    Share value property as number of previous largest scale element to my very important \and unusual property.
+    Share value as number of previous largest scale element to my very important \and unusual property.
     Nudge previous largest scale element.
     Share update of value property as float of previous largest scale element to my very important \and unusual property.//SkipInit.
     On value-changed event of previous largest scale element having inner a-duck element  
@@ -52,6 +52,7 @@ Please expand section below.
         and debug 
         and share value as string to my rhs property
         and fire event my custom event name.
+    Share true value as hello and false value as goodbye as string of previous largest scale eleemtn to my very import \and unusual property.
     
 '>
 </my-element>
