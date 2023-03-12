@@ -8,10 +8,55 @@
 
 be-observant is a key member of the [may-it-be](https://github.com/bahrus/may-it-be) family of web components.  It allows one DOM element to observe another element,  where that element typically comes "before it".  It is much like how Javascript closures can access variables defined outside the closure, as long as it came before.
 
+It serves a similar purpose to [be-sharing](https://github.com/bahrus/be-sharing) but be-observant has more of an "inline binding" flavor, whereas be-sharing follows more of a "binding from a distance" approach.
+
 be-observant is also a trend-setting member of the family -- many of the other may-it-be components piggy-back both on the code as well as the syntax for adding "environment-aware" bindings to their configuration properties.
 
 be-observant also provides an experimental declarative [trans-render plugin](https://github.com/bahrus/be-decorated#isomorphic-logic----baton-passing), so the binding can be done while instantiating a template, rather than after the DOM has been added to the live DOM tree.
 
+## Hemingway Notation [TODO]
+
+```html
+<ways-of-science>
+    <largest-scale>
+        <woman-with-carrot-attached-to-nose></woman-with-carrot-attached-to-nose>
+    </largest-scale>
+    <largest-scale>
+        <a-duck></a-duck>
+    </largest-scale>
+    <if-diff iff -lhs not-equals -rhs set-attr=hidden be-observant='
+        On value-changed event of previous largest scale element having inner woman with carrot attached to nose element do share value to my lhs property.
+        On value-changed event of previous largest scale element having inner a-duck element do share value to my rhs property.
+    '>
+        <template>
+            <div hidden>A witch!</div>
+        </template>
+    </if-diff>
+</ways-of-science>
+```
+
+## Hemingway Notation in Detail [TODO]
+
+Please expand section below.
+
+<details>
+    <summary>Hemingway notation for different scenarios</summary>
+
+```html
+<my-element be-observant='
+    Share value property as number of previous largest scale element to my very important \and unusual property.
+    Nudge previous largest scale element.
+    Share update of value property as float of previous largest scale element to my very important \and unusual property.//SkipInit.
+    On value-changed event of previous largest scale element having inner a-duck element  
+        do stop propagation
+        and debug 
+        and share value as string to my rhs property
+        and fire event my custom event name.
+    
+'>
+</my-element>
+```
+</details>
 
 ## Sample syntax
 
