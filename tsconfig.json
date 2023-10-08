@@ -6,15 +6,10 @@
 		"experimentalDecorators": false,
 		"forceConsistentCasingInFileNames": true,
 		"newLine": "LF",
-		"watch": true,
 		"strict": true,
 	},
 	"files":[
-		"hookUp.ts",
-		"be-observant.ts",
-		"getElementToObserve.ts",
-		"getProxy.ts",
-		"setProp.ts"
+		"be-observant.ts"
 	],
 	"exclude":[
 		"node_modules"
