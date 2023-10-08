@@ -56,7 +56,7 @@ As the user types in the input field, the div's text content reflects the value 
 ```html
 <paul-mccartney age=64>
     #shadow
-    <daughter-heather be-observant='of age and pass value - 10 to $0:age.
+    <daughter-heather be-observant='of age and pass value - 20 to $0:age.
     '></daughter-heather>
 </paul-mccartney>
 ```
