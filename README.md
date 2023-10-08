@@ -2,7 +2,7 @@
 
 Rests heavily on be-linked
 
-## Example 1
+## Example 1a [TODO]
 
 ```html
 <host-element>
@@ -11,11 +11,9 @@ Rests heavily on be-linked
 </host-element>
 ```
 
-
-
 Slash indicates get value from host.  If omitted, it is assumed:
 
-## Example 1a
+## Example 1b [TODO]
 
 ```html
 <host-element>
@@ -24,7 +22,7 @@ Slash indicates get value from host.  If omitted, it is assumed:
 </host-element>
 ```
 
-## Example 2a
+## Example 2a [TODO]
 
 ```html
 <input name=search type=search>
@@ -32,7 +30,9 @@ Slash indicates get value from host.  If omitted, it is assumed:
 <div be-observant='of @search.'></div>
 ```
 
-## Example 2b
+As the user types in the input field, the div's text content reflects the value that was typed.
+
+## Example 2b [TODO]
 
 ```html
 <input name=search type=search>
@@ -42,3 +42,21 @@ Slash indicates get value from host.  If omitted, it is assumed:
 </div>
 ```
 
+## Example 3  Negation [TODO]
+
+```html
+<host-element>
+    #shadow
+    <input type=checkbox be-observant='of is read only negated.'>
+</host-element>
+```
+
+## Example 4 Translation [TODO]
+
+```html
+<paul-mccartney age=64>
+    #shadow
+    <daughter-heather be-observant='of age and pass value - 10 to $0:age.
+    '></daughter-heather>
+</paul-mccartney>
+```
