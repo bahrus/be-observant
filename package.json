@@ -15,36 +15,31 @@
   "module": "be-observant.js",
   "exports": {
     ".": "./be-observant.js",
-    "./be-observant.js": "./be-observant.js",
-    "./hookUp.js": "./hookUp.js",
-    "./getElementToObserve.js": "./getElementToObserve.js",
-    "./getElementWithProp.js": "./getElementWithProp.js",
-    "./getProxy.js": "./getProxy.js",
-    "./setProp.js": "./setProp.js"
+    "./be-observant.js": "./be-observant.js"
   },
   "files": [
-    "*.*"
+    "*.js",
+    "types.d.ts"
   ],
   "types": "types.d.ts",
   "scripts": {
     "serve": "node node_modules/may-it-serve",
     "test": "playwright test",
-    "package-check": "package-check",
-    "doc": "custom-elements-manifest analyze"
+    "safari": "npx playwright wk http://localhost:3030",
+    "update": "ncu -u && npm install"
   },
   "dependencies": {
-    "trans-render": "0.0.670",
-    "be-decorated": "0.0.235",
-    "be-hive": "0.0.82",
-    "be-a-beacon": "0.0.34"
+    "be-enhanced": "0.0.55",
+    "be-hive": "0.0.123",
+    "be-linked": "0.0.52",
+    "be-propagating": "0.0.28",
+    "be-value-added": "0.0.7",
+    "trans-render": "0.0.706",
+    "xtal-element": "0.0.579"
   },
   "devDependencies": {
-    "@playwright/test": "1.31.2",
-    "may-it-serve": "0.0.5",
-    "@skypack/package-check": "0.2.2",
-    "@custom-elements-manifest/analyzer": "0.6.4",
-    "xtal-shell": "0.0.27",
-    "if-diff": "0.0.123"
+    "@playwright/test": "1.38.1",
+    "may-it-serve": "0.0.6"
   },
   "repository": {
     "type": "git",
