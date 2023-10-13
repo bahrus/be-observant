@@ -1,7 +1,7 @@
 import {BE, propDefaults, propInfo} from 'be-enhanced/BE.js';
 import {BEConfig} from 'be-enhanced/types';
 import {XE} from 'xtal-element/XE.js';
-import {Actions, AllProps, AP, PAP, ProPAP, POA} from './types';
+import {Actions, AllProps, AP, PAP, ProPAP, POA, ObserveRule} from './types';
 import {register} from 'be-hive/register.js';
 import {ElTypes, SignalInfo} from 'be-linked/types';
 
@@ -21,9 +21,15 @@ export class BeObservant extends BE<AP, Actions> implements Actions{
     } 
     
     async onCamelized(self: this) {
-        return {
-
+        const {of, Of} = self;
+        let observeRules: Array<ObserveRule> = [];
+        if((of || Of) !== undefined){
+            const {prsOf} = await import('./prsOf.js');
+            observeRules = prsOf(self);
         }
+        return {
+            observeRules
+        };
     }
 
     async hydrate(self: this){
