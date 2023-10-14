@@ -33,6 +33,10 @@ export class BeObservant extends BE<AP, Actions> implements Actions{
     }
 
     async hydrate(self: this){
+        const {enhancedElement, observeRules} = self;
+        for(const observe of observeRules!){
+            const {remoteProp, remoteType} = observe;
+        }
         return {
             resolved: true,
         }

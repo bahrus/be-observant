@@ -1,6 +1,6 @@
 # be-observant [TODO]
 
-Rests heavily on be-linked
+Observe properties of peer elements or the host.
 
 ## Example 1a [TODO]
 

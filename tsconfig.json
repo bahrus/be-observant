@@ -9,7 +9,8 @@
 		"strict": true,
 	},
 	"files":[
-		"be-observant.ts"
+		"be-observant.ts",
+		"MyCustomElement/MyCustomElement.ts"
 	],
 	"exclude":[
 		"node_modules"

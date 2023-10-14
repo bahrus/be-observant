@@ -3,8 +3,15 @@ import {ElTypes} from 'be-linked/types';
 import {RegExpOrRegExpExt} from 'be-enhanced/types';
 import {arr, tryParse} from 'be-enhanced/cpu.js';
 
-const reOfObserveStatement: Array<RegExpOrRegExpExt<Partial<ObserveRule>>> = [
+export const strType = String.raw `\$|\#|\@|\/|\-`;
+const remoteType = String.raw `(?<remoteType>${strType})`;
+const remoteProp = String.raw `(?<remoteProp>[\w\-]+)`;
 
+const reOfObserveStatement: Array<RegExpOrRegExpExt<Partial<ObserveRule>>> = [
+    {
+        regExp: new RegExp(String.raw `^${remoteType}${remoteProp}`),
+        defaultVals:{}
+    }
 ];
 
 export function prsOf(self: AP) : Array<ObserveRule> {
