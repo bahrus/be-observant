@@ -1,6 +1,6 @@
 import { ActionOnEventConfigs } from "trans-render/froop/types";
 import {IBE} from 'be-enhanced/types';
-import {ElTypes} from 'be-linked/types';
+import {ElTypes, SignalRefType} from 'be-linked/types';
 
 export interface EndUserProps extends IBE{
     Of?: Array<OfStatement>,
@@ -31,4 +31,7 @@ export interface Actions{
 export interface ObserveRule{
     remoteProp: string,
     remoteType: ElTypes,
+    remoteSignal?: WeakRef<SignalRefType>,
+    localProp?: string,
+    localSignal?: WeakRef<SignalRefType>,
 }

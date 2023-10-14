@@ -3,7 +3,9 @@ import {BEConfig} from 'be-enhanced/types';
 import {XE} from 'xtal-element/XE.js';
 import {Actions, AllProps, AP, PAP, ProPAP, POA, ObserveRule} from './types';
 import {register} from 'be-hive/register.js';
-import {ElTypes, SignalInfo} from 'be-linked/types';
+import {getRemoteEl} from 'be-linked/getRemoteEl.js';
+import {ElTypes, SignalInfo, SignalContainer} from 'be-linked/types';
+import {getLocalProp, getRemoteProp} from 'be-linked/defaults.js';
 
 export class BeObservant extends BE<AP, Actions> implements Actions{
     #abortControllers: Array<AbortController>  = [];
@@ -25,7 +27,7 @@ export class BeObservant extends BE<AP, Actions> implements Actions{
         const observeRule: ObserveRule = {
             //TODO:  move this evaluation to be-linked -- shared with be-elevating, be-bound
             //Also, support for space delimited itemprop
-            remoteProp: enhancedElement.getAttribute('itemprop') || (enhancedElement as any).name || enhancedElement.id,
+            remoteProp: getRemoteProp(enhancedElement),
             remoteType: '/'
         };
         return {
@@ -49,11 +51,31 @@ export class BeObservant extends BE<AP, Actions> implements Actions{
         const {enhancedElement, observeRules} = self;
         for(const observe of observeRules!){
             console.log({observe});
-            const {remoteProp, remoteType} = observe;
+            const {remoteProp, remoteType, localProp} = observe;
+            if(localProp === undefined){
+                observe.localProp = getLocalProp(enhancedElement);
+            }
+            const el = await getRemoteEl(enhancedElement, remoteType!, remoteProp!);
+            switch(remoteType){
+                case '/':{
+                    const {doPG} = await import('be-linked/doPG.js');
+                    await doPG(self, el, observe as any as SignalContainer, 'remoteSignal', remoteProp!, this.#abortControllers, evalObserveRules as any, 'remote');
+                    break;
+                }
+            }
         }
+        evalObserveRules(self);
         return {
             resolved: true,
         }
+    }
+}
+
+function evalObserveRules(self: BeObservant){
+    console.log('evalObserveRules');
+    const {observeRules} = self;
+    for(const observe of observeRules!){
+        const {} = observe;
     }
 }
 
