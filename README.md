@@ -2,6 +2,9 @@
 
 Observe properties of peer elements or the host.
 
+> [!Note]
+> be-observant overlaps in functionality with [be-sharing](https://github.com/bahrus/be-sharing).  The preference should be to use be-sharing when it is appropriate, as it involves less work, as it provides "wildcard" binding while sticking with attributes which are built in to the platform, attributes that serves other purposes in addition to binding (mainly microdata).  be-sharing works n a "distribute data down" from the host or non-visible "brain" component, whereas be-observant works more on a "pull data in" to the adorned element.  This overlap can get confusing when both element enhancements are used within the same DOM realm.  To tell be-sharing to ignore binding to the adorned element, add an attribute consisting of two dashes to the element, as will be shown in the examples below where applicable. [TODO]:  Document where it is better to use be-observant.
+
 ## Example 1a [TODO]
 
 ```html
