@@ -22,6 +22,14 @@ Slash indicates get value from host.  If omitted, it is assumed:
 </host-element>
 ```
 
+## Example 1c
+
+```html
+<my-custom-element>
+    #s
+```
+
+
 ## Example 2a [TODO]
 
 ```html
