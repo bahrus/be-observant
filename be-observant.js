@@ -15,6 +15,18 @@ export class BeObservant extends BE {
             isParsedProp: 'isParsed'
         };
     }
+    async noAttrs(self) {
+        const { enhancedElement } = self;
+        const observeRule = {
+            //TODO:  move this evaluation to be-linked -- shared with be-elevating, be-bound
+            //Also, support for space delimited itemprop
+            remoteProp: enhancedElement.getAttribute('itemprop') || enhancedElement.name || enhancedElement.id,
+            remoteType: '/'
+        };
+        return {
+            observeRules: [observeRule]
+        };
+    }
     async onCamelized(self) {
         const { of, Of } = self;
         let observeRules = [];
@@ -29,6 +41,7 @@ export class BeObservant extends BE {
     async hydrate(self) {
         const { enhancedElement, observeRules } = self;
         for (const observe of observeRules) {
+            console.log({ observe });
             const { remoteProp, remoteType } = observe;
         }
         return {
@@ -50,6 +63,10 @@ const x = new XE({
             ...propInfo,
         },
         actions: {
+            noAttrs: {
+                ifAllOf: ['isParsed'],
+                ifNoneOf: ['of', 'Of']
+            },
             onCamelized: {
                 ifAllOf: ['isParsed'],
                 ifAtLeastOneOf: ['of', 'Of']

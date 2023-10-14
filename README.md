@@ -16,11 +16,11 @@ Observe properties of peer elements or the host.
 ```html
 <my-custom-element>
     #shadow
-    <input name=isReadOnly type=checkbox be-observant>
+    <input name=isVegetarian type=checkbox onclick="return false" be-observant>
 </my-custom-element>
 ```
 
-What this does:  Passes my-custom-element's isReadOnly value to the input element's checked property.
+What this does:  Passes my-custom-element's isVegetarian value to the input element's checked property.
 
 This is shorthand for:
 

@@ -1,11 +1,11 @@
 export class MyCustomElement extends HTMLElement {
-    #someBoolProp;
-    get someBoolProp() {
-        return this.#someBoolProp;
+    #isVegetarian;
+    get isVegetarian() {
+        return this.#isVegetarian;
     }
-    set someBoolProp(nv) {
-        this.#someBoolProp = nv;
-        const div = this.shadowRoot?.querySelector('#someBoolPropVal');
+    set isVegetarian(nv) {
+        this.#isVegetarian = nv;
+        const div = this.shadowRoot?.querySelector('#isVegetarian');
         if (div !== null && div !== undefined)
             div.textContent = '' + nv;
     }
@@ -17,9 +17,9 @@ export class MyCustomElement extends HTMLElement {
         this.shadowRoot.innerHTML = String.raw `
         <div itemscope>
             <div id=someStringPropVal></div>
-            <div id=someBoolPropVal></div>
+            <div id=isVegetarian></div>
             <h3>Example 1a</h3>
-            <input type=checkbox be-observant='of / is read only.'>
+            <input name=isVegetarian type=checkbox onclick="return false;" be-observant>
         </div>
         <be-hive></be-hive>
         `;

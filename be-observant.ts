@@ -19,6 +19,19 @@ export class BeObservant extends BE<AP, Actions> implements Actions{
             isParsedProp: 'isParsed'
         } as BEConfig;
     } 
+
+    async noAttrs(self: this): ProPAP {
+        const {enhancedElement} = self;
+        const observeRule: ObserveRule = {
+            //TODO:  move this evaluation to be-linked -- shared with be-elevating, be-bound
+            //Also, support for space delimited itemprop
+            remoteProp: enhancedElement.getAttribute('itemprop') || (enhancedElement as any).name || enhancedElement.id,
+            remoteType: '/'
+        };
+        return {
+            observeRules: [observeRule]
+        };
+    }
     
     async onCamelized(self: this) {
         const {of, Of} = self;
@@ -35,6 +48,7 @@ export class BeObservant extends BE<AP, Actions> implements Actions{
     async hydrate(self: this){
         const {enhancedElement, observeRules} = self;
         for(const observe of observeRules!){
+            console.log({observe});
             const {remoteProp, remoteType} = observe;
         }
         return {
@@ -60,6 +74,10 @@ const x = new XE<AP, Actions>({
             ...propInfo,
         },
         actions: {
+            noAttrs: {
+                ifAllOf: ['isParsed'],
+                ifNoneOf: ['of', 'Of']
+            },
             onCamelized: {
                 ifAllOf: ['isParsed'],
                 ifAtLeastOneOf: ['of', 'Of']
