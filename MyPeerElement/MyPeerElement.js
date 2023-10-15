@@ -25,4 +25,4 @@ export class MyPeerElement extends HTMLElement {
         `;
     }
 }
-customElements.define('peer-element', MyPeerElement);
+customElements.define('my-peer-element', MyPeerElement);

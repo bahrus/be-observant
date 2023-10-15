@@ -2,6 +2,7 @@ import {BE, propDefaults, propInfo} from 'be-enhanced/BE.js';
 import {BEConfig} from 'be-enhanced/types';
 import {XE} from 'xtal-element/XE.js';
 import {Actions, AllProps, AP, PAP, ProPAP, POA, ObserveRule} from './types';
+import {Actions as BPActions} from 'be-propagating/types';
 import {register} from 'be-hive/register.js';
 import {getRemoteEl} from 'be-linked/getRemoteEl.js';
 import {ElTypes, SignalInfo, SignalContainer} from 'be-linked/types';
@@ -78,6 +79,22 @@ export class BeObservant extends BE<AP, Actions> implements Actions{
                 }
                 case '@':{
                     stInput();
+                    break;
+                }
+                case '-':{
+                    //TODO:  share code with similar code in be-bound
+                    const {lispToCamel} = await import('trans-render/lib/lispToCamel.js');
+                    const newRemoteProp = lispToCamel(remoteProp!);
+                    observe.remoteProp = newRemoteProp;
+                    import('be-propagating/be-propagating.js');
+                    const bePropagating = await (<any>el).beEnhanced.whenResolved('be-propagating') as BPActions;
+                    const signal = await bePropagating.getSignal(newRemoteProp!);
+                    observe.remoteSignal = new WeakRef(signal);
+                    const ab = new AbortController();
+                    this.#abortControllers.push(ab);
+                    signal.addEventListener('value-changed', async () => {
+                        await evalObserveRules(self);
+                    }, {signal: ab.signal});
                     break;
                 }
                 default:{

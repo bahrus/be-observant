@@ -73,6 +73,22 @@ export class BeObservant extends BE {
                     stInput();
                     break;
                 }
+                case '-': {
+                    //TODO:  share code with similar code in be-bound
+                    const { lispToCamel } = await import('trans-render/lib/lispToCamel.js');
+                    const newRemoteProp = lispToCamel(remoteProp);
+                    observe.remoteProp = newRemoteProp;
+                    import('be-propagating/be-propagating.js');
+                    const bePropagating = await el.beEnhanced.whenResolved('be-propagating');
+                    const signal = await bePropagating.getSignal(newRemoteProp);
+                    observe.remoteSignal = new WeakRef(signal);
+                    const ab = new AbortController();
+                    this.#abortControllers.push(ab);
+                    signal.addEventListener('value-changed', async () => {
+                        await evalObserveRules(self);
+                    }, { signal: ab.signal });
+                    break;
+                }
                 default: {
                     throw 'NI';
                 }
