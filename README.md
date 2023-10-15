@@ -24,7 +24,7 @@ What this does:  Passes my-custom-element's isVegetarian value to the input elem
 
 This is shorthand for:
 
-## Example 1b [TODO]
+## Example 1b
 
 ```html
 <my-custom-element>
