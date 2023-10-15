@@ -60,11 +60,24 @@ export class BeObservant extends BE<AP, Actions> implements Actions{
             }else{
                 throw 'NI';
             }
+            //similar code as be-pute/be-switched, be-bound -- share somehow?
             const el = await getRemoteEl(enhancedElement, remoteType!, remoteProp!);
+            const stInput = () => {
+                observe.remoteSignal = new WeakRef(el);
+                const ab = new AbortController();
+                this.#abortControllers.push(ab);
+                el.addEventListener('input', async e => {
+                    await evalObserveRules(self);
+                }, {signal: ab.signal});
+            }
             switch(remoteType){
                 case '/':{
                     const {doPG} = await import('be-linked/doPG.js');
                     await doPG(self, el, observe as any as SignalContainer, 'remoteSignal', remoteProp!, this.#abortControllers, evalObserveRules as any, 'remote');
+                    break;
+                }
+                case '@':{
+                    stInput();
                     break;
                 }
                 default:{

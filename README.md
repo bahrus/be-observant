@@ -47,7 +47,7 @@ Slash indicates get value from host.  If omitted, it is assumed:
 ## Binding to peer elements
 
 
-## Example 2a [TODO]
+## Example 2a
 
 ```html
 <input name=search type=search>
