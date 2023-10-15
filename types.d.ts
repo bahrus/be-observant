@@ -33,5 +33,5 @@ export interface ObserveRule{
     remoteType: ElTypes,
     remoteSignal?: WeakRef<SignalRefType>,
     localProp?: string,
-    localSignal?: WeakRef<SignalRefType>,
+    localSignal?: SignalRefType,
 }

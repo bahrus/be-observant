@@ -2,7 +2,7 @@ import { BE, propDefaults, propInfo } from 'be-enhanced/BE.js';
 import { XE } from 'xtal-element/XE.js';
 import { register } from 'be-hive/register.js';
 import { getRemoteEl } from 'be-linked/getRemoteEl.js';
-import { getLocalProp, getRemoteProp } from 'be-linked/defaults.js';
+import { getLocalSignal, getRemoteProp } from 'be-linked/defaults.js';
 export class BeObservant extends BE {
     #abortControllers = [];
     detach() {
@@ -46,7 +46,12 @@ export class BeObservant extends BE {
             console.log({ observe });
             const { remoteProp, remoteType, localProp } = observe;
             if (localProp === undefined) {
-                observe.localProp = getLocalProp(enhancedElement);
+                const signal = await getLocalSignal(enhancedElement);
+                observe.localProp = signal.prop;
+                observe.localSignal = signal.signal;
+            }
+            else {
+                throw 'NI';
             }
             const el = await getRemoteEl(enhancedElement, remoteType, remoteProp);
             switch (remoteType) {
@@ -54,6 +59,9 @@ export class BeObservant extends BE {
                     const { doPG } = await import('be-linked/doPG.js');
                     await doPG(self, el, observe, 'remoteSignal', remoteProp, this.#abortControllers, evalObserveRules, 'remote');
                     break;
+                }
+                default: {
+                    throw 'NI';
                 }
             }
         }
@@ -67,7 +75,13 @@ function evalObserveRules(self) {
     console.log('evalObserveRules');
     const { observeRules } = self;
     for (const observe of observeRules) {
-        const {} = observe;
+        const { localProp, localSignal, remoteProp, remoteSignal } = observe;
+        const remoteObj = remoteSignal?.deref();
+        if (remoteObj === undefined) {
+            console.warn(404);
+            continue;
+        }
+        localSignal[localProp] = remoteObj[remoteProp];
     }
 }
 const tagName = 'be-observant';

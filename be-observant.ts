@@ -5,7 +5,8 @@ import {Actions, AllProps, AP, PAP, ProPAP, POA, ObserveRule} from './types';
 import {register} from 'be-hive/register.js';
 import {getRemoteEl} from 'be-linked/getRemoteEl.js';
 import {ElTypes, SignalInfo, SignalContainer} from 'be-linked/types';
-import {getLocalProp, getRemoteProp} from 'be-linked/defaults.js';
+import {getLocalSignal, getRemoteProp} from 'be-linked/defaults.js';
+import {getSignal} from 'be-linked/getSignal.js';
 
 export class BeObservant extends BE<AP, Actions> implements Actions{
     #abortControllers: Array<AbortController>  = [];
@@ -53,7 +54,11 @@ export class BeObservant extends BE<AP, Actions> implements Actions{
             console.log({observe});
             const {remoteProp, remoteType, localProp} = observe;
             if(localProp === undefined){
-                observe.localProp = getLocalProp(enhancedElement);
+                const signal = await getLocalSignal(enhancedElement);
+                observe.localProp = signal.prop;
+                observe.localSignal = signal.signal;
+            }else{
+                throw 'NI';
             }
             const el = await getRemoteEl(enhancedElement, remoteType!, remoteProp!);
             switch(remoteType){
@@ -61,6 +66,9 @@ export class BeObservant extends BE<AP, Actions> implements Actions{
                     const {doPG} = await import('be-linked/doPG.js');
                     await doPG(self, el, observe as any as SignalContainer, 'remoteSignal', remoteProp!, this.#abortControllers, evalObserveRules as any, 'remote');
                     break;
+                }
+                default:{
+                    throw 'NI';
                 }
             }
         }
@@ -75,7 +83,13 @@ function evalObserveRules(self: BeObservant){
     console.log('evalObserveRules');
     const {observeRules} = self;
     for(const observe of observeRules!){
-        const {} = observe;
+        const {localProp, localSignal, remoteProp, remoteSignal} = observe;
+        const remoteObj = remoteSignal?.deref();
+        if(remoteObj === undefined){
+            console.warn(404);
+            continue;
+        }
+        (<any>localSignal!)[localProp!] = (<any>remoteObj)[remoteProp!];
     }
 }
 
