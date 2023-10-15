@@ -8,6 +8,13 @@
 </head>
 <body>
     <my-custom-element></my-custom-element>
+    <button onclick="setVegetarian(true);">Set isVegetarian = true.</button>
+    <button onclick="setVegetarian(false);">Set isVegetarian = false.</button>
+    <script>
+        function setVegetarian(val){
+            document.querySelector('my-custom-element').isVegetarian = val;
+        }
+    </script>
     <script type=importmap>
         {
             "imports": {
