@@ -89,7 +89,7 @@ function evalObserveRules(self: BeObservant){
             console.warn(404);
             continue;
         }
-        (<any>localSignal!)[localProp!] = (<any>remoteObj)[remoteProp!];
+        (<any>localSignal!)[localProp!] = (<any>remoteObj).value;
     }
 }
 

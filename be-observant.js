@@ -81,7 +81,7 @@ function evalObserveRules(self) {
             console.warn(404);
             continue;
         }
-        localSignal[localProp] = remoteObj[remoteProp];
+        localSignal[localProp] = remoteObj.value;
     }
 }
 const tagName = 'be-observant';
