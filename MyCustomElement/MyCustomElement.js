@@ -18,13 +18,13 @@ export class MyCustomElement extends HTMLElement {
         <div itemscope>
             <div id=someStringPropVal></div>
             <div id=isVegetarian></div>
-            <!-- <h3>Example 1a</h3>
+            <h3>Example 1a</h3>
             <input name=isVegetarian type=checkbox onclick="return false;" be-observant>
             <h3>Example 1b</h3>
             <input type=checkbox onclick="return false;" be-observant='of /is vegetarian.'>
             <h3>Example 1c</h3>
             <input type=checkbox onclick="return false;" be-observant='of is vegetarian.'>
-            <hr> -->
+            <hr>
             <h3>Example 2a</h3>
             <input name=search type=search>
             <div be-observant='of @search.'></div>
