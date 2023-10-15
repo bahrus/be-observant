@@ -6,6 +6,12 @@ const reOfObserveStatement = [
     {
         regExp: new RegExp(String.raw `^${remoteType}${remoteProp}`),
         defaultVals: {}
+    },
+    {
+        regExp: new RegExp(String.raw `^${remoteProp}`),
+        defaultVals: {
+            remoteType: '/'
+        }
     }
 ];
 export function prsOf(self) {

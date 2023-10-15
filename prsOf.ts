@@ -11,6 +11,12 @@ const reOfObserveStatement: Array<RegExpOrRegExpExt<Partial<ObserveRule>>> = [
     {
         regExp: new RegExp(String.raw `^${remoteType}${remoteProp}`),
         defaultVals:{}
+    },
+    {
+        regExp: new RegExp(String.raw `^${remoteProp}`),
+        defaultVals:{
+            remoteType: '/'
+        }
     }
 ];
 

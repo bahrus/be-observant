@@ -23,6 +23,8 @@ export class MyCustomElement extends HTMLElement{
             <input name=isVegetarian type=checkbox onclick="return false;" be-observant>
             <h3>Example 1b</h3>
             <input type=checkbox onclick="return false;" be-observant='of /is vegetarian.'>
+            <h3>Example 1c</h3>
+            <input type=checkbox onclick="return false;" be-observant='of is vegetarian.'>
         </div>
         <be-hive></be-hive>
         `;
