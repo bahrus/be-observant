@@ -35,4 +35,6 @@ export interface ObserveRule{
     localProp?: string,
     localSignal?: SignalRefType,
     negate?: boolean,
+    mathOp?: '+' | '-' | '*' | '/',
+    mathEnd?: number,
 }

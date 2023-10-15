@@ -29,7 +29,7 @@ This is shorthand for:
 ```html
 <my-custom-element>
     #shadow
-    <input type=checkbox be-observant='of / is vegetarian.'>
+    <input type=checkbox onclick="return false" be-observant='of / is vegetarian.'>
 </my-custom-element>
 ```
 
@@ -40,7 +40,7 @@ Slash indicates get value from host.  If omitted, it is assumed:
 ```html
 <my-custom-element>
     #shadow
-    <input type=checkbox be-observant='of is vegetarian.'>
+    <input type=checkbox onclick="return false" be-observant='of is vegetarian.'>
 </my-custom-element>
 ```
 
@@ -49,9 +49,20 @@ Slash indicates get value from host.  If omitted, it is assumed:
 ```html
 <my-custom-element>
     #shadow
-    <input type=checkbox be-observant='of not is vegetarian.'>
+    <input type=checkbox onclick="return false" be-observant='of not is vegetarian.'>
 </my-custom-element>
 ```
+
+## Example 1e Translation 
+
+```html
+<my-custom-element>
+    #shadow
+    <input type=readonly be-observant='of age - 20.'>
+</my-custom-element>
+```
+
+Can also use addition (+), multiplication (*), division (/) [Untested].
 
 ## Binding to peer elements
 
@@ -78,15 +89,7 @@ As the user types in the input field, the div's text content reflects the value 
 
 
 
-## Example 4 Translation [TODO]
 
-```html
-<paul-mccartney age=64>
-    #shadow
-    <daughter-heather be-observant='of age and pass value - 20 to $0:age.
-    '></daughter-heather>
-</paul-mccartney>
-```
 
 ## Example 5 Mapping [TODO]
 

@@ -51,7 +51,7 @@ export class BeObservant extends BE<AP, Actions> implements Actions{
     async hydrate(self: this){
         const {enhancedElement, observeRules} = self;
         for(const observe of observeRules!){
-            console.log({observe});
+            //console.log({observe});
             const {remoteProp, remoteType, localProp} = observe;
             if(localProp === undefined){
                 const signal = await getLocalSignal(enhancedElement);
@@ -93,17 +93,34 @@ export class BeObservant extends BE<AP, Actions> implements Actions{
 }
 
 function evalObserveRules(self: BeObservant){
-    console.log('evalObserveRules');
+    //console.log('evalObserveRules');
     const {observeRules} = self;
     for(const observe of observeRules!){
-        const {localProp, localSignal, remoteProp, remoteSignal, negate} = observe;
+        const {localProp, localSignal, remoteProp, remoteSignal, negate, mathEnd, mathOp} = observe;
         const remoteObj = remoteSignal?.deref();
         if(remoteObj === undefined){
             console.warn(404);
             continue;
         }
         let val = (<any>remoteObj).value;
-        if(negate) val = !val;
+        if(negate){
+            val = !val;
+        } else if(typeof mathEnd === 'number'){
+            switch(mathOp){
+                case '*':
+                    val *= mathEnd;
+                    break;
+                case '+':
+                    val += mathEnd;
+                    break;
+                case '-':
+                    val -= mathEnd;
+                    break;
+                case '/':
+                    val /= mathEnd;
+                    break;
+            }
+        }
         (<any>localSignal!)[localProp!] = val;
     }
 }

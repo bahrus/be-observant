@@ -10,9 +10,13 @@
     <my-custom-element></my-custom-element>
     <button onclick="setVegetarian(true);">Set isVegetarian = true.</button>
     <button onclick="setVegetarian(false);">Set isVegetarian = false.</button>
+    <button onclick="setAge(90)">Set age = 90.</button>
     <script>
         function setVegetarian(val){
             document.querySelector('my-custom-element').isVegetarian = val;
+        }
+        function setAge(val){
+            document.querySelector('my-custom-element').age = val;
         }
     </script>
     <script type=importmap>
