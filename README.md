@@ -66,6 +66,16 @@ Can also use addition (+), multiplication (*), division (/) [Untested].
 
 ## Binding to peer elements
 
+## Example 1f Markers 
+
+```html
+<my-custom-element>
+    #shadow
+    <my-peer-element -some-bool-prop><my-peer-element>
+    <input type=checkbox onclick="return false" be-observant='of -some-bool-prop'>
+</my-custom-element>
+```
+
 
 ## Example 2a
 
@@ -77,7 +87,7 @@ Can also use addition (+), multiplication (*), division (/) [Untested].
 
 As the user types in the input field, the div's text content reflects the value that was typed.
 
-## Example 2b [TODO]
+## Example 3b [TODO]
 
 ```html
 <input name=search type=search>

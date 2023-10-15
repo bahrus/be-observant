@@ -49,7 +49,7 @@ export function prsOf(self: AP) : Array<ObserveRule> {
             Object.assign(test, test2.groups);
             test.mathEnd = Number(test.mathEnd);
         }
-        //console.log({test, test2});
+        console.log({test, test2});
         observeRules.push(test);
     }
     return observeRules;
