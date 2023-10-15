@@ -44,6 +44,15 @@ Slash indicates get value from host.  If omitted, it is assumed:
 </my-custom-element>
 ```
 
+## Example 1d  Negation
+
+```html
+<my-custom-element>
+    #shadow
+    <input type=checkbox be-observant='of not is vegetarian.'>
+</my-custom-element>
+```
+
 ## Binding to peer elements
 
 
@@ -67,14 +76,7 @@ As the user types in the input field, the div's text content reflects the value 
 </div>
 ```
 
-## Example 3  Negation [TODO]
 
-```html
-<my-custom-element>
-    #shadow
-    <input type=checkbox be-observant='of is read only negated.'>
-</my-custom-element>
-```
 
 ## Example 4 Translation [TODO]
 

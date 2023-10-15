@@ -34,4 +34,5 @@ export interface ObserveRule{
     remoteSignal?: WeakRef<SignalRefType>,
     localProp?: string,
     localSignal?: SignalRefType,
+    negate?: boolean,
 }

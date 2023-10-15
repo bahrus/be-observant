@@ -96,13 +96,15 @@ function evalObserveRules(self: BeObservant){
     console.log('evalObserveRules');
     const {observeRules} = self;
     for(const observe of observeRules!){
-        const {localProp, localSignal, remoteProp, remoteSignal} = observe;
+        const {localProp, localSignal, remoteProp, remoteSignal, negate} = observe;
         const remoteObj = remoteSignal?.deref();
         if(remoteObj === undefined){
             console.warn(404);
             continue;
         }
-        (<any>localSignal!)[localProp!] = (<any>remoteObj).value;
+        let val = (<any>remoteObj).value;
+        if(negate) val = !val;
+        (<any>localSignal!)[localProp!] = val;
     }
 }
 

@@ -24,6 +24,8 @@ export class MyCustomElement extends HTMLElement {
             <input type=checkbox onclick="return false;" be-observant='of /is vegetarian.'>
             <h3>Example 1c</h3>
             <input type=checkbox onclick="return false;" be-observant='of is vegetarian.'>
+            <h3>Example 1d</h3>
+            <input type=checkbox onclick="return false;" be-observant='of not is vegetarian.'>
             <hr>
             <h3>Example 2a</h3>
             <input name=search type=search>
