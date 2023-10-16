@@ -40,7 +40,7 @@ export class MyCustomElement extends HTMLElement {
             <h3>Example 1d</h3>
             <input type=checkbox onclick="return false;" be-observant='of not is vegetarian.'>
             <h3>Example 1e</h3>
-            <input type=readonly be-observant='of age - 20.'>
+            <input id=ageTest type=readonly be-observant='of age - 20.'>
             
             <hr>
             <h3>Example 2a</h3>

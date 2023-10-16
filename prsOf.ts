@@ -73,7 +73,7 @@ export function prsOf(self: AP) : Array<ObserveRule> {
         if(localProp?.includes(':')){
             test.splitLocalProp = localProp.split(':');
         }
-        console.log({test, test2});
+        //console.log({test, test2});
         observeRules.push(test);
     }
     return observeRules;
