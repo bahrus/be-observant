@@ -69,6 +69,7 @@ export class BeObservant extends BE {
                     await doPG(self, el, observe, 'remoteSignal', remoteProp, this.#abortControllers, evalObserveRules, 'remote');
                     break;
                 }
+                case '#':
                 case '@': {
                     stInput();
                     break;

@@ -41,12 +41,16 @@ export class MyCustomElement extends HTMLElement {
             <input type=checkbox onclick="return false;" be-observant='of not is vegetarian.'>
             <h3>Example 1e</h3>
             <input type=readonly be-observant='of age - 20.'>
-            <h3>Example 1f</h3>
-            <input type=checkbox onclick="return false" be-observant='of -some-bool-prop'>
+            
             <hr>
             <h3>Example 2a</h3>
             <input name=search type=search>
             <div be-observant='of @search.'></div>
+            <h3>Example 2b</h3>
+            <input id=searchString type=search>
+            <div be-observant='of #search string.'></div>
+            <h3>Example 2c</h3>
+            <input type=checkbox onclick="return false" be-observant='of -some-bool-prop'>
         </div>
         <be-hive></be-hive>
         `;

@@ -77,6 +77,7 @@ export class BeObservant extends BE<AP, Actions> implements Actions{
                     await doPG(self, el, observe as any as SignalContainer, 'remoteSignal', remoteProp!, this.#abortControllers, evalObserveRules as any, 'remote');
                     break;
                 }
+                case '#':
                 case '@':{
                     stInput();
                     break;
