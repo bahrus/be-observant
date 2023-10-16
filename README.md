@@ -2,6 +2,11 @@
 
 Observe properties of peer elements or the host.
 
+[![NPM version](https://badge.fury.io/js/be-observant.png)](http://badge.fury.io/js/be-observant)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/be-observant?style=for-the-badge)](https://bundlephobia.com/result?p=be-observant)
+<img src="http://img.badgesize.io/https://cdn.jsdelivr.net/npm/be-observant?compression=gzip">
+[![Playwright Tests](https://github.com/bahrus/be-observant/actions/workflows/CI.yml/badge.svg?branch=baseline)](https://github.com/bahrus/be-observant/actions/workflows/CI.yml)
+
 > [!Note]
 > *be-observant* overlaps in functionality with [be-sharing](https://github.com/bahrus/be-sharing).  The preference should be to use be-sharing when it is appropriate, especially when it can reduce busy work.  *be-sharing* provides "wildcard" binding while sticking with attributes which are built in to the platform, attributes that serve other purposes in addition to binding (namely microdata).  *be-sharing* works following an approach of "distribute data down" from the host or non-visible "brain" components, whereas be-observant works more on a "pull data in" to the adorned element.  This overlap can get confusing when both element enhancements are used within the same DOM realm.  To tell be-sharing to ignore binding to the adorned element, add an attribute consisting of two dashes to the adorned element, as will be shown in the examples below where applicable. [TODO]:  Document where it is better to use be-observant.
 
@@ -119,9 +124,46 @@ This watches the input element for input events and passes the checked property 
 ```
 
 
-
+<!-->
 
 
 ## Example 5 Mapping [TODO]
 
 ## Example 6
+
+<-->
+
+
+
+## Viewing Demos Locally
+
+Any web server that can serve static files will do, but...
+
+1.  Install git.
+2.  Fork/clone this repo.
+3.  Install node.js.
+4.  Open command window to folder where you cloned this repo.
+5.  > npm install
+6.  > npm run serve
+7.  Open http://localhost:3030/demo/ in a modern browser.
+
+## Running Tests
+
+```
+> npm run test
+```
+
+## Using from ESM Module:
+
+```JavaScript
+import 'be-observant/be-observant.js';
+```
+
+## Using from CDN:
+
+```html
+<script type=module crossorigin=anonymous>
+    import 'https://esm.run/be-observant';
+</script>
+```
+
