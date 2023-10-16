@@ -89,7 +89,7 @@ As the user types in the input field, the div's text content reflects the value 
 ```html
 <my-custom-element>
     #shadow
-    <my-peer-element -some-bool-prop><my-peer-element>
+    <my-peer-element -some-bool-prop></my-peer-element>
     <input type=checkbox onclick="return false" be-observant='of -some-bool-prop'>
 </my-custom-element>
 ```
@@ -100,20 +100,20 @@ As the user types in the input field, the div's text content reflects the value 
 <my-custom-element>
     #shadow
     
-    <input name=someCheckbox type=checkbox onclick="return false">
+    <input name=someCheckbox type=checkbox>
 
-    <my-peer-element be-observant='of @ some checkbox and assign to some bool prop'><my-peer-element>
+    <my-peer-element be-observant='of @ some checkbox and assign to some bool prop'></my-peer-element>
 </my-custom-element>
 ```
 
 This watches the input element for input events and passes the checked property to someBoolProp of oMyPeerElement.
 
-## Example 3b [TODO]
+## Example 3b
 
 ```html
 <input name=search type=search>
 
-<div be-observant='of @search and pass value to $0-enh-by-be-searching : for text.'>
+<div be-observant='of @search and assign to beEnhanced:by:beSearching:forText.'>
     supercalifragilisticexpialidocious
 </div>
 ```

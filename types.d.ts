@@ -33,6 +33,7 @@ export interface ObserveRule{
     remoteType: ElTypes,
     remoteSignal?: WeakRef<SignalRefType>,
     localProp?: string,
+    splitLocalProp?: Array<string>,
     localSignal?: SignalRefType,
     negate?: boolean,
     mathOp?: '+' | '-' | '*' | '/',

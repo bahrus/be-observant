@@ -115,7 +115,7 @@ function evalObserveRules(self: BeObservant){
     //console.log('evalObserveRules');
     const {observeRules} = self;
     for(const observe of observeRules!){
-        const {localProp, localSignal, remoteProp, remoteSignal, negate, mathEnd, mathOp} = observe;
+        const {localProp, localSignal, splitLocalProp, remoteSignal, negate, mathEnd, mathOp} = observe;
         const remoteObj = remoteSignal?.deref();
         if(remoteObj === undefined){
             console.warn(404);
@@ -140,7 +140,30 @@ function evalObserveRules(self: BeObservant){
                     break;
             }
         }
-        (<any>localSignal!)[localProp!] = val;
+        if(splitLocalProp !== undefined){
+            setVal(localSignal, splitLocalProp, val);
+        }else{
+            (<any>localSignal!)[localProp!] = val;
+        }
+        
+    }
+}
+
+//TODO:  move to be-linked
+export function setVal(obj: any, split: Array<string>, val: any){
+    let context = obj;
+    const len = split.length;
+    let cnt = 1;
+    for(const token of split){
+        if(cnt === len){
+            context[token] = val;
+            return;
+        }
+        if(context[token] === undefined){
+            context[token] = {};
+        }
+        context = context[token];
+        cnt++;
     }
 }
 

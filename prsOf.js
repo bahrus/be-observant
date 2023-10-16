@@ -60,11 +60,14 @@ export function prsOf(self) {
         const test = tryParse(ofStatement, reOfObserveStatement);
         if (test === null)
             throw 'PE';
-        const { remoteProp } = test;
+        const { remoteProp, localProp } = test;
         const test2 = arithmeticExpr.exec(remoteProp);
         if (test2 !== null) {
             Object.assign(test, test2.groups);
             test.mathEnd = Number(test.mathEnd);
+        }
+        if (localProp?.includes(':')) {
+            test.splitLocalProp = localProp.split(':');
         }
         console.log({ test, test2 });
         observeRules.push(test);
