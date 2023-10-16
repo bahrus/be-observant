@@ -51,7 +51,7 @@ export class BeObservant extends BE {
                 observe.localSignal = signal.signal;
             }
             else {
-                throw 'NI';
+                observe.localSignal = enhancedElement;
             }
             //similar code as be-pute/be-switched, be-bound -- share somehow?
             const el = await getRemoteEl(enhancedElement, remoteType, remoteProp);
