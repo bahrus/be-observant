@@ -94,6 +94,20 @@ As the user types in the input field, the div's text content reflects the value 
 </my-custom-element>
 ```
 
+## Example 3a [TODO]
+
+```html
+<my-custom-element>
+    #shadow
+    
+    <input name=someCheckbox type=checkbox onclick="return false">
+
+    <my-peer-element be-observant='of @ some checkbox and assign to some bool prop'><my-peer-element>
+</my-custom-element>
+```
+
+This watches the input element for input events and passes the checked property to someBoolProp of oMyPeerElement.
+
 ## Example 3b [TODO]
 
 ```html

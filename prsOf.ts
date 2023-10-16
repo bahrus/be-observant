@@ -7,8 +7,31 @@ export const strType = String.raw `\$|\#|\@|\/|\-`;
 const remoteType = String.raw `(?<remoteType>${strType})`;
 const remoteProp = String.raw `(?<remoteProp>[\w\-\+\*\/]+)`;
 const arithmeticExpr = new RegExp(String.raw `^(?<remoteProp>[\w]+)(?<mathOp>\-|\+|\*\|\\)(?<mathEnd>(([0-9]*)|(([0-9]*)\.([0-9]*)))$)`);
-
+const andAssignTo = String.raw `(?<!\\)AndAssignTo(?<localProp>[\w\:]+)`;
 const reOfObserveStatement: Array<RegExpOrRegExpExt<Partial<ObserveRule>>> = [
+    {
+        regExp: new RegExp(String.raw `^not${remoteType}${remoteProp}${andAssignTo}`),
+        defaultVals:{
+            negate: true
+        }
+    },
+    {
+        regExp: new RegExp(String.raw `^${remoteType}${remoteProp}${andAssignTo}`),
+        defaultVals:{}
+    },
+    {
+        regExp: new RegExp(String.raw `^not${remoteProp}${andAssignTo}`),
+        defaultVals:{
+            remoteType: '/',
+            negate: true,
+        }
+    },
+    {
+        regExp: new RegExp(String.raw `^${remoteProp}${andAssignTo}`),
+        defaultVals:{
+            remoteType: '/'
+        }
+    },
     {
         regExp: new RegExp(String.raw `^not${remoteType}${remoteProp}`),
         defaultVals:{
@@ -32,8 +55,6 @@ const reOfObserveStatement: Array<RegExpOrRegExpExt<Partial<ObserveRule>>> = [
             remoteType: '/'
         }
     },
-
-
 ];
 
 export function prsOf(self: AP) : Array<ObserveRule> {
@@ -49,7 +70,7 @@ export function prsOf(self: AP) : Array<ObserveRule> {
             Object.assign(test, test2.groups);
             test.mathEnd = Number(test.mathEnd);
         }
-        //console.log({test, test2});
+        console.log({test, test2});
         observeRules.push(test);
     }
     return observeRules;
