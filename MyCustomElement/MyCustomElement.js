@@ -30,7 +30,7 @@ export class MyCustomElement extends HTMLElement {
             <div id=someStringPropVal></div>
             <div id=isVegetarian></div>
             <div id=age></div>
-            <!-- <my-peer-element -some-bool-prop></my-peer-element>
+            <my-peer-element -some-bool-prop></my-peer-element>
             <h3>Example 1a</h3>
             <input name=isVegetarian type=checkbox onclick="return false;" be-observant>
             <h3>Example 1b</h3>
@@ -43,9 +43,9 @@ export class MyCustomElement extends HTMLElement {
             <input type=readonly be-observant='of age - 20.'>
             
             <hr>
-            <h3>Example 2a</h3> -->
+            <h3>Example 2a</h3>
             <input name=search type=search>
-            <!-- <div be-observant='of @search.'></div>
+            <div be-observant='of @search.'></div>
             <h3>Example 2b</h3>
             <input id=searchString type=search>
             <div be-observant='of #search string.'></div>
@@ -53,7 +53,7 @@ export class MyCustomElement extends HTMLElement {
             <input type=checkbox onclick="return false" be-observant='of -some-bool-prop'>
             <input name=someCheckbox type=checkbox>
 
-            <my-peer-element enh-by-be-observant='of @ some checkbox and assign to some bool prop'></my-peer-element> -->
+            <my-peer-element enh-by-be-observant='of @ some checkbox and assign to some bool prop'></my-peer-element>
 
 
             <div be-observant='of @search and assign to beEnhanced:by:beSearching:forText.'>
