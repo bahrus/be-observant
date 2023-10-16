@@ -53,7 +53,7 @@ export class MyCustomElement extends HTMLElement {
             <input type=checkbox onclick="return false" be-observant='of -some-bool-prop'> -->
             <input name=someCheckbox type=checkbox>
 
-            <my-peer-element enh-by-be-observant='of @ some checkbox and assign to some bool prop'><my-peer-element>
+            <my-peer-element enh-by-be-observant='of @ some checkbox and assign to some bool prop'></my-peer-element>
         </div>
         <be-hive></be-hive>
         `;

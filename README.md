@@ -94,7 +94,7 @@ As the user types in the input field, the div's text content reflects the value 
 </my-custom-element>
 ```
 
-## Example 3a [TODO]
+## Example 3a
 
 ```html
 <my-custom-element>

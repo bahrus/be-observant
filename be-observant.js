@@ -3,6 +3,7 @@ import { XE } from 'xtal-element/XE.js';
 import { register } from 'be-hive/register.js';
 import { getRemoteEl } from 'be-linked/getRemoteEl.js';
 import { getLocalSignal, getRemoteProp } from 'be-linked/defaults.js';
+import { getSignalVal } from 'be-linked/getSignalVal.js';
 export class BeObservant extends BE {
     #abortControllers = [];
     detach() {
@@ -111,7 +112,7 @@ function evalObserveRules(self) {
             console.warn(404);
             continue;
         }
-        let val = remoteObj.value;
+        let val = getSignalVal(remoteObj); // (<any>remoteObj).value;
         if (negate) {
             val = !val;
         }

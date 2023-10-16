@@ -8,6 +8,7 @@ import {getRemoteEl} from 'be-linked/getRemoteEl.js';
 import {ElTypes, SignalInfo, SignalContainer} from 'be-linked/types';
 import {getLocalSignal, getRemoteProp} from 'be-linked/defaults.js';
 import {getSignal} from 'be-linked/getSignal.js';
+import {getSignalVal} from 'be-linked/getSignalVal.js';
 
 export class BeObservant extends BE<AP, Actions> implements Actions{
     #abortControllers: Array<AbortController>  = [];
@@ -120,7 +121,7 @@ function evalObserveRules(self: BeObservant){
             console.warn(404);
             continue;
         }
-        let val = (<any>remoteObj).value;
+        let val = getSignalVal(remoteObj); // (<any>remoteObj).value;
         if(negate){
             val = !val;
         } else if(typeof mathEnd === 'number'){
