@@ -41,60 +41,64 @@ export class BeObservant extends BE {
             observeRules
         };
     }
-    async hydrate(self) {
-        const { enhancedElement, observeRules } = self;
-        for (const observe of observeRules) {
-            //console.log({observe});
-            const { remoteProp, remoteType, localProp } = observe;
-            if (localProp === undefined) {
-                const signal = await getLocalSignal(enhancedElement);
-                observe.localProp = signal.prop;
-                observe.localSignal = signal.signal;
+    async hydrateSingleObserve(self, observe) {
+        //console.log({observe});
+        const { enhancedElement } = self;
+        const { remoteProp, remoteType, localProp } = observe;
+        if (localProp === undefined) {
+            const signal = await getLocalSignal(enhancedElement);
+            observe.localProp = signal.prop;
+            observe.localSignal = signal.signal;
+        }
+        else {
+            observe.localSignal = enhancedElement;
+        }
+        //similar code as be-pute/be-switched, be-bound -- share somehow?
+        const el = await getRemoteEl(enhancedElement, remoteType, remoteProp);
+        const stInput = () => {
+            observe.remoteSignal = new WeakRef(el);
+            const ab = new AbortController();
+            this.#abortControllers.push(ab);
+            el.addEventListener('input', async (e) => {
+                await evalObserveRules(self, 'update');
+            }, { signal: ab.signal });
+        };
+        switch (remoteType) {
+            case '/': {
+                const { doPG } = await import('be-linked/doPG.js');
+                await doPG(self, el, observe, 'remoteSignal', remoteProp, this.#abortControllers, evalObserveRules, 'remote');
+                break;
             }
-            else {
-                observe.localSignal = enhancedElement;
+            case '#':
+            case '@': {
+                stInput();
+                break;
             }
-            //similar code as be-pute/be-switched, be-bound -- share somehow?
-            const el = await getRemoteEl(enhancedElement, remoteType, remoteProp);
-            const stInput = () => {
-                observe.remoteSignal = new WeakRef(el);
+            case '-': {
+                //TODO:  share code with similar code in be-bound
+                const { lispToCamel } = await import('trans-render/lib/lispToCamel.js');
+                const newRemoteProp = lispToCamel(remoteProp);
+                observe.remoteProp = newRemoteProp;
+                import('be-propagating/be-propagating.js');
+                const bePropagating = await el.beEnhanced.whenResolved('be-propagating');
+                const signal = await bePropagating.getSignal(newRemoteProp);
+                observe.remoteSignal = new WeakRef(signal);
                 const ab = new AbortController();
                 this.#abortControllers.push(ab);
-                el.addEventListener('input', async (e) => {
+                signal.addEventListener('value-changed', async () => {
                     await evalObserveRules(self, 'update');
                 }, { signal: ab.signal });
-            };
-            switch (remoteType) {
-                case '/': {
-                    const { doPG } = await import('be-linked/doPG.js');
-                    await doPG(self, el, observe, 'remoteSignal', remoteProp, this.#abortControllers, evalObserveRules, 'remote');
-                    break;
-                }
-                case '#':
-                case '@': {
-                    stInput();
-                    break;
-                }
-                case '-': {
-                    //TODO:  share code with similar code in be-bound
-                    const { lispToCamel } = await import('trans-render/lib/lispToCamel.js');
-                    const newRemoteProp = lispToCamel(remoteProp);
-                    observe.remoteProp = newRemoteProp;
-                    import('be-propagating/be-propagating.js');
-                    const bePropagating = await el.beEnhanced.whenResolved('be-propagating');
-                    const signal = await bePropagating.getSignal(newRemoteProp);
-                    observe.remoteSignal = new WeakRef(signal);
-                    const ab = new AbortController();
-                    this.#abortControllers.push(ab);
-                    signal.addEventListener('value-changed', async () => {
-                        await evalObserveRules(self, 'update');
-                    }, { signal: ab.signal });
-                    break;
-                }
-                default: {
-                    throw 'NI';
-                }
+                break;
             }
+            default: {
+                throw 'NI';
+            }
+        }
+    }
+    async hydrate(self) {
+        const { observeRules } = self;
+        for (const observe of observeRules) {
+            await this.hydrateSingleObserve(self, observe);
         }
         evalObserveRules(self, 'init');
         return {

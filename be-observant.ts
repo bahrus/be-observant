@@ -50,10 +50,9 @@ export class BeObservant extends BE<AP, Actions> implements Actions{
         };
     }
 
-    async hydrate(self: this){
-        const {enhancedElement, observeRules} = self;
-        for(const observe of observeRules!){
+    async hydrateSingleObserve(self: this, observe: ObserveRule){
             //console.log({observe});
+            const {enhancedElement} = self;
             const {remoteProp, remoteType, localProp} = observe;
             if(localProp === undefined){
                 const signal = await getLocalSignal(enhancedElement);
@@ -103,6 +102,12 @@ export class BeObservant extends BE<AP, Actions> implements Actions{
                     throw 'NI';
                 }
             }
+    }
+
+    async hydrate(self: this){
+        const {observeRules} = self;
+        for(const observe of observeRules!){
+            await this.hydrateSingleObserve(self, observe)
         }
         evalObserveRules(self, 'init');
         return {
