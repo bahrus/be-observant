@@ -61,7 +61,7 @@ export class BeObservant extends BE {
                 const ab = new AbortController();
                 this.#abortControllers.push(ab);
                 el.addEventListener('input', async (e) => {
-                    await evalObserveRules(self);
+                    await evalObserveRules(self, 'update');
                 }, { signal: ab.signal });
             };
             switch (remoteType) {
@@ -87,7 +87,7 @@ export class BeObservant extends BE {
                     const ab = new AbortController();
                     this.#abortControllers.push(ab);
                     signal.addEventListener('value-changed', async () => {
-                        await evalObserveRules(self);
+                        await evalObserveRules(self, 'update');
                     }, { signal: ab.signal });
                     break;
                 }
@@ -96,22 +96,25 @@ export class BeObservant extends BE {
                 }
             }
         }
-        evalObserveRules(self);
+        evalObserveRules(self, 'init');
         return {
             resolved: true,
         };
     }
 }
-function evalObserveRules(self) {
+function evalObserveRules(self, lifecycleEvent) {
     //console.log('evalObserveRules');
     const { observeRules } = self;
     for (const observe of observeRules) {
-        const { localProp, localSignal, splitLocalProp, remoteSignal, negate, mathEnd, mathOp } = observe;
+        const { skipInit, remoteSignal } = observe;
+        if (skipInit && lifecycleEvent === 'init')
+            continue;
         const remoteObj = remoteSignal?.deref();
         if (remoteObj === undefined) {
             console.warn(404);
             continue;
         }
+        const { localProp, localSignal, splitLocalProp, negate, mathEnd, mathOp } = observe;
         let val = getSignalVal(remoteObj); // (<any>remoteObj).value;
         if (negate) {
             val = !val;
@@ -160,7 +163,7 @@ export function setVal(obj, split, val) {
 const tagName = 'be-observant';
 const ifWantsToBe = 'observant';
 const upgrade = '*';
-const x = new XE({
+const xe = new XE({
     config: {
         tagName,
         isEnh: true,
