@@ -1,7 +1,7 @@
 import {BE, propDefaults, propInfo} from 'be-enhanced/BE.js';
 import {BEConfig} from 'be-enhanced/types';
 import {XE} from 'xtal-element/XE.js';
-import {Actions, AllProps, AP, PAP, ProPAP, POA, ObserveRule} from './types';
+import {Actions, AllProps, AP, PAP, ProPAP, POA, ObserveRule, LifecycleEvent} from './types';
 import {Actions as BPActions} from 'be-propagating/types';
 import {register} from 'be-hive/register.js';
 import {getRemoteEl} from 'be-linked/getRemoteEl.js';
@@ -69,7 +69,7 @@ export class BeObservant extends BE<AP, Actions> implements Actions{
                 const ab = new AbortController();
                 this.#abortControllers.push(ab);
                 el.addEventListener('input', async e => {
-                    await evalObserveRules(self);
+                    await evalObserveRules(self, 'update');
                 }, {signal: ab.signal});
             }
             switch(remoteType){
@@ -95,7 +95,7 @@ export class BeObservant extends BE<AP, Actions> implements Actions{
                     const ab = new AbortController();
                     this.#abortControllers.push(ab);
                     signal.addEventListener('value-changed', async () => {
-                        await evalObserveRules(self);
+                        await evalObserveRules(self, 'update');
                     }, {signal: ab.signal});
                     break;
                 }
@@ -104,23 +104,25 @@ export class BeObservant extends BE<AP, Actions> implements Actions{
                 }
             }
         }
-        evalObserveRules(self);
+        evalObserveRules(self, 'init');
         return {
             resolved: true,
         }
     }
 }
 
-function evalObserveRules(self: BeObservant){
+function evalObserveRules(self: BeObservant, lifecycleEvent: LifecycleEvent){
     //console.log('evalObserveRules');
     const {observeRules} = self;
     for(const observe of observeRules!){
-        const {localProp, localSignal, splitLocalProp, remoteSignal, negate, mathEnd, mathOp} = observe;
+        const {skipInit, remoteSignal} = observe;
+        if(skipInit && lifecycleEvent === 'init') continue;
         const remoteObj = remoteSignal?.deref();
         if(remoteObj === undefined){
             console.warn(404);
             continue;
         }
+        const {localProp, localSignal, splitLocalProp, negate, mathEnd, mathOp} = observe;
         let val = getSignalVal(remoteObj); // (<any>remoteObj).value;
         if(negate){
             val = !val;
@@ -173,7 +175,7 @@ const tagName = 'be-observant';
 const ifWantsToBe = 'observant';
 const upgrade = '*';
 
-const x = new XE<AP, Actions>({
+const xe = new XE<AP, Actions>({
     config:{
         tagName,
         isEnh: true,

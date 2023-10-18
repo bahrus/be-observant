@@ -22,6 +22,8 @@ export type ProPAP = Promise<PAP>;
 
 export type POA = [PAP | undefined, ActionOnEventConfigs<PAP, Actions>];
 
+export type LifecycleEvent = 'init' | 'update';
+
 export interface Actions{
     noAttrs(self: this): ProPAP;
     onCamelized(self: this): ProPAP;
@@ -38,4 +40,5 @@ export interface ObserveRule{
     negate?: boolean,
     mathOp?: '+' | '-' | '*' | '/',
     mathEnd?: number,
+    skipInit?: boolean,
 }
