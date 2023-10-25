@@ -118,7 +118,7 @@ function evalObserveRules(self, lifecycleEvent) {
             console.warn(404);
             continue;
         }
-        const { localProp, localSignal, splitLocalProp, negate, mathEnd, mathOp } = observe;
+        const { localProp, localSignal, splitLocalProp, negate, mathEnd, mathOp, callback } = observe;
         let val = getSignalVal(remoteObj); // (<any>remoteObj).value;
         if (negate) {
             val = !val;
@@ -138,6 +138,10 @@ function evalObserveRules(self, lifecycleEvent) {
                     val /= mathEnd;
                     break;
             }
+        }
+        if (callback !== undefined) {
+            callback(observe, val);
+            return;
         }
         if (splitLocalProp !== undefined) {
             setVal(localSignal, splitLocalProp, val);

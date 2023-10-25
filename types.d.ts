@@ -41,4 +41,5 @@ export interface ObserveRule{
     mathOp?: '+' | '-' | '*' | '/',
     mathEnd?: number,
     skipInit?: boolean,
+    callback?:(rule: ObserveRule, val: any) => void;
 }
