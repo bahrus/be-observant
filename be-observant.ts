@@ -1,7 +1,7 @@
 import {BE, propDefaults, propInfo} from 'be-enhanced/BE.js';
 import {BEConfig} from 'be-enhanced/types';
 import {XE} from 'xtal-element/XE.js';
-import {Actions, AllProps, AP, PAP, ProPAP, POA, ObserveRule, LifecycleEvent} from './types';
+import {Actions, AllProps, AP, PAP, ProPAP, POA, ObserveRule, LifecycleEvent, IObserveRules} from './types';
 import {Actions as BPActions} from 'be-propagating/types';
 import {register} from 'be-hive/register.js';
 import {getRemoteEl} from 'be-linked/getRemoteEl.js';
@@ -116,7 +116,7 @@ export class BeObservant extends BE<AP, Actions> implements Actions{
     }
 }
 
-function evalObserveRules(self: BeObservant, lifecycleEvent: LifecycleEvent){
+function evalObserveRules(self: IObserveRules, lifecycleEvent: LifecycleEvent){
     //console.log('evalObserveRules');
     const {observeRules} = self;
     for(const observe of observeRules!){

@@ -7,9 +7,12 @@ export interface EndUserProps extends IBE{
     of?: Array<OfStatement>
 } 
 
-export interface AllProps extends EndUserProps{
-    isParsed?: boolean,
+export interface IObserveRules {
     observeRules?: Array<ObserveRule>,
+}
+
+export interface AllProps extends EndUserProps, IObserveRules{
+    isParsed?: boolean,
 }
 
 export type OfStatement = string;
