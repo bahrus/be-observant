@@ -33,6 +33,16 @@ export async function hydrateObserve(self, observe, abortControllers) {
             stInput();
             break;
         }
+        case '$': {
+            if (el.hasAttribute('contenteditable')) {
+                stInput();
+            }
+            else {
+                const { doVA } = await import('be-linked/doVA.js');
+                await doVA(self, el, observe, 'remoteSignal', abortControllers, evalObserveRules, 'remote');
+            }
+            break;
+        }
         case '-': {
             //TODO:  share code with similar code in be-bound
             const { lispToCamel } = await import('trans-render/lib/lispToCamel.js');

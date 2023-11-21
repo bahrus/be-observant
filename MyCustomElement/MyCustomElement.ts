@@ -51,8 +51,13 @@ export class MyCustomElement extends HTMLElement{
             <input id=searchString type=search>
             <div be-observant='of #search string.'></div>
             <h3>Example 2c</h3>
-            <input type=checkbox onclick="return false" be-observant='of -some-bool-prop'>
+            <input type=checkbox onclick="return false" be-observant='of -some-bool-prop.'>
             <input name=someCheckbox type=checkbox>
+
+            <h3>Example 2d</h3>
+            <link itemprop=isHappy href=https://schema.org/True>
+
+            <input type=checkbox onclick="return false" be-observant='of $ is happy.'>
 
             <my-peer-element enh-by-be-observant='of @ some checkbox and assign to some bool prop'></my-peer-element>
 
