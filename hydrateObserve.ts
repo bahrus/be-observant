@@ -1,8 +1,8 @@
 import {IBE} from 'be-enhanced/types';
 import {ObserveRule, IObserveRules, LifecycleEvent} from './types';
-import {getLocalSignal, getRemoteProp} from 'be-linked/defaults.js';
+import {getLocalSignal} from 'be-linked/defaults.js';
 import {getRemoteEl} from 'be-linked/getRemoteEl.js';
-import {ElTypes, SignalInfo, SignalContainer} from 'be-linked/types';
+import {SignalContainer} from 'be-linked/types';
 import {Actions as BPActions} from 'be-propagating/types';
 import {getSignalVal} from 'be-linked/getSignalVal.js';
 
