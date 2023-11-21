@@ -9,6 +9,7 @@ import {ElTypes, SignalInfo, SignalContainer} from 'be-linked/types';
 import {getLocalSignal, getRemoteProp} from 'be-linked/defaults.js';
 import {getSignal} from 'be-linked/getSignal.js';
 import {getSignalVal} from 'be-linked/getSignalVal.js';
+import {hydrateObserve, evalObserveRules} from './hydrateObserve.js';
 
 export class BeObservant extends BE<AP, Actions> implements Actions{
     #abortControllers: Array<AbortController>  = [];
@@ -50,64 +51,11 @@ export class BeObservant extends BE<AP, Actions> implements Actions{
         };
     }
 
-    async hydrateSingleObserve(self: this, observe: ObserveRule){
-            //console.log({observe});
-            const {enhancedElement} = self;
-            const {remoteProp, remoteType, localProp} = observe;
-            if(localProp === undefined){
-                const signal = await getLocalSignal(enhancedElement);
-                observe.localProp = signal.prop;
-                observe.localSignal = signal.signal;
-            }else{
-                observe.localSignal = enhancedElement;
-            }
-            //similar code as be-pute/be-switched, be-bound -- share somehow?
-            const el = await getRemoteEl(enhancedElement, remoteType!, remoteProp!);
-            const stInput = () => {
-                observe.remoteSignal = new WeakRef(el);
-                const ab = new AbortController();
-                this.#abortControllers.push(ab);
-                el.addEventListener('input', async e => {
-                    await evalObserveRules(self, 'update');
-                }, {signal: ab.signal});
-            }
-            switch(remoteType){
-                case '/':{
-                    const {doPG} = await import('be-linked/doPG.js');
-                    await doPG(self, el, observe as any as SignalContainer, 'remoteSignal', remoteProp!, this.#abortControllers, evalObserveRules as any, 'remote');
-                    break;
-                }
-                case '#':
-                case '@':{
-                    stInput();
-                    break;
-                }
-                case '-':{
-                    //TODO:  share code with similar code in be-bound
-                    const {lispToCamel} = await import('trans-render/lib/lispToCamel.js');
-                    const newRemoteProp = lispToCamel(remoteProp!);
-                    observe.remoteProp = newRemoteProp;
-                    import('be-propagating/be-propagating.js');
-                    const bePropagating = await (<any>el).beEnhanced.whenResolved('be-propagating') as BPActions;
-                    const signal = await bePropagating.getSignal(newRemoteProp!);
-                    observe.remoteSignal = new WeakRef(signal);
-                    const ab = new AbortController();
-                    this.#abortControllers.push(ab);
-                    signal.addEventListener('value-changed', async () => {
-                        await evalObserveRules(self, 'update');
-                    }, {signal: ab.signal});
-                    break;
-                }
-                default:{
-                    throw 'NI';
-                }
-            }
-    }
 
     async hydrate(self: this){
         const {observeRules} = self;
         for(const observe of observeRules!){
-            await this.hydrateSingleObserve(self, observe)
+            await hydrateObserve(self, observe, this.#abortControllers)
         }
         evalObserveRules(self, 'init');
         return {
@@ -116,67 +64,6 @@ export class BeObservant extends BE<AP, Actions> implements Actions{
     }
 }
 
-function evalObserveRules(self: IObserveRules, lifecycleEvent: LifecycleEvent){
-    //console.log('evalObserveRules');
-    const {observeRules} = self;
-    for(const observe of observeRules!){
-        const {skipInit, remoteSignal} = observe;
-        if(skipInit && lifecycleEvent === 'init') continue;
-        const remoteObj = remoteSignal?.deref();
-        if(remoteObj === undefined){
-            console.warn(404);
-            continue;
-        }
-        const {localProp, localSignal, splitLocalProp, negate, mathEnd, mathOp, callback} = observe;
-        let val = getSignalVal(remoteObj); // (<any>remoteObj).value;
-        if(negate){
-            val = !val;
-        } else if(typeof mathEnd === 'number'){
-            switch(mathOp){
-                case '*':
-                    val *= mathEnd;
-                    break;
-                case '+':
-                    val += mathEnd;
-                    break;
-                case '-':
-                    val -= mathEnd;
-                    break;
-                case '/':
-                    val /= mathEnd;
-                    break;
-            }
-        }
-        if(callback !== undefined){
-            callback(observe, val);
-            return;
-        }
-        if(splitLocalProp !== undefined){
-            setVal(localSignal, splitLocalProp, val);
-        }else{
-            (<any>localSignal!)[localProp!] = val;
-        }
-        
-    }
-}
-
-//TODO:  move to be-linked
-export function setVal(obj: any, split: Array<string>, val: any){
-    let context = obj;
-    const len = split.length;
-    let cnt = 1;
-    for(const token of split){
-        if(cnt === len){
-            context[token] = val;
-            return;
-        }
-        if(context[token] === undefined){
-            context[token] = {};
-        }
-        context = context[token];
-        cnt++;
-    }
-}
 
 export interface BeObservant extends AllProps{}
 
