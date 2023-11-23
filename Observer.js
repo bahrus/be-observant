@@ -4,6 +4,22 @@ import { getSignalVal } from 'be-linked/getSignalVal.js';
 export class Observer {
     enhancementInstance;
     observe;
+    #remoteEl;
+    #setUpInput(abortControllers) {
+        const { observe } = this;
+        const el = this.#remoteEl?.deref();
+        if (el === undefined) {
+            console.warn(404);
+            return;
+        }
+        observe.remoteSignal = this.#remoteEl;
+        const ab = new AbortController();
+        abortControllers.push(ab);
+        el.addEventListener('input', e => {
+            //await evalObserveRules(enhancementInstance, 'update');
+            evalObserveRule(observe, 'update');
+        }, { signal: ab.signal });
+    }
     constructor(enhancementInstance, observe, abortControllers) {
         this.enhancementInstance = enhancementInstance;
         this.observe = observe;
@@ -22,15 +38,7 @@ export class Observer {
             }
             //similar code as be-pute/be-switched, be-bound -- share somehow?
             const el = await getRemoteEl(enhancedElement, remoteType, remoteProp);
-            const stInput = () => {
-                observe.remoteSignal = new WeakRef(el);
-                const ab = new AbortController();
-                abortControllers.push(ab);
-                el.addEventListener('input', e => {
-                    //await evalObserveRules(enhancementInstance, 'update');
-                    evalObserveRule(observe, 'update');
-                }, { signal: ab.signal });
-            };
+            this.#remoteEl = new WeakRef(el);
             switch (remoteType) {
                 case '/': {
                     const { doPG } = await import('be-linked/doPG.js');
@@ -39,12 +47,12 @@ export class Observer {
                 }
                 case '#':
                 case '@': {
-                    stInput();
+                    this.#setUpInput(abortControllers);
                     break;
                 }
                 case '$': {
                     if (el.hasAttribute('contenteditable')) {
-                        stInput();
+                        this.#setUpInput(abortControllers);
                     }
                     else {
                         console.log(observe);

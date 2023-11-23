@@ -2,7 +2,7 @@ import { BE, propDefaults, propInfo } from 'be-enhanced/BE.js';
 import { XE } from 'xtal-element/XE.js';
 import { register } from 'be-hive/register.js';
 import { getRemoteProp } from 'be-linked/defaults.js';
-import { Observer, evalObserveRules } from './hydrateObserve.js';
+import { Observer, evalObserveRules } from './Observer.js';
 export class BeObservant extends BE {
     #abortControllers = [];
     detach() {
