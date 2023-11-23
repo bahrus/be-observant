@@ -4,7 +4,7 @@ import {XE} from 'xtal-element/XE.js';
 import {Actions, AllProps, AP, PAP, ProPAP, POA, ObserveRule, LifecycleEvent, IObserveRules} from './types';
 import {register} from 'be-hive/register.js';
 import {getRemoteProp} from 'be-linked/defaults.js';
-import {hydrateObserve, evalObserveRules} from './hydrateObserve.js';
+import {Observer, evalObserveRules} from './hydrateObserve.js';
 
 export class BeObservant extends BE<AP, Actions> implements Actions{
     #abortControllers: Array<AbortController>  = [];
@@ -50,7 +50,8 @@ export class BeObservant extends BE<AP, Actions> implements Actions{
     async hydrate(self: this){
         const {observeRules} = self;
         for(const observe of observeRules!){
-            await hydrateObserve(self, observe, this.#abortControllers)
+            new Observer(self, observe, this.#abortControllers);
+            //await hydrateObserve(self, observe, this.#abortControllers)
         }
         evalObserveRules(self, 'init');
         return {

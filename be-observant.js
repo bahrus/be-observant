@@ -2,7 +2,7 @@ import { BE, propDefaults, propInfo } from 'be-enhanced/BE.js';
 import { XE } from 'xtal-element/XE.js';
 import { register } from 'be-hive/register.js';
 import { getRemoteProp } from 'be-linked/defaults.js';
-import { hydrateObserve, evalObserveRules } from './hydrateObserve.js';
+import { Observer, evalObserveRules } from './hydrateObserve.js';
 export class BeObservant extends BE {
     #abortControllers = [];
     detach() {
@@ -43,7 +43,8 @@ export class BeObservant extends BE {
     async hydrate(self) {
         const { observeRules } = self;
         for (const observe of observeRules) {
-            await hydrateObserve(self, observe, this.#abortControllers);
+            new Observer(self, observe, this.#abortControllers);
+            //await hydrateObserve(self, observe, this.#abortControllers)
         }
         evalObserveRules(self, 'init');
         return {
