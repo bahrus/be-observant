@@ -56,7 +56,7 @@ export class Observer{
                     if(el.hasAttribute('contenteditable')){
                         this.#setUpInput(abortControllers);
                     }else{
-                        console.log(observe);
+                        //console.log(observe);
                         const {doVA} = await import('be-linked/doVA.js');
                         await doVA(enhancementInstance, el, observe as any as SignalContainer, 'remoteSignal', abortControllers, evalObserveRules as any, 'remote');
                     }

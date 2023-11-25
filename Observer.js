@@ -55,7 +55,7 @@ export class Observer {
                         this.#setUpInput(abortControllers);
                     }
                     else {
-                        console.log(observe);
+                        //console.log(observe);
                         const { doVA } = await import('be-linked/doVA.js');
                         await doVA(enhancementInstance, el, observe, 'remoteSignal', abortControllers, evalObserveRules, 'remote');
                     }
