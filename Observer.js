@@ -46,6 +46,7 @@ export class Observer {
                     await doPG(enhancementInstance, el, observe, 'remoteSignal', remoteProp, abortControllers, () => {
                         evalObserveRule(observe, 'update');
                     }, 'remote');
+                    evalObserveRule(observe, 'init');
                     break;
                 }
                 case '#':
@@ -63,6 +64,7 @@ export class Observer {
                         await doVA(enhancementInstance, el, observe, 'remoteSignal', abortControllers, () => {
                             evalObserveRule(observe, 'update');
                         }, 'remote');
+                        evalObserveRule(observe, 'init');
                     }
                     break;
                 }
@@ -81,6 +83,7 @@ export class Observer {
                         //await evalObserveRules(self, 'update');
                         evalObserveRule(observe, 'update');
                     }, { signal: ab.signal });
+                    evalObserveRule(observe, 'init');
                     break;
                 }
                 default: {
