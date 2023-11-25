@@ -22,6 +22,7 @@ export class Observer{
             //await evalObserveRules(enhancementInstance, 'update');
             evalObserveRule(observe, 'update');
         }, {signal: ab.signal});
+        evalObserveRule(observe, 'init');
     }
     constructor(public enhancementInstance: IBE, public observe: ObserveRule, abortControllers: Array<AbortController>){
         (async () => {
@@ -44,7 +45,9 @@ export class Observer{
             switch(remoteType){
                 case '/':{
                     const {doPG} = await import('be-linked/doPG.js');
-                    await doPG(enhancementInstance, el, observe as any as SignalContainer, 'remoteSignal', remoteProp!, abortControllers, evalObserveRules as any, 'remote');
+                    await doPG(enhancementInstance, el, observe as any as SignalContainer, 'remoteSignal', remoteProp!, abortControllers, () => {
+                        evalObserveRule(observe, 'update')
+                    }, 'remote');
                     break;
                 }
                 case '#':
@@ -58,7 +61,9 @@ export class Observer{
                     }else{
                         //console.log(observe);
                         const {doVA} = await import('be-linked/doVA.js');
-                        await doVA(enhancementInstance, el, observe as any as SignalContainer, 'remoteSignal', abortControllers, evalObserveRules as any, 'remote');
+                        await doVA(enhancementInstance, el, observe as any as SignalContainer, 'remoteSignal', abortControllers, () => {
+                            evalObserveRule(observe, 'update');
+                        }, 'remote');
                     }
                     break;
                 }
@@ -129,12 +134,12 @@ function evalObserveRule(observe: ObserveRule, lifecycleEvent: LifecycleEvent){
 
 }
 
-export function evalObserveRules(self: IObserveRules, lifecycleEvent: LifecycleEvent){
-    const {observeRules} = self;
-    for(const observe of observeRules!){
-        evalObserveRule(observe, lifecycleEvent);
-    }
-}
+// export function evalObserveRules(self: IObserveRules, lifecycleEvent: LifecycleEvent){
+//     const {observeRules} = self;
+//     for(const observe of observeRules!){
+//         evalObserveRule(observe, lifecycleEvent);
+//     }
+// }
 
 //TODO:  move to be-linked
 export function setVal(obj: any, split: Array<string>, val: any){

@@ -19,6 +19,7 @@ export class Observer {
             //await evalObserveRules(enhancementInstance, 'update');
             evalObserveRule(observe, 'update');
         }, { signal: ab.signal });
+        evalObserveRule(observe, 'init');
     }
     constructor(enhancementInstance, observe, abortControllers) {
         this.enhancementInstance = enhancementInstance;
@@ -42,7 +43,9 @@ export class Observer {
             switch (remoteType) {
                 case '/': {
                     const { doPG } = await import('be-linked/doPG.js');
-                    await doPG(enhancementInstance, el, observe, 'remoteSignal', remoteProp, abortControllers, evalObserveRules, 'remote');
+                    await doPG(enhancementInstance, el, observe, 'remoteSignal', remoteProp, abortControllers, () => {
+                        evalObserveRule(observe, 'update');
+                    }, 'remote');
                     break;
                 }
                 case '#':
@@ -57,7 +60,9 @@ export class Observer {
                     else {
                         //console.log(observe);
                         const { doVA } = await import('be-linked/doVA.js');
-                        await doVA(enhancementInstance, el, observe, 'remoteSignal', abortControllers, evalObserveRules, 'remote');
+                        await doVA(enhancementInstance, el, observe, 'remoteSignal', abortControllers, () => {
+                            evalObserveRule(observe, 'update');
+                        }, 'remote');
                     }
                     break;
                 }
@@ -126,12 +131,12 @@ function evalObserveRule(observe, lifecycleEvent) {
         localSignal[localProp] = val;
     }
 }
-export function evalObserveRules(self, lifecycleEvent) {
-    const { observeRules } = self;
-    for (const observe of observeRules) {
-        evalObserveRule(observe, lifecycleEvent);
-    }
-}
+// export function evalObserveRules(self: IObserveRules, lifecycleEvent: LifecycleEvent){
+//     const {observeRules} = self;
+//     for(const observe of observeRules!){
+//         evalObserveRule(observe, lifecycleEvent);
+//     }
+// }
 //TODO:  move to be-linked
 export function setVal(obj, split, val) {
     let context = obj;
