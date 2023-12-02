@@ -46,3 +46,8 @@ export interface ObserveRule{
     skipInit?: boolean,
     callback?:(rule: ObserveRule, val: any) => void;
 }
+
+export interface ObserverOptions{
+    abortControllers: Array<AbortController>,
+    remoteEl?: Element,
+}

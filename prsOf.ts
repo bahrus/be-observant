@@ -4,8 +4,8 @@ import {RegExpOrRegExpExt} from 'be-enhanced/types';
 import {arr, tryParse} from 'be-enhanced/cpu.js';
 
 export const strType = String.raw `\$|\#|\@|\/|\-`;
-const remoteType = String.raw `(?<remoteType>${strType})`;
-const remoteProp = String.raw `(?<remoteProp>[\w\-\+\*\/]+)`;
+export const remoteType = String.raw `(?<remoteType>${strType})`;
+export const remoteProp = String.raw `(?<remoteProp>[\w\-\+\*\/]+)`;
 const arithmeticExpr = new RegExp(String.raw `^(?<remoteProp>[\w]+)(?<mathOp>\-|\+|\*\|\\)(?<mathEnd>(([0-9]*)|(([0-9]*)\.([0-9]*)))$)`);
 const andAssignTo = String.raw `(?<!\\)AndAssignTo(?<localProp>[\w\:]+)`;
 const reOfObserveStatement: Array<RegExpOrRegExpExt<Partial<ObserveRule>>> = [

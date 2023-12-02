@@ -43,7 +43,9 @@ export class BeObservant extends BE {
     async hydrate(self) {
         const { observeRules } = self;
         for (const observe of observeRules) {
-            new Observer(self, observe, this.#abortControllers);
+            new Observer(self, observe, {
+                abortControllers: this.#abortControllers
+            });
             //await hydrateObserve(self, observe, this.#abortControllers)
         }
         //evalObserveRules(self, 'init');

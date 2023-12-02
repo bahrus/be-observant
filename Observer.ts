@@ -1,5 +1,5 @@
 import {IBE} from 'be-enhanced/types';
-import {ObserveRule, IObserveRules, LifecycleEvent} from './types';
+import {ObserveRule, ObserverOptions, LifecycleEvent} from './types';
 import {getLocalSignal} from 'be-linked/defaults.js';
 import {getRemoteEl} from 'be-linked/getRemoteEl.js';
 import {SignalContainer} from 'be-linked/types';
@@ -24,10 +24,13 @@ export class Observer{
         }, {signal: ab.signal});
         evalObserveRule(observe, 'init');
     }
-    constructor(public enhancementInstance: IBE, public observe: ObserveRule, abortControllers: Array<AbortController>){
+    constructor(
+        public enhancementInstance: IBE, public observe: ObserveRule, 
+        options: ObserverOptions){
         (async () => {
             const {enhancedElement} = enhancementInstance;
             const {remoteProp, remoteType, localProp, callback} = observe;
+            const {abortControllers} = options;
             if(callback === undefined){
                 if(localProp === undefined){
                     const signal = await getLocalSignal(enhancedElement);
@@ -79,7 +82,7 @@ export class Observer{
                     const signal = await bePropagating.getSignal(newRemoteProp!);
                     observe.remoteSignal = new WeakRef(signal);
                     const ab = new AbortController();
-                    abortControllers.push(ab);
+                    abortControllers?.push(ab);
                     signal.addEventListener('value-changed', async () => {
                         //await evalObserveRules(self, 'update');
                         evalObserveRule(observe, 'update');

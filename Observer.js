@@ -21,12 +21,13 @@ export class Observer {
         }, { signal: ab.signal });
         evalObserveRule(observe, 'init');
     }
-    constructor(enhancementInstance, observe, abortControllers) {
+    constructor(enhancementInstance, observe, options) {
         this.enhancementInstance = enhancementInstance;
         this.observe = observe;
         (async () => {
             const { enhancedElement } = enhancementInstance;
             const { remoteProp, remoteType, localProp, callback } = observe;
+            const { abortControllers } = options;
             if (callback === undefined) {
                 if (localProp === undefined) {
                     const signal = await getLocalSignal(enhancedElement);
@@ -78,7 +79,7 @@ export class Observer {
                     const signal = await bePropagating.getSignal(newRemoteProp);
                     observe.remoteSignal = new WeakRef(signal);
                     const ab = new AbortController();
-                    abortControllers.push(ab);
+                    abortControllers?.push(ab);
                     signal.addEventListener('value-changed', async () => {
                         //await evalObserveRules(self, 'update');
                         evalObserveRule(observe, 'update');

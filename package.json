@@ -15,7 +15,8 @@
   "module": "be-observant.js",
   "exports": {
     ".": "./be-observant.js",
-    "./be-observant.js": "./be-observant.js"
+    "./be-observant.js": "./be-observant.js",
+    "./prsOf.js": "./prsOf.js"
   },
   "files": [
     "*.js",
