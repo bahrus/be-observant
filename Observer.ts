@@ -30,7 +30,7 @@ export class Observer{
         (async () => {
             const {enhancedElement} = enhancementInstance;
             const {remoteProp, remoteType, localProp, callback} = observe;
-            const {abortControllers} = options;
+            const {abortControllers, remoteEl} = options;
             if(callback === undefined){
                 if(localProp === undefined){
                     const signal = await getLocalSignal(enhancedElement);
@@ -42,7 +42,7 @@ export class Observer{
             }
             
             //similar code as be-pute/be-switched, be-bound -- share somehow?
-            const el = await getRemoteEl(enhancedElement, remoteType!, remoteProp!);
+            const el = remoteEl || await getRemoteEl(enhancedElement, remoteType!, remoteProp!);
             this.#remoteEl = new WeakRef(el);
 
             switch(remoteType){
