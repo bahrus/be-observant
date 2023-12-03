@@ -32,14 +32,14 @@
   "dependencies": {
     "be-enhanced": "0.0.56",
     "be-hive": "0.0.127",
-    "be-linked": "0.0.68",
+    "be-linked": "0.0.69",
     "be-propagating": "0.0.29",
     "be-value-added": "0.0.17",
     "trans-render": "0.0.707",
     "xtal-element": "0.0.579"
   },
   "devDependencies": {
-    "@playwright/test": "1.40.0",
+    "@playwright/test": "1.40.1",
     "may-it-serve": "0.0.6"
   },
   "repository": {
