@@ -1,7 +1,7 @@
 import { getLocalSignal } from 'be-linked/defaults.js';
 import { getRemoteEl } from 'be-linked/getRemoteEl.js';
 import { getSignalVal } from 'be-linked/getSignalVal.js';
-export class Observer {
+export class Observer extends EventTarget {
     enhancementInstance;
     observe;
     #remoteEl;
@@ -22,6 +22,7 @@ export class Observer {
         evalObserveRule(observe, 'init');
     }
     constructor(enhancementInstance, observe, options) {
+        super();
         this.enhancementInstance = enhancementInstance;
         this.observe = observe;
         (async () => {
@@ -91,6 +92,7 @@ export class Observer {
                     throw 'NI';
                 }
             }
+            this.dispatchEvent(new Event('resolved'));
         })();
     }
 }

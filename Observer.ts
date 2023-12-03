@@ -6,7 +6,7 @@ import {SignalContainer} from 'be-linked/types';
 import {Actions as BPActions} from 'be-propagating/types';
 import {getSignalVal} from 'be-linked/getSignalVal.js';
 
-export class Observer{
+export class Observer extends EventTarget{
     #remoteEl: WeakRef<Element> | undefined;
     #setUpInput(abortControllers: Array<AbortController>){
         const {observe} = this;
@@ -27,6 +27,7 @@ export class Observer{
     constructor(
         public enhancementInstance: IBE, public observe: ObserveRule, 
         options: ObserverOptions){
+        super();
         (async () => {
             const {enhancedElement} = enhancementInstance;
             const {remoteProp, remoteType, localProp, callback} = observe;
@@ -94,6 +95,7 @@ export class Observer{
                     throw 'NI';
                 }
             }
+            this.dispatchEvent(new Event('resolved'));
         })();
 
     }
