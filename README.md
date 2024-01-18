@@ -49,6 +49,8 @@ Slash indicates get value from host.  If omitted, it is assumed:
 </my-custom-element>
 ```
 
+The space between is and vegetarian can also be omitted, if case is specified:  isVegetarian.
+
 ## Example 1d  Negation
 
 ```html
@@ -99,6 +101,8 @@ As the user types in the input field, the div's text content reflects the value 
 </my-custom-element>
 ```
 
+This observes the my-peer-element's someBoolProp property for changes.
+
 ## Example 2d Microdata
 
 ```html
@@ -126,7 +130,7 @@ This watches the input element for input events and passes the checked property 
 ```html
 <input name=search type=search>
 
-<div be-observant='of @search and assign to beEnhanced:by:beSearching:forText.'>
+<div be-observant='of @search and assign to $0+beSearching:forText.'>
     supercalifragilisticexpialidocious
 </div>
 ```
