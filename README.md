@@ -16,7 +16,7 @@ Observe properties of peer elements or the host.
 > [!Note]
 > Although *be-observant* can declaratively adjust the value it is observing, it does *not* provide unfettered access to the JavaScript runtime though.  It is a purely declarative element enhancement.  For full access to the JavaScript runtime, use [be-computed](https://github.com/bahrus/be-computed).
 
-## Example 1a
+## Example 1a (Hemingway Notation)
 
 ```html
 <my-custom-element>
@@ -26,6 +26,20 @@ Observe properties of peer elements or the host.
 ```
 
 What this does:  Passes my-custom-element's isVegetarian value to the input element's checked property.
+
+## Example 1a (JavaScriptObjectNotation)
+
+```TypeScript
+const oInput.beEnhanced.beObservant.observeRules = [
+    {
+        "remoteType": "/",
+        "remoteProp": "isVegetarian",
+        "localProp": "checked",
+        "localSignal": {},
+        "remoteSignal": {}
+    }
+]
+```
 
 This is shorthand for:
 
