@@ -56,7 +56,7 @@ export class MyCustomElement extends HTMLElement {
             <h3>Example 2d</h3>
             <link itemprop=isHappy href=https://schema.org/True>
 
-            <input type=checkbox onclick="return false" be-observant='of $ is happy.'>
+            <input type=checkbox onclick="return false" be-observant='of | is happy.'>
 
             <my-peer-element enh-by-be-observant='of @ some checkbox and assign to some bool prop'></my-peer-element>
 

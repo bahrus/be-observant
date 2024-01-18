@@ -45,6 +45,7 @@ export interface ObserveRule{
     mathEnd?: number,
     skipInit?: boolean,
     callback?:(rule: ObserveRule, val: any) => void;
+    lastVal?: any;
 }
 
 export interface ObserverOptions{

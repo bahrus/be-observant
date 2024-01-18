@@ -1,5 +1,5 @@
 import { tryParse } from 'be-enhanced/cpu.js';
-export const strType = String.raw `\$|\#|\@|\/|\-`;
+export const strType = String.raw `\||\#|\@|\/|\-`;
 export const remoteType = String.raw `(?<remoteType>${strType})`;
 export const remoteProp = String.raw `(?<remoteProp>[\w\-\+\*\/]+)`;
 const arithmeticExpr = new RegExp(String.raw `^(?<remoteProp>[\w]+)(?<mathOp>\-|\+|\*\|\\)(?<mathEnd>(([0-9]*)|(([0-9]*)\.([0-9]*)))$)`);

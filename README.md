@@ -1,4 +1,4 @@
-# be-observant [WIP]
+# be-observant
 
 Observe properties of peer elements or the host.
 
@@ -104,7 +104,7 @@ As the user types in the input field, the div's text content reflects the value 
 ```html
 <link itemprop=isHappy>
 ...
-<input type=checkbox be-observant='of $ is happy.'>
+<input type=checkbox be-observant='of | is happy.'>
 ```
 
 ## Example 3a
