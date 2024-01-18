@@ -1,6 +1,5 @@
 import { BE, propDefaults, propInfo } from 'be-enhanced/BE.js';
 import { XE } from 'xtal-element/XE.js';
-import { register } from 'be-hive/register.js';
 import { getRemoteProp } from 'be-linked/defaults.js';
 import { Observer } from './Observer.js';
 export class BeObservant extends BE {
@@ -54,9 +53,7 @@ export class BeObservant extends BE {
         };
     }
 }
-const tagName = 'be-observant';
-const ifWantsToBe = 'observant';
-const upgrade = '*';
+export const tagName = 'be-observant';
 const xe = new XE({
     config: {
         tagName,
@@ -81,4 +78,3 @@ const xe = new XE({
     },
     superclass: BeObservant
 });
-register(ifWantsToBe, upgrade, tagName);

@@ -9,7 +9,7 @@
 		"strict": true,
 	},
 	"files":[
-		"be-observant.ts",
+		"behivior.ts",
 		"MyCustomElement/MyCustomElement.ts"
 	],
 	"exclude":[

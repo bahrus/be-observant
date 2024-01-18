@@ -1,4 +1,4 @@
-# be-observant
+# be-observant [WIP]
 
 Observe properties of peer elements or the host.
 
@@ -125,7 +125,7 @@ This observes the my-peer-element's someBoolProp property for changes.
 
 This watches the input element for input events and passes the checked property to someBoolProp of oMyPeerElement.
 
-## Example 3b
+## Example 3b [TODO]
 
 ```html
 <input name=search type=search>
