@@ -60,7 +60,7 @@ export class Observer extends EventTarget{
                     this.#setUpInput(abortControllers);
                     break;
                 }
-                case '$':{
+                case '|':{
                     if(el.hasAttribute('contenteditable')){
                         this.#setUpInput(abortControllers);
                     }else{
