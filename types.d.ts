@@ -34,6 +34,7 @@ export interface Actions{
 }
 
 export interface ObserveRule{
+    localEnhancement?: string,
     remoteProp: string,
     remoteType: ElTypes,
     remoteSignal?: WeakRef<SignalRefType>,

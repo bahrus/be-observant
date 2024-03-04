@@ -8,12 +8,17 @@ export const remoteType = String.raw `(?<remoteType>${strType})`;
 export const remoteProp = String.raw `(?<remoteProp>[\w\-\+\*\/]+)`;
 const arithmeticExpr = new RegExp(String.raw `^(?<remoteProp>[\w]+)(?<mathOp>\-|\+|\*\|\\)(?<mathEnd>(([0-9]*)|(([0-9]*)\.([0-9]*)))$)`);
 const andAssignTo = String.raw `(?<!\\)AndAssignTo(?<localProp>[\w\:]+)`;
+const applyToEnhancement = String.raw `(?<!\\)AndAssignTo\$0\+(?<localEnhancement>[\w\-\:]+)`
 const reOfObserveStatement: Array<RegExpOrRegExpExt<Partial<ObserveRule>>> = [
     {
         regExp: new RegExp(String.raw `^not${remoteType}${remoteProp}${andAssignTo}`),
         defaultVals:{
             negate: true
         }
+    },
+    {
+        regExp: new RegExp(String.raw `^${remoteType}${remoteProp}${applyToEnhancement}`),
+        defaultVals:{}
     },
     {
         regExp: new RegExp(String.raw `^${remoteType}${remoteProp}${andAssignTo}`),
@@ -63,12 +68,21 @@ export function prsOf(self: AP) : Array<ObserveRule> {
     const observeRules: Array<ObserveRule> = [];
     for(const ofStatement of both){
         const test = tryParse(ofStatement, reOfObserveStatement) as ObserveRule;
+        console.log({test});
         if(test === null) throw 'PE';
-        const {remoteProp, localProp} = test;
+        let {remoteProp, localProp, localEnhancement} = test;
         const test2 = arithmeticExpr.exec(remoteProp!);
         if(test2 !== null){
             Object.assign(test, test2.groups);
             test.mathEnd = Number(test.mathEnd);
+        }
+        if(localEnhancement !== undefined){
+            const idxOfColon = localEnhancement.indexOf(':');
+            if(idxOfColon > -1){
+                test.localEnhancement = localEnhancement.substring(0, idxOfColon);
+                localProp = localEnhancement.substring(idxOfColon + 1);
+                test.localProp = localProp;
+            }
         }
         if(localProp?.includes(':')){
             test.splitLocalProp = localProp.split(':');
