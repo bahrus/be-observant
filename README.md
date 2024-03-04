@@ -16,6 +16,9 @@ Observe properties of peer elements or the host.
 > [!Note]
 > Although *be-observant* can declaratively adjust the value it is observing, it does *not* provide unfettered access to the JavaScript runtime though.  It is a purely declarative element enhancement.  For full access to the JavaScript runtime, use [be-computed](https://github.com/bahrus/be-computed).
 
+> [!Note]
+> An extra thin layer can be applied on top of be-observant, so that the original HTML that is streamed from the server can provide the initial values of the property that *be-observant* observes, and then once that initial handshake is established, lean exclusively on *be-observant* for all subsequent updates.  This is handled by [be-entrusting](https://github.com/bahrus/be-entrusting).
+
 ## Example 1a (Hemingway Notation)
 
 ```html
@@ -25,23 +28,11 @@ Observe properties of peer elements or the host.
 </my-custom-element>
 ```
 
-What this does:  Passes my-custom-element's isVegetarian value to the input element's checked property.
+What this does:  Binds my-custom-element's isVegetarian value to the input element's checked property.
 
-## Example 1a (JavaScriptObjectNotation)
+So we are making the assumption here that if the user gives the input element name "isVegetatarian", that the choice of name will most likely match the identical property name coming from the host web component container.
 
-```TypeScript
-const oInput.beEnhanced.beObservant.observeRules = [
-    {
-        "remoteType": "/",
-        "remoteProp": "isVegetarian",
-        "localProp": "checked",
-        "localSignal": {},
-        "remoteSignal": {}
-    }
-]
-```
-
-This is shorthand for:
+If this assumption doesn't hold in some cases, then we can specify the name of the property we want to observe from the host.
 
 ## Example 1b
 
@@ -54,6 +45,8 @@ This is shorthand for:
 
 Slash indicates get value from host.  If omitted, it is assumed:
 
+
+
 ## Example 1c
 
 ```html
@@ -64,6 +57,26 @@ Slash indicates get value from host.  If omitted, it is assumed:
 ```
 
 The space between is and vegetarian can also be omitted, if case is specified:  isVegetarian.
+
+## Special Symbols
+
+In the examples below, we will encounter special symbols used in order to keep the statements small:
+
+| Symbol       | Meaning                        | Notes                                                                                |
+|--------------|--------------------------------|--------------------------------------------------------------------------------------|
+| /propName    |"Hostish"                       | Attaches listeners to getters/setters.                                               |
+| @propName    |Name attribute                  | Listens for input events.                                                            |
+| |propName    |Itemprop attribute              | If contenteditible, listens for input events.  Otherwise, uses be-value-added.       |
+| #propName    |Id attribute                    | Listens for input events.                                                            |
+| %propName    |match based on part attribute   | Listens for input events.                                                            |
+| -prop-name   |Marker indicates prop           | Attaches listeners to getters/setters.                                               | 
+| ~elementName |match based on element name     | Listens for input events.                                                            |
+
+
+"Hostish" means:
+
+1.  First, do a "closest" for an element with attribute itemscope, where the tag name has a dash in it.  Do that search recursively.  
+2.  If no match found, use getRootNode().host.
 
 ## Example 1d  Negation
 
@@ -147,6 +160,22 @@ This watches the input element for input events and passes the checked property 
 <div be-observant='of @search and assign to $0+beSearching:forText.'>
     supercalifragilisticexpialidocious
 </div>
+```
+
+## Example 4a (JavaScriptObjectNotation)
+
+In some scenarios, it may be more effective to utilize the underlying binding model that the Hemingway statements above get transpiled to.  This can be done as follows:
+
+```TypeScript
+const oInput.beEnhanced.beObservant.observeRules = [
+    {
+        "remoteType": "/",
+        "remoteProp": "isVegetarian",
+        "localProp": "checked",
+        "localSignal": {},
+        "remoteSignal": {}
+    }
+]
 ```
 
 
