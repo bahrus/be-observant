@@ -67,13 +67,13 @@ What follows is a listing of other special symbols we can use to be able to obse
 
 | Symbol       | Meaning                        | Notes                                                                                |
 |--------------|--------------------------------|--------------------------------------------------------------------------------------|
-| /propName    |"Hostish"                       | Attaches listeners to getters/setters.                                               |
+| /propName    |"Hostish"                       | Binds to a "propagator" EventTarget.                                                 |
 | @propName    |Name attribute                  | Listens for input events.                                                            |
 | |propName    |Itemprop attribute              | If contenteditible, listens for input events.  Otherwise, uses be-value-added.       |
 | #propName    |Id attribute                    | Listens for input events.                                                            |
 | %propName    |match based on part attribute   | Listens for input events.                                                            |
-| -prop-name   |Marker indicates prop           | Attaches listeners to getters/setters.                                               | 
-| ~elementName |match based on element name     | Listens for input events.                                                            |
+| -prop-name   |Marker indicates prop           | Binds to a "propagator" EventTarget.                                               | 
+| ~elementName |match based on element name     | Listens for input events. [TODO]                                                           |
 
 
 "Hostish" means:
@@ -164,6 +164,8 @@ This watches the input element for input events and passes the checked property 
     supercalifragilisticexpialidocious
 </div>
 ```
+
+The plus symbol:  $0+ is indicating to tap into a [custom enhancement](https://github.com/WICG/webcomponents/issues/1000).
 
 ## Example 4a (JavaScriptObjectNotation)
 
