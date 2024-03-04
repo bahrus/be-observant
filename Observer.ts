@@ -41,7 +41,6 @@ export class Observer extends EventTarget{
                     if(localEnhancement !== undefined){
                         const {applyEnh} = await import('be-linked/applyEnh.js');
                         const enhancement = await applyEnh(enhancedElement, localEnhancement, false);
-                        console.log({enhancement});
                         observe.localSignal = enhancement;
 
                     }else{

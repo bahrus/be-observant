@@ -63,7 +63,6 @@ export function prsOf(self) {
     const observeRules = [];
     for (const ofStatement of both) {
         const test = tryParse(ofStatement, reOfObserveStatement);
-        console.log({ test });
         if (test === null)
             throw 'PE';
         let { remoteProp, localProp, localEnhancement } = test;

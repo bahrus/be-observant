@@ -68,7 +68,6 @@ export function prsOf(self: AP) : Array<ObserveRule> {
     const observeRules: Array<ObserveRule> = [];
     for(const ofStatement of both){
         const test = tryParse(ofStatement, reOfObserveStatement) as ObserveRule;
-        console.log({test});
         if(test === null) throw 'PE';
         let {remoteProp, localProp, localEnhancement} = test;
         const test2 = arithmeticExpr.exec(remoteProp!);
