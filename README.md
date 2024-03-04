@@ -155,7 +155,7 @@ This observes the my-peer-element's someBoolProp property for changes.
 
 This watches the input element for input events and passes the checked property to someBoolProp of oMyPeerElement.
 
-## Example 3b [TODO]
+## Example 3b
 
 ```html
 <input name=search type=search>

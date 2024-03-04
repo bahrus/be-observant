@@ -30,7 +30,7 @@ export class Observer extends EventTarget{
         super();
         (async () => {
             const {enhancedElement} = enhancementInstance;
-            const {remoteProp, remoteType, localProp, callback} = observe;
+            const {remoteProp, remoteType, localProp, callback, localEnhancement} = observe;
             const {abortControllers, remoteEl} = options;
             if(callback === undefined){
                 if(localProp === undefined){
@@ -38,7 +38,16 @@ export class Observer extends EventTarget{
                     observe.localProp = signal.prop;
                     observe.localSignal = signal.signal;
                 }else{
-                    observe.localSignal = enhancedElement;
+                    if(localEnhancement !== undefined){
+                        const {applyEnh} = await import('be-linked/applyEnh.js');
+                        const enhancement = await applyEnh(enhancedElement, localEnhancement, false);
+                        console.log({enhancement});
+                        observe.localSignal = enhancement;
+
+                    }else{
+                        observe.localSignal = enhancedElement;
+                    }
+                    
                 }
             }
             
@@ -110,7 +119,7 @@ function evalObserveRule(observe: ObserveRule, lifecycleEvent: LifecycleEvent){
         console.warn(404);
         return;
     }
-    const {localProp, localSignal, splitLocalProp, negate, mathEnd, mathOp, callback} = observe;
+    const {localProp, localSignal, splitLocalProp, negate, mathEnd, mathOp, callback, localEnhancement} = observe;
     let val = getSignalVal(remoteObj); // (<any>remoteObj).value;
     if(negate){
         val = !val;
