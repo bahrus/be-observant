@@ -32,7 +32,7 @@ What this does:  Binds my-custom-element's isVegetarian value to the input eleme
 
 So we are making the assumption here that if the user gives the input element name "isVegetatarian", that the choice of name will most likely match the identical property name coming from the host web component container.
 
-If this assumption doesn't hold in some cases, then we can specify the name of the property we want to observe from the host.
+If this assumption doesn't hold in some cases, then we can specify the name of the property we want to observe from the host:
 
 ## Example 1b
 
@@ -60,7 +60,10 @@ The space between is and vegetarian can also be omitted, if case is specified:  
 
 ## Special Symbols
 
-In the examples below, we will encounter special symbols used in order to keep the statements small:
+In the example above, we mentioned using the / symbol to indicate to observe a property from the host.  But be-observant can also observe peer elements within the ShadowRoot (or outside any shadow root *be-observant* adorns an element sitting outside any ShadowRoot).
+
+What follows is a listing of other special symbols we can use to be able to observe other peer elements within the ShadowRoot realm.  We stick to single character symbols in order to keep the statements small:
+
 
 | Symbol       | Meaning                        | Notes                                                                                |
 |--------------|--------------------------------|--------------------------------------------------------------------------------------|
