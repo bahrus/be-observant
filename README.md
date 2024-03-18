@@ -30,6 +30,9 @@ Observe properties of peer elements or the host.
 
 What this does:  One-way passes my-custom-element's isVegetarian value to the input element's checked property.
 
+> [!Note]
+> *be-observant* is a rather lengthy word to have to type over and over again, and this element enhancement would likely be sprinkled around quite a bit in a web application.  The name is registered in file [behivior.ts](https://github.com/bahrus/be-observant/blob/baseline/behivior.ts) so use whatever name makes sense to you (be-o, be-obs?) within your application, by creating and referencing your own registration file.  Names can also be overridden within a [Shadow scope](https://github.com/bahrus/be-hive).
+
 So we are making the assumption here that if the user gives the input element name "isVegetarian", that the choice of name will most likely match the identical property name coming from the host web component container.
 
 If this assumption doesn't hold in some cases, then we can specify the name of the property we want to observe from the host:
