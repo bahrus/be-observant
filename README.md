@@ -24,14 +24,14 @@ Observe properties of peer elements or the host.
 ```html
 <my-custom-element>
     #shadow
-    <input name=isVegetarian type=checkbox disabled be-observant>
+    <input name=isVegetarian disabled type=checkbox  be-observant>
 </my-custom-element>
 ```
 
 What this does:  One-way passes my-custom-element's isVegetarian value to the input element's checked property.
 
 > [!Note]
-> *be-observant* is a rather lengthy word to have to type over and over again, and this element enhancement would likely be sprinkled around quite a bit in a web application.  The name is registered in file [behivior.ts](https://github.com/bahrus/be-observant/blob/baseline/behivior.ts) so use whatever name makes sense to you (be-o, be-obs?) within your application, by creating and referencing your own registration file.  Names can also be overridden within a [Shadow scope](https://github.com/bahrus/be-hive).
+> *be-observant* is a rather lengthy word to have to type over and over again, and this element enhancement would likely be sprinkled around quite a bit in a web application.  The name is registered in file [behivior.ts](https://github.com/bahrus/be-observant/blob/baseline/behivior.ts) so use whatever name makes sense to you (be-o, be-obs?) within your application, by creating and referencing your own registration file.  Names can also be overridden within a [Shadow scope](https://github.com/bahrus/be-hive) as well.  Throughout the rest of this document, we will use be-o in order to reduce the download size of this document (just kidding).
 
 So we are making the assumption here that if the user gives the input element name "isVegetarian", that the choice of name will most likely match the identical property name coming from the host web component container.
 
@@ -42,7 +42,7 @@ If this assumption doesn't hold in some cases, then we can specify the name of t
 ```html
 <my-custom-element>
     #shadow
-    <input type=checkbox be-observant='of / is vegetarian.' disabled>
+    <input type=checkbox disabled be-o='of / is vegetarian.'>
 </my-custom-element>
 ```
 
@@ -53,11 +53,22 @@ Slash indicates get value from host.  If omitted, it is assumed:
 ```html
 <my-custom-element>
     #shadow
-    <input type=checkbox onclick="return false" be-observant='of is vegetarian.'>
+    <input type=checkbox disabled be-o='of is vegetarian.'>
 </my-custom-element>
 ```
 
 The space between is and vegetarian can also be omitted, if case is specified:  isVegetarian.
+
+## Example 1d
+
+```html
+<my-custom-element>
+    #shadow
+    <input type=checkbox disabled be-o='of isVegetarian.'>
+</my-custom-element>
+```
+
+Okay, now that I've thoroughly bored you to tears...
 
 ## Special Symbols
 
@@ -82,6 +93,8 @@ What follows is a listing of other special symbols we can use to be able to obse
 1.  First, do a "closest" for an element with attribute itemscope, where the tag name has a dash in it.  Do that search recursively.  
 2.  If no match found, use getRootNode().host.
 
+<!--
+
 ## Example 1d  Negation
 
 ```html
@@ -102,6 +115,8 @@ What follows is a listing of other special symbols we can use to be able to obse
 
 Can also use addition (+), multiplication (*), division (/) [Untested].
 
+-->
+
 ## Binding to peer elements
 
 ## Example 2a
@@ -109,7 +124,7 @@ Can also use addition (+), multiplication (*), division (/) [Untested].
 ```html
 <input name=search type=search>
 
-<div be-observant='of @search.'></div>
+<div be-o='of @search.'></div>
 ```
 
 As the user types in the input field, the div's text content reflects the value that was typed.
@@ -119,7 +134,7 @@ As the user types in the input field, the div's text content reflects the value 
 ```html
 <input id=searchString type=search>
 
-<div be-observant='of # search string.'></div>
+<div be-o='of # search string.'></div>
 ```
 
 ## Example 2c Markers 
@@ -128,7 +143,7 @@ As the user types in the input field, the div's text content reflects the value 
 <my-custom-element>
     #shadow
     <my-peer-element -some-bool-prop></my-peer-element>
-    <input type=checkbox onclick="return false" be-observant='of -some-bool-prop'>
+    <input type=checkbox onclick="return false" be-o='of -some-bool-prop'>
 </my-custom-element>
 ```
 
@@ -139,8 +154,10 @@ This observes the my-peer-element's someBoolProp property for changes.
 ```html
 <link itemprop=isHappy>
 ...
-<input type=checkbox be-observant='of | is happy.'>
+<input type=checkbox be-o='of | is happy.'>
 ```
+
+# Specifying the property to assign the observed value to.
 
 ## Example 3a
 
@@ -150,18 +167,41 @@ This observes the my-peer-element's someBoolProp property for changes.
     
     <input name=someCheckbox type=checkbox>
 
-    <my-peer-element be-observant='of @ some checkbox and assign to some bool prop'></my-peer-element>
+    <my-peer-element be-o='
+        Of @ someCheckbox.
+        Set someBoolProp.
+        '></my-peer-element>
 </my-custom-element>
 ```
 
 This watches the input element for input events and passes the checked property to someBoolProp of oMyPeerElement.
 
-## Example 3b
+## Negation
+
+```html
+<my-custom-element>
+    #shadow
+    
+    <input name=someCheckbox type=checkbox>
+
+    <my-peer-element be-o='
+        Of @ someCheckbox.
+        Negate to someBoolProp.
+        '></my-peer-element>
+</my-custom-element>
+```
+
+
+
+## Attaching and setting other enhancement values
 
 ```html
 <input name=search type=search>
 
-<div be-observant='of @search and assign to $0+beSearching:forText.'>
+<div be-o='
+    of @search.
+    Set to $0+beSearching:forText
+'>
     supercalifragilisticexpialidocious
 </div>
 ```
