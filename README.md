@@ -31,9 +31,9 @@ Observe properties of peer elements or the host.
 What this does:  One-way passes my-custom-element's isVegetarian value to the input element's checked property.
 
 > [!Note]
-> *be-observant* is a rather lengthy word to have to type over and over again, and this element enhancement would likely be sprinkled around quite a bit in a web application.  The name is registered in file [behivior.ts](https://github.com/bahrus/be-observant/blob/baseline/behivior.ts) so use whatever name makes sense to you (be-o, be-obs?) within your application, by creating and referencing your own registration file.  Names can also be overridden within a [Shadow scope](https://github.com/bahrus/be-hive) as well.  Throughout the rest of this document, we will use be-o in order to reduce the download size of this document (just kidding).
+> *be-observant* is a rather lengthy word to have to type over and over again, and this element enhancement would likely be sprinkled around quite a bit in a web application.  The name is registered in file [behivior.ts](https://github.com/bahrus/be-observant/blob/baseline/behivior.ts) so use whatever name makes sense to you (be-o, be-obs?) within your application, by creating and referencing your own registration file.  Names can also be overridden within a [Shadow scope](https://github.com/bahrus/be-hive) as well.  Throughout the rest of this document, we will use be-o in order to reduce the download size of this document (just kidding).  If you only use this enhancement once in the application, spelling out the full name would probably be best, for locality of behavior reasons, and also tapping into google searches.  But I would strongly consider using a shortcut in any application that intends to rely on this enhancement in a heavy way.
 
-So we are making the assumption here that if the user gives the input element name "isVegetarian", that the choice of name will most likely match the identical property name coming from the host web component container.
+In the example above, we are making the assumption that if the user gives the input element name "isVegetarian", that the choice of name will most likely match the identical property name coming from the host web component container.
 
 If this assumption doesn't hold in some cases, then we can specify the name of the property we want to observe from the host:
 
@@ -202,7 +202,7 @@ To simply toggle a property anytime the observed element changes:
     <input name=someCheckbox type=checkbox>
 
     <my-peer-element be-o='
-        Of @ someCheckbox.
+        Of @someCheckbox.
         Toggle someBoolProp.
         '></my-peer-element>
 </my-custom-element>
@@ -222,6 +222,47 @@ To simply toggle a property anytime the observed element changes:
 ```
 
 The plus symbol:  $0+ is indicating to tap into a [custom enhancement](https://github.com/WICG/webcomponents/issues/1000).
+
+The example above happens to refer to this [enhancement](https://github.com/bahrus/be-searching).
+
+## Observing multiple "signals" [TODO]
+
+
+```html
+<my-custom-element>
+    #shadow
+    
+    <input name=yourCheckbox type=checkbox>
+    <input name=myCheckbox type=checkbox>
+
+    <my-peer-element be-o='
+        Of @yourCheckbox and @myCheckbox.
+        Set myFirstProp to 0.
+        Set mySecondProp to 1.
+        '></my-peer-element>
+</my-custom-element>
+```
+
+0 and 1 refer to the index of observed values from the "Of" statement.
+
+## Interpolating
+
+```html
+<my-custom-element>
+    #shadow
+    
+    <input name=name>
+    <input name=food>
+
+    <my-peer-element be-o='
+        Of @name and @food.
+        Set myFirstProp to `$0 eats $1`.
+        '></my-peer-element>
+</my-custom-element>
+```
+
+
+
 
 ## Example 4a (JavaScriptObjectNotation)
 
