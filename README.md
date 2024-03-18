@@ -24,13 +24,13 @@ Observe properties of peer elements or the host.
 ```html
 <my-custom-element>
     #shadow
-    <input name=isVegetarian type=checkbox onclick="return false" be-observant>
+    <input name=isVegetarian type=checkbox disabled be-observant>
 </my-custom-element>
 ```
 
-What this does:  Binds my-custom-element's isVegetarian value to the input element's checked property.
+What this does:  One-way passes my-custom-element's isVegetarian value to the input element's checked property.
 
-So we are making the assumption here that if the user gives the input element name "isVegetatarian", that the choice of name will most likely match the identical property name coming from the host web component container.
+So we are making the assumption here that if the user gives the input element name "isVegetarian", that the choice of name will most likely match the identical property name coming from the host web component container.
 
 If this assumption doesn't hold in some cases, then we can specify the name of the property we want to observe from the host:
 
@@ -39,13 +39,11 @@ If this assumption doesn't hold in some cases, then we can specify the name of t
 ```html
 <my-custom-element>
     #shadow
-    <input type=checkbox onclick="return false" be-observant='of / is vegetarian.'>
+    <input type=checkbox be-observant='of / is vegetarian.' disabled>
 </my-custom-element>
 ```
 
 Slash indicates get value from host.  If omitted, it is assumed:
-
-
 
 ## Example 1c
 
@@ -68,10 +66,10 @@ What follows is a listing of other special symbols we can use to be able to obse
 | Symbol       | Meaning                        | Notes                                                                                |
 |--------------|--------------------------------|--------------------------------------------------------------------------------------|
 | /propName    |"Hostish"                       | Binds to a "propagator" EventTarget.                                                 |
-| @propName    |Name attribute                  | Listens for input events.                                                            |
+| @propName    |Name attribute                  | Listens for input events by default.                                                            |
 | |propName    |Itemprop attribute              | If contenteditible, listens for input events.  Otherwise, uses be-value-added.       |
-| #propName    |Id attribute                    | Listens for input events.                                                            |
-| %propName    |match based on part attribute   | Listens for input events.                                                            |
+| #propName    |Id attribute                    | Listens for input events by default.                                                            |
+| %propName    |match based on part attribute   | Listens for input events by default.                                                            |
 | -prop-name   |Marker indicates prop           | Binds to a "propagator" EventTarget.                                               | 
 | ~elementName |match based on element name     | Listens for input events. [TODO]                                                           |
 
@@ -86,7 +84,7 @@ What follows is a listing of other special symbols we can use to be able to obse
 ```html
 <my-custom-element>
     #shadow
-    <input type=checkbox onclick="return false" be-observant='of not is vegetarian.'>
+    <input type=checkbox disabled be-observant='of not is vegetarian.'>
 </my-custom-element>
 ```
 

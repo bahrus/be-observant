@@ -1,4 +1,4 @@
-import { tryParse } from 'be-enhanced/cpu.js';
+import { tryParse } from 'trans-render/lib/prs/tryParse.js';
 export const strType = String.raw `\||\#|\@|\/|\-`;
 export const remoteType = String.raw `(?<remoteType>${strType})`;
 export const remoteProp = String.raw `(?<remoteProp>[\w\-\+\*\/]+)`;

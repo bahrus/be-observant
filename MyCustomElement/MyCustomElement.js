@@ -32,11 +32,11 @@ export class MyCustomElement extends HTMLElement {
             <div id=age></div>
             <my-peer-element -some-bool-prop></my-peer-element>
             <h3>Example 1a</h3>
-            <input name=isVegetarian type=checkbox onclick="return false;" be-observant>
+            <input disabled name=isVegetarian type=checkbox be-observant>
             <h3>Example 1b</h3>
-            <input type=checkbox onclick="return false;" be-observant='of /is vegetarian.'>
+            <input type=checkbox disabled be-observant='of /is vegetarian.'>
             <h3>Example 1c</h3>
-            <input type=checkbox onclick="return false;" be-observant='of is vegetarian.'>
+            <input type=checkbox disabled be-observant='of is vegetarian.'>
             <h3>Example 1d</h3>
             <input type=checkbox onclick="return false;" be-observant='of not is vegetarian.'>
             <h3>Example 1e</h3>
