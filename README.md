@@ -119,7 +119,7 @@ Can also use addition (+), multiplication (*), division (/) [Untested].
 
 ## Binding to peer elements
 
-## Example 2a
+## By name attribute
 
 ```html
 <input name=search type=search>
@@ -129,7 +129,7 @@ Can also use addition (+), multiplication (*), division (/) [Untested].
 
 As the user types in the input field, the div's text content reflects the value that was typed.
 
-## Example 2b
+## By id
 
 ```html
 <input id=searchString type=search>
@@ -137,13 +137,13 @@ As the user types in the input field, the div's text content reflects the value 
 <div be-o='of # search string.'></div>
 ```
 
-## Example 2c Markers 
+## by markers 
 
 ```html
 <my-custom-element>
     #shadow
     <my-peer-element -some-bool-prop></my-peer-element>
-    <input type=checkbox onclick="return false" be-o='of -some-bool-prop'>
+    <input type=checkbox disabled be-o='of -some-bool-prop'>
 </my-custom-element>
 ```
 
@@ -279,7 +279,7 @@ If we know that this enhancement is the only enhancement affecting the adorned e
             const {o} = event;
             o.set = {
                 myFirstProp: `${o.factors.name} eats ${o.factors.food}`,
-                mySecondProp: `${o.factors[0]} eats ${o.factors[1]}
+                mySecondProp: `${o.factors[0]} eats ${o.factors[1]}`
             } 
         "
     ></my-peer-element>
