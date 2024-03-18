@@ -256,11 +256,86 @@ The example above happens to refer to this [enhancement](https://github.com/bahr
 
     <my-peer-element be-o='
         Of @name and @food.
-        Set myFirstProp to `$0 eats $1`.
+        Set myFirstProp to `${name} eats ${food}`
+        Set mySecondProp to `$0 eats $1`.
         '></my-peer-element>
 </my-custom-element>
 ```
 
+## Scripting bravely
+
+If we know that the only enhancement affecting the adorned element, that leverages the onload event, is this one, we can skip some defensive maneuvers that avoid collisions with other enhancements:
+
+```html
+<my-custom-element>
+    #shadow
+    
+    <input name=name>
+    <input name=food>
+
+    <my-peer-element 
+        be-o='Of @name and @food.'
+        onload="
+            const {o} = event;
+            o.set = {
+                myFirstProp: `${o.factors.name} eats ${o.factors.food}`,
+                mySecondProp: `${o.factors[0]} eats ${o.factors[1]}
+            } 
+        "
+    ></my-peer-element>
+</my-custom-element>
+```
+
+## Scripting defensively
+
+```html
+<my-custom-element>
+    #shadow
+    
+    <input name=name>
+    <input name=food>
+
+    <my-peer-element 
+        be-o='Of @name and @food.'
+        onload="
+            const {enh} = event; //enh = 'o' 
+            const o = event[enh];
+            switch(enh){
+                'o':{
+                    o.set = {
+                        myFirstProp: `${o.factors.name} eats ${o.factors.food}`,
+                        mySecondProp: `${o.factors[0]} eats ${o.factors[1]}
+                    }
+                }
+            }
+        "
+    ></my-peer-element>
+</my-custom-element>
+```
+
+```html
+<my-custom-element>
+    #shadow
+    
+    <input name=name>
+    <input name=food>
+
+    <my-peer-element 
+        be-o='Of @name and @food.'
+        onload="
+            const {enh} = event; //enh = 'o' 
+            const o = event[enh];
+            switch(enh){
+                'o':{
+                    o.set = {
+
+                    }
+                }
+            }
+        "
+    ></my-peer-element>
+</my-custom-element>
+```
 
 
 
