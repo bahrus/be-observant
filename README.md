@@ -191,7 +191,22 @@ This watches the input element for input events and passes the checked property 
 </my-custom-element>
 ```
 
+## Toggle
 
+To simply toggle a property anytime the observed element changes:
+
+```html
+<my-custom-element>
+    #shadow
+    
+    <input name=someCheckbox type=checkbox>
+
+    <my-peer-element be-o='
+        Of @ someCheckbox.
+        Toggle someBoolProp.
+        '></my-peer-element>
+</my-custom-element>
+```
 
 ## Attaching and setting other enhancement values
 
