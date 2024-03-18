@@ -264,7 +264,7 @@ The example above happens to refer to this [enhancement](https://github.com/bahr
 
 ## Scripting bravely
 
-If we know that the only enhancement affecting the adorned element, that leverages the onload event, is this one, we can skip some defensive maneuvers that avoid collisions with other enhancements:
+If we know that this enhancement is the only enhancement affecting the adorned element that leverages the onload event, we can skip some defensive maneuvers that avoid collisions with other enhancements, resulting in a fairly compact script:
 
 ```html
 <my-custom-element>
