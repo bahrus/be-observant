@@ -1,4 +1,5 @@
 import { AP, PAP } from './types';
+import {prsElO} from 'trans-render/lib/prs/prsElO.js';
 
 export function prsOf(self: AP) : PAP {
     const {Of, of} = self;
@@ -7,13 +8,14 @@ export function prsOf(self: AP) : PAP {
     for(const ofS of both){
         const split = ofS.split(reAnd);
         refSArr = refSArr.concat(...split);
-        console.log({split})
     }
-    console.log({refSArr});
+    
+    const observedFactors = refSArr.map(s => prsElO(s));
+    console.log({observedFactors, refSArr});
     return {
-
-    }
+        observedFactors
+    };
 }
 
-//TODO:  move and use in trans-render
+//TODO:  use in be-switched also
 const reAnd = new RegExp(String.raw `(?<!\\)And`);
