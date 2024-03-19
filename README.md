@@ -1,4 +1,4 @@
-# be-observant [WIP]
+# be-observant [TODO]
 
 Observe properties of peer elements or the host.
 
@@ -14,7 +14,7 @@ Observe properties of peer elements or the host.
 
 
 
-## The most quintessential example
+## The most quintessential example [TODO]
 
 ```html
 <mood-stone>
@@ -42,7 +42,7 @@ As we already discussed, in the example above, we made the assumption that if th
 
 If this assumption doesn't hold in some cases, then we can specify the name of the property we want to observe from the host:
 
-## Specifying the host property to observe
+## Specifying the host property to observe [TODO]
 
 ```html
 <mood-stone>
@@ -57,7 +57,7 @@ If this assumption doesn't hold in some cases, then we can specify the name of t
 
 Slash indicates get value from host.  If omitted, it is assumed:
 
-## Reducing cryptic syntax
+## Reducing cryptic syntax [TODO]
 
 ```html
 <mood-stone>
@@ -72,7 +72,7 @@ Slash indicates get value from host.  If omitted, it is assumed:
 
 The space between is and happy can also be omitted, if case is specified:
 
-## Reducing number of spaces at expense of readability?
+## Reducing number of spaces at expense of readability? [TODO]
 
 ```html
 <mood-stone>
@@ -136,7 +136,7 @@ Can also use addition (+), multiplication (*), division (/) [Untested].
 
 ## Binding to peer elements
 
-## By name attribute
+## By name attribute [TODO]
 
 ```html
 <input name=search type=search>
@@ -146,7 +146,7 @@ Can also use addition (+), multiplication (*), division (/) [Untested].
 
 As the user types in the input field, the div's text content reflects the value that was typed.
 
-## By id
+## By id [TODO]
 
 ```html
 <input id=searchString type=search>
@@ -154,7 +154,7 @@ As the user types in the input field, the div's text content reflects the value 
 <div be-o='of # search string.'></div>
 ```
 
-## By markers 
+## By markers [TODO]
 
 ```html
 <mood-stone>
@@ -170,7 +170,7 @@ As the user types in the input field, the div's text content reflects the value 
 
 This observes the my-peer-element's someBoolProp property for changes.
 
-## By itemprop
+## By itemprop [TODO]
 
 ```html
 <link itemprop=isHappy>
@@ -183,10 +183,10 @@ This observes the my-peer-element's someBoolProp property for changes.
 
 # Specifying the property to assign the observed value to.
 
-## Single mapping from observed "signal" to single property of the adorned element.
+## Single mapping from observed "signal" to single property of the adorned element. [TODO]
 
 ```html
-<mood-stone>
+<mood-stone> 
     #shadow
     
     <input name=someCheckbox type=checkbox>
@@ -200,7 +200,7 @@ This observes the my-peer-element's someBoolProp property for changes.
 
 This watches the input element for input events and passes the checked property to someBoolProp of oMyPeerElement.
 
-## Negation
+## Negation [TODO]
 
 ```html
 <mood-stone>
@@ -215,7 +215,7 @@ This watches the input element for input events and passes the checked property 
 </mood-stone>
 ```
 
-## Toggle
+## Toggle [TODO]
 
 To simply toggle a property anytime the observed element changes:
 
@@ -231,6 +231,10 @@ To simply toggle a property anytime the observed element changes:
         '></my-peer-element>
 </mood-stone>
 ```
+
+## PlusEq, MinusEq, TimeEq, DivEq [TODO]
+
+## Increment, Decrement [TODO]
 
 ## Attaching and setting other enhancement values
 
@@ -358,6 +362,10 @@ If we know that this enhancement is the only enhancement affecting the adorned e
 ```
 
 Since we are binding to booleans, adds class if true, otherwise removes.
+
+If we bind to a string, simply sets the class to the value of the string.
+
+Same with SetPart, SetStyle
 
 ## Observing a specified property
 
