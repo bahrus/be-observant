@@ -32,7 +32,7 @@ export class BeObservant extends BE {
         const { of, Of } = self;
         let observeRules = [];
         if ((of || Of) !== undefined) {
-            const { prsOf } = await import('./prsOf.js');
+            const { prsOf } = await import('./prsOf.void');
             observeRules = prsOf(self);
         }
         return {

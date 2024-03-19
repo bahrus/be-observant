@@ -37,7 +37,7 @@ export class BeObservant extends BE<AP, Actions> implements Actions{
         const {of, Of} = self;
         let observeRules: Array<ObserveRule> = [];
         if((of || Of) !== undefined){
-            const {prsOf} = await import('./prsOf.js');
+            const {prsOf} = await import('./prsOf.void');
             observeRules = prsOf(self);
         }
         return {

@@ -1,6 +1,7 @@
 import { ActionOnEventConfigs } from "trans-render/froop/types";
 import {IBE} from 'be-enhanced/types';
 import {ElTypes, SignalRefType} from 'be-linked/types';
+import {ElO} from 'trans-render/lib/prs/types';
 
 export interface EndUserProps extends IBE{
     Of?: Array<OfStatement>,
@@ -13,6 +14,7 @@ export interface IObserveRules {
 
 export interface AllProps extends EndUserProps, IObserveRules{
     isParsed?: boolean,
+    observedFactors?: Array<ElO>,
 }
 
 export type OfStatement = string;
