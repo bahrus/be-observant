@@ -243,7 +243,7 @@ To simply toggle a property anytime the observed element changes:
 
 <div be-o='
     of @search.
-    Set to $0+beSearching:forText
+    Set $0+beSearching:forText
 '>
     supercalifragilisticexpialidocious
 </div>
