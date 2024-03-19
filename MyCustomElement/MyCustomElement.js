@@ -27,15 +27,18 @@ export class MyCustomElement extends HTMLElement {
     connectedCallback() {
         this.shadowRoot.innerHTML = String.raw `
         <div itemscope>
-            <div id=someStringPropVal></div>
+            <!-- <div id=someStringPropVal></div>
             <div id=isVegetarian></div>
             <div id=age></div>
             <my-peer-element -some-bool-prop></my-peer-element>
             <h3>Example 1a</h3>
             <input disabled name=isVegetarian type=checkbox be-observant>
-            <h3>Example 1b</h3>
-            <input type=checkbox disabled be-observant='of /is vegetarian.'>
-            <h3>Example 1c</h3>
+            <h3>Example 1b</h3> -->
+            <input type=checkbox disabled be-observant='
+                of /is vegetarian and #someStringPropVal.
+                Of |isVegan and @someBoolPropVal.
+            '>
+            <!-- <h3>Example 1c</h3>
             <input type=checkbox disabled be-observant='of is vegetarian.'>
             <h3>Example 1d</h3>
             <input type=checkbox onclick="return false;" be-observant='of not is vegetarian.'>
@@ -63,7 +66,7 @@ export class MyCustomElement extends HTMLElement {
 
             <div be-observant='of @search and assign to beEnhanced:by:beSearching:forText.'>
                 supercalifragilisticexpialidocious
-            </div>
+            </div> -->
         </div>
         <be-hive></be-hive>
         `;

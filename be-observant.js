@@ -30,13 +30,13 @@ export class BeObservant extends BE {
     }
     async onCamelized(self) {
         const { of, Of } = self;
-        let observeRules = [];
+        //let observeRules: Array<ObserveRule> = [];
         if ((of || Of) !== undefined) {
-            const { prsOf } = await import('./prsOf.void');
-            observeRules = prsOf(self);
+            const { prsOf } = await import('./prsOf.js');
+            prsOf(self);
         }
         return {
-            observeRules
+        //observeRules
         };
     }
     async hydrate(self) {
