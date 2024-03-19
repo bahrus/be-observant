@@ -47,34 +47,46 @@ As we already discussed, in the example above, we made the assumption that if th
 
 If this assumption doesn't hold in some cases, then we can specify the name of the property we want to observe from the host:
 
-## Example 1b
+## Specifying the host property to observe
 
 ```html
 <my-custom-element>
     #shadow
-    <input type=checkbox disabled be-o='of / is vegetarian.'>
+    <input 
+        type=checkbox 
+        disabled 
+        be-o='of / is vegetarian.'
+    >
 </my-custom-element>
 ```
 
 Slash indicates get value from host.  If omitted, it is assumed:
 
-## Example 1c
+## Reducing cryptic syntax
 
 ```html
 <my-custom-element>
     #shadow
-    <input type=checkbox disabled be-o='of is vegetarian.'>
+    <input 
+        type=checkbox 
+        disabled 
+        be-o='of is vegetarian.'
+    >
 </my-custom-element>
 ```
 
 The space between is and vegetarian can also be omitted, if case is specified:
 
-## Example 1d
+## Reducing number of spaces at expense of readability?
 
 ```html
 <my-custom-element>
     #shadow
-    <input type=checkbox disabled be-o='of isVegetarian.'>
+    <input 
+        type=checkbox 
+        disabled 
+        be-o='of isVegetarian.'
+    >
 </my-custom-element>
 ```
 
