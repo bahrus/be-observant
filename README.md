@@ -261,13 +261,13 @@ The example above happens to refer to this [enhancement](https://github.com/bahr
 
     <my-peer-element be-o='
         Of @yourCheckbox and @myCheckbox.
-        Set myFirstProp to 0.
-        Set mySecondProp to 1.
+        Set myFirstProp to $1.
+        Set mySecondProp to $2.
         '></my-peer-element>
 </mood-stone>
 ```
 
-0 and 1 refer to the index of observed values from the "Of" statement.
+1 and 2 refer to the 1-based index of observed values from the "Of" statement(s).
 
 ## Interpolating
 
@@ -281,7 +281,7 @@ The example above happens to refer to this [enhancement](https://github.com/bahr
     <my-peer-element be-o='
         Of @name and @food.
         //Set myFirstProp to `${name} eats ${food}`  Is this worth supporting?
-        Set mySecondProp to `$0 eats $1`.
+        Set mySecondProp to `$1 eats $2`.
         '></my-peer-element>
 </mood-stone>
 ```
