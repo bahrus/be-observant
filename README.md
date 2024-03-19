@@ -22,17 +22,17 @@ Observe properties of peer elements or the host.
 ## The most quintessential example
 
 ```html
-<my-custom-element>
+<mood-stone>
     #shadow
     <input 
-        name=isVegetarian 
+        name=isHappy 
         disabled 
         type=checkbox  
         be-observant>
-</my-custom-element>
+</mood-stone>
 ```
 
-What this does:  Observes and one-way passes my-custom-element's isVegetarian property value to the input element's checked property.
+What this does:  Observes and one-way passes *mood-stone*'s isHappy property value to the input element's checked property.
 
 The assumption be-observant is making is that the name of the input element will match with the name of the host property from which we would want to bind it.  Why adopt confusing mappings if we can possibly avoid it?  
 
@@ -50,14 +50,14 @@ If this assumption doesn't hold in some cases, then we can specify the name of t
 ## Specifying the host property to observe
 
 ```html
-<my-custom-element>
+<mood-stone>
     #shadow
     <input 
         type=checkbox 
         disabled 
-        be-o='of / is vegetarian.'
+        be-o='of / is happy.'
     >
-</my-custom-element>
+</mood-stone>
 ```
 
 Slash indicates get value from host.  If omitted, it is assumed:
@@ -65,29 +65,29 @@ Slash indicates get value from host.  If omitted, it is assumed:
 ## Reducing cryptic syntax
 
 ```html
-<my-custom-element>
+<mood-stone>
     #shadow
     <input 
         type=checkbox 
         disabled 
-        be-o='of is vegetarian.'
+        be-o='of is happy.'
     >
-</my-custom-element>
+</mood-stone>
 ```
 
-The space between is and vegetarian can also be omitted, if case is specified:
+The space between is and happy can also be omitted, if case is specified:
 
 ## Reducing number of spaces at expense of readability?
 
 ```html
-<my-custom-element>
+<mood-stone>
     #shadow
     <input 
         type=checkbox 
         disabled 
-        be-o='of isVegetarian.'
+        be-o='of isHappy.'
     >
-</my-custom-element>
+</mood-stone>
 ```
 
 Okay, now that I've thoroughly bored you to tears...
@@ -120,19 +120,19 @@ What follows is a listing of other special symbols we can use to be able to obse
 ## Example 1d  Negation
 
 ```html
-<my-custom-element>
+<mood-stone>
     #shadow
     <input type=checkbox disabled be-observant='of not is vegetarian.'>
-</my-custom-element>
+</mood-stone>
 ```
 
 ## Example 1e Translation 
 
 ```html
-<my-custom-element>
+<mood-stone>
     #shadow
     <input type=readonly be-observant='of age - 20.'>
-</my-custom-element>
+</mood-stone>
 ```
 
 Can also use addition (+), multiplication (*), division (/) [Untested].
@@ -162,11 +162,15 @@ As the user types in the input field, the div's text content reflects the value 
 ## By markers 
 
 ```html
-<my-custom-element>
+<mood-stone>
     #shadow
     <my-peer-element -some-bool-prop></my-peer-element>
-    <input type=checkbox disabled be-o='of -some-bool-prop'>
-</my-custom-element>
+    <input 
+        type=checkbox 
+        disabled 
+        be-o='of -some-bool-prop'
+    >
+</mood-stone>
 ```
 
 This observes the my-peer-element's someBoolProp property for changes.
@@ -176,7 +180,10 @@ This observes the my-peer-element's someBoolProp property for changes.
 ```html
 <link itemprop=isHappy>
 ...
-<input type=checkbox be-o='of | is happy.'>
+<input 
+    type=checkbox 
+    be-o='of | is happy.'
+>
 ```
 
 # Specifying the property to assign the observed value to.
@@ -184,7 +191,7 @@ This observes the my-peer-element's someBoolProp property for changes.
 ## Single mapping from observed "signal" to single property of the adorned element.
 
 ```html
-<my-custom-element>
+<mood-stone>
     #shadow
     
     <input name=someCheckbox type=checkbox>
@@ -193,7 +200,7 @@ This observes the my-peer-element's someBoolProp property for changes.
         Of @ someCheckbox.
         Set someBoolProp.
         '></my-peer-element>
-</my-custom-element>
+</mood-stone>
 ```
 
 This watches the input element for input events and passes the checked property to someBoolProp of oMyPeerElement.
@@ -201,7 +208,7 @@ This watches the input element for input events and passes the checked property 
 ## Negation
 
 ```html
-<my-custom-element>
+<mood-stone>
     #shadow
     
     <input name=someCheckbox type=checkbox>
@@ -210,7 +217,7 @@ This watches the input element for input events and passes the checked property 
         Of @ someCheckbox.
         Negate to someBoolProp.
         '></my-peer-element>
-</my-custom-element>
+</mood-stone>
 ```
 
 ## Toggle
@@ -218,7 +225,7 @@ This watches the input element for input events and passes the checked property 
 To simply toggle a property anytime the observed element changes:
 
 ```html
-<my-custom-element>
+<mood-stone>
     #shadow
     
     <input name=someCheckbox type=checkbox>
@@ -227,7 +234,7 @@ To simply toggle a property anytime the observed element changes:
         Of @someCheckbox.
         Toggle someBoolProp.
         '></my-peer-element>
-</my-custom-element>
+</mood-stone>
 ```
 
 ## Attaching and setting other enhancement values
@@ -251,7 +258,7 @@ The example above happens to refer to this [enhancement](https://github.com/bahr
 
 
 ```html
-<my-custom-element>
+<mood-stone>
     #shadow
     
     <input name=yourCheckbox type=checkbox>
@@ -262,7 +269,7 @@ The example above happens to refer to this [enhancement](https://github.com/bahr
         Set myFirstProp to 0.
         Set mySecondProp to 1.
         '></my-peer-element>
-</my-custom-element>
+</mood-stone>
 ```
 
 0 and 1 refer to the index of observed values from the "Of" statement.
@@ -270,7 +277,7 @@ The example above happens to refer to this [enhancement](https://github.com/bahr
 ## Interpolating
 
 ```html
-<my-custom-element>
+<mood-stone>
     #shadow
     
     <input name=name>
@@ -281,7 +288,7 @@ The example above happens to refer to this [enhancement](https://github.com/bahr
         //Set myFirstProp to `${name} eats ${food}`  Is this worth supporting?
         Set mySecondProp to `$0 eats $1`.
         '></my-peer-element>
-</my-custom-element>
+</mood-stone>
 ```
 
 ## Scripting bravely
@@ -292,7 +299,7 @@ The example above happens to refer to this [enhancement](https://github.com/bahr
 If we know that this enhancement is the only enhancement affecting the adorned element that leverages the onload event, we can skip some defensive maneuvers that avoid collisions with other enhancements, resulting in a fairly compact script:
 
 ```html
-<my-custom-element>
+<mood-stone>
     #shadow
     
     <input name=name>
@@ -308,13 +315,13 @@ If we know that this enhancement is the only enhancement affecting the adorned e
             } 
         "
     ></my-peer-element>
-</my-custom-element>
+</mood-stone>
 ```
 
 ## Scripting defensively
 
 ```html
-<my-custom-element>
+<mood-stone>
     #shadow
     
     <input name=name>
@@ -335,7 +342,7 @@ If we know that this enhancement is the only enhancement affecting the adorned e
             }
         "
     ></my-peer-element>
-</my-custom-element>
+</mood-stone>
 ```
 
 ## Observing a specified property
