@@ -304,7 +304,7 @@ If we know that this enhancement is the only enhancement affecting the adorned e
         be-o='Of @name and @food.'
         onload="
             const {o} = event;
-            o.set = {
+            o.setProps = {
                 myFirstProp: `${o.factors.name} eats ${o.factors.food}`,
                 mySecondProp: `${o.factors[0]} eats ${o.factors[1]}`
             } 
@@ -329,7 +329,7 @@ If we know that this enhancement is the only enhancement affecting the adorned e
             const e = event[enh];
             switch(enh){
                 'o':{
-                    e.set = {
+                    e.setProps = {
                         myFirstProp: `${e.factors.name} eats ${e.factors.food}`,
                         mySecondProp: `${e.factors[0]} eats ${e.factors[1]}
                     }
@@ -339,6 +339,8 @@ If we know that this enhancement is the only enhancement affecting the adorned e
     ></my-peer-element>
 </mood-stone>
 ```
+
+## Adding / removing css classes / styles / parts
 
 ## Observing a specified property
 
