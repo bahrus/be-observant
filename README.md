@@ -38,7 +38,7 @@ If you only use this enhancement once in a large application, spelling out the f
 
 ## Back to our quintessential example
 
-As we already discussed, in the example above, we made the assumption that if the user gives the input element name "isVegetarian", that the choice of name will most likely match the identical property name coming from the host web component container.
+As we already discussed, in the example above, we made the assumption that if the user gives the input element name "isHappy", that the choice of name will most likely match the identical property name coming from the host web component container.
 
 If this assumption doesn't hold in some cases, then we can specify the name of the property we want to observe from the host:
 
