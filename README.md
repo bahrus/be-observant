@@ -28,15 +28,16 @@ Observe properties of peer elements or the host.
 
 What this does:  Observes and one-way passes my-custom-element's isVegetarian property value to the input element's checked property.
 
-The assumption be-observant is making is that the name of the input element will match with the name of the host property from which we would want to bind it.  Why adopt confusing mappings if we can help it?  
+The assumption be-observant is making is that the name of the input element will match with the name of the host property from which we would want to bind it.  Why adopt confusing mappings if we can possibly avoid it?  
 
 > [!Note]
 > *be-observant* is a rather lengthy word to have to type over and over again, and this element enhancement would likely be sprinkled around quite a bit in a web application.  The name is registered in the optional file [behivior.js](https://github.com/bahrus/be-observant/blob/baseline/behivior.js) so to use whatever name makes sense to you (be-o, be-obs?) within your application, just don't reference that file, and instead create and reference your own registration file.  Names can also be overridden within a [Shadow scope](https://github.com/bahrus/be-hive) as well.  Throughout the rest of this document, we will use be-o instead of be-observant, and ask that you make a "mental map" of "o" to observant.  
 
 If you only use this enhancement once in a large application, spelling out the full name (and referencing the canonical behivior.js file) would probably make the most sense, for locality of behavior reasons, and also tapping into google searches.  But I would strongly consider using a shortcut in any application that intends to rely on this enhancement in a heavy way.
 
-## Back to e
-In the example above, we are making the assumption that if the user gives the input element name "isVegetarian", that the choice of name will most likely match the identical property name coming from the host web component container.
+## Back to our quintessential example
+
+As we already discussed, in the example above, we made the assumption that if the user gives the input element name "isVegetarian", that the choice of name will most likely match the identical property name coming from the host web component container.
 
 If this assumption doesn't hold in some cases, then we can specify the name of the property we want to observe from the host:
 
@@ -60,7 +61,7 @@ Slash indicates get value from host.  If omitted, it is assumed:
 </my-custom-element>
 ```
 
-The space between is and vegetarian can also be omitted, if case is specified:  isVegetarian.
+The space between is and vegetarian can also be omitted, if case is specified:
 
 ## Example 1d
 
@@ -140,7 +141,7 @@ As the user types in the input field, the div's text content reflects the value 
 <div be-o='of # search string.'></div>
 ```
 
-## by markers 
+## By markers 
 
 ```html
 <my-custom-element>
@@ -152,7 +153,7 @@ As the user types in the input field, the div's text content reflects the value 
 
 This observes the my-peer-element's someBoolProp property for changes.
 
-## Example 2d Microdata
+## By itemprop
 
 ```html
 <link itemprop=isHappy>
@@ -162,7 +163,7 @@ This observes the my-peer-element's someBoolProp property for changes.
 
 # Specifying the property to assign the observed value to.
 
-## Example 3a
+## Single mapping from observed "signal" to single property of the adorned element.
 
 ```html
 <my-custom-element>
@@ -319,25 +320,18 @@ If we know that this enhancement is the only enhancement affecting the adorned e
 </my-custom-element>
 ```
 
+## Observing a specified property
 
+```html
+<my-peer-element></my-peer-element>
 
-
-## Example 4a (JavaScriptObjectNotation)
-
-In some scenarios, it may be more effective to utilize the underlying binding model that the Hemingway statements above get transpiled to.  This can be done as follows:
-
-```TypeScript
-const oInput.beEnhanced.beObservant.observeRules = [
-    {
-        "remoteType": "/",
-        "remoteProp": "isVegetarian",
-        "localProp": "checked",
-        "localSignal": {},
-        "remoteSignal": {}
-    }
-]
+<your-peer-element be-o="
+    of ~myPeerElement:myProp.
+    Set yourProp.
+">
 ```
 
+This will one-way synchronize *my-peer-element*'s myProp value to the adorned element's yourProp property.
 
 <!-->
 
