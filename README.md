@@ -14,7 +14,7 @@ Observe properties of peer elements or the host.
 
 
 
-## The most quintessential example [TODO]
+## The most quintessential example
 
 ```html
 <mood-stone>
