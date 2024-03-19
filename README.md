@@ -16,8 +16,6 @@ Observe properties of peer elements or the host.
 > [!Note]
 > Although *be-observant* can declaratively adjust the value it is observing, it does *not* provide unfettered access to the JavaScript runtime though.  It is a purely declarative element enhancement.  For full access to the JavaScript runtime, use [be-computed](https://github.com/bahrus/be-computed).
 
-> [!Note]
-> An extra thin layer can be applied on top of be-observant, so that the original HTML that is streamed from the server can provide the initial values of the property that *be-observant* observes, and then once that initial handshake is established, lean exclusively on *be-observant* for all subsequent updates.  This is handled by [be-entrusting](https://github.com/bahrus/be-entrusting).
 
 ## Example 1a (Hemingway Notation)
 
@@ -30,8 +28,12 @@ Observe properties of peer elements or the host.
 
 What this does:  One-way passes my-custom-element's isVegetarian value to the input element's checked property.
 
+Why?  The assumption be-observant is making is that the name of the input element will match with the name of the host property from which we would want to bind it.  Why adopt confusing mappings if we can help it?  
+
 > [!Note]
-> *be-observant* is a rather lengthy word to have to type over and over again, and this element enhancement would likely be sprinkled around quite a bit in a web application.  The name is registered in file [behivior.ts](https://github.com/bahrus/be-observant/blob/baseline/behivior.ts) so use whatever name makes sense to you (be-o, be-obs?) within your application, by creating and referencing your own registration file.  Names can also be overridden within a [Shadow scope](https://github.com/bahrus/be-hive) as well.  Throughout the rest of this document, we will use be-o in order to reduce the download size of this document (just kidding).  If you only use this enhancement once in the application, spelling out the full name would probably be best, for locality of behavior reasons, and also tapping into google searches.  But I would strongly consider using a shortcut in any application that intends to rely on this enhancement in a heavy way.
+> *be-observant* is a rather lengthy word to have to type over and over again, and this element enhancement would likely be sprinkled around quite a bit in a web application.  The name is registered in the optional file [behivior.js](https://github.com/bahrus/be-observant/blob/baseline/behivior.js) so to use whatever name makes sense to you (be-o, be-obs?) within your application, just don't reference that file, and instead create and reference your own registration file.  Names can also be overridden within a [Shadow scope](https://github.com/bahrus/be-hive) as well.  Throughout the rest of this document, we will use be-o instead of be-observant, and ask that you make a "mental map" of "o" to observant.  
+
+If you only use this enhancement once in a large application, spelling out the full name (and referencing the canonical behivior.js file) would probably make the most sense, for locality of behavior reasons, and also tapping into google searches.  But I would strongly consider using a shortcut in any application that intends to rely on this enhancement in a heavy way.
 
 In the example above, we are making the assumption that if the user gives the input element name "isVegetarian", that the choice of name will most likely match the identical property name coming from the host web component container.
 
