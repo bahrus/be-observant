@@ -24,7 +24,11 @@ Observe properties of peer elements or the host.
 ```html
 <my-custom-element>
     #shadow
-    <input name=isVegetarian disabled type=checkbox  be-observant>
+    <input 
+        name=isVegetarian 
+        disabled 
+        type=checkbox  
+        be-observant>
 </my-custom-element>
 ```
 
