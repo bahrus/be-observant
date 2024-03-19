@@ -340,7 +340,24 @@ If we know that this enhancement is the only enhancement affecting the adorned e
 </mood-stone>
 ```
 
-## Adding / removing css classes / styles / parts
+## Adding / removing css classes / styles / parts declaratively [TODO]
+
+```html
+<mood-stone>
+    #shadow
+    
+    <input name=yourCheckbox type=checkbox>
+    <input name=myCheckbox type=checkbox>
+
+    <my-peer-element be-o='
+        Of @yourCheckbox and @myCheckbox.
+        SetClass my-class to $1.
+        SetClass my-second-class to $2.
+        '></my-peer-element>
+</mood-stone>
+```
+
+Since we are binding to booleans, adds class if true, otherwise removes.
 
 ## Observing a specified property
 
