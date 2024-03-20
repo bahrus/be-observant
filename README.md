@@ -57,7 +57,7 @@ If this assumption doesn't hold in some cases, then we can specify the name of t
 
 Slash indicates get value from host.  If omitted, it is assumed:
 
-## Reducing cryptic syntax [TODO]
+## Reducing cryptic syntax
 
 ```html
 <mood-stone>
