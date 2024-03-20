@@ -15,7 +15,10 @@ export interface IObserveRules {
 export interface AllProps extends EndUserProps, IObserveRules{
     isParsed?: boolean,
     observedFactors?: Array<ElO>,
+    setRules?: Array<SetRule>
 }
+
+export type SetRule = any;
 
 export type OfStatement = string;
 

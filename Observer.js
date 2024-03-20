@@ -15,12 +15,20 @@ export class Observer {
             this.#signals.set(prop, signal);
             const ref = signal.deref();
             ref?.addEventListener(eventSuggestion, e => {
-                this.#invokeLoadEvent(self);
+                this.#pullInValuesToEnhancedElement(self);
             });
         }
-        this.#invokeLoadEvent(self);
+        this.#pullInValuesToEnhancedElement(self);
     }
-    async #invokeLoadEvent(self) {
+    async #pullInValuesToEnhancedElement(self) {
+        const { setRules, enhancedElement } = self;
+        if (setRules === undefined) {
+            if (this.#signals.entries.length > 1)
+                throw 'NI';
+            const { getLocalSignal } = await import('be-linked/defaults.js');
+            const localSignal = await getLocalSignal(enhancedElement);
+            console.log({ localSignal });
+        }
     }
     #signals = new Map();
 }
