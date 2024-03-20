@@ -42,7 +42,7 @@ As we already discussed, in the example above, we made the assumption that if th
 
 If this assumption doesn't hold in some cases, then we can specify the name of the property we want to observe from the host:
 
-## Specifying the host property to observe [WIP]
+## Specifying the host property to observe
 
 ```html
 <mood-stone>
