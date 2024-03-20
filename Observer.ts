@@ -14,10 +14,10 @@ export class Observer{
             const {prop} = observedFactor;
             const watchSeeker = new WatchSeeker<AP, any>(observedFactor, false);
             const res = await watchSeeker.do(self, undefined, enhancedElement);
-            const {eventSuggestion, signal} = res!;
+            const {eventSuggestion, signal, propagator} = res!;
             this.#remoteSignals.set(prop!, signal!);
             const ref =signal!.deref();
-            ref?.addEventListener(eventSuggestion!, e => {
+            (propagator || ref)?.addEventListener(eventSuggestion!, e => {
                 this.#pullInValuesToEnhancedElement(self);
             });
         }
