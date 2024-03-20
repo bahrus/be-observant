@@ -3,7 +3,6 @@ import {BEConfig} from 'be-enhanced/types';
 import {XE} from 'xtal-element/XE.js';
 import {Actions, AllProps, AP, PAP, ProPAP, POA, ObserveRule, LifecycleEvent, IObserveRules} from './types';
 import {getRemoteProp} from 'be-linked/defaults.js';
-import {Observer} from './Observer.js';
 
 export class BeObservant extends BE<AP, Actions> implements Actions{
     #abortControllers: Array<AbortController>  = [];
@@ -34,27 +33,16 @@ export class BeObservant extends BE<AP, Actions> implements Actions{
     }
     
     async onCamelized(self: this) {
-        const {of, Of} = self;
-        //let observeRules: Array<ObserveRule> = [];
-        if((of || Of) !== undefined){
-            const {prsOf} = await import('./prsOf.js');
-            prsOf(self);
-        }
-        return {
-            //observeRules
-        };
+        const {prsOf} = await import('./prsOf.js');
+        const parsed = prsOf(self);
+        return structuredClone(parsed);
     }
 
 
     async hydrate(self: this){
-        const {observeRules} = self;
-        for(const observe of observeRules!){
-            new Observer(self, observe, {
-                abortControllers: this.#abortControllers
-            });
-            //await hydrateObserve(self, observe, this.#abortControllers)
-        }
-        //evalObserveRules(self, 'init');
+        const {Observer} = await import('./Observer.js');
+        const obs = new Observer(self);
+
         return {
             resolved: true,
         }
@@ -86,7 +74,9 @@ const xe = new XE<AP, Actions>({
                 ifAllOf: ['isParsed'],
                 ifAtLeastOneOf: ['of', 'Of']
             },
-            hydrate: 'observeRules'            
+            hydrate: {
+                ifAllOf: ['isParsed', 'observedFactors']
+            }          
         }
     },
     superclass: BeObservant

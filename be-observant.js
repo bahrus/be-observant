@@ -1,7 +1,6 @@
 import { BE, propDefaults, propInfo } from 'be-enhanced/BE.js';
 import { XE } from 'xtal-element/XE.js';
 import { getRemoteProp } from 'be-linked/defaults.js';
-import { Observer } from './Observer.js';
 export class BeObservant extends BE {
     #abortControllers = [];
     detach() {
@@ -29,25 +28,13 @@ export class BeObservant extends BE {
         };
     }
     async onCamelized(self) {
-        const { of, Of } = self;
-        //let observeRules: Array<ObserveRule> = [];
-        if ((of || Of) !== undefined) {
-            const { prsOf } = await import('./prsOf.js');
-            prsOf(self);
-        }
-        return {
-        //observeRules
-        };
+        const { prsOf } = await import('./prsOf.js');
+        const parsed = prsOf(self);
+        return structuredClone(parsed);
     }
     async hydrate(self) {
-        const { observeRules } = self;
-        for (const observe of observeRules) {
-            new Observer(self, observe, {
-                abortControllers: this.#abortControllers
-            });
-            //await hydrateObserve(self, observe, this.#abortControllers)
-        }
-        //evalObserveRules(self, 'init');
+        const { Observer } = await import('./Observer.js');
+        const obs = new Observer(self);
         return {
             resolved: true,
         };
@@ -73,7 +60,9 @@ const xe = new XE({
                 ifAllOf: ['isParsed'],
                 ifAtLeastOneOf: ['of', 'Of']
             },
-            hydrate: 'observeRules'
+            hydrate: {
+                ifAllOf: ['isParsed', 'observedFactors']
+            }
         }
     },
     superclass: BeObservant

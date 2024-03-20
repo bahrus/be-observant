@@ -55,3 +55,8 @@ export interface ObserverOptions{
     abortControllers: Array<AbortController>,
     remoteEl?: Element,
 }
+
+export type LoadEventName = 'load';
+export interface EventForObserver{
+
+}
