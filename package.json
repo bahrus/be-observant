@@ -32,10 +32,10 @@
   "dependencies": {
     "be-enhanced": "0.0.72",
     "be-hive": "0.0.140",
-    "be-linked": "0.0.81",
+    "be-linked": "0.0.82",
     "be-propagating": "0.0.34",
     "be-value-added": "0.0.24",
-    "trans-render": "0.0.746",
+    "trans-render": "0.0.747",
     "xtal-element": "0.0.599"
   },
   "devDependencies": {
