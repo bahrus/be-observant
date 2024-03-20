@@ -214,7 +214,7 @@ This also works:
 
 The search for element with id=searchString is done within the (shadow)root node.
 
-## By markers [TODO]
+## By markers
 
 ```html
 <mood-stone>
