@@ -38,21 +38,25 @@ export interface Actions{
     hydrate(self: this): ProPAP;
 }
 
-export interface ObserveRule{
-    localEnhancement?: string,
-    remoteProp: string,
-    remoteType: ElTypes,
-    remoteSignal?: WeakRef<SignalRefType>,
-    localProp?: string,
-    splitLocalProp?: Array<string>,
-    localSignal?: SignalRefType,
-    negate?: boolean,
-    mathOp?: '+' | '-' | '*' | '/',
-    mathEnd?: number,
-    skipInit?: boolean,
-    callback?:(rule: ObserveRule, val: any) => void;
-    lastVal?: any;
+export interface SignalAndElO extends ElO{
+    signal?: WeakRef<SignalRefType>
 }
+
+// export interface ObserveRule{
+//     localEnhancement?: string,
+//     remoteProp: string,
+//     remoteType: ElTypes,
+//     remoteSignal?: WeakRef<SignalRefType>,
+//     localProp?: string,
+//     splitLocalProp?: Array<string>,
+//     localSignal?: SignalRefType,
+//     negate?: boolean,
+//     mathOp?: '+' | '-' | '*' | '/',
+//     mathEnd?: number,
+//     skipInit?: boolean,
+//     callback?:(rule: ObserveRule, val: any) => void;
+//     lastVal?: any;
+// }
 
 export interface ObserverOptions{
     abortControllers: Array<AbortController>,

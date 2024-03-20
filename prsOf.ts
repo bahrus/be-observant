@@ -11,7 +11,7 @@ export function prsOf(self: AP) : PAP {
     }
     
     const observedFactors = refSArr.map(s => prsElO(s));
-    console.log({observedFactors, refSArr});
+    //console.log({observedFactors, refSArr});
     return {
         observedFactors
     };

@@ -8,7 +8,7 @@ export function prsOf(self) {
         refSArr = refSArr.concat(...split);
     }
     const observedFactors = refSArr.map(s => prsElO(s));
-    console.log({ observedFactors, refSArr });
+    //console.log({observedFactors, refSArr});
     return {
         observedFactors
     };

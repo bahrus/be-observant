@@ -1,5 +1,5 @@
 import {WatchSeeker} from './WatchSeeker.js';
-import { AP, EventForObserver } from './types';
+import { AP, EventForObserver, SignalAndElO } from './types';
 import {SignalRefType} from 'be-linked/types';
 
 export class Observer{
@@ -15,7 +15,11 @@ export class Observer{
             const watchSeeker = new WatchSeeker<AP, any>(observedFactor, false);
             const res = await watchSeeker.do(self, undefined, enhancedElement);
             const {eventSuggestion, signal, propagator} = res!;
-            this.#remoteSignals.set(prop!, signal!);
+            const signalAndElO : SignalAndElO = {
+                ...observedFactor,
+                signal
+            }
+            this.#remoteSignals.set(prop!, signalAndElO);
             const ref =signal!.deref();
             (propagator || ref)?.addEventListener(eventSuggestion!, e => {
                 this.#pullInValuesToEnhancedElement(self);
@@ -31,10 +35,25 @@ export class Observer{
             const {getLocalSignal} = await import('be-linked/defaults.js');
             const localSignal = await getLocalSignal(enhancedElement);
             for(const [key, value] of this.#remoteSignals){
-                console.log({key, value, localSignal});
-                const remoteRef = value.deref();
-                const remoteVal = (<any>remoteRef)[key];
-                console.log({remoteRef, remoteVal});
+                //console.log({key, value, localSignal});
+                const {signal: s, elType, prop: p} = value;
+                const remoteRef = s!.deref();
+                let remoteVal: any;
+                switch(elType){
+                    case '@':{
+                        const {getSignalVal} = await import('be-linked/getSignalVal.js');
+                        remoteVal = getSignalVal(remoteRef!);
+                    }
+                    break;
+                    case '/':
+                        remoteVal = (<any>remoteRef)[key];
+                        break;
+                }
+                if(p === undefined){
+                    
+                }
+
+                //console.log({remoteRef, remoteVal});
                 const {prop, signal} = localSignal;
                 (<any>signal)[prop!] = remoteVal;
             }
@@ -42,7 +61,7 @@ export class Observer{
         }
     }
 
-    #remoteSignals: Map<string, WeakRef<SignalRefType>> = new Map();
+    #remoteSignals: Map<string, SignalAndElO> = new Map();
 }
 
 export class LoadEvent extends Event implements EventForObserver {

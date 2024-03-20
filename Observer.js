@@ -12,7 +12,11 @@ export class Observer {
             const watchSeeker = new WatchSeeker(observedFactor, false);
             const res = await watchSeeker.do(self, undefined, enhancedElement);
             const { eventSuggestion, signal, propagator } = res;
-            this.#remoteSignals.set(prop, signal);
+            const signalAndElO = {
+                ...observedFactor,
+                signal
+            };
+            this.#remoteSignals.set(prop, signalAndElO);
             const ref = signal.deref();
             (propagator || ref)?.addEventListener(eventSuggestion, e => {
                 this.#pullInValuesToEnhancedElement(self);
@@ -28,10 +32,24 @@ export class Observer {
             const { getLocalSignal } = await import('be-linked/defaults.js');
             const localSignal = await getLocalSignal(enhancedElement);
             for (const [key, value] of this.#remoteSignals) {
-                console.log({ key, value, localSignal });
-                const remoteRef = value.deref();
-                const remoteVal = remoteRef[key];
-                console.log({ remoteRef, remoteVal });
+                //console.log({key, value, localSignal});
+                const { signal: s, elType, prop: p } = value;
+                const remoteRef = s.deref();
+                let remoteVal;
+                switch (elType) {
+                    case '@':
+                        {
+                            const { getSignalVal } = await import('be-linked/getSignalVal.js');
+                            remoteVal = getSignalVal(remoteRef);
+                        }
+                        break;
+                    case '/':
+                        remoteVal = remoteRef[key];
+                        break;
+                }
+                if (p === undefined) {
+                }
+                //console.log({remoteRef, remoteVal});
                 const { prop, signal } = localSignal;
                 signal[prop] = remoteVal;
             }

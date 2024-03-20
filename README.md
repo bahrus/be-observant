@@ -136,7 +136,7 @@ Can also use addition (+), multiplication (*), division (/) [Untested].
 
 ## Binding to peer elements
 
-## By name attribute [TODO]
+## By name attribute
 
 ```html
 <input name=search type=search>
