@@ -200,7 +200,9 @@ Can also use addition (+), multiplication (*), division (/) [Untested].
 
 As the user types in the input field, the div's text content reflects the value that was typed.
 
-## By id [TODO]
+## By id
+
+This also works:
 
 ```html
 <input id=searchString type=search>

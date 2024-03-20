@@ -37,6 +37,7 @@ export class Observer {
                 const remoteRef = s.deref();
                 let remoteVal;
                 switch (elType) {
+                    case '#':
                     case '@':
                         {
                             const { getSignalVal } = await import('be-linked/getSignalVal.js');
@@ -46,6 +47,8 @@ export class Observer {
                     case '/':
                         remoteVal = remoteRef[key];
                         break;
+                    default:
+                        throw 'NI';
                 }
                 if (p === undefined) {
                 }
