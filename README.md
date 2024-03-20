@@ -72,7 +72,7 @@ Slash indicates get value from host.  If omitted, it is assumed:
 
 The space between is and happy can also be omitted, if case is specified:
 
-## Reducing number of spaces at expense of readability? [TODO]
+## Reducing number of spaces at expense of readability?
 
 ```html
 <mood-stone>
