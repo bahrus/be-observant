@@ -107,6 +107,33 @@ The space between is and happy can also be omitted, if case is specified:
 
 This sets the span's textContent to "true" the .toString value of moo-stone's isHappy property.
 
+## By Id also works:
+
+```html
+<mood-stone>
+    <template shadowrootmode=open>
+        <div itemscope>
+            <span itemprop=isHappy></span>
+        </div>
+        <input 
+            id=isHappy 
+            disabled 
+            type=checkbox  
+            be-o
+        >
+        <xtal-element
+            prop-defaults='{
+                "isHappy": true
+            }'
+            xform='{
+                "| isHappy": 0
+            }'
+        ></xtal-element>
+        <be-hive></be-hive>
+    </template>
+</mood-stone>
+```
+
 
 Okay, now that I've thoroughly bored you to tears...
 
