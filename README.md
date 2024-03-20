@@ -134,6 +134,7 @@ This sets the span's textContent to "true" the .toString value of moo-stone's is
 </mood-stone>
 ```
 
+Note that the itemprop attribute takes precedence over the name attribute, which takes precedence over the id attribute.
 
 Okay, now that I've thoroughly bored you to tears...
 
