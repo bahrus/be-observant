@@ -29,7 +29,10 @@ Observe properties of peer elements or the host.
 
 What this does:  Observes and one-way passes *mood-stone*'s isHappy property value to the input element's checked property.
 
-The assumption be-observant is making is that the name of the input element will match with the name of the host property from which we would want to bind it.  Why adopt confusing mappings if we can possibly avoid it?  
+be-observant is making a few inferences:  
+
+1.  The name of the input element will match with the name of the host property from which we would want to bind it.  Why adopt confusing mappings if we can possibly avoid it? 
+2.  Since the type of input element is a checkbox, set the "checked" property from the host. 
 
 > [!Note]
 > *be-observant* is a rather lengthy word to have to type over and over again, and this element enhancement would likely be sprinkled around quite a bit in a web application.  The name is registered in the optional file [behivior.js](https://github.com/bahrus/be-observant/blob/baseline/behivior.js) so to use whatever name makes sense to you (be-o, be-obs?) within your application, just don't reference that file, and instead create and reference your own registration file.  Names can also be overridden within a [Shadow scope](https://github.com/bahrus/be-hive) as well.  Throughout the rest of this document, we will use be-o instead of be-observant, and ask that you make a "mental map" of "o" to observant.  
