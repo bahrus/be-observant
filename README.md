@@ -1,4 +1,4 @@
-# be-observant [TODO]
+# be-observant [WIP]
 
 Observe properties of peer elements or the host.
 
@@ -108,7 +108,7 @@ The space between is and happy can also be omitted, if case is specified:
 </mood-stone>
 ```
 
-This sets the span's textContent to "true" the .toString value of moo-stone's isHappy property.
+This sets the span's textContent to the .toString value of moon-stone's isHappy property.
 
 ## By Id also works:
 
@@ -200,6 +200,8 @@ Can also use addition (+), multiplication (*), division (/) [Untested].
 
 As the user types in the input field, the div's text content reflects the value that was typed.
 
+The search for the element with name=search is done within the closest form element, and if not found, within the (shadow)root node.
+
 ## By id
 
 This also works:
@@ -210,12 +212,15 @@ This also works:
 <div be-o='of # search string.'></div>
 ```
 
+The search for element with id=searchString is done within the (shadow)root node.
+
 ## By markers [TODO]
 
 ```html
 <mood-stone>
     #shadow
-    <my-peer-element -some-bool-prop></my-peer-element>
+    <my-peer-element -some-bool-prop>
+    </my-peer-element>
     <input 
         type=checkbox 
         disabled 

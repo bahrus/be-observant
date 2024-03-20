@@ -44,6 +44,7 @@ export class Observer {
                             remoteVal = getSignalVal(remoteRef);
                         }
                         break;
+                    case '-':
                     case '/':
                         remoteVal = remoteRef[key];
                         break;
