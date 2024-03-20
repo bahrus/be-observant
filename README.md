@@ -85,6 +85,29 @@ The space between is and happy can also be omitted, if case is specified:
 </mood-stone>
 ```
 
+## Binding based on microdata attribute.
+
+```html
+<mood-stone>
+    <template shadowrootmode=open>
+        <div itemscope>
+            <span itemprop=isHappy be-o></span>
+        </div>
+
+        <xtal-element
+            prop-defaults='{
+                "isHappy": true
+            }'
+
+        ></xtal-element>
+        <be-hive></be-hive>
+    </template>
+</mood-stone>
+```
+
+This sets the span's textContent to "true" the .toString value of moo-stone's isHappy property.
+
+
 Okay, now that I've thoroughly bored you to tears...
 
 ## Special Symbols

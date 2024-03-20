@@ -3,6 +3,7 @@ import {BEConfig} from 'be-enhanced/types';
 import {XE} from 'xtal-element/XE.js';
 import {Actions, AllProps, AP, PAP, ProPAP, POA, ObserveRule, LifecycleEvent, IObserveRules} from './types';
 import {getRemoteProp} from 'be-linked/defaults.js';
+import { ElO } from 'trans-render/lib/prs/types';
 
 export class BeObservant extends BE<AP, Actions> implements Actions{
     #abortControllers: Array<AbortController>  = [];
@@ -21,15 +22,22 @@ export class BeObservant extends BE<AP, Actions> implements Actions{
 
     async noAttrs(self: this): ProPAP {
         const {enhancedElement} = self;
-        const observeRule: ObserveRule = {
-            //TODO:  move this evaluation to be-linked -- shared with be-elevating, be-bound
-            //Also, support for space delimited itemprop
-            remoteProp: getRemoteProp(enhancedElement),
-            remoteType: '/'
-        };
+        const observedFactor: ElO = {
+            elType: '/',
+            prop: getRemoteProp(enhancedElement),
+        }
+        // const observeRule: ObserveRule = {
+        //     //TODO:  move this evaluation to be-linked -- shared with be-elevating, be-bound
+        //     //Also, support for space delimited itemprop
+        //     remoteProp: getRemoteProp(enhancedElement),
+        //     remoteType: '/'
+        // };
+        // return {
+        //     observeRules: [observeRule]
+        // };
         return {
-            observeRules: [observeRule]
-        };
+            observedFactors: [observedFactor],
+        }
     }
     
     async onCamelized(self: this) {
