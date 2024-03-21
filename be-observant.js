@@ -35,9 +35,20 @@ export class BeObservant extends BE {
         };
     }
     async onCamelized(self) {
-        const { prsOf } = await import('./prsOf.js');
-        const parsed = prsOf(self);
-        return structuredClone(parsed);
+        const { of, Of, Set } = self;
+        let parsedOf = {};
+        if (of !== undefined || Of !== undefined) {
+            const { prsOf } = await import('./prsOf.js');
+            parsedOf = prsOf(self);
+        }
+        let parsedSet = {};
+        if (Set !== undefined) {
+            const { prsSet } = await import('./prsSet.js');
+            // const parsedSet = structuredClone(prsSet(self));
+            // const parsedOf = structuredClone(prsOf(self));
+            parsedSet = prsSet(self);
+        }
+        return { ...parsedSet, ...parsedOf, };
     }
     async hydrate(self) {
         const { Observer } = await import('./Observer.js');
@@ -65,7 +76,7 @@ const xe = new XE({
             },
             onCamelized: {
                 ifAllOf: ['isParsed'],
-                ifAtLeastOneOf: ['of', 'Of']
+                ifAtLeastOneOf: ['of', 'Of', 'Set']
             },
             hydrate: {
                 ifAllOf: ['isParsed', 'observedFactors']

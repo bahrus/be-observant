@@ -32,7 +32,7 @@ export type ProPAP = Promise<PAP>;
 
 export type POA = [PAP | undefined, ActionOnEventConfigs<PAP, Actions>];
 
-export type LifecycleEvent = 'init' | 'update';
+// export type LifecycleEvent = 'init' | 'update';
 
 export interface Actions{
     noAttrs(self: this): ProPAP;
@@ -46,6 +46,7 @@ export interface SignalAndElO extends ElO{
 
 export interface ParsedSetStatement{
     localPropToSet?: string,
+    to: string
 }
 
 // export interface ObserveRule{

@@ -262,7 +262,7 @@ We saw earlier that we can adorn elements with the itemprop attribute with be-o 
 
 What we've seen above is a lot of mind reading about what your intentions are, based on context.  But sometimes we need to be more explicit because it isn't always transparent what we intend.
 
-## Single mapping from observed "signal" to single, specified property of the adorned element. [TODO]
+## Single mapping from observed "signal" to observe, specified property of the adorned element.
 
 ```html
 <mood-stone> 
@@ -270,7 +270,7 @@ What we've seen above is a lot of mind reading about what your intentions are, b
     
     <input name=someCheckbox type=checkbox>
 
-    <my-peer-element be-o='
+    <my-peer-element enh-be-o='
         Of @ someCheckbox.
         Set someBoolProp.
         '></my-peer-element>

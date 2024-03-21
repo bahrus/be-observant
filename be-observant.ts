@@ -1,7 +1,7 @@
 import {BE, propDefaults, propInfo} from 'be-enhanced/BE.js';
 import {BEConfig} from 'be-enhanced/types';
 import {XE} from 'xtal-element/XE.js';
-import {Actions, AllProps, AP, PAP, ProPAP, POA, ObserveRule, LifecycleEvent, IObserveRules} from './types';
+import {Actions, AllProps, AP, PAP, ProPAP} from './types';
 import {getRemoteProp} from 'be-linked/defaults.js';
 import { ElO } from 'trans-render/lib/prs/types';
 
@@ -41,13 +41,23 @@ export class BeObservant extends BE<AP, Actions> implements Actions{
     }
     
     async onCamelized(self: this) {
-        const {prsSet} = await import('./prsSet.js');
-        const {prsOf} = await import('./prsOf.js');
-        // const parsedSet = structuredClone(prsSet(self));
-        // const parsedOf = structuredClone(prsOf(self));
-        const parsedSet = prsSet(self);
-        const parsedOf = prsOf(self);
-        return {...parsedOf, ...parsedSet};
+        const {of, Of, Set} = self;
+        let parsedOf: PAP = {};
+        if(of !== undefined || Of !== undefined){
+            const {prsOf} = await import('./prsOf.js');
+            parsedOf = prsOf(self);
+        }
+        let parsedSet: PAP = {};
+        if(Set !== undefined){
+            const {prsSet} = await import('./prsSet.js');
+        
+            // const parsedSet = structuredClone(prsSet(self));
+            // const parsedOf = structuredClone(prsOf(self));
+            parsedSet = prsSet(self);
+        }
+        
+        
+        return {...parsedSet, ...parsedOf, };
     }
 
 

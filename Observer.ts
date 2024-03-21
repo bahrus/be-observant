@@ -30,40 +30,53 @@ export class Observer{
 
     async #pullInValuesToEnhancedElement(self: AP){
         const {setRules, enhancedElement} = self;
-        if(setRules === undefined){
-            if(this.#remoteSignals.entries.length > 1) throw 'NI';
-            const {getLocalSignal} = await import('be-linked/defaults.js');
-            const localSignal = await getLocalSignal(enhancedElement);
-            for(const [key, value] of this.#remoteSignals){
-                //console.log({key, value, localSignal});
-                const {signal: s, elType, prop: p} = value;
-                const remoteRef = s!.deref();
-                let remoteVal: any;
-                switch(elType){
-                    case '|':
-                    case '#':
-                    case '@':{
-                        const {getSignalVal} = await import('be-linked/getSignalVal.js');
-                        remoteVal = getSignalVal(remoteRef!);
-                    }
+        if(this.#remoteSignals.entries.length > 1) throw 'NI';
+        const {getLocalSignal} = await import('be-linked/defaults.js');
+        
+        const vals = [];
+        for(const [key, value] of this.#remoteSignals){
+            //console.log({key, value, localSignal});
+            const {signal: s, elType, prop: p} = value;
+            const remoteRef = s!.deref();
+            let remoteVal: any;
+            switch(elType){
+                case '|':
+                case '#':
+                case '@':{
+                    const {getSignalVal} = await import('be-linked/getSignalVal.js');
+                    remoteVal = getSignalVal(remoteRef!);
+                }
+                break;
+                case '-':
+                case '/':
+                    remoteVal = (<any>remoteRef)[key];
                     break;
-                    case '-':
-                    case '/':
-                        remoteVal = (<any>remoteRef)[key];
-                        break;
-                    default:
-                        throw 'NI';
-                }
-                if(p === undefined){
-                    
-                }
-
-                //console.log({remoteRef, remoteVal});
-                const {prop, signal} = localSignal;
-                (<any>signal)[prop!] = remoteVal;
+                default:
+                    throw 'NI';
             }
+            vals.push(remoteVal);
             
         }
+
+        if(setRules === undefined){
+            const localSignal = await getLocalSignal(enhancedElement);
+            if(vals.length !== 1) throw 'NI';
+            //console.log({remoteRef, remoteVal});
+            const {prop, signal} = localSignal;
+            (<any>signal)[prop!] = vals[0];
+            return;
+        }
+        if(setRules.length === vals.length){
+            for(let i = 0, ii = setRules.length; i < ii; i++){
+                const setRule = setRules[i];
+                const val = vals[i];
+                const {localPropToSet} = setRule;
+                (<any>enhancedElement)[localPropToSet!] = vals[i];
+            }
+        }else{
+            throw 'NI';
+        }
+            
     }
 
     #remoteSignals: Map<string, SignalAndElO> = new Map();
