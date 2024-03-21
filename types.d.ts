@@ -49,21 +49,7 @@ export interface ParsedSetStatement{
     to: string
 }
 
-// export interface ObserveRule{
-//     localEnhancement?: string,
-//     remoteProp: string,
-//     remoteType: ElTypes,
-//     remoteSignal?: WeakRef<SignalRefType>,
-//     localProp?: string,
-//     splitLocalProp?: Array<string>,
-//     localSignal?: SignalRefType,
-//     negate?: boolean,
-//     mathOp?: '+' | '-' | '*' | '/',
-//     mathEnd?: number,
-//     skipInit?: boolean,
-//     callback?:(rule: ObserveRule, val: any) => void;
-//     lastVal?: any;
-// }
+
 
 export interface ObserverOptions{
     abortControllers: Array<AbortController>,
@@ -71,6 +57,12 @@ export interface ObserverOptions{
 }
 
 export type LoadEventName = 'load';
-export interface EventForObserver{
 
+export interface EventForObserver{
+    o: ObserverEventModel
+}
+
+export interface ObserverEventModel{
+    factors: {[key: string] : SignalRefType},
+    setProps?: {[key: string]: any};
 }

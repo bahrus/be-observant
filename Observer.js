@@ -30,10 +30,12 @@ export class Observer {
             throw 'NI';
         const { getLocalSignal } = await import('be-linked/defaults.js');
         const vals = [];
+        const factors = {};
         for (const [key, value] of this.#remoteSignals) {
             //console.log({key, value, localSignal});
             const { signal: s, elType, prop: p } = value;
             const remoteRef = s.deref();
+            factors[key] = remoteRef;
             let remoteVal;
             switch (elType) {
                 case '|':
@@ -53,7 +55,18 @@ export class Observer {
             }
             vals.push(remoteVal);
         }
-        if (setRules === undefined) {
+        const hasOnload = !!enhancedElement.onload;
+        if (hasOnload) {
+            const o = {
+                factors
+            };
+            const loadEvent = new LoadEvent(o);
+            enhancedElement.dispatchEvent(loadEvent);
+            if (o.setProps !== undefined) {
+                Object.assign(enhancedElement, o.setProps);
+            }
+        }
+        if (setRules === undefined && !hasOnload) {
             const localSignal = await getLocalSignal(enhancedElement);
             if (vals.length !== 1)
                 throw 'NI';
@@ -82,4 +95,10 @@ export class Observer {
     #remoteSignals = new Map();
 }
 export class LoadEvent extends Event {
+    o;
+    static EventName = 'load';
+    constructor(o) {
+        super(LoadEvent.EventName);
+        this.o = o;
+    }
 }

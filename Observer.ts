@@ -1,5 +1,6 @@
+import { loadEventName } from '../mount-observer/types.js';
 import {WatchSeeker} from './WatchSeeker.js';
-import { AP, EventForObserver, SignalAndElO } from './types';
+import { AP, EventForObserver, ObserverEventModel, SignalAndElO } from './types';
 import {SignalRefType} from 'be-linked/types';
 
 export class Observer{
@@ -34,10 +35,12 @@ export class Observer{
         const {getLocalSignal} = await import('be-linked/defaults.js');
         
         const vals = [];
+        const factors: {[key: string] : SignalRefType} = {};
         for(const [key, value] of this.#remoteSignals){
             //console.log({key, value, localSignal});
             const {signal: s, elType, prop: p} = value;
             const remoteRef = s!.deref();
+            factors[key] = remoteRef!;
             let remoteVal: any;
             switch(elType){
                 case '|':
@@ -57,8 +60,18 @@ export class Observer{
             vals.push(remoteVal);
             
         }
-
-        if(setRules === undefined){
+        const hasOnload = !!(enhancedElement as HTMLElement).onload;
+        if(hasOnload){
+            const o: ObserverEventModel = {
+                factors
+            }
+            const loadEvent = new LoadEvent(o);
+            enhancedElement.dispatchEvent(loadEvent);
+            if(o.setProps !== undefined){
+                Object.assign(enhancedElement, o.setProps);
+            }
+        }
+        if(setRules === undefined && !hasOnload){
             const localSignal = await getLocalSignal(enhancedElement);
             if(vals.length !== 1) throw 'NI';
             //console.log({remoteRef, remoteVal});
@@ -88,5 +101,11 @@ export class Observer{
 }
 
 export class LoadEvent extends Event implements EventForObserver {
-    
+    static EventName: loadEventName = 'load';
+
+    constructor(
+        public o: ObserverEventModel
+    ){
+        super(LoadEvent.EventName);
+    }
 }
