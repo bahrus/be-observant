@@ -292,6 +292,69 @@ This watches the input element for input events and passes the checked property 
 
 1 and 2 refer to the 1-based index of observed values from the "Of" statement(s).
 
+## For the power hungry JS-firsters
+
+As our HTML markup becomes more complex, I suspect many readers will begin asking themselves:
+
+>  This is all great, but what if I just want to do some coding?  Why learn all this contrived syntax?
+
+Fair enough. We need provide an interlude where we indicate how to inject JavaScript into the picture, and set properties, and derive properties as we need, with full, unfettered access to the JavaScript run time.
+
+## Scripting bravely
+
+*be-observant* empowers the developer to tap into the full power of the JavaScript run time engine by adding script to the onload event.
+
+
+If we know that this enhancement is the only enhancement affecting the adorned element that leverages the onload event, we can skip some defensive maneuvers that avoid collisions with other enhancements (discussed in the next example), resulting in a fairly compact script:
+
+```html
+<mood-stone>
+    #shadow
+    
+    <input name=name>
+    <input name=food>
+
+    <my-peer-element 
+        be-o='Of @name and @food.'
+        onload="
+            const {o} = event;
+            o.setProps = {
+                myFirstProp: `${o.factors.name} eats ${o.factors.food}`,
+                mySecondProp: `${o.factors[0]} eats ${o.factors[1]}`
+            } 
+        "
+    ></my-peer-element>
+</mood-stone>
+```
+
+## Scripting defensively
+
+```html
+<mood-stone>
+    #shadow
+    
+    <input name=name>
+    <input name=food>
+
+    <my-peer-element 
+        be-o='Of @name and @food.'
+        onload="
+            const {enh} = event; //enh = 'o' 
+            const e = event[enh];
+            switch(enh){
+                'o':{
+                    e.setProps = {
+                        myFirstProp: `${e.factors.name} eats ${e.factors.food}`,
+                        mySecondProp: `${e.factors[0]} eats ${e.factors[1]}
+                    }
+                }
+            }
+        "
+    ></my-peer-element>
+</mood-stone>
+```
+
+
 ## Negation [TODO]
 
 ```html
@@ -364,59 +427,6 @@ The example above happens to refer to this [enhancement](https://github.com/bahr
 </mood-stone>
 ```
 
-## Scripting bravely
-
-*be-observant* empowers the developer to tap into the full power of the JavaScript run time engine by adding script to the onload event.
-
-
-If we know that this enhancement is the only enhancement affecting the adorned element that leverages the onload event, we can skip some defensive maneuvers that avoid collisions with other enhancements, resulting in a fairly compact script:
-
-```html
-<mood-stone>
-    #shadow
-    
-    <input name=name>
-    <input name=food>
-
-    <my-peer-element 
-        be-o='Of @name and @food.'
-        onload="
-            const {o} = event;
-            o.setProps = {
-                myFirstProp: `${o.factors.name} eats ${o.factors.food}`,
-                mySecondProp: `${o.factors[0]} eats ${o.factors[1]}`
-            } 
-        "
-    ></my-peer-element>
-</mood-stone>
-```
-
-## Scripting defensively
-
-```html
-<mood-stone>
-    #shadow
-    
-    <input name=name>
-    <input name=food>
-
-    <my-peer-element 
-        be-o='Of @name and @food.'
-        onload="
-            const {enh} = event; //enh = 'o' 
-            const e = event[enh];
-            switch(enh){
-                'o':{
-                    e.setProps = {
-                        myFirstProp: `${e.factors.name} eats ${e.factors.food}`,
-                        mySecondProp: `${e.factors[0]} eats ${e.factors[1]}
-                    }
-                }
-            }
-        "
-    ></my-peer-element>
-</mood-stone>
-```
 
 ## Adding / removing css classes / styles / parts declaratively [TODO]
 
