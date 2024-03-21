@@ -70,7 +70,11 @@ export class Observer {
                 val = vals[i];
             }
             else {
-                throw 'NI';
+                const toHead = to[0];
+                if (toHead === '$') {
+                    const idx = Number(to.substring(1)) - 1;
+                    val = vals[idx];
+                }
             }
             enhancedElement[localPropToSet] = val;
         }

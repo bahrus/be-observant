@@ -73,7 +73,11 @@ export class Observer{
             if(to === '$i'){
                 val = vals[i];
             }else{
-                throw 'NI';
+                const toHead = to[0];
+                if(toHead === '$'){
+                    const idx = Number(to.substring(1)) - 1;
+                    val = vals[idx];
+                }
             }
             (<any>enhancedElement)[localPropToSet!] = val;
         }

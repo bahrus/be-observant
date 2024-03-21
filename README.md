@@ -276,7 +276,7 @@ What we've seen above is a lot of mind reading about what your intentions are, b
 
 This watches the input element for input events and passes the checked property to someBoolProp of oMyPeerElement.
 
-## Observing multiple "signals" [TODO]
+## Observing multiple "signals"
 
 
 ```html
