@@ -5,22 +5,24 @@ import {ElO} from 'trans-render/lib/prs/types';
 
 export interface EndUserProps extends IBE{
     Of?: Array<OfStatement>,
-    of?: Array<OfStatement>
+    of?: Array<OfStatement>,
+    Set?: Array<SetStatement>
 } 
 
-export interface IObserveRules {
-    observeRules?: Array<ObserveRule>,
-}
+// export interface IObserveRules {
+//     observeRules?: Array<ObserveRule>,
+// }
 
-export interface AllProps extends EndUserProps, IObserveRules{
+export interface AllProps extends EndUserProps{
     isParsed?: boolean,
     observedFactors?: Array<ElO>,
-    setRules?: Array<SetRule>
+    setRules?: Array<ParsedSetStatement>
 }
 
-export type SetRule = any;
 
 export type OfStatement = string;
+
+export type SetStatement = string;
 
 export type AP = AllProps;
 
@@ -40,6 +42,10 @@ export interface Actions{
 
 export interface SignalAndElO extends ElO{
     signal?: WeakRef<SignalRefType>
+}
+
+export interface ParsedSetStatement{
+    localPropToSet?: string,
 }
 
 // export interface ObserveRule{

@@ -260,7 +260,7 @@ We saw earlier that we can adorn elements with the itemprop attribute with be-o 
 
 # Specifying the property to assign the observed value to.
 
-We've seen above is a lot of mind reading about what your intentions are, based on context.  But sometimes we need to be more explicit because it isn't always transparent what we intend.
+What we've seen above is a lot of mind reading about what your intentions are, based on context.  But sometimes we need to be more explicit because it isn't always transparent what we intend.
 
 ## Single mapping from observed "signal" to single property of the adorned element. [TODO]
 

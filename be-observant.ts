@@ -41,9 +41,13 @@ export class BeObservant extends BE<AP, Actions> implements Actions{
     }
     
     async onCamelized(self: this) {
+        const {prsSet} = await import('./prsSet.js');
         const {prsOf} = await import('./prsOf.js');
-        const parsed = prsOf(self);
-        return structuredClone(parsed);
+        // const parsedSet = structuredClone(prsSet(self));
+        // const parsedOf = structuredClone(prsOf(self));
+        const parsedSet = prsSet(self);
+        const parsedOf = prsOf(self);
+        return {...parsedOf, ...parsedSet};
     }
 
 
@@ -80,7 +84,7 @@ const xe = new XE<AP, Actions>({
             },
             onCamelized: {
                 ifAllOf: ['isParsed'],
-                ifAtLeastOneOf: ['of', 'Of']
+                ifAtLeastOneOf: ['of', 'Of', 'Set']
             },
             hydrate: {
                 ifAllOf: ['isParsed', 'observedFactors']
