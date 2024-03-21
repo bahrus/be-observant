@@ -62,7 +62,7 @@ If this assumption doesn't hold in some cases, then we can specify the name of t
 </mood-stone>
 ```
 
-Now that we've spelled up the full word twice (be-observant), from now on, we will use "be-o" as our shortcut for be-observant, but please apply the mental mapping from be-o to the full name, for the statements to make the most sense.
+Now that we've spelled out the full word twice (be-observant), from now on, we will use "be-o" as our shortcut for be-observant, but please apply the mental mapping from be-o to the full name, for the statements to make the most sense.
 
 Slash indicates get value from host.  If omitted, it is assumed:
 
@@ -262,7 +262,7 @@ We saw earlier that we can adorn elements with the itemprop attribute with be-o 
 
 What we've seen above is a lot of mind reading about what your intentions are, based on context.  But sometimes we need to be more explicit because it isn't always transparent what we intend.
 
-## Single mapping from observed "signal" to single property of the adorned element. [TODO]
+## Single mapping from observed "signal" to single, specified property of the adorned element. [TODO]
 
 ```html
 <mood-stone> 
