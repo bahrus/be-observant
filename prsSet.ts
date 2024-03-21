@@ -8,7 +8,7 @@ const reSetStatements: RegExpOrRegExpExt<ParsedSetStatement>[] = [
     {
         regExp: new RegExp(String.raw `^${prop}`),
         defaultVals:{
-            to: '$1'
+            to: '$i'
         }
     }
 ]

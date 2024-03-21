@@ -62,16 +62,17 @@ export class Observer {
             signal[prop] = vals[0];
             return;
         }
-        if (setRules.length === vals.length) {
-            for (let i = 0, ii = setRules.length; i < ii; i++) {
-                const setRule = setRules[i];
-                const val = vals[i];
-                const { localPropToSet } = setRule;
-                enhancedElement[localPropToSet] = vals[i];
+        for (let i = 0, ii = setRules.length; i < ii; i++) {
+            const setRule = setRules[i];
+            const { localPropToSet, to } = setRule;
+            let val;
+            if (to === '$i') {
+                val = vals[i];
             }
-        }
-        else {
-            throw 'NI';
+            else {
+                throw 'NI';
+            }
+            enhancedElement[localPropToSet] = val;
         }
     }
     #remoteSignals = new Map();

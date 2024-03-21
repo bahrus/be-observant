@@ -66,15 +66,16 @@ export class Observer{
             (<any>signal)[prop!] = vals[0];
             return;
         }
-        if(setRules.length === vals.length){
-            for(let i = 0, ii = setRules.length; i < ii; i++){
-                const setRule = setRules[i];
-                const val = vals[i];
-                const {localPropToSet} = setRule;
-                (<any>enhancedElement)[localPropToSet!] = vals[i];
+        for(let i = 0, ii = setRules.length; i < ii; i++){
+            const setRule = setRules[i];
+            const {localPropToSet, to} = setRule;
+            let val: any;
+            if(to === '$i'){
+                val = vals[i];
+            }else{
+                throw 'NI';
             }
-        }else{
-            throw 'NI';
+            (<any>enhancedElement)[localPropToSet!] = val;
         }
             
     }
