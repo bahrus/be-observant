@@ -2,6 +2,8 @@
 
 Observe properties of peer elements or the host.
 
+be-observant takes less of a "top-down" approach to binding than other traditional frameworks.  It places less emphasis (but certainly not none) on binding exclusively from the (custom element) host container.  Yes, it can do that, but it can also provide for "Democratic Web Component Organisms" where the host container acts as a very thin "Skin Layer" which can be passed a small number of "stimuli" values into.  Inside the body of the web component, we might have a non visible "brain" component that dispatches events.  be-observant allows other peer elements within the body to receive messages that the brain component emits, without forcing the outer "skin" layer to have to micromanage this all.
+
 [![NPM version](https://badge.fury.io/js/be-observant.png)](http://badge.fury.io/js/be-observant)
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/be-observant?style=for-the-badge)](https://bundlephobia.com/result?p=be-observant)
 <img src="http://img.badgesize.io/https://cdn.jsdelivr.net/npm/be-observant?compression=gzip">
@@ -15,6 +17,8 @@ Observe properties of peer elements or the host.
 
 
 ## The most quintessential example
+
+The example below follows the traditional "pass props down" from the host approach, only really it is "pulling props in". You say tomāto, I say tomäto kind of thing.
 
 ```html
 <mood-stone>
@@ -53,10 +57,12 @@ If this assumption doesn't hold in some cases, then we can specify the name of t
     <input 
         type=checkbox 
         disabled 
-        be-o='of / is happy.'
+        be-observant='of / is happy.'
     >
 </mood-stone>
 ```
+
+Now that we've spelled up the full word twice (be-observant), from now on, we will use "be-o" as our shortcut for be-observant, but please apply the mental mapping from be-o to the full name, for the statements to make the most sense.
 
 Slash indicates get value from host.  If omitted, it is assumed:
 
@@ -108,7 +114,7 @@ The space between is and happy can also be omitted, if case is specified:
 </mood-stone>
 ```
 
-This sets the span's textContent to the .toString value of moon-stone's isHappy property.
+This sets the span's textContent to the .toString value of moon-stone's isHappy property, and monitors for changes, i.e. one-way binds.
 
 ## By Id also works:
 
@@ -190,6 +196,8 @@ Can also use addition (+), multiplication (*), division (/) [Untested].
 
 ## Binding to peer elements
 
+Now we will start to see how be-observant provides for more "grass-roots" democratic organism (web component) support.
+
 ## By name attribute
 
 ```html
@@ -212,7 +220,7 @@ This also works:
 <div be-o='of # search string.'></div>
 ```
 
-The search for element with id=searchString is done within the (shadow)root node.
+The search for element with id=searchString is done within the (shadow)root node, since id's are supposed to be unique with a (shadow)root node.
 
 ## By markers
 
@@ -251,6 +259,8 @@ The editable checkbox element can observe changes to this "signal".
 We saw earlier that we can adorn elements with the itemprop attribute with be-o attribute, and it will automatically pull in values from the host.  This allows us to create a code-free "chain" of bindings from the host to Shadow Children, and from the Shadow children to peer elements.
 
 # Specifying the property to assign the observed value to.
+
+We've seen above is a lot of mind reading about what your intentions are, based on context.  But sometimes we need to be more explicit because it isn't always transparent what we intend.
 
 ## Single mapping from observed "signal" to single property of the adorned element. [TODO]
 
