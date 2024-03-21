@@ -38,8 +38,12 @@
     <mood-stone enh-be-o='of @name and @food.'
         onload="
             const {o} = event;
+            console.log({
+                name: o.factors.name,
+                food: o.factors.food,
+            })
             o.setProps = {
-                myFirstProp: `${o.factors.name} eats ${o.factors.food}`,
+                myFirstProp: `${o.factors.name.value} eats ${o.factors.food.value}`,
                 //mySecondProp: `${o.factors[0]} eats ${o.factors[1]}`
             } 
         "
