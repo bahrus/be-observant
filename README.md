@@ -231,7 +231,7 @@ The search for element with id=searchString is done within the (shadow)root node
 
 This observes the my-peer-element's someBoolProp property for changes and sets the adorned element's checked property based on the current value.
 
-## By itemprop [TODO]
+## By itemprop
 
 ```html
 <link itemprop=isHappy href=https://schema.org/True>
@@ -243,6 +243,12 @@ This observes the my-peer-element's someBoolProp property for changes and sets t
     be-o='of | is happy.'
 >
 ```
+
+What this does:  If necessary, auto attaches the [be-value-added](https://github.com/bahrus/be-value-added) enhancement to the link element, which recognizes the True/False values of schema.org as far as the href attribute, and provides a property oHTMLLinkElement.beValueAdded.value through which updated properties can be passed / listened to.  Essentially it provides a hidden boolean "signal" we can bind to and also use for styling purposes.
+
+The editable checkbox element can observe changes to this "signal".
+
+We saw earlier that we can adorn elements with the itemprop attribute with be-o attribute, and it will automatically pull in values from the host.  This allows us to create a code-free "chain" of bindings from the host to Shadow Children, and from the Shadow children to peer elements.
 
 # Specifying the property to assign the observed value to.
 
