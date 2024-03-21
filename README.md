@@ -265,19 +265,32 @@ What we've seen above is a lot of mind reading about what your intentions are, b
 ## Single mapping from observed "signal" to observe, specified property of the adorned element.
 
 ```html
-<mood-stone> 
-    #shadow
-    
-    <input name=someCheckbox type=checkbox>
+<input name=someCheckbox type=checkbox>
 
-    <my-peer-element enh-be-o='
-        Of @ someCheckbox.
-        Set someBoolProp.
-        '></my-peer-element>
-</mood-stone>
+<my-peer-element enh-be-o='
+    Of @ someCheckbox.
+    Set someBoolProp.
+    '></my-peer-element>
+
 ```
 
 This watches the input element for input events and passes the checked property to someBoolProp of oMyPeerElement.
+
+## Observing multiple "signals" [TODO]
+
+
+```html
+<input name=yourCheckbox type=checkbox>
+<input name=myCheckbox type=checkbox>
+
+<my-peer-element be-o='
+    Of @yourCheckbox and @myCheckbox.
+    Set myFirstProp to $1.
+    Set mySecondProp to $2.
+    '></my-peer-element>
+```
+
+1 and 2 refer to the 1-based index of observed values from the "Of" statement(s).
 
 ## Negation [TODO]
 
@@ -332,25 +345,7 @@ The plus symbol:  $0+ is indicating to tap into a [custom enhancement](https://g
 
 The example above happens to refer to this [enhancement](https://github.com/bahrus/be-searching).
 
-## Observing multiple "signals" [TODO]
 
-
-```html
-<mood-stone>
-    #shadow
-    
-    <input name=yourCheckbox type=checkbox>
-    <input name=myCheckbox type=checkbox>
-
-    <my-peer-element be-o='
-        Of @yourCheckbox and @myCheckbox.
-        Set myFirstProp to $1.
-        Set mySecondProp to $2.
-        '></my-peer-element>
-</mood-stone>
-```
-
-1 and 2 refer to the 1-based index of observed values from the "Of" statement(s).
 
 ## Interpolating
 
