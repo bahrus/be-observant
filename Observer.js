@@ -66,7 +66,9 @@ export class Observer {
                 Object.assign(enhancedElement, o.setProps);
             }
         }
-        if (setRules === undefined && !hasOnload) {
+        if (setRules === undefined) {
+            if (hasOnload)
+                return;
             const localSignal = await getLocalSignal(enhancedElement);
             if (vals.length !== 1)
                 throw 'NI';
