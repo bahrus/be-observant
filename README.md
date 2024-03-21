@@ -234,8 +234,10 @@ This observes the my-peer-element's someBoolProp property for changes.
 ## By itemprop [TODO]
 
 ```html
-<link itemprop=isHappy>
+<link itemprop=isHappy href=https://schema.org/True>
+
 ...
+
 <input 
     type=checkbox 
     be-o='of | is happy.'

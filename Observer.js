@@ -37,6 +37,7 @@ export class Observer {
                 const remoteRef = s.deref();
                 let remoteVal;
                 switch (elType) {
+                    case '|':
                     case '#':
                     case '@':
                         {
