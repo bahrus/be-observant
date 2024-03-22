@@ -387,7 +387,7 @@ The search for the my-view-model custom element is done within the closest "item
 
 This can be useful for scenarios where we want to display repeated data, and can't use a custom element to host each repeated element (for example, rows of an HTML table), but we want to provide a custom element as the "view model" for each row.
 
-This will one-way synchronize *my-peer-element*'s myProp value to the adorned element's yourProp property.
+This will one-way synchronize *my-view-model*'s myProp2 value to the adorned element's textContent property.
 
 
 ## Negation [TODO]
