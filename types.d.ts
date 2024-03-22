@@ -64,5 +64,6 @@ export interface EventForObserver{
 
 export interface ObserverEventModel{
     factors: {[key: string] : any},
+    vals: any[],
     setProps?: {[key: string]: any};
 }

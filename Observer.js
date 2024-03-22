@@ -31,10 +31,16 @@ export class Observer {
         const { getLocalSignal } = await import('be-linked/defaults.js');
         const vals = [];
         const factors = {};
+        const refs = {};
         for (const [key, value] of this.#remoteSignals) {
             //console.log({key, value, localSignal});
             const { signal: s, elType, prop: p } = value;
             const remoteRef = s.deref();
+            if (remoteRef === undefined) {
+                this.#remoteSignals.delete(key);
+                continue;
+            }
+            refs[key] = remoteRef;
             let remoteVal;
             switch (elType) {
                 case '|':
@@ -58,7 +64,8 @@ export class Observer {
         const hasOnload = !!enhancedElement.onload;
         if (hasOnload) {
             const o = {
-                factors
+                factors,
+                vals
             };
             const loadEvent = new LoadEvent(o);
             enhancedElement.dispatchEvent(loadEvent);

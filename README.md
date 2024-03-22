@@ -320,7 +320,6 @@ If we know that this enhancement is the only enhancement affecting the adorned e
             const {o} = event;
             o.setProps = {
                 myFirstProp: `${o.factors.name} eats ${o.factors.food}`,
-                mySecondProp: `${o.factors[0]} eats ${o.factors[1]}`
             } 
         "
     ></my-peer-element>
