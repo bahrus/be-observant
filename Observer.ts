@@ -84,7 +84,14 @@ export class Observer{
             if(vals.length !== 1) throw 'NI';
             //console.log({remoteRef, remoteVal});
             const {prop, signal} = localSignal;
-            (<any>signal)[prop!] = vals[0];
+            const head = prop![0];
+            if(head === '.' || head === '+'){
+                const {setEnhProp} = await import('trans-render/lib/setEnhProp.js');
+                setEnhProp(<any>signal, prop!, vals[0]);
+            }else{
+                (<any>signal)[prop!] = vals[0];
+            }
+            
             return;
         }
         for(let i = 0, ii = setRules.length; i < ii; i++){
