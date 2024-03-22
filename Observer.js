@@ -36,7 +36,7 @@ export class Observer {
         const refs = {};
         for (const [key, value] of this.#remoteSignals) {
             //console.log({key, value, localSignal});
-            const { signal: s, elType, prop: p } = value;
+            const { signal: s, elType, prop: p, subProp } = value;
             const remoteRef = s.deref();
             if (remoteRef === undefined) {
                 this.#remoteSignals.delete(key);
@@ -56,6 +56,17 @@ export class Observer {
                 case '-':
                 case '/':
                     remoteVal = remoteRef[key];
+                    break;
+                case '~':
+                    if (subProp !== undefined) {
+                        const substr = subProp.substring(1);
+                        if (substr.includes('.') || substr.includes('|')) {
+                            throw 'NI';
+                        }
+                        else {
+                            remoteVal = remoteRef[substr];
+                        }
+                    }
                     break;
                 default:
                     throw 'NI';

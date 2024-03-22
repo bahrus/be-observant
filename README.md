@@ -374,21 +374,22 @@ The example above happens to refer to this [enhancement](https://github.com/bahr
 ```html
 <tr itemscope>
     <td>
-        <my-view-model></my-view-model>
-        <div>My First column information</div>
+        <my-item-view-model></my-item-view-model>
+        <div be-o="of ~myItemViewModel:myProp1.">My First column information</div>
     </td>
     <td>
-        <div be-o="of ~myViewModel:myProp2.">
+        <div be-o="of ~myItemViewModel:myProp2."></div>
     </td>
 </tr>
 ```
 
-The search for the my-view-model custom element is done within the closest "itemscope" attribute.
+The search for the my-item-view-model custom element is done within the closest "itemscope" attribute.
 
 This can be useful for scenarios where we want to display repeated data, and can't use a custom element to host each repeated element (for example, rows of an HTML table), but we want to provide a custom element as the "view model" for each row.
 
-This will one-way synchronize *my-view-model*'s myProp2 value to the adorned element's textContent property.
+This will one-way synchronize *my-item-view-model*'s myProp 1/2 values to the adorned element's textContent property.
 
+We can specify what prop to bind to by using an additional "Set" statement.
 
 ## Negation [TODO]
 
