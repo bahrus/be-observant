@@ -1,6 +1,8 @@
 import { WatchSeeker } from './WatchSeeker.js';
 export class Observer {
-    constructor(self) {
+    enh;
+    constructor(self, enh) {
+        this.enh = enh;
         this.do(self);
     }
     async do(self) {
@@ -67,7 +69,7 @@ export class Observer {
                 factors,
                 vals
             };
-            const loadEvent = new LoadEvent(o);
+            const loadEvent = new LoadEvent(o, this.enh);
             enhancedElement.dispatchEvent(loadEvent);
             if (o.setProps !== undefined) {
                 Object.assign(enhancedElement, o.setProps);
@@ -105,9 +107,11 @@ export class Observer {
 }
 export class LoadEvent extends Event {
     o;
+    enh;
     static EventName = 'load';
-    constructor(o) {
+    constructor(o, enh) {
         super(LoadEvent.EventName);
         this.o = o;
+        this.enh = enh;
     }
 }

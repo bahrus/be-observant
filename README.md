@@ -326,7 +326,7 @@ If we know that this enhancement is the only enhancement affecting the adorned e
 </mood-stone>
 ```
 
-## Scripting defensively [TODO]
+## Scripting defensively
 
 ```html
 <mood-stone>
@@ -352,6 +352,25 @@ If we know that this enhancement is the only enhancement affecting the adorned e
     ></my-peer-element>
 </mood-stone>
 ```
+
+## Attaching and setting other enhancement values [TODO]
+
+```html
+<input name=search type=search>
+
+<div be-o='
+    of @search.
+    Set $0+beSearching:forText
+'>
+    supercalifragilisticexpialidocious
+</div>
+```
+
+The plus symbol:  $0+ is indicating to tap into a [custom enhancement](https://github.com/WICG/webcomponents/issues/1000).
+
+The example above happens to refer to this [enhancement](https://github.com/bahrus/be-searching).
+
+
 
 
 ## Negation [TODO]
@@ -389,23 +408,6 @@ To simply toggle a property anytime the observed element changes:
 ## PlusEq, MinusEq, TimeEq, DivEq [TODO]
 
 ## Increment, Decrement [TODO]
-
-## Attaching and setting other enhancement values
-
-```html
-<input name=search type=search>
-
-<div be-o='
-    of @search.
-    Set $0+beSearching:forText
-'>
-    supercalifragilisticexpialidocious
-</div>
-```
-
-The plus symbol:  $0+ is indicating to tap into a [custom enhancement](https://github.com/WICG/webcomponents/issues/1000).
-
-The example above happens to refer to this [enhancement](https://github.com/bahrus/be-searching).
 
 
 

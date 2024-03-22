@@ -59,7 +59,8 @@ export interface ObserverOptions{
 export type LoadEventName = 'load';
 
 export interface EventForObserver{
-    o: ObserverEventModel
+    o: ObserverEventModel,
+    enh: string,
 }
 
 export interface ObserverEventModel{

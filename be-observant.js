@@ -8,6 +8,11 @@ export class BeObservant extends BE {
             ac.abort();
         }
     }
+    #ifWantsToBe;
+    async attach(enhancedElement, enhancementInfo) {
+        super.attach(enhancedElement, enhancementInfo);
+        this.#ifWantsToBe = enhancementInfo.ifWantsToBe;
+    }
     static get beConfig() {
         return {
             parse: true,
@@ -52,7 +57,7 @@ export class BeObservant extends BE {
     }
     async hydrate(self) {
         const { Observer } = await import('./Observer.js');
-        const obs = new Observer(self);
+        const obs = new Observer(self, this.#ifWantsToBe);
         return {
             resolved: true,
         };

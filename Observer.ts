@@ -4,7 +4,7 @@ import { AP, EventForObserver, ObserverEventModel, SignalAndElO } from './types'
 import {SignalRefType} from 'be-linked/types';
 
 export class Observer{
-    constructor(self: AP){
+    constructor(self: AP, public enh: string){
         this.do(self);
     }
 
@@ -72,7 +72,7 @@ export class Observer{
                 factors,
                 vals
             }
-            const loadEvent = new LoadEvent(o);
+            const loadEvent = new LoadEvent(o, this.enh);
             enhancedElement.dispatchEvent(loadEvent);
             if(o.setProps !== undefined){
                 Object.assign(enhancedElement, o.setProps);
@@ -112,7 +112,8 @@ export class LoadEvent extends Event implements EventForObserver {
     static EventName: loadEventName = 'load';
 
     constructor(
-        public o: ObserverEventModel
+        public o: ObserverEventModel,
+        public enh: string,
     ){
         super(LoadEvent.EventName);
     }

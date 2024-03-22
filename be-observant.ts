@@ -1,5 +1,5 @@
 import {BE, propDefaults, propInfo} from 'be-enhanced/BE.js';
-import {BEConfig} from 'be-enhanced/types';
+import {BEConfig, EnhancementInfo} from 'be-enhanced/types';
 import {XE} from 'xtal-element/XE.js';
 import {Actions, AllProps, AP, PAP, ProPAP} from './types';
 import {getRemoteProp} from 'be-linked/defaults.js';
@@ -11,6 +11,11 @@ export class BeObservant extends BE<AP, Actions> implements Actions{
         for(const ac of this.#abortControllers){
             ac.abort();
         }
+    }
+    #ifWantsToBe: string | undefined;
+    async attach(enhancedElement: Element, enhancementInfo: EnhancementInfo): Promise<void> {
+        super.attach(enhancedElement, enhancementInfo);
+        this.#ifWantsToBe = enhancementInfo.ifWantsToBe;
     }
     static override get beConfig(){
         return {
@@ -63,7 +68,7 @@ export class BeObservant extends BE<AP, Actions> implements Actions{
 
     async hydrate(self: this){
         const {Observer} = await import('./Observer.js');
-        const obs = new Observer(self);
+        const obs = new Observer(self, this.#ifWantsToBe!);
 
         return {
             resolved: true,
