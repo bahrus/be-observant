@@ -35,7 +35,6 @@ export class Observer {
             //console.log({key, value, localSignal});
             const { signal: s, elType, prop: p } = value;
             const remoteRef = s.deref();
-            factors[key] = remoteRef;
             let remoteVal;
             switch (elType) {
                 case '|':
@@ -53,6 +52,7 @@ export class Observer {
                 default:
                     throw 'NI';
             }
+            factors[key] = remoteVal;
             vals.push(remoteVal);
         }
         const hasOnload = !!enhancedElement.onload;

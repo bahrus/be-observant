@@ -63,6 +63,6 @@ export interface EventForObserver{
 }
 
 export interface ObserverEventModel{
-    factors: {[key: string] : SignalRefType},
+    factors: {[key: string] : any},
     setProps?: {[key: string]: any};
 }

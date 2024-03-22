@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>With Slash</title>
+    <title>Name eats food bravely</title>
     <script type=importmap>
         {
             "imports": {
@@ -38,12 +38,8 @@
     <mood-stone enh-be-o='of @name and @food.'
         onload="
             const {o} = event;
-            console.log({
-                name: o.factors.name,
-                food: o.factors.food,
-            })
             o.setProps = {
-                myFirstProp: `${o.factors.name.value} eats ${o.factors.food.value}`,
+                myFirstProp: `${o.factors.name} eats ${o.factors.food}`,
                 //mySecondProp: `${o.factors[0]} eats ${o.factors[1]}`
             } 
         "
