@@ -369,6 +369,26 @@ The plus symbol:  + is indicating to tap into a [custom enhancement](https://git
 
 The example above happens to refer to this [enhancement](https://github.com/bahrus/be-searching).
 
+## Observing a specified property [TODO]
+
+```html
+<tr itemscope>
+    <td>
+        <my-view-model></my-view-model>
+        <div>My First column information</div>
+    </td>
+    <td>
+        <div be-o="of ~myViewModel:myProp2.">
+    </td>
+</tr>
+```
+
+The search for the my-view-model custom element is done within the closest "itemscope" attribute.
+
+This can be useful for scenarios where we want to display repeated data, and can't use a custom element to host each repeated element (for example, rows of an HTML table), but we want to provide a custom element as the "view model" for each row.
+
+This will one-way synchronize *my-peer-element*'s myProp value to the adorned element's yourProp property.
+
 
 ## Negation [TODO]
 
@@ -408,7 +428,7 @@ To simply toggle a property anytime the observed element changes:
 
 
 
-## Interpolating
+## Interpolating [TODO]
 
 ```html
 <mood-stone>
@@ -449,7 +469,7 @@ If we bind to a string, simply sets the class to the value of the string.
 
 Same with SetPart, SetStyle
 
-## Observing a specified property
+## Observing a specified property [TODO]
 
 ```html
 <my-peer-element></my-peer-element>
