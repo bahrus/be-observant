@@ -360,17 +360,15 @@ If we know that this enhancement is the only enhancement affecting the adorned e
 
 <div be-o='
     of @search.
-    Set $0+beSearching:forText
+    Set +beSearching:forText.
 '>
     supercalifragilisticexpialidocious
 </div>
 ```
 
-The plus symbol:  $0+ is indicating to tap into a [custom enhancement](https://github.com/WICG/webcomponents/issues/1000).
+The plus symbol:  + is indicating to tap into a [custom enhancement](https://github.com/WICG/webcomponents/issues/1000).
 
 The example above happens to refer to this [enhancement](https://github.com/bahrus/be-searching).
-
-
 
 
 ## Negation [TODO]
