@@ -326,7 +326,7 @@ If we know that this enhancement is the only enhancement affecting the adorned e
 </mood-stone>
 ```
 
-## Scripting defensively
+## Scripting defensively [TODO]
 
 ```html
 <mood-stone>
