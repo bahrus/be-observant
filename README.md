@@ -1,8 +1,8 @@
-# be-observant [WIP]
+# be-observant
 
 Observe properties of peer elements or the host.
 
-be-observant takes less of a "top-down" approach to binding than other traditional frameworks.  It places less emphasis (but certainly not none) on binding exclusively from the (custom element) host container.  Yes, it can do that, but it can also provide for "Democratic Web Component Organisms" where the host container acts as a very thin "Skin Layer" which can be passed a small number of "stimuli" values into.  Inside the body of the web component, we might have a non visible "brain" component that dispatches events.  be-observant allows other peer elements within the body to receive messages that the brain component emits, without forcing the outer "skin" layer to have to micromanage this all.
+*be-observant* takes less of a "top-down" approach to binding than traditional frameworks.  It places less emphasis (but certainly not none) on binding exclusively from the (custom element) host container.  Yes, it can do that, but it can also provide for "Democratic Web Component Organisms" where the host container acts as a very thin "Skin Layer" which can be passed a small number of "stimuli" values into.  Inside the body of the web component, we might have a non visible "brain" component that dispatches events.  *be-observant* allows other peer elements within the "body" to receive messages that the brain component emits, without forcing the outer "skin" layer to have to micromanage this all.
 
 [![NPM version](https://badge.fury.io/js/be-observant.png)](http://badge.fury.io/js/be-observant)
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/be-observant?style=for-the-badge)](https://bundlephobia.com/result?p=be-observant)
@@ -12,8 +12,6 @@ be-observant takes less of a "top-down" approach to binding than other tradition
 
 > [!Note]
 > An extra thin layer can be applied on top of be-observant, so that the original HTML that is streamed from the server can provide the initial values of the property that *be-observant* observes, and then once that initial handshake is established, lean exclusively on *be-observant* for all subsequent updates.  This is handled by [be-entrusting](https://github.com/bahrus/be-entrusting).
-
-
 
 
 ## The most quintessential example
@@ -62,9 +60,9 @@ If this assumption doesn't hold in some cases, then we can specify the name of t
 </mood-stone>
 ```
 
-Now that we've spelled out the full word twice (be-observant), from now on, we will use "be-o" as our shortcut for be-observant, but please apply the mental mapping from be-o to the full name, for the statements to make the most sense.
+Now that we've spelled out the full word twice (*be-observant*), from now on, we will use "be-o" as our shortcut for be-observant, but please apply the mental mapping from be-o to the full name, for the statements to make the most sense.  This package even contains a registration file ('be-o') that utilizes this abbreviation.
 
-Slash indicates get value from host.  If omitted, it is assumed:
+The slash ("/") symbol indicates to get the value from the host.  If omitted, it is assumed:
 
 ## Reducing cryptic syntax
 
@@ -93,6 +91,8 @@ The space between is and happy can also be omitted, if case is specified:
     >
 </mood-stone>
 ```
+
+Okay, now that I've thoroughly bored you to tears...
 
 ## Binding based on microdata attribute.
 
@@ -144,8 +144,6 @@ This sets the span's textContent to the .toString value of moon-stone's isHappy 
 ```
 
 Note that the itemprop attribute takes precedence over the name attribute, which takes precedence over the id attribute.
-
-Okay, now that I've thoroughly bored you to tears...
 
 ## Special Symbols
 
@@ -227,8 +225,7 @@ The search for element with id=searchString is done within the (shadow)root node
 ```html
 <mood-stone>
     #shadow
-    <my-peer-element -some-bool-prop>
-    </my-peer-element>
+    <my-peer-element -some-bool-prop></my-peer-element>
     <input 
         type=checkbox 
         disabled 
@@ -287,7 +284,7 @@ This watches the input element for input events and passes the checked property 
     Of @yourCheckbox and @myCheckbox.
     Set myFirstProp to $1.
     Set mySecondProp to $2.
-    '></my-peer-element>
+'></my-peer-element>
 ```
 
 1 and 2 refer to the 1-based index of observed values from the "Of" statement(s).
@@ -298,7 +295,9 @@ As our HTML markup becomes more complex, I suspect many readers will begin askin
 
 >  This is all great, but what if I just want to do some coding?  Why learn all this contrived syntax?
 
-Fair enough. We need provide an interlude where we indicate how to inject JavaScript into the picture, and set properties, and derive properties as we need, with full, unfettered access to the JavaScript run time.
+Fair enough. 
+
+We now provide an interlude where we indicate how to inject JavaScript into the picture, and set properties, and derive properties as we need, with full, unfettered access to the JavaScript run time.
 
 ## Scripting bravely
 
@@ -315,7 +314,7 @@ If we know that this enhancement is the only enhancement affecting the adorned e
     <input name=food>
 
     <my-peer-element 
-        be-o='Of @name and @food.'
+        be-o='of @name and @food.'
         onload="
             const {o} = event;
             o.setProps = {
@@ -353,7 +352,7 @@ If we know that this enhancement is the only enhancement affecting the adorned e
 </mood-stone>
 ```
 
-## Attaching and setting other enhancement values [TODO]
+## Attaching and setting other enhancement values
 
 ```html
 <input name=search type=search>
@@ -438,7 +437,7 @@ To simply toggle a property anytime the observed element changes:
 
     <my-peer-element be-o='
         Of @yourCheckbox and @myCheckbox.
-        SetClass my-class to $1.
+        Set my-class to $1.
         SetClass my-second-class to $2.
         '></my-peer-element>
 </mood-stone>

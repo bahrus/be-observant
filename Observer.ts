@@ -100,7 +100,14 @@ export class Observer{
                     val = vals[idx];
                 }
             }
-            (<any>enhancedElement)[localPropToSet!] = val;
+            const head = localPropToSet![0];
+            if(head === '.' || head === '+'){
+                const {setEnhProp} = await import('trans-render/lib/setEnhProp.js');
+                setEnhProp(enhancedElement, localPropToSet!, val);
+            }else{
+                (<any>enhancedElement)[localPropToSet!] = val;
+            }
+            
         }
             
     }

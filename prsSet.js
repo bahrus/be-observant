@@ -1,5 +1,5 @@
 import { tryParse } from 'trans-render/lib/prs/tryParse.js';
-const localPropToSet = String.raw `(?<localPropToSet>[\w\-\:\|]+)`;
+const localPropToSet = String.raw `(?<localPropToSet>[\w\-\:\|\+]+)`;
 const toDest = String.raw `(?<!\\)To(?<to>.*)`;
 const reSetStatements = [
     {
@@ -18,9 +18,10 @@ export function prsSet(self) {
     const setRules = [];
     for (const setS of Set) {
         const test = tryParse(setS, reSetStatements);
-        console.log({ setS, test });
         if (test === null)
             throw 'PE';
+        test.localPropToSet = test.localPropToSet?.replaceAll(':', ".");
+        console.log({ setS, test });
         setRules.push(test);
     }
     return {

@@ -31,15 +31,6 @@ export class BeObservant extends BE<AP, Actions> implements Actions{
             elType: '/',
             prop: getRemoteProp(enhancedElement),
         }
-        // const observeRule: ObserveRule = {
-        //     //TODO:  move this evaluation to be-linked -- shared with be-elevating, be-bound
-        //     //Also, support for space delimited itemprop
-        //     remoteProp: getRemoteProp(enhancedElement),
-        //     remoteType: '/'
-        // };
-        // return {
-        //     observeRules: [observeRule]
-        // };
         return {
             observedFactors: [observedFactor],
         }
