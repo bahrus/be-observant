@@ -156,7 +156,7 @@ What follows is a listing of other special symbols we can use to be able to obse
 |--------------|--------------------------------|--------------------------------------------------------------------------------------|
 | /propName    |"Hostish"                       | Binds to a "propagator" EventTarget.                                                 |
 | @propName    |Name attribute                  | Listens for input events by default.                                                            |
-| |propName    |Itemprop attribute              | If contenteditible, listens for input events.  Otherwise, uses be-value-added.       |
+| \|propName    |Itemprop attribute              | If contenteditible, listens for input events.  Otherwise, uses be-value-added.       |
 | #propName    |Id attribute                    | Listens for input events by default.                                                            |
 | %propName    |match based on part attribute   | Listens for input events by default.                                                            |
 | -prop-name   |Marker indicates prop           | Binds to a "propagator" EventTarget.                                               | 
@@ -280,7 +280,7 @@ This watches the input element for input events and passes the checked property 
 <input name=yourCheckbox type=checkbox>
 <input name=myCheckbox type=checkbox>
 
-<my-peer-element be-o='
+<my-peer-element enh-be-o='
     Of @yourCheckbox and @myCheckbox.
     Set myFirstProp to $1.
     Set mySecondProp to $2.
@@ -288,6 +288,8 @@ This watches the input element for input events and passes the checked property 
 ```
 
 1 and 2 refer to the 1-based index of observed values from the "Of" statement(s).
+
+The enh- prefix is there to avoid possible conflicts with attributes recognized by my-peer-element.
 
 ## For the power hungry JS-firsters
 
@@ -314,7 +316,7 @@ If we know that this enhancement is the only enhancement affecting the adorned e
     <input name=food>
 
     <my-peer-element 
-        be-o='of @name and @food.'
+        enh-be-o='of @name and @food.'
         onload="
             const {o} = event;
             o.setProps = {
