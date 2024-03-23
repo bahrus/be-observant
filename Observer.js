@@ -59,12 +59,12 @@ export class Observer {
                     break;
                 case '~':
                     if (subProp !== undefined) {
-                        const substr = subProp.substring(1);
-                        if (substr.includes('.') || substr.includes('|')) {
+                        const head = subProp[0];
+                        if (head === '.') {
                             throw 'NI';
                         }
                         else {
-                            remoteVal = remoteRef[substr];
+                            remoteVal = remoteRef[subProp];
                         }
                     }
                     break;
