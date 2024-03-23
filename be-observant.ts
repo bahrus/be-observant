@@ -6,11 +6,12 @@ import {getRemoteProp} from 'be-linked/defaults.js';
 import { ElO } from 'trans-render/lib/prs/types';
 
 export class BeObservant extends BE<AP, Actions> implements Actions{
-    #abortControllers: Array<AbortController>  = [];
+    //#abortControllers: Array<AbortController>  = [];
     detach(): void {
-        for(const ac of this.#abortControllers){
-            ac.abort();
-        }
+        //TODO  cancel all the observers
+        // for(const ac of this.#abortControllers){
+        //     ac.abort();
+        // }
     }
     #ifWantsToBe: string | undefined;
     async attach(enhancedElement: Element, enhancementInfo: EnhancementInfo): Promise<void> {
@@ -60,7 +61,7 @@ export class BeObservant extends BE<AP, Actions> implements Actions{
     async hydrate(self: this){
         const {Observer} = await import('./Observer.js');
         const obs = new Observer(self, this.#ifWantsToBe!);
-
+        //TODO:  put in broader scope so detach can detach
         return {
             resolved: true,
         }
