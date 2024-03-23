@@ -369,7 +369,7 @@ The plus symbol:  + is indicating to tap into a [custom enhancement](https://git
 
 The example above happens to refer to this [enhancement](https://github.com/bahrus/be-searching).
 
-## Observing a specified property [TODO]
+## Observing a specified property or a peer custom element
 
 ```html
 <tr itemscope>
@@ -388,6 +388,22 @@ The search for the my-item-view-model custom element is done within the closest 
 This can be useful for scenarios where we want to display repeated data, and can't use a custom element to host each repeated element (for example, rows of an HTML table), but we want to provide a custom element as the "view model" for each row.
 
 This will one-way synchronize *my-item-view-model*'s myProp 1/2 values to the adorned element's textContent property.
+
+## Inferring the property to observe from a peer custom element
+
+This also works:
+
+```html
+<tr itemscope>
+    <td>
+        <my-item-view-model></my-item-view-model>
+        <div itemprop=myProp1 be-o="of ~myItemViewModel.">My First column information</div>
+    </td>
+    <td>
+        <div itemprop=myProp2 be-o="of ~myItemViewModel."></div>
+    </td>
+</tr>
+```
 
 We can specify what prop to bind to by using an additional "Set" statement.
 
