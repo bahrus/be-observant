@@ -1,5 +1,6 @@
 import { loadEventName } from '../mount-observer/types.js';
-import {WatchSeeker} from './WatchSeeker.js';
+//import {WatchSeeker} from './WatchSeeker.js';
+import {Seeker} from 'be-linked/Seeker.js';
 import { AP, EventForObserver, ObserverEventModel, SignalAndElO } from './types';
 import {SignalRefType} from 'be-linked/types';
 
@@ -13,8 +14,9 @@ export class Observer{
         if(observedFactors === undefined) throw 'NI';
         for(const observedFactor of observedFactors){
             const {prop} = observedFactor;
-            const watchSeeker = new WatchSeeker<AP, any>(observedFactor, false);
-            const res = await watchSeeker.do(self, undefined, enhancedElement);
+            //const watchSeeker = new WatchSeeker<AP, any>(observedFactor, false);
+            const seeker = new Seeker<AP, any>(observedFactor, false);
+            const res = await seeker.do(self, undefined, enhancedElement);
             const {eventSuggestion, signal, propagator} = res!;
             const signalAndElO : SignalAndElO = {
                 ...observedFactor,
@@ -33,7 +35,7 @@ export class Observer{
         const {setRules, enhancedElement} = self;
         if(this.#remoteSignals.entries.length > 1) throw 'NI';
         const {getLocalSignal} = await import('be-linked/defaults.js');
-        
+        const {getObsVal} = await import('be-linked/getObsVal.js');
         const vals = [];
         const factors: {[key: string] : any} = {};
         const refs: {[key: string]: SignalRefType} = {};
@@ -46,35 +48,8 @@ export class Observer{
                 continue;
             }
             refs[key] = remoteRef;
-            let remoteVal: any;
-            switch(elType){
-                case '|':
-                case '#':
-                case '@':{
-                    const {getSignalVal} = await import('be-linked/getSignalVal.js');
-                    remoteVal = getSignalVal(remoteRef);
-                }
-                break;
-                case '-':
-                case '/':
-                    remoteVal = (<any>remoteRef)[key];
-                    break;
-                case '~':
-                    const { getSubProp } = await import('trans-render/lib/prs/prsElO.js');
-                    const dynSubProp = getSubProp(value, enhancedElement as HTMLElement);
-                    if(dynSubProp){
-                        const head = dynSubProp[0];
-                        if(head === '.'){
-                            throw 'NI';
-                        }else{
-                            remoteVal = (<any>remoteRef)[dynSubProp];
-                        }
-                    
-                    }
-                    break;
-                default:
-                    throw 'NI';
-            }
+            //console.log({p, key});
+            let remoteVal = await getObsVal(remoteRef, value, enhancedElement);
             factors[key] = remoteVal;
             vals.push(remoteVal);
             

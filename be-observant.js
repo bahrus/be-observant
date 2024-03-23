@@ -2,11 +2,12 @@ import { BE, propDefaults, propInfo } from 'be-enhanced/BE.js';
 import { XE } from 'xtal-element/XE.js';
 import { getRemoteProp } from 'be-linked/defaults.js';
 export class BeObservant extends BE {
-    #abortControllers = [];
+    //#abortControllers: Array<AbortController>  = [];
     detach() {
-        for (const ac of this.#abortControllers) {
-            ac.abort();
-        }
+        //TODO  cancel all the observers
+        // for(const ac of this.#abortControllers){
+        //     ac.abort();
+        // }
     }
     #ifWantsToBe;
     async attach(enhancedElement, enhancementInfo) {
@@ -49,6 +50,7 @@ export class BeObservant extends BE {
     async hydrate(self) {
         const { Observer } = await import('./Observer.js');
         const obs = new Observer(self, this.#ifWantsToBe);
+        //TODO:  put in broader scope so detach can detach
         return {
             resolved: true,
         };
