@@ -337,7 +337,7 @@ If we know that this enhancement is the only enhancement affecting the adorned e
     <input name=food>
 
     <my-peer-element 
-        be-o='Of @name and @food.'
+        enh-be-o='Of @name and @food.'
         onload="
             const {enh} = event; //enh = 'o' 
             const e = event[enh];
@@ -417,7 +417,7 @@ We can specify what prop to bind to by using an additional "Set" statement.
     
     <input name=someCheckbox type=checkbox>
 
-    <my-peer-element be-o='
+    <my-peer-element enh-be-o='
         Of @ someCheckbox.
         Negate to someBoolProp.
         '></my-peer-element>
@@ -434,7 +434,7 @@ To simply toggle a property anytime the observed element changes:
     
     <input name=someCheckbox type=checkbox>
 
-    <my-peer-element be-o='
+    <my-peer-element enh-be-o='
         Of @someCheckbox.
         Toggle someBoolProp.
         '></my-peer-element>
@@ -456,7 +456,7 @@ To simply toggle a property anytime the observed element changes:
     <input name=name>
     <input name=food>
 
-    <my-peer-element be-o='
+    <my-peer-element enh-be-o='
         Of @name and @food.
         //Set myFirstProp to `${name} eats ${food}`  Is this worth supporting?
         Set mySecondProp to `$1 eats $2`.
@@ -474,7 +474,7 @@ To simply toggle a property anytime the observed element changes:
     <input name=yourCheckbox type=checkbox>
     <input name=myCheckbox type=checkbox>
 
-    <my-peer-element be-o='
+    <my-peer-element enh-be-o='
         Of @yourCheckbox and @myCheckbox.
         Set my-class to $1.
         SetClass my-second-class to $2.
@@ -493,7 +493,7 @@ Same with SetPart, SetStyle
 ```html
 <my-peer-element></my-peer-element>
 
-<your-peer-element be-o="
+<your-peer-element enh-be-o="
     of ~myPeerElement:myProp.
     Set yourProp.
 ">
