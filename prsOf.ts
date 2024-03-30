@@ -10,7 +10,13 @@ export async function prsOf(self: AP) : Promise<PAP> {
         const split = ofS.split(reAnd);
         refSArr = refSArr.concat(...split);
     }
-    
+    refSArr = refSArr.map(s => {
+        const head = s[0];
+        if('A' <= head && head <= 'z'){
+            return '/' + s;
+        }
+        return s;
+    })
     const observedFactors = await Promise.all( refSArr.map(async s => await parse(s)));
     //console.log({observedFactors, refSArr});
     return {
