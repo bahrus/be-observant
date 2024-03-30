@@ -24,8 +24,14 @@ export class BeObservant extends BE {
     async noAttrs(self) {
         const { enhancedElement } = self;
         const observedFactor = {
-            elType: '/',
+            s: '/',
+            elS: '*',
+            dss: '^',
+            scopeS: '[itemscope]',
+            rec: true,
+            rnf: true,
             prop: getRemoteProp(enhancedElement),
+            host: true
         };
         return {
             observedFactors: [observedFactor],

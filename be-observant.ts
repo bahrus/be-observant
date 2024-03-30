@@ -3,7 +3,7 @@ import {BEConfig, EnhancementInfo} from 'be-enhanced/types';
 import {XE} from 'xtal-element/XE.js';
 import {Actions, AllProps, AP, PAP, ProPAP} from './types';
 import {getRemoteProp} from 'be-linked/defaults.js';
-import { ElO } from 'trans-render/lib/prs/types';
+import { Specifier } from 'trans-render/dss/types';
 
 export class BeObservant extends BE<AP, Actions> implements Actions{
     //#abortControllers: Array<AbortController>  = [];
@@ -28,10 +28,15 @@ export class BeObservant extends BE<AP, Actions> implements Actions{
 
     async noAttrs(self: this): ProPAP {
         const {enhancedElement} = self;
-        const observedFactor: ElO = {
-            elType: '/',
+        const observedFactor: Specifier = {
+            s: '/',
+            elS: '*',
+            dss: '^',
+            scopeS: '[itemscope]',
+            rec: true,
+            rnf: true,
             prop: getRemoteProp(enhancedElement),
-            scope: ['h', true]
+            host: true
         }
         return {
             observedFactors: [observedFactor],
