@@ -147,28 +147,14 @@ This sets the span's textContent to the .toString value of moon-stone's isHappy 
 
 Note that the itemprop attribute takes precedence over the name attribute, which takes precedence over the id attribute.
 
-## Special Symbols
+## DSS Specifier Syntax
 
 In the example above, we mentioned using the / symbol to indicate to observe a property from the host.  But be-observant can also observe peer elements within the ShadowRoot (or outside any shadow root *be-observant* adorns an element sitting outside any ShadowRoot).
 
-What follows is a listing of other special symbols we can use to be able to observe other peer elements within the ShadowRoot realm.  We stick to single character symbols in order to keep the statements small:
+The syntax adopts what we refer as the DSS specification, where DSS stands for "directed scoped specifier".  It is inspired by CSS selectors, but it is optimized for binding scenarios. 
 
+This is documented in (increasingly) painstaking detail where the [library is maintained](https://github.com/bahrus/trans-render/blob/baseline/dss/README.md#directed-scoped-specifiers-dss).
 
-| Symbol       | Meaning                        | Notes                                                                                |
-|--------------|--------------------------------|--------------------------------------------------------------------------------------|
-| /propName    |"Hostish"                       | Binds to a "propagator" EventTarget.                                                 |
-| @propName    |Name attribute                  | Listens for input events by default.                                                            |
-| \|propName    |Itemprop attribute              | If contenteditible, listens for input events.  Otherwise, uses be-value-added.       |
-| #propName    |Id attribute                    | Listens for input events by default.                                                            |
-| %propName    |match based on part attribute   | Listens for input events by default.                                                            |
-| -prop-name   |Marker indicates prop           | Binds to a "propagator" EventTarget.                                               | 
-| ~elementName |match based on element name     | Listens for input events. [TODO]                                                           |
-
-
-"Hostish" means:
-
-1.  First, do a "closest" for an element with attribute itemscope, where the tag name has a dash in it.  Do that search recursively.  
-2.  If no match found, use getRootNode().host.
 
 <!--
 
