@@ -42,7 +42,7 @@ export class BeObservant extends BE<AP, Actions> implements Actions{
         let parsedOf: PAP = {};
         if(of !== undefined || Of !== undefined){
             const {prsOf} = await import('./prsOf.js');
-            parsedOf = prsOf(self);
+            parsedOf = await prsOf(self);
         }
         let parsedSet: PAP = {};
         if(Set !== undefined){

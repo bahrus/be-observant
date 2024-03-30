@@ -1,7 +1,8 @@
 import { AP, PAP } from './types';
-import {prsElO} from 'trans-render/lib/prs/prsElO.js';
+//import {prsElO} from 'trans-render/lib/prs/prsElO.js';
+import {parse} from 'trans-render/dss/parse.js';
 
-export function prsOf(self: AP) : PAP {
+export async function prsOf(self: AP) : Promise<PAP> {
     const {Of, of} = self;
     const both = [...(Of || []), ...(of || [])];
     let refSArr: Array<string> = [];
@@ -10,7 +11,7 @@ export function prsOf(self: AP) : PAP {
         refSArr = refSArr.concat(...split);
     }
     
-    const observedFactors = refSArr.map(s => prsElO(s));
+    const observedFactors = await Promise.all( refSArr.map(async s => await parse(s)));
     //console.log({observedFactors, refSArr});
     return {
         observedFactors

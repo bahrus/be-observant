@@ -1,5 +1,6 @@
-import { prsElO } from 'trans-render/lib/prs/prsElO.js';
-export function prsOf(self) {
+//import {prsElO} from 'trans-render/lib/prs/prsElO.js';
+import { parse } from 'trans-render/dss/parse.js';
+export async function prsOf(self) {
     const { Of, of } = self;
     const both = [...(Of || []), ...(of || [])];
     let refSArr = [];
@@ -7,7 +8,7 @@ export function prsOf(self) {
         const split = ofS.split(reAnd);
         refSArr = refSArr.concat(...split);
     }
-    const observedFactors = refSArr.map(s => prsElO(s));
+    const observedFactors = await Promise.all(refSArr.map(async (s) => await parse(s)));
     //console.log({observedFactors, refSArr});
     return {
         observedFactors

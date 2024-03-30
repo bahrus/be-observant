@@ -36,7 +36,7 @@ export class BeObservant extends BE {
         let parsedOf = {};
         if (of !== undefined || Of !== undefined) {
             const { prsOf } = await import('./prsOf.js');
-            parsedOf = prsOf(self);
+            parsedOf = await prsOf(self);
         }
         let parsedSet = {};
         if (Set !== undefined) {

@@ -39,7 +39,7 @@ export class Observer {
         const refs = {};
         for (const [key, value] of this.#remoteSignals) {
             //console.log({key, value, localSignal});
-            const { signal: s, elType, prop: p } = value;
+            const { signal: s, s: elType, prop: p } = value;
             const remoteRef = s.deref();
             if (remoteRef === undefined) {
                 this.#remoteSignals.delete(key);
