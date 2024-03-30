@@ -31,6 +31,7 @@ export class BeObservant extends BE<AP, Actions> implements Actions{
         const observedFactor: ElO = {
             elType: '/',
             prop: getRemoteProp(enhancedElement),
+            scope: ['h', true]
         }
         return {
             observedFactors: [observedFactor],
