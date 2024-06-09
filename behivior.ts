@@ -1,6 +1,6 @@
 import {register} from 'be-hive/register.js';
-import {tagName } from './be-observant.js';
-import './be-observant.js';
+import {tagName } from './legacy/be-observant.js';
+import './legacy/be-observant.js';
 
 const ifWantsToBe = 'observant';
 const upgrade = '*';
