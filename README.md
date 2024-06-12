@@ -494,8 +494,15 @@ Any web server that can serve static files will do, but...
 ## Using from ESM Module:
 
 ```JavaScript
-import 'be-observant/be-observant.js';
+import 'be-observant/behivior.js';
 ```
+
+or
+
+```JavaScript
+import 'be-observant/b-o.js';
+```
+
 
 ## Using from CDN:
 
