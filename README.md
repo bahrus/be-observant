@@ -285,12 +285,12 @@ If we know that this enhancement is the only enhancement affecting the adorned e
 
     <my-peer-element 
         enh-b-o='of @name and @food.'
-        onload="
+        onload="{
             const {o} = event;
             o.setProps = {
                 myFirstProp: `${o.factors.name} eats ${o.factors.food}`,
             } 
-        "
+        }"
     ></my-peer-element>
 </mood-stone>
 ```
@@ -306,7 +306,7 @@ If we know that this enhancement is the only enhancement affecting the adorned e
 
     <my-peer-element 
         enh-b-o='Of @name and @food.'
-        onload="
+        onload="{
             const {enh} = event; //enh = 'o' 
             const e = event[enh];
             switch(enh){
@@ -317,7 +317,7 @@ If we know that this enhancement is the only enhancement affecting the adorned e
                     }
                 }
             }
-        "
+        }"
     ></my-peer-element>
 </mood-stone>
 ```
@@ -328,8 +328,7 @@ If we know that this enhancement is the only enhancement affecting the adorned e
 <input name=search type=search>
 
 <div b-o='
-    of @search.
-    Set +beSearching:forText.
+    and set +beSearching:forText from @search.
 '>
     supercalifragilisticexpialidocious
 </div>
