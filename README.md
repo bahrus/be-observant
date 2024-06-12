@@ -79,6 +79,20 @@ The slash ("/") symbol indicates to get the value from the host.  If omitted, it
 </mood-stone>
 ```
 
+## Hosts that don't use shadow DOM.
+
+If Shadow DOM is not used, add the "itemscope" attribute so that *be-observant* knows what to look for:
+
+```html
+<mood-stone itemscope>
+    <input 
+        type=checkbox 
+        disabled 
+        b-o='of isHappy.'
+    >
+</mood-stone>
+```
+
 ## Binding based on microdata attribute.
 
 ```html
