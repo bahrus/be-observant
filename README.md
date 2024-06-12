@@ -284,12 +284,7 @@ If we know that this enhancement is the only enhancement affecting the adorned e
 
     <my-peer-element 
         enh-b-o='of @name and @food.'
-        onload="{
-            const {o} = event;
-            o.setProps = {
-                myFirstProp: `${o.factors.name} eats ${o.factors.food}`,
-            } 
-        }"
+        onload="event.o.setProps = {myFirstProp: `${event.o.factors.name} eats ${event.o.factors.food}`"
     ></my-peer-element>
 </mood-stone>
 ```
@@ -308,11 +303,12 @@ If we know that this enhancement is the only enhancement affecting the adorned e
         onload="{
             const {enh} = event; //enh = 'o' 
             const e = event[enh];
+            const {factors: f} = e;
             switch(enh){
                 'o':{
                     e.setProps = {
-                        myFirstProp: `${e.factors.name} eats ${e.factors.food}`,
-                        mySecondProp: `${e.factors[0]} eats ${e.factors[1]}
+                        myFirstProp: `${f.name} eats ${f.food}`,
+                        mySecondProp: `${f[0]} eats ${f[1]}
                     }
                 }
             }
@@ -337,7 +333,7 @@ The plus symbol:  + is indicating to tap into a [custom enhancement](https://git
 
 The example above happens to refer to this [enhancement](https://github.com/bahrus/be-searching).
 
-## Observing a specified property or a peer custom element
+## Observing a specified property of a peer custom element
 
 ```html
 <tr itemscope>
@@ -384,8 +380,7 @@ We can specify what prop to bind to by using an additional "Set" statement.
     <input name=someCheckbox type=checkbox>
 
     <my-peer-element enh-b-o='
-        Of @ someCheckbox.
-        Negate to someBoolProp.
+        and set someBoolProp from the negation of @someCheckbox.
         '></my-peer-element>
 </mood-stone>
 ```
@@ -401,8 +396,7 @@ To simply toggle a property anytime the observed element changes:
     <input name=someCheckbox type=checkbox>
 
     <my-peer-element enh-b-o='
-        Of @someCheckbox.
-        Toggle someBoolProp.
+        and toggle someBoolProp on @someCheckbox::input.
         '></my-peer-element>
 </mood-stone>
 ```
@@ -423,9 +417,7 @@ To simply toggle a property anytime the observed element changes:
     <input name=food>
 
     <my-peer-element enh-b-o='
-        Of @name and @food.
-        //Set myFirstProp to `${name} eats ${food}`  Is this worth supporting?
-        Set mySecondProp to `$1 eats $2`.
+        and set mySecondProp to `$1 eats $2` from @name and @food.
         '></my-peer-element>
 </mood-stone>
 ```
