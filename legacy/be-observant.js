@@ -54,7 +54,7 @@ export class BeObservant extends BE {
         return { ...parsedSet, ...parsedOf, };
     }
     async hydrate(self) {
-        const { Observer } = await import('../Observer.js');
+        const { Observer } = await import('./Observer.js');
         const obs = new Observer(self, this.#ifWantsToBe);
         //TODO:  put in broader scope so detach can detach
         return {

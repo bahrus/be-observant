@@ -1,6 +1,17 @@
-import { register } from 'be-hive/register.js';
-import { tagName } from './be-observant.js';
-import './be-observant.js';
-const ifWantsToBe = 'observant';
-const upgrade = '*';
-register(ifWantsToBe, upgrade, tagName);
+import { BeHive, seed, MountObserver } from 'be-hive/be-hive.js';
+export const emc = {
+    base: 'be-observant',
+    map: {
+        '0.0': {
+            mapsTo: 'eventName',
+            valIfFalsy: 'i-am-here'
+        }
+    },
+    enhPropKey: 'beObservant',
+    importEnh: async () => {
+        const { BeObservant } = await import('./behance.js');
+        return BeObservant;
+    }
+};
+const mose = seed(emc);
+MountObserver.synthesize(document, BeHive, mose);

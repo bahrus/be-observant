@@ -10,7 +10,6 @@
 	},
 	"files":[
 		"behivior.ts",
-		"be-o.ts",
 	],
 	"exclude":[
 		"node_modules"

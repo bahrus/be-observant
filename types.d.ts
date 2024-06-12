@@ -1,12 +1,10 @@
 import { ActionOnEventConfigs } from "trans-render/froop/types";
-import {IBE} from 'be-enhanced/types';
+import {IEnhancement} from 'trans-render/be/types';
 import {ElTypes, SignalRefType} from 'be-linked/types';
 import { Specifier } from "trans-render/dss/types";
 
-export interface EndUserProps extends IBE{
-    Of?: Array<OfStatement>,
-    of?: Array<OfStatement>,
-    Set?: Array<SetStatement>
+export interface EndUserProps extends IEnhancement{
+    
 } 
 
 // export interface IObserveRules {
@@ -35,9 +33,9 @@ export type POA = [PAP | undefined, ActionOnEventConfigs<PAP, Actions>];
 // export type LifecycleEvent = 'init' | 'update';
 
 export interface Actions{
-    noAttrs(self: this): ProPAP;
-    onCamelized(self: this): ProPAP;
-    hydrate(self: this): ProPAP;
+    // noAttrs(self: this): ProPAP;
+    // onCamelized(self: this): ProPAP;
+    // hydrate(self: this): ProPAP;
 }
 
 export interface SignalAndElO extends Specifier{
