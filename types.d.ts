@@ -7,10 +7,6 @@ export interface EndUserProps extends IEnhancement{
     
 } 
 
-// export interface IObserveRules {
-//     observeRules?: Array<ObserveRule>,
-// }
-
 export interface AllProps extends EndUserProps{
     isParsed?: boolean,
     observedFactors?: Array<Specifier>,
