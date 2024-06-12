@@ -34,12 +34,12 @@ What this does:  Observes and one-way passes *mood-stone*'s isHappy property val
 be-observant is making a few inferences:  
 
 1.  The name of the input element ("isHappy") will match with the name of the host property from which we would want to bind it.  Why adopt confusing mappings if we can possibly avoid it? 
-2.  Since the type of input element is a checkbox, set the local "checked" property to match the "isHapy" property from the host. 
+2.  Since the type of input element is of type checkbox, it sets the local "checked" property to match the "isHappy" property from the host. 
 
 
 
 > [!Note]
-> *be-observant* is a rather lengthy word to have to type over and over again, and this element enhancement would likely be sprinkled around quite a bit in a web application.  The name is registered in the optional file [behivior.js](https://github.com/bahrus/be-observant/blob/baseline/behivior.js) so to use whatever name makes sense to you (b-o, b-obs?) within your application, just don't reference that file, and instead create and reference your own registration file.  Names can also be overridden within a [Shadow scope](https://github.com/bahrus/be-hive) as well.  Throughout much of the rest of this document, we will use b-o instead of be-observant, and ask that you make a "mental map" of "b" to "be" and "o" to "observant".  In fact, this package does provide an alternative registration file, b-o.js, that registers the enhancement via attribute "b-o".  The developer could easily copy/modify to adopt their own default name.
+> *be-observant* is a rather lengthy word to have to type over and over again, and this element enhancement would likely be sprinkled around quite a bit in a web application.  The name is registered in the optional file [behivior.js](https://github.com/bahrus/be-observant/blob/baseline/behivior.js) so to use whatever name makes sense to you (b-o, be-obs?) within your application, just don't reference that file, and instead create and reference your own registration file.  Names can also be overridden within a [Shadow scope](https://github.com/bahrus/be-hive) as well.  Throughout much of the rest of this document, we will use b-o instead of be-observant, and ask that you make a "mental map" of "b" to "be" and "o" to "observant".  In fact, this package does provide an alternative registration file, b-o.js, that registers the enhancement via attribute "b-o".  The developer could easily copy/modify an additional registration file, to adopt their own default name.
 
 If you only use this enhancement once in a large application, spelling out the full name (and referencing the canonical behivior.js file) would probably make the most sense, for "locality of behavior" reasons, and also tapping into google searches.  But I would strongly consider using a shortcut in any application that intends to rely on this enhancement in a heavy way.
 
@@ -62,7 +62,7 @@ If this assumption doesn't hold in some cases, then we can specify the name of t
 </mood-stone>
 ```
 
-Now that we've spelled out the full word twice (*be-observant*), from now on, we will use "b-o" as our shortcut for be-observant, but please apply the mental mapping from b-o to the full name, for the statements to make the most sense.  This package even contains a registration file ('b-o') that utilizes this abbreviation.
+Now that we've spelled out the full word twice (*be-observant*), from now on, we will use "b-o" as our shortcut for be-observant, but please apply the mental mapping from b-o to the full name, for the statements to make the most sense.  
 
 The slash ("/") symbol indicates to get the value from the host.  If omitted, it is assumed:
 
@@ -220,11 +220,11 @@ This observes the my-peer-element's someBoolProp property for changes and sets t
 >
 ```
 
-What this does:  If necessary, auto attaches the [be-value-added](https://github.com/bahrus/be-value-added) enhancement to the link element, which recognizes the True/False values of schema.org as far as the href attribute, and provides a property oHTMLLinkElement.beValueAdded.value through which updated properties can be passed / listened to.  Essentially it provides a hidden boolean "signal" we can bind to and also use for styling purposes.
+What this does:  If necessary, auto attaches the [be-value-added](https://github.com/bahrus/be-value-added) enhancement to the link element, which recognizes the True/False values of schema.org as far as the href attribute, and provides a property oHTMLLinkElement.beValueAdded.value through which updated values can be passed / listened to.  Essentially it provides a hidden boolean "signal" we can bind to and also use for styling purposes.
 
 The editable checkbox element can observe changes to this "signal".
 
-We saw earlier that we can adorn elements with the itemprop attribute with b-o attribute, and it will automatically pull in values from the host.  This allows us to create a code-free "chain" of bindings from the host to Shadow Children, and from the Shadow children to peer elements.
+We saw earlier that we can adorn elements with the itemprop attribute with b-o attribute, and it will automatically pull in values from the host.  This allows us to create a code-free "chain" of bindings from the host to Shadow children, and from the Shadow children to peer elements.
 
 # Specifying the property to assign the observed value to.
 
@@ -237,11 +237,13 @@ What we've seen above is a lot of mind reading about what our intentions are, ba
 
 <my-peer-element enh-b-o='
     and set someBoolProp from @someCheckbox.
-    ' enh-b-o-set-props></my-peer-element>
+    '></my-peer-element>
 
 ```
 
 This watches the input element for input events and passes the checked property to someBoolProp of oMyPeerElement.
+
+The enh- prefix is there to avoid possible conflicts with attributes recognized by my-peer-element.
 
 ## Observing multiple "signals"
 
@@ -255,9 +257,6 @@ This watches the input element for input events and passes the checked property 
     And set mySecondProp from @yourCheckbox.
 '></my-peer-element>
 ```
-
-
-The enh- prefix is there to avoid possible conflicts with attributes recognized by my-peer-element.
 
 ## For the power hungry JS-firsters
 
