@@ -14,14 +14,14 @@
                 "be-value-added/": "/node_modules/be-value-added/",
                 "blow-dry/": "/node_modules/blow-dry/",
                 "mount-observer/": "/node_modules/mount-observer/",
-                "trans-render/": "/node_modules/trans-render/",
+                "trans-render/": "/trans-render/",
                 "xtal-element/": "/node_modules/xtal-element/"
             }
         }
     </script>
     <script type=module>
-        import 'xtal-element/xtal-element.js';
-        import '/be-o.js';
+        import 'xtal-element/index.js';
+        import '/behivior.js';
     </script>
 </head>
 <body>
@@ -34,7 +34,7 @@
                 id=isHappy 
                 disabled 
                 type=checkbox  
-                be-o
+                be-observant
             >
             <xtal-element
                 prop-defaults='{

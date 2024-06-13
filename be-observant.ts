@@ -1,12 +1,33 @@
 import {config as beCnfg} from 'be-enhanced/config.js';
 import {BE, BEConfig} from 'be-enhanced/BE.js';
 import {Actions, AllProps, AP, PAP} from './types';
-import {IEnhancement,  BEAllProps} from 'trans-render/be/types';
+import {IEnhancement,  BEAllProps, EnhancementInfo, EMC} from 'trans-render/be/types';
 import {getRemoteProp} from 'be-linked/defaults.js';
 import { Specifier } from 'trans-render/dss/types';
 
 class BeObservant extends BE implements Actions {
     static override config: BEConfig<AP & BEAllProps, Actions & IEnhancement, any> = {
+        propDefaults:{},
+        propInfo: {
+            ...beCnfg.propInfo,
+            observedFactors:{},
+        },
+        actions: {
+            noAttrs: {
+                ifNoneOf: ['observedFactors']
+            },
+            hydrate: {
+                ifAllOf: ['observedFactors']
+            }
+        }
+    }
+
+    #emc: EMC | undefined;
+    async attach(el: Element, enhancementInfo: EnhancementInfo) {
+        console.log({enhancementInfo});
+        const {mountCnfg} = enhancementInfo;
+        this.#emc = mountCnfg;
+        super.attach(el, enhancementInfo);
     }
 
     async noAttrs(self: this){
@@ -23,6 +44,15 @@ class BeObservant extends BE implements Actions {
         }
         return {
             observedFactors: [observedFactor],
+        }
+    }
+
+    async hydrate(self: this){
+        const {Observer} = await import('./Observer.js');
+        const obs = new Observer(self, this.#emc!.enhPropKey);
+        //TODO:  put in broader scope so detach can detach
+        return {
+            resolved: true,
         }
     }
 }

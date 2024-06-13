@@ -31,7 +31,7 @@ export type POA = [PAP | undefined, ActionOnEventConfigs<PAP, Actions>];
 export interface Actions{
     noAttrs(self: this): ProPAP;
     // onCamelized(self: this): ProPAP;
-    // hydrate(self: this): ProPAP;
+    hydrate(self: this): ProPAP;
 }
 
 export interface SignalAndElO extends Specifier{
