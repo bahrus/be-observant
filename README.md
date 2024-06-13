@@ -39,7 +39,7 @@ be-observant is making a few inferences:
 
 
 > [!Note]
-> *be-observant* is a rather lengthy word to have to type over and over again, and this element enhancement would likely be sprinkled around quite a bit in a web application.  The name is registered in the optional file [behivior.js](https://github.com/bahrus/be-observant/blob/baseline/behivior.js) so to use whatever name makes sense to you (b-o, be-obs?) within your application, just don't reference that file, and instead create and reference your own registration file.  Names can also be overridden within a [Shadow scope](https://github.com/bahrus/be-hive) as well.  Throughout much of the rest of this document, we will use b-o instead of be-observant, and ask that you make a "mental map" of "b" to "be" and "o" to "observant".  In fact, this package does provide an alternative registration file, b-o.js, that registers the enhancement via attribute "b-o".  The developer could easily copy/modify an additional registration file, to adopt their own default name.
+> *be-observant* is a rather lengthy word to have to type over and over again, and this element enhancement would likely be sprinkled around quite a bit in a web application.  The name is registered in the optional file [behivior.js](https://github.com/bahrus/be-observant/blob/baseline/behivior.js) so to use whatever name makes sense to you (🔭, be-obs?) within your application, just don't reference that file, and instead create and reference your own registration file.  Names can also be overridden within a [Shadow scope](https://github.com/bahrus/be-hive) as well.  Throughout much of the rest of this document, we will use 🔭 instead of be-observant, and ask that you make a "mental map" of "b" to "be" and "o" to "observant".  In fact, this package does provide an alternative registration file, 🔭.js, that registers the enhancement via attribute "🔭".  The developer could easily copy/modify an additional registration file, to adopt their own default name.
 
 If you only use this enhancement once in a large application, spelling out the full name (and referencing the canonical behivior.js file) would probably make the most sense, for "locality of behavior" reasons, and also tapping into google searches.  But I would strongly consider using a shortcut in any application that intends to rely on this enhancement in a heavy way.
 
@@ -62,7 +62,7 @@ If this assumption doesn't hold in some cases, then we can specify the name of t
 </mood-stone>
 ```
 
-Now that we've spelled out the full word twice (*be-observant*), from now on, we will use "b-o" as our shortcut for be-observant, but please apply the mental mapping from b-o to the full name, for the statements to make the most sense.  
+Now that we've spelled out the full word twice (*be-observant*), from now on, we will use "🔭" as our shortcut for be-observant, but please apply the mental mapping from 🔭 to the full name, for the statements to make the most sense.  
 
 The slash ("/") symbol indicates to get the value from the host.  If omitted, it is assumed:
 
@@ -74,7 +74,7 @@ The slash ("/") symbol indicates to get the value from the host.  If omitted, it
     <input 
         type=checkbox 
         disabled 
-        b-o='of isHappy.'
+        🔭='of isHappy.'
     >
 </mood-stone>
 ```
@@ -88,7 +88,7 @@ If Shadow DOM is not used, add the "itemscope" attribute so that *be-observant* 
     <input 
         type=checkbox 
         disabled 
-        b-o='of isHappy.'
+        🔭='of isHappy.'
     >
 </mood-stone>
 ```
@@ -99,7 +99,7 @@ If Shadow DOM is not used, add the "itemscope" attribute so that *be-observant* 
 <mood-stone>
     <template shadowrootmode=open>
         <div itemscope>
-            <span itemprop=isHappy b-o></span>
+            <span itemprop=isHappy 🔭></span>
         </div>
 
         <xtal-element
@@ -127,7 +127,7 @@ This sets the span's textContent to the .toString value of moon-stone's isHappy 
             id=isHappy 
             disabled 
             type=checkbox  
-            b-o
+            🔭
         >
         <xtal-element
             prop-defaults='{
@@ -186,7 +186,7 @@ Now we will start to see how be-observant provides for more "grass-roots" democr
 ```html
 <input name=search type=search>
 
-<div b-o='of @search.'></div>
+<div 🔭='of @search.'></div>
 ```
 
 As the user types in the input field, the div's text content reflects the value that was typed.
@@ -200,7 +200,7 @@ This also works:
 ```html
 <input id=searchString type=search>
 
-<div b-o='of #searchString.'></div>
+<div 🔭='of #searchString.'></div>
 ```
 
 The search for element with id=searchString is done within the (shadow)root node, since id's are supposed to be unique with a (shadow)root node.
@@ -214,7 +214,7 @@ The search for element with id=searchString is done within the (shadow)root node
     <input 
         type=checkbox 
         disabled 
-        b-o='of -some-bool-prop'
+        🔭='of -some-bool-prop'
     >
 </mood-stone>
 ```
@@ -230,7 +230,7 @@ This observes the my-peer-element's someBoolProp property for changes and sets t
 
 <input 
     type=checkbox 
-    b-o='of |isHappy.'
+    🔭='of |isHappy.'
 >
 ```
 
@@ -238,7 +238,7 @@ What this does:  If necessary, auto attaches the [be-value-added](https://github
 
 The editable checkbox element can observe changes to this "signal".
 
-We saw earlier that we can adorn elements with the itemprop attribute with b-o attribute, and it will automatically pull in values from the host.  This allows us to create a code-free "chain" of bindings from the host to Shadow children, and from the Shadow children to peer elements.
+We saw earlier that we can adorn elements with the itemprop attribute with 🔭 attribute, and it will automatically pull in values from the host.  This allows us to create a code-free "chain" of bindings from the host to Shadow children, and from the Shadow children to peer elements.
 
 # Specifying the property to assign the observed value to.
 
@@ -249,7 +249,7 @@ What we've seen above is a lot of mind reading about what our intentions are, ba
 ```html
 <input name=someCheckbox type=checkbox>
 
-<my-peer-element enh-b-o='
+<my-peer-element enh-🔭='
     and set someBoolProp from @someCheckbox.
     '></my-peer-element>
 
@@ -266,7 +266,7 @@ The enh- prefix is there to avoid possible conflicts with attributes recognized 
 <input name=yourCheckbox type=checkbox>
 <input name=myCheckbox type=checkbox>
 
-<my-peer-element enh-b-o='
+<my-peer-element enh-🔭='
     and set myFirstProp from @myCheckbox.
     And set mySecondProp from @yourCheckbox.
 '></my-peer-element>
@@ -297,7 +297,7 @@ If we know that this enhancement is the only enhancement affecting the adorned e
     <input name=food>
 
     <my-peer-element 
-        enh-b-o='of @name and @food.'
+        enh-🔭='of @name and @food.'
         onload="event.o.setProps = {myFirstProp: `${event.o.factors.name} eats ${event.o.factors.food}`"
     ></my-peer-element>
 </mood-stone>
@@ -313,7 +313,7 @@ If we know that this enhancement is the only enhancement affecting the adorned e
     <input name=food>
 
     <my-peer-element 
-        enh-b-o='Of @name and @food.'
+        enh-🔭='Of @name and @food.'
         onload="{
             const {enh} = event; //enh = 'o' 
             const e = event[enh];
@@ -336,7 +336,7 @@ If we know that this enhancement is the only enhancement affecting the adorned e
 ```html
 <input name=search type=search>
 
-<div b-o='
+<div 🔭='
     and set +beSearching:forText from @search.
 '>
     supercalifragilisticexpialidocious
@@ -353,10 +353,10 @@ The example above happens to refer to this [enhancement](https://github.com/bahr
 <tr itemscope>
     <td>
         <my-item-view-model></my-item-view-model>
-        <div b-o="of ~myItemViewModel:myProp1.">My First column information</div>
+        <div 🔭="of ~myItemViewModel:myProp1.">My First column information</div>
     </td>
     <td>
-        <div b-o="of ~myItemViewModel:myProp2."></div>
+        <div 🔭="of ~myItemViewModel:myProp2."></div>
     </td>
 </tr>
 ```
@@ -375,10 +375,10 @@ This also works:
 <tr itemscope>
     <td>
         <my-item-view-model></my-item-view-model>
-        <div itemprop=myProp1 b-o="of ~myItemViewModel.">My First column information</div>
+        <div itemprop=myProp1 🔭="of ~myItemViewModel.">My First column information</div>
     </td>
     <td>
-        <div itemprop=myProp2 b-o="of ~myItemViewModel."></div>
+        <div itemprop=myProp2 🔭="of ~myItemViewModel."></div>
     </td>
 </tr>
 ```
@@ -393,7 +393,7 @@ We can specify what prop to bind to by using an additional "Set" statement.
     
     <input name=someCheckbox type=checkbox>
 
-    <my-peer-element enh-b-o='
+    <my-peer-element enh-🔭='
         and set someBoolProp from the negation of @someCheckbox.
         '></my-peer-element>
 </mood-stone>
@@ -409,7 +409,7 @@ To simply toggle a property anytime the observed element changes:
     
     <input name=someCheckbox type=checkbox>
 
-    <my-peer-element enh-b-o='
+    <my-peer-element enh-🔭='
         and toggle someBoolProp on @someCheckbox::input.
         '></my-peer-element>
 </mood-stone>
@@ -430,7 +430,7 @@ To simply toggle a property anytime the observed element changes:
     <input name=name>
     <input name=food>
 
-    <my-peer-element enh-b-o='
+    <my-peer-element enh-🔭='
         and set mySecondProp to `$1 eats $2` from @name and @food.
         '></my-peer-element>
 </mood-stone>
@@ -446,7 +446,7 @@ To simply toggle a property anytime the observed element changes:
     <input name=yourCheckbox type=checkbox>
     <input name=myCheckbox type=checkbox>
 
-    <my-peer-element enh-b-o='
+    <my-peer-element enh-🔭='
         Of @yourCheckbox and @myCheckbox.
         Set my-class to $1.
         SetClass my-second-class to $2.
@@ -465,7 +465,7 @@ Same with SetPart, SetStyle
 ```html
 <my-peer-element></my-peer-element>
 
-<your-peer-element enh-b-o="
+<your-peer-element enh-🔭="
     of ~myPeerElement:myProp.
     Set yourProp.
 ">
@@ -514,7 +514,7 @@ import 'be-observant/behivior.js';
 or
 
 ```JavaScript
-import 'be-observant/b-o.js';
+import 'be-observant/🔭.js';
 ```
 
 
