@@ -28,6 +28,7 @@ export class Observer {
         }
         this.#pullInValuesToEnhancedElement(self);
     }
+    #localSignal;
     async #pullInValuesToEnhancedElement(self) {
         const { setRules, enhancedElement } = self;
         if (this.#remoteSignals.entries.length > 1)
@@ -66,7 +67,10 @@ export class Observer {
         if (setRules === undefined) {
             if (hasOnload)
                 return;
-            const localSignal = await getLocalSignal(enhancedElement);
+            //TODO:  cache local Signal somewhere?
+            const localSignal = this.#localSignal || await getLocalSignal(enhancedElement);
+            this.#localSignal = localSignal;
+            //console.log({localSignal});
             if (vals.length !== 1)
                 throw 'NI';
             //console.log({remoteRef, remoteVal});

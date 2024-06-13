@@ -2,7 +2,7 @@ import { loadEventName } from '../mount-observer/types.js';
 //import {WatchSeeker} from './WatchSeeker.js';
 import {Seeker} from 'be-linked/Seeker.js';
 import { AP, EventForObserver, ObserverEventModel, SignalAndElO } from './types';
-import {SignalRefType} from 'be-linked/types';
+import {LocalSignal, SignalRefType} from 'be-linked/types';
 
 export class Observer{
     constructor(self: AP, public enh: string){
@@ -30,7 +30,7 @@ export class Observer{
         }
         this.#pullInValuesToEnhancedElement(self);
     }
-
+    #localSignal: LocalSignal | undefined;
     async #pullInValuesToEnhancedElement(self: AP){
         const {setRules, enhancedElement} = self;
         if(this.#remoteSignals.entries.length > 1) throw 'NI';
@@ -68,7 +68,10 @@ export class Observer{
         }
         if(setRules === undefined){
             if(hasOnload) return;
-            const localSignal = await getLocalSignal(enhancedElement);
+            //TODO:  cache local Signal somewhere?
+            const localSignal = this.#localSignal || await getLocalSignal(enhancedElement);
+            this.#localSignal = localSignal;
+            //console.log({localSignal});
             if(vals.length !== 1) throw 'NI';
             //console.log({remoteRef, remoteVal});
             const {prop, signal} = localSignal;
