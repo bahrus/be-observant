@@ -1,4 +1,4 @@
-# be-observant [WIP]
+# be-observant 🔭 [WIP]
 
 Observe properties of peer elements or the host.
 
