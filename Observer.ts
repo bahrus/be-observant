@@ -66,25 +66,25 @@ export class Observer{
                 Object.assign(enhancedElement, o.setProps);
             }
         }
-        // if(setRules === undefined){
-        //     if(hasOnload) return;
-        //     //TODO:  cache local Signal somewhere?
-        //     const localSignal = this.#localSignal || await getLocalSignal(enhancedElement);
-        //     this.#localSignal = localSignal;
-        //     //console.log({localSignal});
-        //     if(vals.length !== 1) throw 'NI';
-        //     //console.log({remoteRef, remoteVal});
-        //     const {prop, signal} = localSignal;
-        //     const head = prop![0];
-        //     if(head === '.' || head === '+'){
-        //         const {setEnhProp} = await import('trans-render/lib/setEnhProp.js');
-        //         setEnhProp(<any>signal, prop!, vals[0]);
-        //     }else{
-        //         (<any>signal)[prop!] = vals[0];
-        //     }
+        if(setRules === undefined){
+            if(hasOnload) return;
+            //TODO:  cache local Signal somewhere?
+            const localSignal = this.#localSignal || await getLocalSignal(enhancedElement);
+            this.#localSignal = localSignal;
+            //console.log({localSignal});
+            if(vals.length !== 1) throw 'NI';
+            //console.log({remoteRef, remoteVal});
+            const {prop, signal} = localSignal;
+            const head = prop![0];
+            if(head === '.' || head === '+'){
+                const {setEnhProp} = await import('trans-render/lib/setEnhProp.js');
+                setEnhProp(<any>signal, prop!, vals[0]);
+            }else{
+                (<any>signal)[prop!] = vals[0];
+            }
             
-        //     return;
-        // }
+            return;
+        }
         // for(let i = 0, ii = setRules.length; i < ii; i++){
         //     const setRule = setRules[i];
         //     const {localPropToSet, to} = setRule;
