@@ -1,6 +1,7 @@
 import { config as beCnfg } from 'be-enhanced/config.js';
 import { BE } from 'be-enhanced/BE.js';
-import { getRemoteProp } from 'be-linked/defaults.js';
+import { getRemoteProp, getLocalSignal } from 'be-linked/defaults.js';
+import { Seeker } from 'be-linked/Seeker.js';
 class BeObservant extends BE {
     static config = {
         propDefaults: {},
@@ -51,12 +52,28 @@ class BeObservant extends BE {
         };
     }
     async hydrate(self) {
-        const { parsedStatements } = self;
+        const { parsedStatements, enhancedElement } = self;
         console.log({ parsedStatements });
-        for (const parsedStatement of parsedStatements) {
+        const emitters = [];
+        for (const ps of parsedStatements) {
+            const { localPropToSet, remoteSpecifiers } = ps;
+            const localSignal = localPropToSet ===
+                undefined ? this.#localSignal : await getLocalSignal(enhancedElement);
+            const remoteSignalAndEvents = [];
+            for (const remoteSpecifier of remoteSpecifiers) {
+                const seeker = new Seeker(remoteSpecifier, false);
+                const res = await seeker.do(self, undefined, enhancedElement);
+                remoteSignalAndEvents.push(res);
+            }
+            const emitters = {
+                ...ps,
+                remoteSignalAndEvents,
+                localSignal
+            };
         }
         return {
             resolved: true,
+            emitters
         };
     }
 }

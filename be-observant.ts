@@ -1,10 +1,11 @@
 import {config as beCnfg} from 'be-enhanced/config.js';
 import {BE, BEConfig} from 'be-enhanced/BE.js';
-import {Actions, AllProps, AP, ObserveAndSetStatement, PAP} from './types';
+import {Actions, AllProps, AP, Emitters, ObserveAndSetStatement, PAP} from './types';
 import {IEnhancement,  BEAllProps, EnhancementInfo, EMC} from 'trans-render/be/types';
-import {getRemoteProp} from 'be-linked/defaults.js';
+import {getRemoteProp, getLocalSignal} from 'be-linked/defaults.js';
 import { Specifier } from 'trans-render/dss/types';
-import { LocalSignal } from 'be-linked/types';
+import { LocalSignal, SignalAndEvent } from 'be-linked/types';
+import {Seeker} from 'be-linked/Seeker.js';
 
 class BeObservant extends BE implements Actions {
     static override config: BEConfig<AP & BEAllProps, Actions & IEnhancement, any> = {
@@ -59,14 +60,31 @@ class BeObservant extends BE implements Actions {
     }
 
     async hydrate(self: this){
-        const {parsedStatements} = self;
+        const {parsedStatements, enhancedElement} = self;
         console.log({parsedStatements});
-        for(const parsedStatement of parsedStatements!){
-            
+        const emitters: Array<Emitters> = [];
+        for(const ps of parsedStatements!){
+            const {localPropToSet, remoteSpecifiers} = ps;
+            const localSignal = localPropToSet === 
+                undefined ? this.#localSignal : await getLocalSignal(enhancedElement);
+            const remoteSignalAndEvents: Array<SignalAndEvent> = [];
+            for(const remoteSpecifier of remoteSpecifiers){
+                const seeker = new Seeker<AP, any>(remoteSpecifier, false);
+                const res = await seeker.do(self, undefined, enhancedElement);
+                remoteSignalAndEvents.push(res!);
+            }
+            const emitters: Emitters = {
+                ...ps,
+                remoteSignalAndEvents,
+                localSignal
+            } 
         }
+       
+
         return {
             resolved: true,
-        }
+            emitters
+        } as PAP
     }
 }
 

@@ -1,6 +1,6 @@
 import { ActionOnEventConfigs } from "trans-render/froop/types";
 import {IEnhancement} from 'trans-render/be/types';
-import {ElTypes, LocalSignal, SignalRefType} from 'be-linked/types';
+import {ElTypes, LocalSignal, SignalAndEvent, SignalRefType} from 'be-linked/types';
 import { Specifier } from "trans-render/dss/types";
 
 export interface EndUserProps extends IEnhancement{
@@ -10,7 +10,8 @@ export interface EndUserProps extends IEnhancement{
 export interface AllProps extends EndUserProps{
     isScriptExpression: boolean,
     //observedFactors?: Array<Specifier>,
-    parsedStatements?: Array<ObserveAndSetStatement>
+    parsedStatements?: Array<ObserveAndSetStatement>,
+    emitters?: Array<Emitters>
 }
 
 
@@ -32,9 +33,9 @@ export interface Actions{
     hydrate(self: this): ProPAP;
 }
 
-export interface SignalAndElO extends Specifier{
-    signal?: WeakRef<SignalRefType>
-}
+// export interface SignalAndElO extends Specifier{
+//     signal?: WeakRef<SignalRefType>
+// }
 
 // export interface ParsedSetStatement{
 //     localPropToSet?: string,
@@ -42,10 +43,14 @@ export interface SignalAndElO extends Specifier{
 // }
 
 export interface ObserveAndSetStatement{
-    //localSignal?: LocalSignal, 
     localPropToSet?: string,
     remoteSpecifiers: Array<Specifier>,
     modifyLocalPropBy?: 'Negating' | 'Toggling'
+}
+
+export interface Emitters extends ObserveAndSetStatement{
+    localSignal?: LocalSignal,
+    remoteSignalAndEvents: Array<SignalAndEvent>
 }
  
 
