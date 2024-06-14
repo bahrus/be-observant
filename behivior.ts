@@ -9,11 +9,11 @@ export const emc: EMC = {
             instanceOf: 'Object$entences',
             objValMapsTo: '.',
             regExpExts: {
-                observedFactors: [
+                ofStatements: [
                     {
                         regExp: onDependencies,
                         defaultVals:[],
-                        dssKeys: [['dependencyPart', 'dependencies[]']]
+                        dssKeys: [['dependencyPart', 'specifiers[]']]
                     }
                 ]
             }

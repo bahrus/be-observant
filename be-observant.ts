@@ -10,7 +10,8 @@ class BeObservant extends BE implements Actions {
         propDefaults:{},
         propInfo: {
             ...beCnfg.propInfo,
-            observedFactors:{},
+            //observedFactors:{},
+            ofStatements: {}
         },
         actions: {
             noAttrs: {
@@ -32,7 +33,7 @@ class BeObservant extends BE implements Actions {
 
     async noAttrs(self: this){
         const {enhancedElement} = self;
-        const observedFactor: Specifier = {
+        const specifier: Specifier = {
             s: '/',
             elS: '*',
             dss: '^',
@@ -43,11 +44,14 @@ class BeObservant extends BE implements Actions {
             host: true
         }
         return {
-            observedFactors: [observedFactor],
-        }
+            ofStatements:{
+                specifiers: [specifier]
+            }
+            //observedFactors: [observedFactor],
+        } as PAP
     }
 
-    async hydrate(self: this){
+    async hydrateOfStatements(self: this){
         const {Observer} = await import('./Observer.js');
         const obs = new Observer(self, this.#emc!.enhPropKey);
         //TODO:  put in broader scope so detach can detach

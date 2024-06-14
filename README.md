@@ -257,7 +257,7 @@ What we've seen above is a lot of mind reading about what our intentions are, ba
 
 This watches the input element for input events and passes the checked property to someBoolProp of oMyPeerElement.
 
-The enh- prefix is there to avoid possible conflicts with attributes recognized by my-peer-element.
+The enh- prefix is there to avoid possible conflicts with attributes recognized by my-peer-element, in the absence of any [tending loving care from the platform](https://github.com/WICG/webcomponents/issues/1000).
 
 ## Observing multiple "signals"
 
@@ -313,7 +313,7 @@ If we know that this enhancement is the only enhancement affecting the adorned e
     <input name=food>
 
     <my-peer-element 
-        enh-🔭='Of @name and @food.'
+        enh-🔭='of @name and @food.'
         onload="{
             const {enh} = event; //enh = 'o' 
             const e = event[enh];

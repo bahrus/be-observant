@@ -8,15 +8,13 @@ export interface EndUserProps extends IEnhancement{
 } 
 
 export interface AllProps extends EndUserProps{
-    isParsed?: boolean,
-    observedFactors?: Array<Specifier>,
-    setRules?: Array<ParsedSetStatement>
+    isScriptExpression: boolean,
+    //observedFactors?: Array<Specifier>,
+    ofStatements?: OfStatements
 }
 
 
-export type OfStatement = string;
 
-export type SetStatement = string;
 
 export type AP = AllProps;
 
@@ -31,7 +29,7 @@ export type POA = [PAP | undefined, ActionOnEventConfigs<PAP, Actions>];
 export interface Actions{
     noAttrs(self: this): ProPAP;
     // onCamelized(self: this): ProPAP;
-    hydrate(self: this): ProPAP;
+    hydrateOfStatements(self: this): ProPAP;
 }
 
 export interface SignalAndElO extends Specifier{
@@ -41,6 +39,12 @@ export interface SignalAndElO extends Specifier{
 export interface ParsedSetStatement{
     localPropToSet?: string,
     to: string
+}
+
+export interface SetFromStatement{
+    localPropToSet?: string, 
+    remoteSpecifiers: Array<Specifier>,
+    modifiedLocalPropBy?: 'Negating' | 'Toggling'
 }
 
 
