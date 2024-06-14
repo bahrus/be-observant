@@ -12,7 +12,7 @@ class BeObservant extends BE implements Actions {
         propInfo: {
             ...beCnfg.propInfo,
             //observedFactors:{},
-            ofStatements: {}
+            parsedStatements: {}
         },
         actions: {
             noAttrs: {
@@ -28,7 +28,6 @@ class BeObservant extends BE implements Actions {
     #hasOnload: boolean | undefined;
     #localSignal: LocalSignal | undefined;
     async attach(el: Element, enhancementInfo: EnhancementInfo) {
-        console.log({enhancementInfo});
         const {mountCnfg} = enhancementInfo;
         this.#emc = mountCnfg;
         this.#hasOnload = !!(el as HTMLElement).onload;
@@ -60,9 +59,11 @@ class BeObservant extends BE implements Actions {
     }
 
     async hydrate(self: this){
-        const {Observer} = await import('./Observer.js');
-        const obs = new Observer(self, this.#emc!.enhPropKey);
-        //TODO:  put in broader scope so detach can detach
+        const {parsedStatements} = self;
+        console.log({parsedStatements});
+        for(const parsedStatement of parsedStatements!){
+            
+        }
         return {
             resolved: true,
         }

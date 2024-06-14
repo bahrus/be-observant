@@ -6,27 +6,34 @@ class BeObservant extends BE {
         propDefaults: {},
         propInfo: {
             ...beCnfg.propInfo,
-            observedFactors: {},
+            //observedFactors:{},
+            parsedStatements: {}
         },
         actions: {
             noAttrs: {
-                ifNoneOf: ['observedFactors']
+                ifNoneOf: ['parsedStatements']
             },
             hydrate: {
-                ifAllOf: ['observedFactors']
+                ifAtLeastOneOf: ['parsedStatements']
             }
         }
     };
     #emc;
+    #hasOnload;
+    #localSignal;
     async attach(el, enhancementInfo) {
-        console.log({ enhancementInfo });
         const { mountCnfg } = enhancementInfo;
         this.#emc = mountCnfg;
+        this.#hasOnload = !!el.onload;
+        if (this.#hasOnload) {
+            const { getLocalSignal } = await import('be-linked/defaults.js');
+            this.#localSignal = await getLocalSignal(el);
+        }
         super.attach(el, enhancementInfo);
     }
     async noAttrs(self) {
         const { enhancedElement } = self;
-        const observedFactor = {
+        const specifier = {
             s: '/',
             elS: '*',
             dss: '^',
@@ -36,14 +43,18 @@ class BeObservant extends BE {
             prop: getRemoteProp(enhancedElement),
             host: true
         };
+        const parsedStatement = {
+            remoteSpecifiers: [specifier]
+        };
         return {
-            observedFactors: [observedFactor],
+            parsedStatements: [parsedStatement]
         };
     }
     async hydrate(self) {
-        const { Observer } = await import('./Observer.js');
-        const obs = new Observer(self, this.#emc.enhPropKey);
-        //TODO:  put in broader scope so detach can detach
+        const { parsedStatements } = self;
+        console.log({ parsedStatements });
+        for (const parsedStatement of parsedStatements) {
+        }
         return {
             resolved: true,
         };
