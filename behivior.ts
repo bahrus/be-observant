@@ -1,6 +1,10 @@
 import {BeHive, EMC, seed, MountObserver} from 'be-hive/be-hive.js';
 
-const onDependencies = String.raw `^of (?<dependencyPart>.*)`;
+const ofDependencies = String.raw `^of (?<dependencyPart>.*)`;
+
+const andSetFrom = String.raw `^and set (?<localPropToSet>.^) from (?<dependencyPart>.*)`;
+
+const dssKeys = [['dependencyPart', 'remoteSpecifiers[]']] as [string, string][];
 
 export const emc: EMC = {
     base: 'be-observant',
@@ -9,11 +13,16 @@ export const emc: EMC = {
             instanceOf: 'Object$entences',
             objValMapsTo: '.',
             regExpExts: {
-                ofStatements: [
+                parsedStatements: [
                     {
-                        regExp: onDependencies,
+                        regExp: andSetFrom,
+                        defaultVals: [],
+                        dssKeys,
+                    },
+                    {
+                        regExp: ofDependencies,
                         defaultVals:[],
-                        dssKeys: [['dependencyPart', 'specifiers[]']]
+                        dssKeys
                     }
                 ]
             }

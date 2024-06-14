@@ -36,14 +36,14 @@ export interface SignalAndElO extends Specifier{
     signal?: WeakRef<SignalRefType>
 }
 
-export interface ParsedSetStatement{
-    localPropToSet?: string,
-    to: string
-}
+// export interface ParsedSetStatement{
+//     localPropToSet?: string,
+//     to: string
+// }
 
 export interface ObserveAndSetStatement{
     //localSignal?: LocalSignal, 
-    set?: string,
+    localPropToSet?: string,
     remoteSpecifiers: Array<Specifier>,
     modifyLocalPropBy?: 'Negating' | 'Toggling'
 }

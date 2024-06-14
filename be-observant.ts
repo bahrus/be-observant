@@ -16,10 +16,10 @@ class BeObservant extends BE implements Actions {
         },
         actions: {
             noAttrs: {
-                ifNoneOf: ['ofStatements']
+                ifNoneOf: ['parsedStatements']
             },
             hydrate: {
-                ifAtLeastOneOf: ['ofStatements']
+                ifAtLeastOneOf: ['parsedStatements']
             }
         }
     }
