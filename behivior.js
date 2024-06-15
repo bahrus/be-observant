@@ -12,12 +12,16 @@ export const emc = {
                 parsedStatements: [
                     {
                         regExp: andSetFrom,
-                        defaultVals: [],
+                        defaultVals: {
+                            aggregateRemoteVals: 'Union'
+                        },
                         dssKeys,
                     },
                     {
                         regExp: ofDependencies,
-                        defaultVals: [],
+                        defaultVals: {
+                            aggregateRemoteVals: 'Union'
+                        },
                         dssKeys
                     }
                 ]

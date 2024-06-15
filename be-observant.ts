@@ -1,6 +1,6 @@
 import {config as beCnfg} from 'be-enhanced/config.js';
 import {BE, BEConfig} from 'be-enhanced/BE.js';
-import {Actions, AllProps, AP, Emitters, ObserveAndSetStatement, PAP} from './types';
+import {Actions, AllProps, AP, EndPoints, ObservingParameters, PAP} from './types';
 import {IEnhancement,  BEAllProps, EnhancementInfo, EMC} from 'trans-render/be/types';
 import {getRemoteProp, getLocalSignal} from 'be-linked/defaults.js';
 import { Specifier } from 'trans-render/dss/types';
@@ -55,7 +55,7 @@ class BeObservant extends BE implements Actions {
             prop: getRemoteProp(enhancedElement),
             host: true
         }
-        const parsedStatement : ObserveAndSetStatement = {
+        const parsedStatement : ObservingParameters = {
             remoteSpecifiers: [specifier]
         };
         return {
@@ -66,7 +66,7 @@ class BeObservant extends BE implements Actions {
     async seek(self: this){
         const {parsedStatements, enhancedElement} = self;
         console.log({parsedStatements});
-        const emitters: Array<Emitters> = [];
+        const emitters: Array<EndPoints> = [];
         for(const ps of parsedStatements!){
             const {localPropToSet, remoteSpecifiers} = ps;
             const localSignal = //localPropToSet === 
@@ -78,7 +78,7 @@ class BeObservant extends BE implements Actions {
                 const res = await seeker.do(self, undefined, enhancedElement);
                 remoteSignalAndEvents.push(res!);
             }
-            const emitterScenario: Emitters = {
+            const emitterScenario: EndPoints = {
                 ...ps,
                 remoteSignalAndEvents,
                 localSignal
@@ -101,6 +101,7 @@ class BeObservant extends BE implements Actions {
         }
         for(const emitter of emitters!){
             await this.#pullInValue(self, emitter);
+            this.#scheduleUpdates(self, emitter);
             console.log({emitter})
         }
         return {
@@ -108,9 +109,10 @@ class BeObservant extends BE implements Actions {
         } as PAP
     }
 
-    async #pullInValue(self: this, emitters: Emitters){
+    async #pullInValue(self: this, endPoints: EndPoints){
         const {enhancedElement} = this;
-        const {remoteSignalAndEvents, remoteSpecifiers, localSignal} = emitters;
+        const {remoteSignalAndEvents, remoteSpecifiers, localSignal, aggregateRemoteVals} = endPoints;
+        console.log({aggregateRemoteVals});
         const {prop, signal: localHardRef} = localSignal!;
         const remove: SignalAndEvent[] = [];
         let i = 0;
@@ -128,7 +130,13 @@ class BeObservant extends BE implements Actions {
             i++;
         }
     }
+
+    async #scheduleUpdates(self: this, emitters: EndPoints){
+
+    }
 }
+
+
 
 interface BeObservant extends AP{}
 

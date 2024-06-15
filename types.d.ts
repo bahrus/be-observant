@@ -10,8 +10,8 @@ export interface EndUserProps extends IEnhancement{
 export interface AllProps extends EndUserProps{
     isScriptExpression: boolean,
     //observedFactors?: Array<Specifier>,
-    parsedStatements?: Array<ObserveAndSetStatement>,
-    emitters?: Array<Emitters>
+    parsedStatements?: Array<ObservingParameters>,
+    emitters?: Array<EndPoints>
 }
 
 
@@ -33,22 +33,14 @@ export interface Actions{
     hydrate(self: this): ProPAP;
 }
 
-// export interface SignalAndElO extends Specifier{
-//     signal?: WeakRef<SignalRefType>
-// }
 
-// export interface ParsedSetStatement{
-//     localPropToSet?: string,
-//     to: string
-// }
-
-export interface ObserveAndSetStatement{
+export interface ObservingParameters{
     localPropToSet?: string,
     remoteSpecifiers: Array<Specifier>,
-    modifyLocalPropBy?: 'Negating' | 'Toggling'
+    aggregateRemoteVals?: 'Union' | 'Objectifying' | 'Negating' | 'Toggling' | 'Sum'
 }
 
-export interface Emitters extends ObserveAndSetStatement{
+export interface EndPoints extends ObservingParameters{
     localSignal?: LocalSignal,
     remoteSignalAndEvents: Array<SignalAndEvent>
 }
@@ -56,10 +48,10 @@ export interface Emitters extends ObserveAndSetStatement{
 
 
 
-export interface ObserverOptions{
-    abortControllers: Array<AbortController>,
-    remoteEl?: Element,
-}
+// export interface ObserverOptions{
+//     abortControllers: Array<AbortController>,
+//     remoteEl?: Element,
+// }
 
 export type LoadEventName = 'load';
 

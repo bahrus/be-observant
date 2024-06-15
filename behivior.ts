@@ -1,4 +1,5 @@
 import {BeHive, EMC, seed, MountObserver} from 'be-hive/be-hive.js';
+import {ObservingParameters} from './types';
 
 const ofDependencies = String.raw `^of (?<dependencyPart>.*)`;
 
@@ -16,12 +17,16 @@ export const emc: EMC = {
                 parsedStatements: [
                     {
                         regExp: andSetFrom,
-                        defaultVals: [],
+                        defaultVals: {
+                            aggregateRemoteVals: 'Union'
+                        } as ObservingParameters,
                         dssKeys,
                     },
                     {
                         regExp: ofDependencies,
-                        defaultVals:[],
+                        defaultVals:{
+                            aggregateRemoteVals: 'Union'
+                        } as ObservingParameters,
                         dssKeys
                     }
                 ]

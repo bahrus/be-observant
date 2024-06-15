@@ -89,15 +89,17 @@ class BeObservant extends BE {
         }
         for (const emitter of emitters) {
             await this.#pullInValue(self, emitter);
+            this.#scheduleUpdates(self, emitter);
             console.log({ emitter });
         }
         return {
             resolved: true
         };
     }
-    async #pullInValue(self, emitters) {
+    async #pullInValue(self, endPoints) {
         const { enhancedElement } = this;
-        const { remoteSignalAndEvents, remoteSpecifiers, localSignal } = emitters;
+        const { remoteSignalAndEvents, remoteSpecifiers, localSignal, aggregateRemoteVals } = endPoints;
+        console.log({ aggregateRemoteVals });
         const { prop, signal: localHardRef } = localSignal;
         const remove = [];
         let i = 0;
@@ -114,6 +116,8 @@ class BeObservant extends BE {
             localHardRef[prop] = remoteVal;
             i++;
         }
+    }
+    async #scheduleUpdates(self, emitters) {
     }
 }
 await BeObservant.bootUp();
