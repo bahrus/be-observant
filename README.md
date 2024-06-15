@@ -348,7 +348,7 @@ They are:
 
 ## For the power hungry JS-firsters
 
-As our HTML markup becomes more complex, I suspect many readers will begin asking themselves:
+As our business logic becomes more complex, I suspect many readers will begin asking themselves:
 
 >  This is all great, but what if I just want to do some coding?  Why learn all this contrived syntax?
 
