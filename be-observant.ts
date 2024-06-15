@@ -14,7 +14,7 @@ class BeObservant extends BE implements Actions {
         propInfo: {
             ...beCnfg.propInfo,
             parsedStatements: {},
-            endPoints: {},
+            bindings: {},
         },
         actions: {
             noAttrs: {
@@ -24,7 +24,7 @@ class BeObservant extends BE implements Actions {
                 ifAtLeastOneOf: ['parsedStatements']
             },
             hydrate:{
-                ifAllOf: ['endPoints']
+                ifAllOf: ['bindings']
             }
         }
     }
@@ -66,7 +66,7 @@ class BeObservant extends BE implements Actions {
     async seek(self: this){
         const {parsedStatements, enhancedElement} = self;
         console.log({parsedStatements});
-        const endPoints: Array<EndPoints> = [];
+        const bindings: Array<EndPoints> = [];
         for(const ps of parsedStatements!){
             const {localPropToSet, remoteSpecifiers} = ps;
             const localSignal = //localPropToSet === 
@@ -78,31 +78,31 @@ class BeObservant extends BE implements Actions {
                 const res = await seeker.do(self, undefined, enhancedElement);
                 remoteSignalAndEvents.push(res!);
             }
-            const emitterScenario: EndPoints = {
+            const endPoints: EndPoints = {
                 ...ps,
                 remoteSignalAndEvents,
                 localSignal
             } 
-            endPoints.push(emitterScenario);
+            bindings.push(endPoints);
         }
 
         
        
 
         return {
-            endPoints
+            bindings
         } as PAP
     }
 
     async hydrate(self: this){
-        const {endPoints} = self;
+        const {bindings} = self;
         if(this.#hasOnload){
             throw 'NI';
         }
-        for(const endPoint of endPoints!){
-            await this.#pullInValue(self, endPoint);
-            this.#scheduleUpdates(self, endPoint);
-            console.log({endPoint})
+        for(const endPoints of bindings!){
+            await this.#pullInValue(self, endPoints);
+            this.#scheduleUpdates(self, endPoints);
+            console.log({endPoint: endPoints})
         }
         return {
             resolved: true

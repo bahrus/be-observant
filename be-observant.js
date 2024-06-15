@@ -9,7 +9,7 @@ class BeObservant extends BE {
         propInfo: {
             ...beCnfg.propInfo,
             parsedStatements: {},
-            endPoints: {},
+            bindings: {},
         },
         actions: {
             noAttrs: {
@@ -19,7 +19,7 @@ class BeObservant extends BE {
                 ifAtLeastOneOf: ['parsedStatements']
             },
             hydrate: {
-                ifAllOf: ['endPoints']
+                ifAllOf: ['bindings']
             }
         }
     };
@@ -58,7 +58,7 @@ class BeObservant extends BE {
     async seek(self) {
         const { parsedStatements, enhancedElement } = self;
         console.log({ parsedStatements });
-        const endPoints = [];
+        const bindings = [];
         for (const ps of parsedStatements) {
             const { localPropToSet, remoteSpecifiers } = ps;
             const localSignal = //localPropToSet === 
@@ -71,26 +71,26 @@ class BeObservant extends BE {
                 const res = await seeker.do(self, undefined, enhancedElement);
                 remoteSignalAndEvents.push(res);
             }
-            const emitterScenario = {
+            const endPoints = {
                 ...ps,
                 remoteSignalAndEvents,
                 localSignal
             };
-            endPoints.push(emitterScenario);
+            bindings.push(endPoints);
         }
         return {
-            endPoints
+            bindings
         };
     }
     async hydrate(self) {
-        const { endPoints } = self;
+        const { bindings } = self;
         if (this.#hasOnload) {
             throw 'NI';
         }
-        for (const endPoint of endPoints) {
-            await this.#pullInValue(self, endPoint);
-            this.#scheduleUpdates(self, endPoint);
-            console.log({ endPoint });
+        for (const endPoints of bindings) {
+            await this.#pullInValue(self, endPoints);
+            this.#scheduleUpdates(self, endPoints);
+            console.log({ endPoint: endPoints });
         }
         return {
             resolved: true
