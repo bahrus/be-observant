@@ -27,9 +27,6 @@ class BeObservant extends BE implements Actions {
             hydrate:{
                 ifAllOf: ['bindings']
             },
-            // onRawStatements: {
-            //     ifAllOf:  ['rawStatements']
-            // }
         },
         positractions: [
             {
@@ -185,10 +182,6 @@ class BeObservant extends BE implements Actions {
         }
     }
 
-    onRawStatements(self: this): void {
-        const {rawStatements} = self;
-        console.error('The following statements could not be parsed.', rawStatements);
-    }
 }
 
 

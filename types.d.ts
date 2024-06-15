@@ -32,8 +32,7 @@ export interface Actions{
     noAttrs(self: this): ProPAP;
     seek(self: this): ProPAP;
     hydrate(self: this): ProPAP;
-    onRawStatements(self: this): void;
-    warn(args: any): void;
+    warn(...data: any[]): void;
 }
 
 
