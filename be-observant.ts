@@ -117,6 +117,7 @@ class BeObservant extends BE implements Actions {
         const {prop, signal: localHardRef} = localSignal!;
         const remove: SignalAndEvent[] = [];
         let i = 0;
+        let accumulator: any;
         for(const rse of remoteSignalAndEvents){
             const {signal} = rse;
             const hardRef = signal?.deref();
@@ -126,10 +127,18 @@ class BeObservant extends BE implements Actions {
                 continue;
             }
             const remoteVal = await getObsVal(hardRef, remoteSpecifiers[i], enhancedElement);
-            console.log({localSignal, remoteVal});
-            (<any>localHardRef)[prop!] = remoteVal;
+            switch(aggregateRemoteVals){
+                case 'Union':
+                    accumulator = accumulator || remoteVal;
+                    if(accumulator) break;
+                    break;
+            }
+            
             i++;
         }
+        console.log({localSignal, accumulator});
+        (<any>localHardRef)[prop!] = accumulator;
+        //TODO remove
     }
 
     async #scheduleUpdates(self: this, emitters: EndPoints){
