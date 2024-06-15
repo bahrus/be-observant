@@ -9,7 +9,7 @@ class BeObservant extends BE {
         propInfo: {
             ...beCnfg.propInfo,
             parsedStatements: {},
-            emitters: {},
+            endPoints: {},
         },
         actions: {
             noAttrs: {
@@ -19,7 +19,7 @@ class BeObservant extends BE {
                 ifAtLeastOneOf: ['parsedStatements']
             },
             hydrate: {
-                ifAllOf: ['emitters']
+                ifAllOf: ['endPoints']
             }
         }
     };
@@ -58,7 +58,7 @@ class BeObservant extends BE {
     async seek(self) {
         const { parsedStatements, enhancedElement } = self;
         console.log({ parsedStatements });
-        const emitters = [];
+        const endPoints = [];
         for (const ps of parsedStatements) {
             const { localPropToSet, remoteSpecifiers } = ps;
             const localSignal = //localPropToSet === 
@@ -76,21 +76,21 @@ class BeObservant extends BE {
                 remoteSignalAndEvents,
                 localSignal
             };
-            emitters.push(emitterScenario);
+            endPoints.push(emitterScenario);
         }
         return {
-            emitters
+            endPoints
         };
     }
     async hydrate(self) {
-        const { emitters } = self;
+        const { endPoints } = self;
         if (this.#hasOnload) {
             throw 'NI';
         }
-        for (const emitter of emitters) {
-            await this.#pullInValue(self, emitter);
-            this.#scheduleUpdates(self, emitter);
-            console.log({ emitter });
+        for (const endPoint of endPoints) {
+            await this.#pullInValue(self, endPoint);
+            this.#scheduleUpdates(self, endPoint);
+            console.log({ endPoint });
         }
         return {
             resolved: true

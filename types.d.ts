@@ -11,7 +11,7 @@ export interface AllProps extends EndUserProps{
     isScriptExpression: boolean,
     //observedFactors?: Array<Specifier>,
     parsedStatements?: Array<ObservingParameters>,
-    emitters?: Array<EndPoints>
+    endPoints?: Array<EndPoints>
 }
 
 
