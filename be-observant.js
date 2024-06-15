@@ -97,7 +97,8 @@ class BeObservant extends BE {
     }
     async #pullInValue(self, emitters) {
         const { enhancedElement } = this;
-        const { remoteSignalAndEvents, remoteSpecifiers } = emitters;
+        const { remoteSignalAndEvents, remoteSpecifiers, localSignal } = emitters;
+        const { prop, signal: localHardRef } = localSignal;
         const remove = [];
         let i = 0;
         for (const rse of remoteSignalAndEvents) {
@@ -108,8 +109,9 @@ class BeObservant extends BE {
                 i++;
                 continue;
             }
-            const removeVal = await getObsVal(hardRef, remoteSpecifiers[i], enhancedElement);
-            console.log(removeVal);
+            const remoteVal = await getObsVal(hardRef, remoteSpecifiers[i], enhancedElement);
+            console.log({ localSignal, remoteVal });
+            localHardRef[prop] = remoteVal;
             i++;
         }
     }

@@ -110,7 +110,8 @@ class BeObservant extends BE implements Actions {
 
     async #pullInValue(self: this, emitters: Emitters){
         const {enhancedElement} = this;
-        const {remoteSignalAndEvents, remoteSpecifiers} = emitters;
+        const {remoteSignalAndEvents, remoteSpecifiers, localSignal} = emitters;
+        const {prop, signal: localHardRef} = localSignal!;
         const remove: SignalAndEvent[] = [];
         let i = 0;
         for(const rse of remoteSignalAndEvents){
@@ -121,8 +122,9 @@ class BeObservant extends BE implements Actions {
                 i++;
                 continue;
             }
-            const removeVal = await getObsVal(hardRef, remoteSpecifiers[i], enhancedElement);
-            console.log(removeVal);
+            const remoteVal = await getObsVal(hardRef, remoteSpecifiers[i], enhancedElement);
+            console.log({localSignal, remoteVal});
+            (<any>localHardRef)[prop!] = remoteVal;
             i++;
         }
     }
