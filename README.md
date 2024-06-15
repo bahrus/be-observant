@@ -344,7 +344,7 @@ They are:
 
 4.  Interpolation [TODO]
 
-<mood-stone enh-🔭='and set sentenceProp to `${0} eats $1}` coming from @name and @food.'>
+<mood-stone enh-🔭='and set sentenceProp to `${0} eats $1}` weaving in @name and @food.'>
 
 ## For the power hungry JS-firsters
 
