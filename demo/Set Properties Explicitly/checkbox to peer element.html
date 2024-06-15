@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>With Slash</title>
+    <title>Set Properties Explicitly > Checkbox to Peer Element</title>
     <script type=importmap>
         {
             "imports": {
@@ -20,15 +20,14 @@
         }
     </script>
     <script type=module>
-        import 'xtal-element/xtal-element.js';
-        import '/be-o.js';
+        import 'xtal-element/index.js';
+        import '/🔭.js';
     </script>
 </head>
 <body>
     <input name=someCheckbox type=checkbox>
 
-    <mood-stone enh-be-o='of @someCheckbox.
-        Set isHappy.
+    <mood-stone enh-🔭='and set isHappy from @someCheckbox.
     '>
         <template shadowrootmode=open>
             <div itemscope>

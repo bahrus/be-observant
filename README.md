@@ -240,9 +240,11 @@ The editable checkbox element can observe changes to this "signal".
 
 We saw earlier that we can adorn elements with the itemprop attribute with 🔭 attribute, and it will automatically pull in values from the host.  This allows us to create a code-free "chain" of bindings from the host to Shadow children, and from the Shadow children to peer elements.
 
-# Specifying the property to assign the observed value to.
+# Specifying the property to assign the observed value(s) to.
 
-What we've seen above is a lot of mind reading about what our intentions are, based on context.  But sometimes we need to be more explicit because it isn't always transparent what we intend.
+What we've seen above is a lot of mind reading about what our intentions are, as far as how we want to apply what we are observing to the element adorned by *be-observant*.  Sometimes we are setting the "checked" property.  Sometimes we are setting the textContent.  
+
+But sometimes we need to be more explicit because it isn't always transparent what we intend.
 
 ## Single mapping from what to observe, specifying the property to target.
 
@@ -255,7 +257,7 @@ What we've seen above is a lot of mind reading about what our intentions are, ba
 
 ```
 
-This watches the input element for input events and passes the checked property to someBoolProp of oMyPeerElement.
+This watches the input element for input events and passes the checked property to someBoolProp of oMyPeerElement.  The word "and" is optional, there to allow for people who like to read complete sentences (including the (mentally mapped) attribute name)
 
 The enh- prefix is there to avoid possible conflicts with attributes recognized by my-peer-element, in the absence of any [tending loving care from the platform](https://github.com/WICG/webcomponents/issues/1000).
 
@@ -284,7 +286,7 @@ We now provide an interlude where we indicate how to inject JavaScript into the 
 
 ## Scripting bravely
 
-*be-observant* empowers the developer to tap into the full power of the JavaScript run time engine by adding script to the onload event.
+*be-observant* empowers the developer to tap into the full power of the JavaScript run time engine by adding script to the onload event of the adorned element.
 
 
 If we know that this enhancement is the only enhancement affecting the adorned element that leverages the onload event, we can skip some defensive maneuvers that avoid collisions with other enhancements (discussed in the next example), resulting in a fairly compact script:
@@ -298,7 +300,7 @@ If we know that this enhancement is the only enhancement affecting the adorned e
 
     <my-peer-element 
         enh-🔭='of @name and @food.'
-        onload="event.o.setProps = {myFirstProp: `${event.o.factors.name} eats ${event.o.factors.food}`"
+        onload="event.setProps = {myFirstProp: `${event.factors.name} eats ${event.factors.food}`"
     ></my-peer-element>
 </mood-stone>
 ```

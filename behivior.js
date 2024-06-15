@@ -1,6 +1,6 @@
 import { BeHive, seed, MountObserver } from 'be-hive/be-hive.js';
 const ofDependencies = String.raw `^of (?<dependencyPart>.*)`;
-const andSetFrom = String.raw `^and set (?<localPropToSet>.^) from (?<dependencyPart>.*)`;
+const andSetFrom = String.raw `^(a|A)nd set (?<localPropToSet>.*) from (?<dependencyPart>.*)`;
 const dssKeys = [['dependencyPart', 'remoteSpecifiers[]']];
 export const emc = {
     base: 'be-observant',
