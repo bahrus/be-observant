@@ -11,7 +11,8 @@ export interface AllProps extends EndUserProps{
     isScriptExpression: boolean,
     //observedFactors?: Array<Specifier>,
     parsedStatements?: Array<ObservingParameters>,
-    bindings?: Array<EndPoints>
+    bindings?: Array<EndPoints>,
+    rawStatements?: Array<string>
 }
 
 
@@ -31,6 +32,7 @@ export interface Actions{
     noAttrs(self: this): ProPAP;
     seek(self: this): ProPAP;
     hydrate(self: this): ProPAP;
+    onRawStatements(self: this): void;
 }
 
 

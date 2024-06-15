@@ -10,6 +10,7 @@ class BeObservant extends BE {
             ...beCnfg.propInfo,
             parsedStatements: {},
             bindings: {},
+            rawStatements: {},
         },
         actions: {
             noAttrs: {
@@ -20,6 +21,9 @@ class BeObservant extends BE {
             },
             hydrate: {
                 ifAllOf: ['bindings']
+            },
+            onRawStatements: {
+                ifAllOf: ['rawStatements']
             }
         }
     };
@@ -158,6 +162,10 @@ class BeObservant extends BE {
             }, { signal: ac.signal });
             i++;
         }
+    }
+    onRawStatements(self) {
+        const { rawStatements } = self;
+        console.error('The following statements could not be parsed.', rawStatements);
     }
 }
 await BeObservant.bootUp();

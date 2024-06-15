@@ -20,22 +20,22 @@
         }
     </script>
     <script type=module>
-        import 'xtal-element/xtal-element.js';
-        import '/be-o.js';
+        import 'xtal-element/index.js';
+        import '/🔭.js';
     </script>
 </head>
 <body>
     <input name=someCheckbox type=checkbox>
     <input name=someOtherCheckbox type=checkbox>
 
-    <mood-stone enh-be-o='of @someCheckbox and @someOtherCheckbox.
-        Set isHappy to $1.
-        Set isWealthy to $2.
+    <mood-stone enh-🔭='and set isHappy from @someCheckbox.
+        Set isWealthy from @someOtherCheckbox.
     '>
         <template shadowrootmode=open>
             <div itemscope>
                 is happy
                 <div itemprop=isHappy></div>
+                is wealthy
                 <div itemprop=isWealthy></div>
             </div>
             <xtal-element
