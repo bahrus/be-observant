@@ -6,21 +6,25 @@ import {getRemoteProp, getLocalSignal} from 'be-linked/defaults.js';
 import { Specifier } from 'trans-render/dss/types';
 import { LocalSignal, SignalAndEvent } from 'be-linked/types';
 import {Seeker} from 'be-linked/Seeker.js';
+import {getObsVal} from 'be-linked/getObsVal.js';
 
 class BeObservant extends BE implements Actions {
     static override config: BEConfig<AP & BEAllProps, Actions & IEnhancement, any> = {
         propDefaults:{},
         propInfo: {
             ...beCnfg.propInfo,
-            //observedFactors:{},
-            parsedStatements: {}
+            parsedStatements: {},
+            emitters: {},
         },
         actions: {
             noAttrs: {
                 ifNoneOf: ['parsedStatements']
             },
-            hydrate: {
+            seek: {
                 ifAtLeastOneOf: ['parsedStatements']
+            },
+            hydrate:{
+                ifAllOf: ['emitters']
             }
         }
     }
@@ -32,7 +36,7 @@ class BeObservant extends BE implements Actions {
         const {mountCnfg} = enhancementInfo;
         this.#emc = mountCnfg;
         this.#hasOnload = !!(el as HTMLElement).onload;
-        if(this.#hasOnload){
+        if(!this.#hasOnload){
             const {getLocalSignal} = await import('be-linked/defaults.js');
             this.#localSignal = await getLocalSignal(el);
         }
@@ -59,32 +63,68 @@ class BeObservant extends BE implements Actions {
         } as PAP
     }
 
-    async hydrate(self: this){
+    async seek(self: this){
         const {parsedStatements, enhancedElement} = self;
         console.log({parsedStatements});
         const emitters: Array<Emitters> = [];
         for(const ps of parsedStatements!){
             const {localPropToSet, remoteSpecifiers} = ps;
-            const localSignal = localPropToSet === 
-                undefined ? this.#localSignal : await getLocalSignal(enhancedElement);
+            const localSignal = //localPropToSet === 
+                //undefined ? 
+                this.#localSignal || await getLocalSignal(enhancedElement);
             const remoteSignalAndEvents: Array<SignalAndEvent> = [];
             for(const remoteSpecifier of remoteSpecifiers){
                 const seeker = new Seeker<AP, any>(remoteSpecifier, false);
                 const res = await seeker.do(self, undefined, enhancedElement);
                 remoteSignalAndEvents.push(res!);
             }
-            const emitters: Emitters = {
+            const emitterScenario: Emitters = {
                 ...ps,
                 remoteSignalAndEvents,
                 localSignal
             } 
+            emitters.push(emitterScenario);
         }
+
+        
        
 
         return {
-            resolved: true,
             emitters
         } as PAP
+    }
+
+    async hydrate(self: this){
+        const {emitters} = self;
+        if(this.#hasOnload){
+            throw 'NI';
+        }
+        for(const emitter of emitters!){
+            await this.#pullInValue(self, emitter);
+            console.log({emitter})
+        }
+        return {
+            resolved: true
+        } as PAP
+    }
+
+    async #pullInValue(self: this, emitters: Emitters){
+        const {enhancedElement} = this;
+        const {remoteSignalAndEvents, remoteSpecifiers} = emitters;
+        const remove: SignalAndEvent[] = [];
+        let i = 0;
+        for(const rse of remoteSignalAndEvents){
+            const {signal} = rse;
+            const hardRef = signal?.deref();
+            if(hardRef === undefined){
+                remove.push(rse);
+                i++;
+                continue;
+            }
+            const removeVal = await getObsVal(hardRef, remoteSpecifiers[i], enhancedElement);
+            console.log(removeVal);
+            i++;
+        }
     }
 }
 
