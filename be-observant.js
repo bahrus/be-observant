@@ -102,14 +102,14 @@ class BeObservant extends BE {
         const { remoteSignalAndEvents, remoteSpecifiers, localSignal, aggregateRemoteVals } = endPoints;
         console.log({ aggregateRemoteVals });
         const { prop, signal: localHardRef } = localSignal;
-        const remove = [];
+        //const remove: WeakEndPoint[] = [];
         let i = 0;
         let accumulator;
         for (const rse of remoteSignalAndEvents) {
             const { signal } = rse;
             const hardRef = signal?.deref();
             if (hardRef === undefined) {
-                remove.push(rse);
+                rse.isStale = true;
                 i++;
                 continue;
             }
@@ -123,11 +123,30 @@ class BeObservant extends BE {
             }
             i++;
         }
-        console.log({ localSignal, accumulator });
         localHardRef[prop] = accumulator;
+        endPoints.remoteSignalAndEvents = endPoints.remoteSignalAndEvents.filter(x => !x.isStale);
         //TODO remove
     }
-    async #scheduleUpdates(self, emitters) {
+    #ac = [];
+    async #scheduleUpdates(self, endPoints) {
+        const { remoteSignalAndEvents, remoteSpecifiers } = endPoints;
+        let i = 0;
+        for (const rse of remoteSignalAndEvents) {
+            const { signal, propagator } = rse;
+            const hardRef = signal?.deref();
+            if (hardRef === undefined) {
+                rse.isStale = true;
+                i++;
+                continue;
+            }
+            const remoteSpecifier = remoteSpecifiers[i];
+            const eventName = remoteSpecifier.evt || rse.eventSuggestion;
+            const ac = new AbortController();
+            (propagator || hardRef).addEventListener(eventName, e => {
+                this.#pullInValue(self, endPoints);
+            }, { signal: ac.signal });
+            i++;
+        }
     }
 }
 await BeObservant.bootUp();

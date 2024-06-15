@@ -4,7 +4,7 @@ import {Actions, AllProps, AP, EndPoints, ObservingParameters, PAP} from './type
 import {IEnhancement,  BEAllProps, EnhancementInfo, EMC} from 'trans-render/be/types';
 import {getRemoteProp, getLocalSignal} from 'be-linked/defaults.js';
 import { Specifier } from 'trans-render/dss/types';
-import { LocalSignal, SignalAndEvent } from 'be-linked/types';
+import { LocalSignal, WeakEndPoint } from 'be-linked/types';
 import {Seeker} from 'be-linked/Seeker.js';
 import {getObsVal} from 'be-linked/getObsVal.js';
 
@@ -73,7 +73,7 @@ class BeObservant extends BE implements Actions {
             const localSignal = //localPropToSet === 
                 //undefined ? 
                 this.#localSignal || await getLocalSignal(enhancedElement);
-            const remoteSignalAndEvents: Array<SignalAndEvent> = [];
+            const remoteSignalAndEvents: Array<WeakEndPoint> = [];
             for(const remoteSpecifier of remoteSpecifiers){
                 const seeker = new Seeker<AP, any>(remoteSpecifier, false);
                 const res = await seeker.do(self, undefined, enhancedElement);
@@ -115,14 +115,14 @@ class BeObservant extends BE implements Actions {
         const {remoteSignalAndEvents, remoteSpecifiers, localSignal, aggregateRemoteVals} = endPoints;
         console.log({aggregateRemoteVals});
         const {prop, signal: localHardRef} = localSignal!;
-        const remove: SignalAndEvent[] = [];
+        //const remove: WeakEndPoint[] = [];
         let i = 0;
         let accumulator: any;
         for(const rse of remoteSignalAndEvents){
             const {signal} = rse;
             const hardRef = signal?.deref();
             if(hardRef === undefined){
-                remove.push(rse);
+                rse.isStale = true;
                 i++;
                 continue;
             }
@@ -136,13 +136,31 @@ class BeObservant extends BE implements Actions {
             
             i++;
         }
-        console.log({localSignal, accumulator});
         (<any>localHardRef)[prop!] = accumulator;
+        endPoints.remoteSignalAndEvents = endPoints.remoteSignalAndEvents.filter(x => !x.isStale);
         //TODO remove
     }
 
-    async #scheduleUpdates(self: this, emitters: EndPoints){
-
+    #ac: AbortController[] = [];
+    async #scheduleUpdates(self: this, endPoints: EndPoints){
+        const {remoteSignalAndEvents, remoteSpecifiers} = endPoints;
+        let i = 0;
+        for(const rse of remoteSignalAndEvents){
+            const {signal, propagator} = rse;
+            const hardRef = signal?.deref();
+            if(hardRef === undefined){
+                rse.isStale = true;
+                i++;
+                continue;
+            }
+            const remoteSpecifier = remoteSpecifiers[i];
+            const eventName = remoteSpecifier.evt || rse.eventSuggestion;
+            const ac = new AbortController();
+            (propagator || hardRef).addEventListener(eventName!, e => {
+                this.#pullInValue(self, endPoints);
+            }, {signal: ac.signal})
+            i++;
+        }
     }
 }
 
