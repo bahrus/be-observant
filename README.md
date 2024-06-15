@@ -294,6 +294,7 @@ This example works, where each observing statement is treated independently:
 </mood-stone>
 ```
 
+
 ## Unionizing
 
 If multiple remote endpoints are observed that map to a single local prop, by default, the "truthy" union is applied to them all:
@@ -322,6 +323,28 @@ If multiple remote endpoints are observed that map to a single local prop, by de
 ```
 
 In other words, in this example, the *mood-stone*'s "isHappy" property will be set if either checkbox is checked.
+
+The number of things we can observe is limited only by when the developer tires of typing the word "and".
+
+*be-observant* also support additional ways of combining multiple remote endpoints into one local prop.
+
+They are:
+
+1.  Conjunction [TODO]
+
+<mood-stone enh-🔭='(and) set isHappy to the conjunction of @someCheckbox and @someOtherCheckbox.'>
+
+2.  Sum [TODO]
+
+<mood-stone enh-🔭='and set mySum to the sum of @someNumericInput and @someOtherNumericInput.'>
+
+3.  Product [TODO]
+
+<mood-stone enh-🔭='and set myProduct to the product of @someNumericInput and @someOtherNumericInput.'>
+
+4.  Interpolation [TODO]
+
+<mood-stone enh-🔭='and set sentenceProp to `${0} eats $1}` coming from @name and @food.'>
 
 ## For the power hungry JS-firsters
 
