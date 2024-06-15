@@ -32,14 +32,16 @@ class BeObservant extends BE implements Actions {
     #emc: EMC | undefined;
     #hasOnload: boolean | undefined;
     #localSignal: LocalSignal | undefined;
+    async #getLocalSignal() : Promise<LocalSignal>{
+        if(this.#localSignal !== undefined) return this.#localSignal;
+        const {getLocalSignal} = await import('be-linked/defaults.js');
+        this.#localSignal = await getLocalSignal(this.enhancedElement);
+        return this.#localSignal;
+    }
     async attach(el: Element, enhancementInfo: EnhancementInfo) {
         const {mountCnfg} = enhancementInfo;
         this.#emc = mountCnfg;
         this.#hasOnload = !!(el as HTMLElement).onload;
-        if(!this.#hasOnload){
-            const {getLocalSignal} = await import('be-linked/defaults.js');
-            this.#localSignal = await getLocalSignal(el);
-        }
         super.attach(el, enhancementInfo);
     }
 
@@ -70,9 +72,17 @@ class BeObservant extends BE implements Actions {
         const bindings: Array<EndPoints> = [];
         for(const ps of parsedStatements!){
             const {localPropToSet, remoteSpecifiers} = ps;
-            const localSignal = //localPropToSet === 
+            let localSignal: LocalSignal | undefined;
+            if(localPropToSet){
+                localSignal = {
+                    signal: enhancedElement,
+                    prop: localPropToSet,
+                    type: 'na'
+                };
+            }else if(!this.#hasOnload){
+                localSignal = await this.#getLocalSignal();
+            }
                 //undefined ? 
-                this.#localSignal || await getLocalSignal(enhancedElement);
             const remoteSignalAndEvents: Array<WeakEndPoint> = [];
             for(const remoteSpecifier of remoteSpecifiers){
                 const seeker = new Seeker<AP, any>(remoteSpecifier, false);

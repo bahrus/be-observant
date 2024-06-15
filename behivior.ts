@@ -3,7 +3,7 @@ import {ObservingParameters} from './types';
 
 const ofDependencies = String.raw `^of (?<dependencyPart>.*)`;
 
-const andSetFrom = String.raw `^(a|A)nd set (?<localPropToSet>.*) from (?<dependencyPart>.*)`;
+const andSetFrom = String.raw `^(.*)set (?<localPropToSet>.*) from (?<dependencyPart>.*)`;
 
 const dssKeys = [['dependencyPart', 'remoteSpecifiers[]']] as [string, string][];
 

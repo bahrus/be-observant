@@ -1,6 +1,6 @@
 import { config as beCnfg } from 'be-enhanced/config.js';
 import { BE } from 'be-enhanced/BE.js';
-import { getRemoteProp, getLocalSignal } from 'be-linked/defaults.js';
+import { getRemoteProp } from 'be-linked/defaults.js';
 import { Seeker } from 'be-linked/Seeker.js';
 import { getObsVal } from 'be-linked/getObsVal.js';
 class BeObservant extends BE {
@@ -26,14 +26,17 @@ class BeObservant extends BE {
     #emc;
     #hasOnload;
     #localSignal;
+    async #getLocalSignal() {
+        if (this.#localSignal !== undefined)
+            return this.#localSignal;
+        const { getLocalSignal } = await import('be-linked/defaults.js');
+        this.#localSignal = await getLocalSignal(this.enhancedElement);
+        return this.#localSignal;
+    }
     async attach(el, enhancementInfo) {
         const { mountCnfg } = enhancementInfo;
         this.#emc = mountCnfg;
         this.#hasOnload = !!el.onload;
-        if (!this.#hasOnload) {
-            const { getLocalSignal } = await import('be-linked/defaults.js');
-            this.#localSignal = await getLocalSignal(el);
-        }
         super.attach(el, enhancementInfo);
     }
     async noAttrs(self) {
@@ -62,10 +65,18 @@ class BeObservant extends BE {
         const bindings = [];
         for (const ps of parsedStatements) {
             const { localPropToSet, remoteSpecifiers } = ps;
-            const localSignal = //localPropToSet === 
-             
+            let localSignal;
+            if (localPropToSet) {
+                localSignal = {
+                    signal: enhancedElement,
+                    prop: localPropToSet,
+                    type: 'na'
+                };
+            }
+            else if (!this.#hasOnload) {
+                localSignal = await this.#getLocalSignal();
+            }
             //undefined ? 
-            this.#localSignal || await getLocalSignal(enhancedElement);
             const remoteSignalAndEvents = [];
             for (const remoteSpecifier of remoteSpecifiers) {
                 const seeker = new Seeker(remoteSpecifier, false);
