@@ -49,7 +49,8 @@ class BeObservant extends BE {
             host: true
         };
         const parsedStatement = {
-            remoteSpecifiers: [specifier]
+            remoteSpecifiers: [specifier],
+            aggregateRemoteVals: 'Union'
         };
         return {
             parsedStatements: [parsedStatement]

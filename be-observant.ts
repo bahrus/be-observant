@@ -56,7 +56,8 @@ class BeObservant extends BE implements Actions {
             host: true
         }
         const parsedStatement : ObservingParameters = {
-            remoteSpecifiers: [specifier]
+            remoteSpecifiers: [specifier],
+            aggregateRemoteVals: 'Union'
         };
         return {
             parsedStatements: [parsedStatement]
