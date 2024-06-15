@@ -261,18 +261,67 @@ This watches the input element for input events and passes the checked property 
 
 The enh- prefix is there to avoid possible conflicts with attributes recognized by my-peer-element, in the absence of any [tending loving care from the platform](https://github.com/WICG/webcomponents/issues/1000).
 
-## Observing multiple "signals"
+## Multiple parallel observers
 
+This example works, where each observing statement is treated independently:
 
 ```html
-<input name=yourCheckbox type=checkbox>
-<input name=myCheckbox type=checkbox>
+<input name=someCheckbox type=checkbox>
+<input name=someOtherCheckbox type=checkbox>
 
-<my-peer-element enh-🔭='
-    and set myFirstProp from @myCheckbox.
-    And set mySecondProp from @yourCheckbox.
-'></my-peer-element>
+<mood-stone enh-🔭='and set isHappy from @someCheckbox.
+    Set isWealthy from @someOtherCheckbox.
+'>
+    <template shadowrootmode=open>
+        <div itemscope>
+            is happy
+            <div itemprop=isHappy></div>
+            is wealthy
+            <div itemprop=isWealthy></div>
+        </div>
+        <xtal-element infer-props
+            prop-defaults='{
+                "isHappy": true,
+                "isWealthy": false
+            }'
+            xform='{
+                "| isHappy": 0,
+                "| isWealthy": 0
+            }'
+        ></xtal-element>
+        <be-hive></be-hive>
+    </template>
+</mood-stone>
 ```
+
+## Unionizing
+
+If multiple remote endpoints are observed that map to a single local prop, by default, the "truthy" union is applied to them all:
+
+```html
+<input name=someCheckbox type=checkbox>
+<input name=someOtherCheckbox type=checkbox>
+
+<mood-stone enh-🔭='and set isHappy from @someCheckbox and @someOtherCheckbox.'>
+    <template shadowrootmode=open>
+        <div itemscope>
+            is happy
+            <div itemprop=isHappy></div>
+        </div>
+        <xtal-element 
+            prop-defaults='{
+                "isHappy": true,
+            }'
+            xform='{
+                "| isHappy": 0,
+            }'
+        ></xtal-element>
+        <be-hive></be-hive>
+    </template>
+</mood-stone>
+```
+
+In other words, in this example, the *mood-stone*'s "isHappy" property will be set if either checkbox is checked.
 
 ## For the power hungry JS-firsters
 

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>With Slash</title>
+    <title>Set props > via union</title>
     <script type=importmap>
         {
             "imports": {
@@ -28,24 +28,18 @@
     <input name=someCheckbox type=checkbox>
     <input name=someOtherCheckbox type=checkbox>
 
-    <mood-stone enh-🔭='and set isHappy from @someCheckbox.
-        Set isWealthy from @someOtherCheckbox.
-    '>
+    <mood-stone enh-🔭='and set isHappy from @someCheckbox and @someOtherCheckbox.'>
         <template shadowrootmode=open>
             <div itemscope>
                 is happy
                 <div itemprop=isHappy></div>
-                is wealthy
-                <div itemprop=isWealthy></div>
             </div>
-            <xtal-element
+            <xtal-element 
                 prop-defaults='{
                     "isHappy": true,
-                    "isWealthy": false
                 }'
                 xform='{
                     "| isHappy": 0,
-                    "| isWealthy": 0
                 }'
             ></xtal-element>
             <be-hive></be-hive>
