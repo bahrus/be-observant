@@ -22,14 +22,22 @@ class BeObservant extends BE {
             hydrate: {
                 ifAllOf: ['bindings']
             },
-            onRawStatements: {
-                ifAllOf: ['rawStatements']
+            // onRawStatements: {
+            //     ifAllOf:  ['rawStatements']
+            // }
+        },
+        positractions: [
+            {
+                do: 'warn',
+                ifAllOf: ['rawStatements'],
+                pass: ['`The following statements could not be parsed.`', 'rawStatements']
             }
-        }
+        ]
     };
     #emc;
     #hasOnload;
     #localSignal;
+    warn = console.warn;
     async #getLocalSignal() {
         if (this.#localSignal !== undefined)
             return this.#localSignal;

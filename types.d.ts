@@ -33,6 +33,7 @@ export interface Actions{
     seek(self: this): ProPAP;
     hydrate(self: this): ProPAP;
     onRawStatements(self: this): void;
+    warn(args: any): void;
 }
 
 

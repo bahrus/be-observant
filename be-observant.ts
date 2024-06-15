@@ -27,15 +27,23 @@ class BeObservant extends BE implements Actions {
             hydrate:{
                 ifAllOf: ['bindings']
             },
-            onRawStatements: {
-                ifAllOf:  ['rawStatements']
+            // onRawStatements: {
+            //     ifAllOf:  ['rawStatements']
+            // }
+        },
+        positractions: [
+            {
+                do: 'warn',
+                ifAllOf: ['rawStatements'],
+                pass: ['`The following statements could not be parsed.`', 'rawStatements']
             }
-        }
+        ]
     }
 
     #emc: EMC | undefined;
     #hasOnload: boolean | undefined;
     #localSignal: LocalSignal | undefined;
+    warn = console.warn;
     async #getLocalSignal() : Promise<LocalSignal>{
         if(this.#localSignal !== undefined) return this.#localSignal;
         const {getLocalSignal} = await import('be-linked/defaults.js');
