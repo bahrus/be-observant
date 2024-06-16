@@ -338,7 +338,7 @@ They are:
 
 <mood-stone enh-🔭='and set mySum to the sum of @someNumericInput and @someOtherNumericInput.'>
 
-3.  Product [TODO]
+3.  Product [Untested]
 
 <mood-stone enh-🔭='and set myProduct to the product of @someNumericInput and @someOtherNumericInput.'>
 

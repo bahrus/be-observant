@@ -11,6 +11,8 @@ const andSetFromUnionOfDependencyPart = String.raw `${setLocalPropToSet} to the 
 
 const andSetFromSumOfDependencyPart = String.raw `${setLocalPropToSet} to the sum of ${ofDependencyPart}`;
 
+const andSetFromProductOfDependencyPart = String.raw `${setLocalPropToSet} to the sum of ${ofDependencyPart}`;
+
 const dssKeys = [['dependencyPart', 'remoteSpecifiers[]']] as [string, string][];
 
 export const emc: EMC = {
@@ -32,6 +34,13 @@ export const emc: EMC = {
                         regExp: andSetFromSumOfDependencyPart,
                         defaultVals: {
                             aggregateRemoteVals: 'Sum'
+                        } as ObservingParameters,
+                        dssKeys,
+                    },
+                    {
+                        regExp: andSetFromProductOfDependencyPart,
+                        defaultVals: {
+                            aggregateRemoteVals: 'Product'
                         } as ObservingParameters,
                         dssKeys,
                     },
