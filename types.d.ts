@@ -58,12 +58,13 @@ export interface EndPoints extends ObservingParameters{
 export type LoadEventName = 'load';
 
 export interface EventForObserver{
-    o: ObserverEventModel,
+    factors: {[key: string | number] : any},
+    setProps?: {[key: string]: any};
     enh: string,
 }
 
-export interface ObserverEventModel{
-    factors: {[key: string] : any},
-    vals: any[],
-    setProps?: {[key: string]: any};
-}
+// export interface ObserverEventModel{
+//     factors: {[key: string] : any},
+//     vals: any[],
+    
+// }

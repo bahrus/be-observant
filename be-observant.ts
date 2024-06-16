@@ -1,6 +1,6 @@
 import {config as beCnfg} from 'be-enhanced/config.js';
 import {BE, BEConfig} from 'be-enhanced/BE.js';
-import {Actions, AllProps, AP, EndPoints, ObservingParameters, PAP} from './types';
+import {Actions, AllProps, AP, EndPoints, EventForObserver, LoadEventName, ObservingParameters, PAP} from './types';
 import {IEnhancement,  BEAllProps, EnhancementInfo, EMC} from 'trans-render/be/types';
 import {getRemoteProp, getLocalSignal} from 'be-linked/defaults.js';
 import { Specifier } from 'trans-render/dss/types';
@@ -188,7 +188,15 @@ class BeObservant extends BE implements Actions {
         }
         endPoints.remoteSignalAndEvents = endPoints.remoteSignalAndEvents.filter(x => !x.isStale);
         if(this.#hasOnload){
-            console.log({accumulator});
+            //console.log({accumulator});
+            const setProps = {};
+            const loadEvent = new LoadEvent(
+                accumulator as {[key: string | number] : any},
+                setProps,
+                this.#emc!.enhPropKey
+            );
+            enhancedElement.dispatchEvent(loadEvent);
+            console.log(loadEvent.setProps);
         }else{
             const {prop, signal: localHardRef} = localSignal!;
             (<any>localHardRef)[prop!] = accumulator;
@@ -222,7 +230,17 @@ class BeObservant extends BE implements Actions {
 
 }
 
+export class LoadEvent extends Event implements EventForObserver {
+    static EventName: LoadEventName = 'load';
 
+    constructor(
+        public factors: {[key: string | number] : any},
+        public setProps: {[key: string]: any},
+        public enh: string,
+    ){
+        super(LoadEvent.EventName);
+    }
+}
 
 interface BeObservant extends AP{}
 

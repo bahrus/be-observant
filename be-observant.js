@@ -174,7 +174,11 @@ class BeObservant extends BE {
         }
         endPoints.remoteSignalAndEvents = endPoints.remoteSignalAndEvents.filter(x => !x.isStale);
         if (this.#hasOnload) {
-            console.log({ accumulator });
+            //console.log({accumulator});
+            const setProps = {};
+            const loadEvent = new LoadEvent(accumulator, setProps, this.#emc.enhPropKey);
+            enhancedElement.dispatchEvent(loadEvent);
+            console.log(loadEvent.setProps);
         }
         else {
             const { prop, signal: localHardRef } = localSignal;
@@ -202,6 +206,18 @@ class BeObservant extends BE {
             }, { signal: ac.signal });
             i++;
         }
+    }
+}
+export class LoadEvent extends Event {
+    factors;
+    setProps;
+    enh;
+    static EventName = 'load';
+    constructor(factors, setProps, enh) {
+        super(LoadEvent.EventName);
+        this.factors = factors;
+        this.setProps = setProps;
+        this.enh = enh;
     }
 }
 await BeObservant.bootUp();
