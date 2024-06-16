@@ -62,7 +62,7 @@ class BeObservant extends BE {
         };
         const parsedStatement = {
             remoteSpecifiers: [specifier],
-            aggregateRemoteVals: 'Union'
+            aggregateRemoteVals: 'Conjunction'
         };
         return {
             parsedStatements: [parsedStatement]
@@ -125,6 +125,20 @@ class BeObservant extends BE {
         //const remove: WeakEndPoint[] = [];
         let i = 0;
         let accumulator;
+        switch (aggregateRemoteVals) {
+            case 'Sum':
+                accumulator = 0;
+                break;
+            case 'Product':
+                accumulator = 1;
+                break;
+            case 'Objectifying':
+                accumulator = {};
+                break;
+            case 'Conjunction':
+                accumulator = true;
+                break;
+        }
         for (const rse of remoteSignalAndEvents) {
             const { signal } = rse;
             const hardRef = signal?.deref();
@@ -133,12 +147,23 @@ class BeObservant extends BE {
                 i++;
                 continue;
             }
-            const remoteVal = await getObsVal(hardRef, remoteSpecifiers[i], enhancedElement);
+            const remoteSpecifier = remoteSpecifiers[i];
+            const remoteVal = await getObsVal(hardRef, remoteSpecifier, enhancedElement);
             switch (aggregateRemoteVals) {
                 case 'Union':
                     accumulator = accumulator || remoteVal;
-                    if (accumulator)
-                        break;
+                    break;
+                case 'Conjunction':
+                    accumulator = accumulator && remoteVal;
+                    break;
+                case 'Sum':
+                    accumulator += remoteVal;
+                    break;
+                case 'Product':
+                    accumulator *= remoteVal;
+                    break;
+                case 'Objectifying':
+                    accumulator[remoteSpecifier.prop] = remoteVal;
                     break;
             }
             i++;

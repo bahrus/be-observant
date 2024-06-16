@@ -297,7 +297,7 @@ This example works, where each observing statement is treated independently:
 
 ## Unionizing
 
-If multiple remote endpoints are observed that map to a single local prop, by default, the "truthy" union is applied to them all:
+If multiple remote endpoints are observed that map to a single local prop, by default, the "truthy" conjunction (&&) is applied to them all.  This will often result in passing in the value of the last property, unless the properties are actual booleans as they are below:
 
 ```html
 <input name=someCheckbox type=checkbox>

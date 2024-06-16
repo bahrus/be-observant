@@ -13,14 +13,14 @@ export const emc = {
                     {
                         regExp: andSetFrom,
                         defaultVals: {
-                            aggregateRemoteVals: 'Union'
+                            aggregateRemoteVals: 'Conjunction'
                         },
                         dssKeys,
                     },
                     {
                         regExp: ofDependencies,
                         defaultVals: {
-                            aggregateRemoteVals: 'Union'
+                            aggregateRemoteVals: 'Conjunction'
                         },
                         dssKeys
                     }

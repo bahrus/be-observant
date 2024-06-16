@@ -18,14 +18,14 @@ export const emc: EMC = {
                     {
                         regExp: andSetFrom,
                         defaultVals: {
-                            aggregateRemoteVals: 'Union'
+                            aggregateRemoteVals: 'Conjunction'
                         } as ObservingParameters,
                         dssKeys,
                     },
                     {
                         regExp: ofDependencies,
                         defaultVals:{
-                            aggregateRemoteVals: 'Union'
+                            aggregateRemoteVals: 'Conjunction'
                         } as ObservingParameters,
                         dssKeys
                     }
