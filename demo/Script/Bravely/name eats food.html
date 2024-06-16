@@ -50,16 +50,13 @@
         <template shadowrootmode=open>
             <div itemscope>
                 <div itemprop=myFirstProp></div>
-                <div itemprop=mySecondProp></div>
             </div>
             <xtal-element
                 prop-defaults='{
-                    "myFirstProp": "",
-                    "mySecondProp": ""
+                    "myFirstProp": ""
                 }'
                 xform='{
-                    "| myFirstProp": 0,
-                    "| mySecondProp": 0
+                    "| myFirstProp": 0
                 }'
             ></xtal-element>
             <be-hive></be-hive>
