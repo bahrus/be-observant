@@ -396,35 +396,46 @@ If we know that this enhancement is the only enhancement affecting the adorned e
 </mood-stone>
 ```
 
+Note that it is also to add event listener to the adorned element (*mood-stone* in this case) with event 'load' and add additional properties to set.
+
 ## Scripting defensively
 
-```html
-<mood-stone>
-    #shadow
-    
-    <input name=name>
-    <input name=food>
+If using an enhancement from the [be-enhanced](https://github.com/bahrus/be-enhanced) family of [behaviors](https://github.com/bahrus/be-hive)/enhancements, a key identifier that distinguishes enhancements from one another is the "enh" key.  So this is how to code the onload event in such a way that it doesn't interfere with any other enhancements that make use of the onload event.  Basically, just an added if condition:
 
-    <my-peer-element 
-        enh-🔭='of @name and @food.'
-        onload="{
-            const {enh} = event; //enh = 'o' 
-            const e = event[enh];
-            const {factors: f} = e;
-            switch(enh){
-                'o':{
-                    e.setProps = {
-                        myFirstProp: `${f.name} eats ${f.food}`,
-                        mySecondProp: `${f[0]} eats ${f[1]}
-                    }
-                }
+```html
+<label>
+    Name:
+    <input name=name>
+</label>
+<label>
+    Food:
+    <input name=food>
+</label>
+
+<mood-stone enh-🔭='of @name and @food.'
+    onload="
+        const {factors, setProps, enh} = event;
+        switch(enh){
+            case '🔭':{
+                Object.assign(setProps, {
+                    myFirstProp: `${factors.name} eats ${factors.food}`,
+                });
             }
-        }"
-    ></my-peer-element>
+        }
+
+    "
+>
+    <template shadowrootmode=open>
+        <div itemscope>
+            <div itemprop=myFirstProp></div>
+        </div>
+        <xtal-element infer-props></xtal-element>
+        <be-hive></be-hive>
+    </template>
 </mood-stone>
 ```
 
-## Attaching and setting other enhancement values
+## Attaching and setting other enhancement values [TODO]
 
 ```html
 <input name=search type=search>

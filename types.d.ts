@@ -12,7 +12,8 @@ export interface AllProps extends EndUserProps{
     //observedFactors?: Array<Specifier>,
     parsedStatements?: Array<ObservingParameters>,
     bindings?: Array<EndPoints>,
-    rawStatements?: Array<string>
+    rawStatements?: Array<string>,
+    didInferring?: boolean,
 }
 
 
@@ -30,6 +31,7 @@ export type POA = [PAP | undefined, ActionOnEventConfigs<PAP, Actions>];
 
 export interface Actions{
     noAttrs(self: this): ProPAP;
+    infer(self: this) : ProPAP;
     seek(self: this): ProPAP;
     hydrate(self: this): ProPAP;
     warn(...data: any[]): void;

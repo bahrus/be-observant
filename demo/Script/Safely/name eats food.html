@@ -20,8 +20,8 @@
         }
     </script>
     <script type=module>
-        import 'xtal-element/xtal-element.js';
-        import '/be-o.js';
+        import 'xtal-element/index.js';
+        import '/🔭.js';
     </script>
 </head>
 <body>
@@ -33,18 +33,16 @@
         Food:
         <input name=food>
     </label>
-    
 
-    <mood-stone enh-be-o='of @name and @food.'
+    <mood-stone enh-🔭='of @name and @food.'
         onload="
-            const {enh} = event;
+            const {factors, setProps, enh} = event;
             switch(enh){
-                case 'o':
-                    const {o} = event;
-                    o.setProps = {
-                        myFirstProp: `${o.factors.name} eats ${o.factors.food}`,
-                    } 
-                    break;
+                case '🔭':{
+                    Object.assign(setProps, {
+                        myFirstProp: `${factors.name} eats ${factors.food}`,
+                    });
+                }
             }
 
         "
@@ -52,18 +50,8 @@
         <template shadowrootmode=open>
             <div itemscope>
                 <div itemprop=myFirstProp></div>
-                <div itemprop=mySecondProp></div>
             </div>
-            <xtal-element
-                prop-defaults='{
-                    "myFirstProp": "",
-                    "mySecondProp": ""
-                }'
-                xform='{
-                    "| myFirstProp": 0,
-                    "| mySecondProp": 0
-                }'
-            ></xtal-element>
+            <xtal-element infer-props></xtal-element>
             <be-hive></be-hive>
         </template>
     </mood-stone>

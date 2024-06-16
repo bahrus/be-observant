@@ -1,11 +1,12 @@
 import { config as beCnfg } from 'be-enhanced/config.js';
 import { BE } from 'be-enhanced/BE.js';
-import { getRemoteProp } from 'be-linked/defaults.js';
 import { Seeker } from 'be-linked/Seeker.js';
 import { getObsVal } from 'be-linked/getObsVal.js';
 class BeObservant extends BE {
     static config = {
-        propDefaults: {},
+        propDefaults: {
+            didInferring: false,
+        },
         propInfo: {
             ...beCnfg.propInfo,
             parsedStatements: {},
@@ -16,8 +17,12 @@ class BeObservant extends BE {
             noAttrs: {
                 ifNoneOf: ['parsedStatements']
             },
+            infer: {
+                ifAllOf: ['parsedStatements'],
+                ifNoneOf: ['didInferring']
+            },
             seek: {
-                ifAtLeastOneOf: ['parsedStatements']
+                ifAllOf: ['didInferring', 'parsedStatements']
             },
             hydrate: {
                 ifAllOf: ['bindings']
@@ -50,6 +55,7 @@ class BeObservant extends BE {
     }
     async noAttrs(self) {
         const { enhancedElement } = self;
+        const { getRemoteProp } = await import('be-linked/defaults.js');
         const specifier = {
             s: '/',
             elS: '*',
@@ -65,7 +71,30 @@ class BeObservant extends BE {
             aggregateRemoteVals: this.#hasOnload ? 'ObjectAssign' : 'Conjunction'
         };
         return {
+            didInferring: true,
             parsedStatements: [parsedStatement]
+        };
+    }
+    async infer(self) {
+        const { parsedStatements, enhancedElement } = self;
+        for (const ps of parsedStatements) {
+            const { localPropToSet, remoteSpecifiers } = ps;
+            if (localPropToSet !== undefined)
+                continue;
+            for (const remoteSpecifier of remoteSpecifiers) {
+                const { s, prop } = remoteSpecifier;
+                switch (s) {
+                    case '~':
+                        if (prop === undefined) {
+                            const { getRemoteProp } = await import('be-linked/defaults.js');
+                            remoteSpecifier.prop = getRemoteProp(enhancedElement);
+                        }
+                        break;
+                }
+            }
+        }
+        return {
+            didInferring: true
         };
     }
     async seek(self) {

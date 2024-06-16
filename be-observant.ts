@@ -2,7 +2,7 @@ import {config as beCnfg} from 'be-enhanced/config.js';
 import {BE, BEConfig} from 'be-enhanced/BE.js';
 import {Actions, AllProps, AP, EndPoints, EventForObserver, LoadEventName, ObservingParameters, PAP} from './types';
 import {IEnhancement,  BEAllProps, EnhancementInfo, EMC} from 'trans-render/be/types';
-import {getRemoteProp, getLocalSignal} from 'be-linked/defaults.js';
+//import {getRemoteProp, getLocalSignal} from 'be-linked/defaults.js';
 import { Specifier } from 'trans-render/dss/types';
 import { LocalSignal, WeakEndPoint } from 'be-linked/types';
 import {Seeker} from 'be-linked/Seeker.js';
@@ -10,7 +10,9 @@ import {getObsVal} from 'be-linked/getObsVal.js';
 
 class BeObservant extends BE implements Actions {
     static override config: BEConfig<AP & BEAllProps, Actions & IEnhancement, any> = {
-        propDefaults:{},
+        propDefaults:{
+            didInferring: false,
+        },
         propInfo: {
             ...beCnfg.propInfo,
             parsedStatements: {},
@@ -21,8 +23,12 @@ class BeObservant extends BE implements Actions {
             noAttrs: {
                 ifNoneOf: ['parsedStatements']
             },
+            infer: {
+                ifAllOf: ['parsedStatements'],
+                ifNoneOf: ['didInferring']
+            },
             seek: {
-                ifAtLeastOneOf: ['parsedStatements']
+                ifAllOf: ['didInferring', 'parsedStatements']
             },
             hydrate:{
                 ifAllOf: ['bindings']
@@ -56,6 +62,7 @@ class BeObservant extends BE implements Actions {
 
     async noAttrs(self: this){
         const {enhancedElement} = self;
+        const {getRemoteProp} = await import('be-linked/defaults.js');
         const specifier: Specifier = {
             s: '/',
             elS: '*',
@@ -71,7 +78,30 @@ class BeObservant extends BE implements Actions {
             aggregateRemoteVals: this.#hasOnload ? 'ObjectAssign' : 'Conjunction'
         };
         return {
+            didInferring: true,
             parsedStatements: [parsedStatement]
+        } as PAP
+    }
+
+    async infer(self: this){
+        const {parsedStatements, enhancedElement} = self;
+        for(const ps of parsedStatements!){
+            const {localPropToSet, remoteSpecifiers} = ps;
+            if(localPropToSet !== undefined) continue;
+            for(const remoteSpecifier of remoteSpecifiers){
+                const {s, prop} = remoteSpecifier;
+                switch(s){
+                    case '~':
+                        if(prop === undefined){
+                            const {getRemoteProp} = await import('be-linked/defaults.js');
+                            remoteSpecifier.prop = getRemoteProp(enhancedElement);
+                        }
+                        break;
+                }
+            }
+        }
+        return {
+            didInferring: true
         } as PAP
     }
 
