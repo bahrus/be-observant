@@ -37,7 +37,6 @@
 
     <mood-stone enh-🔭='of @name and @food.'
         onload="
-            console.log(event);
             const {factors, setProps} = event;
             Object.assign(setProps, {
                 myFirstProp: `${factors.name} eats ${factors.food}`,

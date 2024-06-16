@@ -77,7 +77,6 @@ class BeObservant extends BE implements Actions {
 
     async seek(self: this){
         const {parsedStatements, enhancedElement} = self;
-        console.log({parsedStatements});
         const bindings: Array<EndPoints> = [];
         for(const ps of parsedStatements!){
             if(ps.aggregateRemoteVals === 'Conjunction' && this.#hasOnload){
@@ -122,7 +121,6 @@ class BeObservant extends BE implements Actions {
         for(const endPoints of bindings!){
             await this.#pullInValue(self, endPoints);
             this.#scheduleUpdates(self, endPoints);
-            console.log({endPoint: endPoints})
         }
         return {
             resolved: true
@@ -132,7 +130,6 @@ class BeObservant extends BE implements Actions {
     async #pullInValue(self: this, endPoints: EndPoints){
         const {enhancedElement} = this;
         const {remoteSignalAndEvents, remoteSpecifiers, localSignal, aggregateRemoteVals} = endPoints;
-        console.log({aggregateRemoteVals});
         
         let i = 0;
         let accumulator: any;
