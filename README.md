@@ -369,39 +369,31 @@ We now provide an interlude where we indicate how to inject JavaScript into the 
 If we know that this enhancement is the only enhancement affecting the adorned element that leverages the onload event, we can skip some defensive maneuvers that avoid collisions with other enhancements (discussed in the next example), resulting in a fairly compact script:
 
 ```html
-    <label>
-        Name:
-        <input name=name>
-    </label>
-    <label>
-        Food:
-        <input name=food>
-    </label>
-    
+<label>
+    Name:
+    <input name=name>
+</label>
+<label>
+    Food:
+    <input name=food>
+</label>
 
-    <mood-stone enh-🔭='of @name and @food.'
-        onload="
-            const {factors, setProps} = event;
-            Object.assign(setProps, {
-                myFirstProp: `${factors.name} eats ${factors.food}`,
-            });
-        "
-    >
-        <template shadowrootmode=open>
-            <div itemscope>
-                <div itemprop=myFirstProp></div>
-            </div>
-            <xtal-element
-                prop-defaults='{
-                    "myFirstProp": ""
-                }'
-                xform='{
-                    "| myFirstProp": 0
-                }'
-            ></xtal-element>
-            <be-hive></be-hive>
-        </template>
-    </mood-stone>
+<mood-stone enh-🔭='of @name and @food.'
+    onload="
+        const {factors, setProps} = event;
+        Object.assign(setProps, {
+            myFirstProp: `${factors.name} eats ${factors.food}`,
+        });
+    "
+>
+    <template shadowrootmode=open>
+        <div itemscope>
+            <div itemprop=myFirstProp></div>
+        </div>
+        <xtal-element infer-props></xtal-element>
+        <be-hive></be-hive>
+    </template>
+</mood-stone>
 ```
 
 ## Scripting defensively

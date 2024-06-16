@@ -33,7 +33,6 @@
         Food:
         <input name=food>
     </label>
-    
 
     <mood-stone enh-🔭='of @name and @food.'
         onload="
@@ -51,14 +50,7 @@
             <div itemscope>
                 <div itemprop=myFirstProp></div>
             </div>
-            <xtal-element
-                prop-defaults='{
-                    "myFirstProp": ""
-                }'
-                xform='{
-                    "| myFirstProp": 0
-                }'
-            ></xtal-element>
+            <xtal-element infer-props></xtal-element>
             <be-hive></be-hive>
         </template>
     </mood-stone>
