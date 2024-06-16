@@ -1,9 +1,13 @@
 import {BeHive, EMC, seed, MountObserver} from 'be-hive/be-hive.js';
 import {ObservingParameters} from './types';
 
-const ofDependencies = String.raw `^of (?<dependencyPart>.*)`;
+const ofDependencyPart = String.raw `of (?<dependencyPart>.*)`;
+const ofDependencies = String.raw `^${ofDependencyPart}`;
+const setLocalPropToSet = String.raw `^(.*)(s|S)et (?<localPropToSet>.*)`;
 
-const andSetFrom = String.raw `^(.*)(s|S)et (?<localPropToSet>.*) from (?<dependencyPart>.*)`;
+const andSetFrom = String.raw `${setLocalPropToSet} from (?<dependencyPart>.*)`;
+
+const andSetFromUnionOfDependencyParty = String.raw `${setLocalPropToSet} to the union ${ofDependencyPart}`;
 
 const dssKeys = [['dependencyPart', 'remoteSpecifiers[]']] as [string, string][];
 
@@ -15,6 +19,13 @@ export const emc: EMC = {
             objValMapsTo: '.',
             regExpExts: {
                 parsedStatements: [
+                    {
+                        regExp: andSetFromUnionOfDependencyParty,
+                        defaultVals: {
+                            aggregateRemoteVals: 'Union'
+                        } as ObservingParameters,
+                        dssKeys,
+                    },
                     {
                         regExp: andSetFrom,
                         defaultVals: {

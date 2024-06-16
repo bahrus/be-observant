@@ -330,9 +330,9 @@ The number of things we can observe is limited only by when the developer tires 
 
 They are:
 
-1.  Conjunction [TODO]
+1.  Union
 
-<mood-stone enh-🔭='(and) set isHappy to the conjunction of @someCheckbox and @someOtherCheckbox.'>
+<mood-stone enh-🔭='(and) set isHappy to the union of @someCheckbox and @someOtherCheckbox.'>
 
 2.  Sum [TODO]
 
