@@ -68,7 +68,7 @@ class BeObservant extends BE implements Actions {
         }
         const parsedStatement : ObservingParameters = {
             remoteSpecifiers: [specifier],
-            aggregateRemoteVals: 'Conjunction'
+            aggregateRemoteVals: this.#hasOnload ? 'ObjectAssign' : 'Conjunction'
         };
         return {
             parsedStatements: [parsedStatement]
@@ -80,6 +80,9 @@ class BeObservant extends BE implements Actions {
         console.log({parsedStatements});
         const bindings: Array<EndPoints> = [];
         for(const ps of parsedStatements!){
+            if(ps.aggregateRemoteVals === 'Conjunction' && this.#hasOnload){
+                ps.aggregateRemoteVals = 'ObjectAssign';
+            }
             const {localPropToSet, remoteSpecifiers} = ps;
             let localSignal: LocalSignal | undefined;
             if(localPropToSet){
@@ -116,9 +119,6 @@ class BeObservant extends BE implements Actions {
 
     async hydrate(self: this){
         const {bindings} = self;
-        if(this.#hasOnload){
-            throw 'NI';
-        }
         for(const endPoints of bindings!){
             await this.#pullInValue(self, endPoints);
             this.#scheduleUpdates(self, endPoints);
@@ -133,8 +133,7 @@ class BeObservant extends BE implements Actions {
         const {enhancedElement} = this;
         const {remoteSignalAndEvents, remoteSpecifiers, localSignal, aggregateRemoteVals} = endPoints;
         console.log({aggregateRemoteVals});
-        const {prop, signal: localHardRef} = localSignal!;
-        //const remove: WeakEndPoint[] = [];
+        
         let i = 0;
         let accumulator: any;
         switch(aggregateRemoteVals){
@@ -150,6 +149,8 @@ class BeObservant extends BE implements Actions {
             case 'Conjunction':
                 accumulator = true;
                 break;
+            case 'ArrayPush':
+                accumulator = [];
         }
         for(const rse of remoteSignalAndEvents){
             const {signal} = rse;
@@ -176,14 +177,24 @@ class BeObservant extends BE implements Actions {
                     break;
                 case 'ObjectAssign':
                     accumulator[remoteSpecifier.prop!] = remoteVal;
+                    accumulator[i] = remoteVal;
                     break;
-                
+                case 'ArrayPush':
+                    accumulator.push(remoteVal);
+                    break;
             }
             
             i++;
         }
-        (<any>localHardRef)[prop!] = accumulator;
         endPoints.remoteSignalAndEvents = endPoints.remoteSignalAndEvents.filter(x => !x.isStale);
+        if(this.#hasOnload){
+            console.log({accumulator});
+        }else{
+            const {prop, signal: localHardRef} = localSignal!;
+            (<any>localHardRef)[prop!] = accumulator;
+        }
+       
+        
         //TODO remove
     }
 

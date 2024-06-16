@@ -62,7 +62,7 @@ class BeObservant extends BE {
         };
         const parsedStatement = {
             remoteSpecifiers: [specifier],
-            aggregateRemoteVals: 'Conjunction'
+            aggregateRemoteVals: this.#hasOnload ? 'ObjectAssign' : 'Conjunction'
         };
         return {
             parsedStatements: [parsedStatement]
@@ -73,6 +73,9 @@ class BeObservant extends BE {
         console.log({ parsedStatements });
         const bindings = [];
         for (const ps of parsedStatements) {
+            if (ps.aggregateRemoteVals === 'Conjunction' && this.#hasOnload) {
+                ps.aggregateRemoteVals = 'ObjectAssign';
+            }
             const { localPropToSet, remoteSpecifiers } = ps;
             let localSignal;
             if (localPropToSet) {
@@ -105,9 +108,6 @@ class BeObservant extends BE {
     }
     async hydrate(self) {
         const { bindings } = self;
-        if (this.#hasOnload) {
-            throw 'NI';
-        }
         for (const endPoints of bindings) {
             await this.#pullInValue(self, endPoints);
             this.#scheduleUpdates(self, endPoints);
@@ -121,8 +121,6 @@ class BeObservant extends BE {
         const { enhancedElement } = this;
         const { remoteSignalAndEvents, remoteSpecifiers, localSignal, aggregateRemoteVals } = endPoints;
         console.log({ aggregateRemoteVals });
-        const { prop, signal: localHardRef } = localSignal;
-        //const remove: WeakEndPoint[] = [];
         let i = 0;
         let accumulator;
         switch (aggregateRemoteVals) {
@@ -138,6 +136,8 @@ class BeObservant extends BE {
             case 'Conjunction':
                 accumulator = true;
                 break;
+            case 'ArrayPush':
+                accumulator = [];
         }
         for (const rse of remoteSignalAndEvents) {
             const { signal } = rse;
@@ -164,12 +164,22 @@ class BeObservant extends BE {
                     break;
                 case 'ObjectAssign':
                     accumulator[remoteSpecifier.prop] = remoteVal;
+                    accumulator[i] = remoteVal;
+                    break;
+                case 'ArrayPush':
+                    accumulator.push(remoteVal);
                     break;
             }
             i++;
         }
-        localHardRef[prop] = accumulator;
         endPoints.remoteSignalAndEvents = endPoints.remoteSignalAndEvents.filter(x => !x.isStale);
+        if (this.#hasOnload) {
+            console.log({ accumulator });
+        }
+        else {
+            const { prop, signal: localHardRef } = localSignal;
+            localHardRef[prop] = accumulator;
+        }
         //TODO remove
     }
     #ac = [];

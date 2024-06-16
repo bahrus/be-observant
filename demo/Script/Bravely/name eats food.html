@@ -37,11 +37,12 @@
 
     <mood-stone enh-🔭='of @name and @food.'
         onload="
-            const {🔭, enh} = event;
-            console.log(enh);
-            o.setProps = {
-                myFirstProp: `${o.factors.name} eats ${o.factors.food}`,
-            } 
+            console.log(event)
+            // const {'🔭': o, enh} = event;
+            // console.log(enh, o);
+            // o.setProps = {
+            //     myFirstProp: `${o.factors.name} eats ${o.factors.food}`,
+            // } 
         "
     >
         <template shadowrootmode=open>
