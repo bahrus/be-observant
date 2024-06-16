@@ -487,7 +487,9 @@ This also works:
 </tr>
 ```
 
-We can specify what prop to bind to by using an additional "Set" statement.
+We can specify what property of the peer custom element to bind to as follows:
+
+
 
 ## Negation [TODO]
 
