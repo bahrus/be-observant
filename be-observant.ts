@@ -188,7 +188,6 @@ class BeObservant extends BE implements Actions {
         }
         endPoints.remoteSignalAndEvents = endPoints.remoteSignalAndEvents.filter(x => !x.isStale);
         if(this.#hasOnload){
-            //console.log({accumulator});
             const setProps = {};
             const loadEvent = new LoadEvent(
                 accumulator as {[key: string | number] : any},
@@ -196,7 +195,7 @@ class BeObservant extends BE implements Actions {
                 this.#emc!.enhPropKey
             );
             enhancedElement.dispatchEvent(loadEvent);
-            console.log(loadEvent.setProps);
+            Object.assign(enhancedElement, loadEvent.setProps);
         }else{
             const {prop, signal: localHardRef} = localSignal!;
             (<any>localHardRef)[prop!] = accumulator;

@@ -174,11 +174,10 @@ class BeObservant extends BE {
         }
         endPoints.remoteSignalAndEvents = endPoints.remoteSignalAndEvents.filter(x => !x.isStale);
         if (this.#hasOnload) {
-            //console.log({accumulator});
             const setProps = {};
             const loadEvent = new LoadEvent(accumulator, setProps, this.#emc.enhPropKey);
             enhancedElement.dispatchEvent(loadEvent);
-            console.log(loadEvent.setProps);
+            Object.assign(enhancedElement, loadEvent.setProps);
         }
         else {
             const { prop, signal: localHardRef } = localSignal;
