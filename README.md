@@ -334,7 +334,7 @@ They are:
 
 <mood-stone enh-🔭='(and) set isHappy to the union of @someCheckbox and @someOtherCheckbox.'>
 
-2.  Sum [TODO]
+2.  Sum [Untested]
 
 <mood-stone enh-🔭='and set mySum to the sum of @someNumericInput and @someOtherNumericInput.'>
 

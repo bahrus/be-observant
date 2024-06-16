@@ -3,7 +3,8 @@ const ofDependencyPart = String.raw `of (?<dependencyPart>.*)`;
 const ofDependencies = String.raw `^${ofDependencyPart}`;
 const setLocalPropToSet = String.raw `^(.*)(s|S)et (?<localPropToSet>.*)`;
 const andSetFrom = String.raw `${setLocalPropToSet} from (?<dependencyPart>.*)`;
-const andSetFromUnionOfDependencyParty = String.raw `${setLocalPropToSet} to the union ${ofDependencyPart}`;
+const andSetFromUnionOfDependencyPart = String.raw `${setLocalPropToSet} to the union ${ofDependencyPart}`;
+const andSetFromSumOfDependencyPart = String.raw `${setLocalPropToSet} to the sum of ${ofDependencyPart}`;
 const dssKeys = [['dependencyPart', 'remoteSpecifiers[]']];
 export const emc = {
     base: 'be-observant',
@@ -14,9 +15,16 @@ export const emc = {
             regExpExts: {
                 parsedStatements: [
                     {
-                        regExp: andSetFromUnionOfDependencyParty,
+                        regExp: andSetFromUnionOfDependencyPart,
                         defaultVals: {
                             aggregateRemoteVals: 'Union'
+                        },
+                        dssKeys,
+                    },
+                    {
+                        regExp: andSetFromSumOfDependencyPart,
+                        defaultVals: {
+                            aggregateRemoteVals: 'Sum'
                         },
                         dssKeys,
                     },
