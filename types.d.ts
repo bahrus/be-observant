@@ -39,7 +39,7 @@ export interface Actions{
 export interface ObservingParameters{
     localPropToSet?: string,
     remoteSpecifiers: Array<Specifier>,
-    aggregateRemoteVals?: 'Union' | 'Conjunction' | 'Objectifying' | 'Sum' | 'Product'
+    aggregateRemoteVals?: 'Union' | 'Conjunction' | 'ObjectAssign' | 'Sum' | 'Product'
 }
 
 export interface EndPoints extends ObservingParameters{

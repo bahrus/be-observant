@@ -1,11 +1,13 @@
 import { BeHive, seed, MountObserver } from 'be-hive/be-hive.js';
-const ofDependencyPart = String.raw `of (?<dependencyPart>.*)`;
+const dependencyPart = String.raw `(?<dependencyPart>.*)`;
+const ofDependencyPart = String.raw `of ${dependencyPart}`;
 const ofDependencies = String.raw `^${ofDependencyPart}`;
 const setLocalPropToSet = String.raw `^(.*)(s|S)et (?<localPropToSet>.*)`;
 const andSetFrom = String.raw `${setLocalPropToSet} from (?<dependencyPart>.*)`;
 const andSetFromUnionOfDependencyPart = String.raw `${setLocalPropToSet} to the union ${ofDependencyPart}`;
 const andSetFromSumOfDependencyPart = String.raw `${setLocalPropToSet} to the sum of ${ofDependencyPart}`;
 const andSetFromProductOfDependencyPart = String.raw `${setLocalPropToSet} to the sum of ${ofDependencyPart}`;
+const andSetFromObjectAssignmentOfDependencyParty = String.raw `${setLocalPropToSet} to an object structure by assigning ${dependencyPart}`;
 const dssKeys = [['dependencyPart', 'remoteSpecifiers[]']];
 export const emc = {
     base: 'be-observant',
@@ -33,6 +35,13 @@ export const emc = {
                         regExp: andSetFromProductOfDependencyPart,
                         defaultVals: {
                             aggregateRemoteVals: 'Product'
+                        },
+                        dssKeys,
+                    },
+                    {
+                        regExp: andSetFromObjectAssignmentOfDependencyParty,
+                        defaultVals: {
+                            aggregateRemoteVals: 'ObjectAssign'
                         },
                         dssKeys,
                     },

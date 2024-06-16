@@ -132,7 +132,7 @@ class BeObservant extends BE {
             case 'Product':
                 accumulator = 1;
                 break;
-            case 'Objectifying':
+            case 'ObjectAssign':
                 accumulator = {};
                 break;
             case 'Conjunction':
@@ -162,7 +162,7 @@ class BeObservant extends BE {
                 case 'Product':
                     accumulator *= remoteVal;
                     break;
-                case 'Objectifying':
+                case 'ObjectAssign':
                     accumulator[remoteSpecifier.prop] = remoteVal;
                     break;
             }

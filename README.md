@@ -346,6 +346,11 @@ They are:
 
 <mood-stone enh-🔭='and set sentenceProp to `${0} eats $1}` weaving in @name and @food.'>
 
+5.  Object Assignment [Untested]
+
+<mood-stone enh-🔭='and set myObjectProp to an object structure by assigning @name and @food.'>
+
+
 ## For the power hungry JS-firsters
 
 As our business logic becomes more complex, I suspect many readers will begin asking themselves:
