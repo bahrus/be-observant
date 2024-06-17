@@ -342,9 +342,9 @@ They are:
 
 <mood-stone enh-🔭='and set myProduct to the product of @someNumericInput and @someOtherNumericInput.'>
 
-4.  Interpolation [TODO]
+4.  Interpolation [TODO -- wait for santizer api or whatever it is called these days to finally land in all the browsers]
 
-<mood-stone enh-🔭='and set sentenceProp to `${0} eats $1}` weaving in @name and @food.'>
+<mood-stone enh-🔭='and set sentenceProp to `${0} eats ${1}` weaving in @name and @food.'>
 
 5.  Object Assignment [Untested]
 
