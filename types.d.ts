@@ -37,10 +37,15 @@ export interface Actions{
     warn(...data: any[]): void;
 }
 
+export interface AndIfThen{
+    condition: string,
+    result: string,
+}
 
 export interface ObservingParameters{
     localPropToSet?: string,
     remoteSpecifiers: Array<Specifier>,
+    mappings?: Array<AndIfThen>
     aggregateRemoteVals?: 'Union' | 'Conjunction' | 'ObjectAssign' | 'Sum' | 'Product' | 'ArrayPush'
 }
 

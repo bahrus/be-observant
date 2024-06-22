@@ -355,19 +355,22 @@ They are:
 ```html
 <input type=checkbox name=isHappy>
 
-<div 🔭='of @isHappy and if true then hello and if false then goodbye else ¯\_(ツ)_/¯.'></div>
+<div 🔭='of @isHappy 
+            and if true then hello 
+            and if false then goodbye 
+            else ¯\_(ツ)_/¯.'></div>
 ```
 
 The statement above uses toString on @isHappy if not null.
 
-## Being boolish [TODO -- need sanitizer]
+## Being boolish [TODO]
 
 To use truthy checks:
 
 ```html
 <input name=search>
 
-<div 🔭='of @search and ifish then Searching... else How can I help you today?.'></div>
+<div 🔭='of @search and if * then Searching... else How can I help you today?.'></div>
 ```
 
 
