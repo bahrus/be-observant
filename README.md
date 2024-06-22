@@ -355,10 +355,10 @@ They are:
 ```html
 <input type=checkbox name=isHappy>
 
-<div 🔭='of @isHappy and if it is then hello if not goodbye else ¯\_(ツ)_/¯.'></div>
+<div 🔭='of @isHappy and if true then hello and if false then goodbye else ¯\_(ツ)_/¯.'></div>
 ```
 
-The statement above uses true / false / other boolean checks.
+The statement above uses toString on @isHappy if not null.
 
 ## Being boolish [TODO]
 
