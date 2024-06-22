@@ -350,6 +350,8 @@ They are:
 
 <mood-stone enh-🔭='and set myObjectProp to an object structure by assigning @name and @food.'>
 
+## Observing a single remote endpoint and applying a simple mapping to the value
+
 ## Decisions [TODO]
 
 ```html
@@ -358,10 +360,10 @@ They are:
 <div 🔭='of only @isHappy 
             and if true then hello 
             and if false then goodbye 
-            and else ¯\_(ツ)_/¯.'></div>
+            else ¯\_(ツ)_/¯.'></div>
 ```
 
-The statement above uses toString on @isHappy if not null.
+The statement above uses toString on @isHappy if not null.  If it is null or doesn't match any of the other tests, sets to the else
 
 ## Being boolish [TODO]
 
