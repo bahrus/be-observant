@@ -405,7 +405,7 @@ If we know that this enhancement is the only enhancement affecting the adorned e
 
 <mood-stone enh-🔭='of @name and @food.'
     onload="
-        const {factors, setProps} = event;
+        const {factors, setProps, idx} = event;
         setProps.myFirstProp = `${factors.name} eats ${factors.food}`;
     "
 >
