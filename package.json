@@ -30,17 +30,17 @@
     "update": "ncu -u && npm install"
   },
   "dependencies": {
-    "be-enhanced": "0.0.101",
-    "be-hive": "0.0.178",
+    "be-enhanced": "0.0.102",
+    "be-hive": "0.0.179",
     "be-linked": "0.0.104",
     "be-propagating": "0.0.46",
     "be-value-added": "0.0.38",
-    "trans-render": "0.0.783"
+    "trans-render": "0.0.786"
   },
   "devDependencies": {
     "@playwright/test": "1.44.1",
     "may-it-serve": "0.0.6",
-    "xtal-element": "0.0.607"
+    "xtal-element": "0.0.608"
   },
   "repository": {
     "type": "git",
