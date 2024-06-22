@@ -355,10 +355,10 @@ They are:
 ```html
 <input type=checkbox name=isHappy>
 
-<div 🔭='of @isHappy 
+<div 🔭='of only @isHappy 
             and if true then hello 
             and if false then goodbye 
-            else ¯\_(ツ)_/¯.'></div>
+            and else ¯\_(ツ)_/¯.'></div>
 ```
 
 The statement above uses toString on @isHappy if not null.
@@ -370,7 +370,7 @@ To use truthy checks:
 ```html
 <input name=search>
 
-<div 🔭='of @search and if * then Searching... else How can I help you today?.'></div>
+<div 🔭='of only @search and if * then Searching... else How can I help you today?.'></div>
 ```
 
 
