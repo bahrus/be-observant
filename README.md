@@ -342,13 +342,33 @@ They are:
 
 <mood-stone enh-🔭='and set myProduct to the product of @someNumericInput and @someOtherNumericInput.'>
 
-4.  Interpolation [TODO -- wait for santizer api or whatever it is called these days to finally land in all the browsers]
+4.  Interpolation [TODO -- wait for sanitizer api or whatever it is called these days to finally land in all the browsers]
 
 <mood-stone enh-🔭='and set sentenceProp to `${0} eats ${1}` weaving in @name and @food.'>
 
 5.  Object Assignment [Untested]
 
 <mood-stone enh-🔭='and set myObjectProp to an object structure by assigning @name and @food.'>
+
+## Decisions [TODO]
+
+```html
+<input type=checkbox name=isHappy>
+
+<div 🔭='of @isHappy and if it is then hello if not goodbye else ¯\_(ツ)_/¯.'></div>
+```
+
+The statement above uses true / false / other boolean checks.
+
+## Being boolish [TODO]
+
+To use truthy checks:
+
+```html
+<input name=search>
+
+<div 🔭='of @search and if it ish then Searching... else How can I help you today?.'></div>
+```
 
 
 ## For the power hungry JS-firsters
@@ -381,9 +401,7 @@ If we know that this enhancement is the only enhancement affecting the adorned e
 <mood-stone enh-🔭='of @name and @food.'
     onload="
         const {factors, setProps} = event;
-        Object.assign(setProps, {
-            myFirstProp: `${factors.name} eats ${factors.food}`,
-        });
+        setProps.myFirstProp = `${factors.name} eats ${factors.food}`;
     "
 >
     <template shadowrootmode=open>
