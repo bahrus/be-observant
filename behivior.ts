@@ -1,10 +1,12 @@
 import {BeHive, EMC, seed, MountObserver} from 'be-hive/be-hive.js';
 import {ObservingParameters} from './types';
+import { RegExpExt } from 'trans-render/lib/prs/types';
 
 const dependencyPart = String.raw `(?<dependencyPart>.*)`
 const ofDependencyPart = String.raw `of ${dependencyPart}`;
 const ofDependencies = String.raw `^${ofDependencyPart}`;
 const setLocalPropToSet = String.raw `^(.*)(s|S)et (?<localPropToSet>.*)`;
+const onlyOfAndIf = String.raw `^(o|O)nly of (?<dependencyPart>(\@|\#|\|)[\w\:]+) and (?<mappings>.*)`;
 
 const andSetFrom = String.raw `${setLocalPropToSet} from (?<dependencyPart>.*)`;
 
@@ -67,7 +69,27 @@ export const emc: EMC = {
                             aggregateRemoteVals: 'Conjunction'
                         } as ObservingParameters,
                         dssKeys
-                    }
+                    },
+                    {
+                        regExp: onlyOfAndIf,
+                        defaultVals:{},
+                        //remoteSpecifiers: [],
+                        statementPartParser: {
+                            splitWord: 'and',
+                            propMap: {
+                                mappings: [
+                                    {
+                                        regExp: String.raw `^if (?<ifCondition>.*) pass (?<passValue>.*)`,
+                                        defaultVals: {},
+                                    },
+                                    {
+                                        regExp: String.raw `^anything else pass (?<passValue>.*)`,
+                                        defaultVals: {},
+                                    }
+                                ]
+                            }
+                        }
+                    } as any as RegExpExt
                 ]
             }
         }

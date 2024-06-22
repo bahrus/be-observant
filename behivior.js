@@ -3,6 +3,7 @@ const dependencyPart = String.raw `(?<dependencyPart>.*)`;
 const ofDependencyPart = String.raw `of ${dependencyPart}`;
 const ofDependencies = String.raw `^${ofDependencyPart}`;
 const setLocalPropToSet = String.raw `^(.*)(s|S)et (?<localPropToSet>.*)`;
+const onlyOfAndIf = String.raw `^(o|O)nly of (?<dependencyPart>(\@|\#|\|)[\w\:]+) and (?<mappings>.*)`;
 const andSetFrom = String.raw `${setLocalPropToSet} from (?<dependencyPart>.*)`;
 const andSetFromUnionOfDependencyPart = String.raw `${setLocalPropToSet} to the union ${ofDependencyPart}`;
 const andSetFromSumOfDependencyPart = String.raw `${setLocalPropToSet} to the sum of ${ofDependencyPart}`;
@@ -58,6 +59,26 @@ export const emc = {
                             aggregateRemoteVals: 'Conjunction'
                         },
                         dssKeys
+                    },
+                    {
+                        regExp: onlyOfAndIf,
+                        defaultVals: {},
+                        //remoteSpecifiers: [],
+                        statementPartParser: {
+                            splitWord: 'and',
+                            propMap: {
+                                mappings: [
+                                    {
+                                        regExp: String.raw `^if (?<ifCondition>.*) pass (?<passValue>.*)`,
+                                        defaultVals: {},
+                                    },
+                                    {
+                                        regExp: String.raw `^anything else pass (?<passValue>.*)`,
+                                        defaultVals: {},
+                                    }
+                                ]
+                            }
+                        }
                     }
                 ]
             }

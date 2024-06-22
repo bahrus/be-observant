@@ -357,10 +357,10 @@ They are:
 ```html
 <input type=checkbox name=isHappy>
 
-<div 🔭='of only @isHappy 
-            and if true then hello 
-            and if false then goodbye 
-            else ¯\_(ツ)_/¯.'></div>
+<div 🔭='only of @isHappy 
+            and if true pass hello 
+            and if false pass goodbye 
+            and anything else pass ¯\_(ツ)_/¯.'></div>
 ```
 
 The statement above uses toString on @isHappy if not null.  If it is null or doesn't match any of the other tests, sets to the else
@@ -372,7 +372,7 @@ To use truthy checks:
 ```html
 <input name=search>
 
-<div 🔭='of only @search and if * then Searching... else How can I help you today?.'></div>
+<div 🔭='only of @search and if * pass Searching... and anything else pass How can I help you today?.'></div>
 ```
 
 
