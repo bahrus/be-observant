@@ -194,7 +194,7 @@ class BeObservant extends BE implements Actions {
                     accumulator = accumulator || remoteVal;
                     break;
                 case 'Conjunction':
-                    accumulator = accumulator && remoteVal;
+                    accumulator = remoteVal && accumulator;
                     break;
                 case 'Sum':
                     accumulator += remoteVal;

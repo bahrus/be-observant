@@ -72,7 +72,9 @@ export const emc: EMC = {
                     },
                     {
                         regExp: onlyOfAndIf,
-                        defaultVals:{},
+                        defaultVals: {
+                            aggregateRemoteVals: 'Conjunction'
+                        }  as ObservingParameters,
                         dssKeys,
                         //remoteSpecifiers: [],
                         statementPartParser: {
