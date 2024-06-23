@@ -352,8 +352,6 @@ They are:
 
 ## Observing a single remote endpoint and applying a simple mapping to the value
 
-## Decisions [TODO]
-
 ```html
 <input type=checkbox name=isHappy>
 
@@ -363,7 +361,7 @@ They are:
             and anything else pass ¯\_(ツ)_/¯.'></div>
 ```
 
-The statement above uses toString on @isHappy if not null.  If it is null or doesn't match any of the other tests, sets to the else
+The statement above uses toString on @isHappy if not null.  If it is null or doesn't match any of the other tests, sets to the else.
 
 ## Being boolish [TODO]
 

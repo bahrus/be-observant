@@ -189,8 +189,7 @@ class BeObservant extends BE implements Actions {
             }
             const remoteSpecifier = remoteSpecifiers[i];
             let remoteVal = await getObsVal(hardRef, remoteSpecifier, enhancedElement);
-            if(remoteVal !== null && remoteVal !== undefined && mappings !== undefined){
-                console.log({mappings});
+            if(mappings !== undefined){
                 const remoteValAsString = remoteVal.toString();
                 let elseVal: any;
                 let foundVal = false;
@@ -198,14 +197,15 @@ class BeObservant extends BE implements Actions {
                     const {ifCondition, passValue} = mapping;
                     if(ifCondition === undefined){
                         elseVal = passValue;
-                        foundVal = true;
                         continue;
                     }
                     if(ifCondition === remoteValAsString){
                         remoteVal = passValue;
+                        foundVal = true;
                         break;
                     }
                 }
+
 
             }
             switch(aggregateRemoteVals){
