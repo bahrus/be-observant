@@ -63,6 +63,7 @@ export const emc = {
                     {
                         regExp: onlyOfAndIf,
                         defaultVals: {},
+                        dssKeys,
                         //remoteSpecifiers: [],
                         statementPartParser: {
                             splitWord: 'and',
