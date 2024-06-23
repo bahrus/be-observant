@@ -159,7 +159,7 @@ class BeObservant extends BE implements Actions {
 
     async #pullInValue(self: this, endPoints: EndPoints){
         const {enhancedElement} = this;
-        const {remoteSignalAndEvents, remoteSpecifiers, localSignal, aggregateRemoteVals} = endPoints;
+        const {remoteSignalAndEvents, remoteSpecifiers, localSignal, aggregateRemoteVals, mappings} = endPoints;
         
         let i = 0;
         let accumulator: any;
@@ -188,13 +188,32 @@ class BeObservant extends BE implements Actions {
                 continue;
             }
             const remoteSpecifier = remoteSpecifiers[i];
-            const remoteVal = await getObsVal(hardRef, remoteSpecifier, enhancedElement);
+            let remoteVal = await getObsVal(hardRef, remoteSpecifier, enhancedElement);
+            if(remoteVal !== null && remoteVal !== undefined && mappings !== undefined){
+                console.log({mappings});
+                const remoteValAsString = remoteVal.toString();
+                let elseVal: any;
+                let foundVal = false;
+                for(const mapping of mappings){
+                    const {ifCondition, passValue} = mapping;
+                    if(ifCondition === undefined){
+                        elseVal = passValue;
+                        foundVal = true;
+                        continue;
+                    }
+                    if(ifCondition === remoteValAsString){
+                        remoteVal = passValue;
+                        break;
+                    }
+                }
+
+            }
             switch(aggregateRemoteVals){
                 case 'Union':
                     accumulator = accumulator || remoteVal;
                     break;
                 case 'Conjunction':
-                    accumulator = remoteVal && accumulator;
+                    accumulator = accumulator && remoteVal;
                     break;
                 case 'Sum':
                     accumulator += remoteVal;

@@ -38,8 +38,8 @@ export interface Actions{
 }
 
 export interface AndIfThen{
-    condition: string,
-    result: string,
+    ifCondition: string,
+    passValue: string,
 }
 
 export interface ObservingParameters{
