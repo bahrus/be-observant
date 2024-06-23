@@ -185,10 +185,25 @@ class BeObservant extends BE {
                         elseVal = passValue;
                         continue;
                     }
-                    if (ifCondition === remoteValAsString) {
-                        remoteVal = passValue;
-                        foundVal = true;
-                        break;
+                    switch (ifCondition) {
+                        case 'truthy':
+                            if (remoteValAsString) {
+                                remoteVal = passValue;
+                                foundVal = true;
+                            }
+                            break;
+                        case 'falsy':
+                            if (!remoteValAsString) {
+                                remoteVal = passValue;
+                                foundVal = true;
+                            }
+                            break;
+                        default:
+                            if (ifCondition === remoteValAsString) {
+                                remoteVal = passValue;
+                                foundVal = true;
+                                break;
+                            }
                     }
                 }
             }

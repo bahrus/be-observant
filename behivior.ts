@@ -86,7 +86,7 @@ export const emc: EMC = {
                                         defaultVals: {},
                                     },
                                     {
-                                        regExp: String.raw `^anything else pass (?<passValue>.*)`,
+                                        regExp: String.raw `^otherwise pass (?<passValue>.*)`,
                                         defaultVals: {},
                                     }
                                 ]
