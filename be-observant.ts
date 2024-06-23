@@ -220,8 +220,11 @@ class BeObservant extends BE implements Actions {
                             }
                     }
 
-                }
 
+                }
+                if(!foundVal && elseVal){
+                    remoteVal = elseVal;
+                }
 
             }
             switch(aggregateRemoteVals){

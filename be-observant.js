@@ -206,6 +206,9 @@ class BeObservant extends BE {
                             }
                     }
                 }
+                if (!foundVal && elseVal) {
+                    remoteVal = elseVal;
+                }
             }
             switch (aggregateRemoteVals) {
                 case 'Union':
