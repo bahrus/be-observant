@@ -16,7 +16,7 @@
   "exports": {
     ".": "./be-observant.js",
     "./be-observant.js": "./be-observant.js",
-    "./prsOf.js": "./prsOf.js"
+    "./🔭.js": "./🔭.js"
   },
   "files": [
     "*.js",
