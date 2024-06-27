@@ -99,14 +99,13 @@ If Shadow DOM is not used, add the "itemscope" attribute so that *be-observant* 
 <mood-stone>
     <template shadowrootmode=open>
         <div itemscope>
-            <span itemprop=isHappy 🔭></span>
+            <span 🔭 itemprop=isHappy ></span>
         </div>
 
         <xtal-element
             prop-defaults='{
                 "isHappy": true
             }'
-
         ></xtal-element>
         <be-hive></be-hive>
     </template>
@@ -114,6 +113,8 @@ If Shadow DOM is not used, add the "itemscope" attribute so that *be-observant* 
 ```
 
 This sets the span's textContent to the .toString value of moon-stone's isHappy property, and monitors for changes, i.e. one-way binds.
+
+*xtal-element*, by the way, is a [userland implementation](https://github.com/bahrus/xtal-element) of declarative custom elements, so the example above is actually fully functional (after importing two generic js references).
 
 ## By Id also works:
 
@@ -144,13 +145,15 @@ This sets the span's textContent to the .toString value of moon-stone's isHappy 
 
 Note that the itemprop attribute takes precedence over the name attribute, which takes precedence over the id attribute.
 
+In the example above, we are mixing inline binding (🔭) with binding from a distance ("xform").
+
 ## DSS Specifier Syntax
 
 In the example above, we mentioned using the / symbol to indicate to observe a property from the host.  But be-observant can also observe peer elements within the ShadowRoot (or outside any shadow root *be-observant* adorns an element sitting outside any ShadowRoot).
 
 The syntax adopts what we refer as the DSS specification, where DSS stands for "directed scoped specifier".  It is inspired by CSS selectors, but it is optimized for binding scenarios. 
 
-This is documented in (increasingly) painstaking detail where the [library is maintained](https://github.com/bahrus/trans-render/blob/baseline/dss/README.md#directed-scoped-specifiers-dss).
+This is documented in (increasingly) painstaking detail where the [DSS parser library is maintained](https://github.com/bahrus/trans-render/blob/baseline/dss/README.md#directed-scoped-specifiers-dss).
 
 
 <!--
