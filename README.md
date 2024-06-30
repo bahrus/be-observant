@@ -231,17 +231,18 @@ This observes the my-peer-element's someBoolProp property for changes and sets t
 
 ...
 
-<input 
+<input
+    disabled
     type=checkbox 
     🔭='of |isHappy.'
 >
 ```
 
-What this does:  If necessary, auto attaches the [be-value-added](https://github.com/bahrus/be-value-added) enhancement to the link element, which recognizes the True/False values of schema.org as far as the href attribute, and provides a property oHTMLLinkElement.beValueAdded.value through which updated values can be passed / listened to.  Essentially it provides a hidden boolean "signal" we can bind to and also use for styling purposes.
+What this does:  If necessary, auto attaches the [be-value-added](https://github.com/bahrus/be-value-added) enhancement to the link element, which then recognizes the True/False values of schema.org as far as the href attribute, and provides a property oHTMLLinkElement.beValueAdded.value through which updated values can be passed / listened to.  Essentially it provides a hidden boolean "signal" we can bind to and also use for styling purposes.
 
-The editable checkbox element can observe changes to this "signal".
+The checkbox element can observe changes to this "signal".
 
-We saw earlier that we can adorn elements with the itemprop attribute with 🔭 attribute, and it will automatically pull in values from the host.  This allows us to create a code-free "chain" of bindings from the host to Shadow children, and from the Shadow children to peer elements.
+We saw earlier that we can adorn elements with the itemprop attribute with the 🔭 attribute, and it will automatically pull in values from the host.  This allows us to create a code-free "chain" of bindings from the host to Shadow children, and from the Shadow children to peer elements.
 
 # Specifying the property to assign the observed value(s) to.
 
@@ -373,7 +374,7 @@ To use truthy checks:
 ```html
 <input name=search>
 
-<div 🔭='only of @search and if truthy pass Searching... and otherwise pass How can I help you today?.'></div>
+<div 🔭='only of @search and if truthy pass Searching\.\.\. and otherwise pass How can I help you today?.'></div>
 ```
 
 
