@@ -2,7 +2,7 @@ import {BeHive, EMC, seed, MountObserver} from 'be-hive/be-hive.js';
 import {ObservingParameters} from './types';
 import { RegExpExt } from 'trans-render/lib/prs/types';
 
-const dependencyPart = String.raw `(?<dependencyPart>.*)`
+const dependencyPart = String.raw `(?<dependencyPart>.*)`;
 const ofDependencyPart = String.raw `of ${dependencyPart}`;
 const ofDependencies = String.raw `^${ofDependencyPart}`;
 const setLocalPropToSet = String.raw `^(.*)(s|S)et (?<localPropToSet>.*)`;
