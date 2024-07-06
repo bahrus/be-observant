@@ -94,6 +94,9 @@ export const emc: EMC = {
                         }
                     } as any as RegExpExt
                 ]
+            },
+            blockingRules: {
+                localPropToSet: ['href', 'src', 'action', String.raw `^on(.*)`]
             }
         }
     },
