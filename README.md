@@ -263,7 +263,7 @@ But sometimes we need to be more explicit because it isn't always transparent wh
 
 This watches the input element for input events and passes the checked property to someBoolProp of oMyPeerElement.  The word "and" is optional, there to allow for people who like to read complete sentences (including the (mentally mapped) attribute name)
 
-The enh- prefix is there to avoid possible conflicts with attributes recognized by my-peer-element, in the absence of any [tending loving care from the platform](https://github.com/WICG/webcomponents/issues/1000).
+The enh- prefix is there to avoid possible conflicts with attributes recognized by my-peer-element, in the absence of any [tender loving care from the platform](https://github.com/WICG/webcomponents/issues/1000).
 
 > [!NOTE]
 > This potentially could allow for a xss attack.  For now, be sure to only use this enhancement when sufficient CSP/TrustedType policies are in place.  Additional checks will be placed on this component:  Blocking setting properties innerHTML, on*, href, src, action unless the onload attribute is present [TODO].
