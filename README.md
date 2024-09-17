@@ -1,6 +1,6 @@
 # be-observant 🔭 [WIP]
 
-Observe properties of peer elements or the host.
+Observe properties of peer elements or the host, purely declaratively.
 
 *be-observant* takes less of a "top-down" approach to binding than traditional frameworks.  It places less emphasis (but certainly not none) on binding exclusively from the (custom element) component container.  Yes, it can do that, but it can also provide for "Democratic Web Component Organisms" where the host container acts as a very thin "Skin Layer" which can be passed a small number of "stimuli" values into.  Inside the body of the web component, we might have a non visible "brain" component that dispatches events.  *be-observant* allows other peer elements within the "body" to receive messages that the brain component emits, without forcing the outer "skin" layer to have to micromanage this all.
 
@@ -397,85 +397,9 @@ To use truthy checks:
 
 ## For the power hungry JS-firsters
 
-As our business logic becomes more complex, I suspect many readers will begin asking themselves:
-
->  This is all great, but what if I just want to do some coding?  Why learn all this contrived syntax?
-
-Fair enough. 
-
-We now provide an interlude where we indicate how to inject JavaScript into the picture, and set properties, and derive properties as we need, with full, unfettered access to the JavaScript run time.
-
-## Scripting bravely
-
-*be-observant* empowers the developer to tap into the full power of the JavaScript run time engine by adding script to the onload event of the adorned element.
+Choose to use [be-calculating](https://github.com/bahrus/be-calculating) instead.
 
 
-If we know that this enhancement is the only enhancement affecting the adorned element that leverages the onload event, we can skip some defensive maneuvers that avoid collisions with other enhancements (discussed in the next example), resulting in a fairly compact script:
-
-```html
-<label>
-    Name:
-    <input name=name>
-</label>
-<label>
-    Food:
-    <input name=food>
-</label>
-
-<mood-stone enh-🔭='of @name and @food.'
-    onload="
-        const {factors, setProps, idx} = event;
-        setProps.myFirstProp = `${factors.name} eats ${factors.food}`;
-    "
->
-    <template shadowrootmode=open>
-        <div itemscope>
-            <div itemprop=myFirstProp></div>
-        </div>
-        <xtal-element infer-props></xtal-element>
-        <be-hive></be-hive>
-    </template>
-</mood-stone>
-```
-
-Note that it is also to add event listener to the adorned element (*mood-stone* in this case) with event 'load' and add additional properties to set.
-
-## Scripting defensively
-
-If using an enhancement from the [be-enhanced](https://github.com/bahrus/be-enhanced) family of [behaviors](https://github.com/bahrus/be-hive)/enhancements, a key identifier that distinguishes enhancements from one another is the "enh" key.  So this is how to code the onload event in such a way that it doesn't interfere with any other enhancements that make use of the onload event.  Basically, just an added if condition:
-
-```html
-<label>
-    Name:
-    <input name=name>
-</label>
-<label>
-    Food:
-    <input name=food>
-</label>
-
-<mood-stone enh-🔭='of @name and @food.'
-    onload="
-        const {factors, setProps, enh} = event;
-        switch(enh){
-            case '🔭':{
-                Object.assign(setProps, {
-                    myFirstProp: `${factors.name} eats ${factors.food}`,
-                });
-            }
-        }
-
-    "
->
-    <template shadowrootmode=open>
-        <div itemscope>
-            <div itemprop=myFirstProp></div>
-        </div>
-        <xtal-element infer-props></xtal-element>
-        <be-hive></be-hive>
-    </template>
-</mood-stone>
-```
 
 ## Attaching and setting other enhancement values [TODO]
 
