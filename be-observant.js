@@ -29,6 +29,7 @@ class BeObservant extends BE {
             },
         },
         positractions: [
+            ...beCnfg.positractions,
             {
                 do: 'warn',
                 ifAllOf: ['rawStatements'],

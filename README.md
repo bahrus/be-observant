@@ -9,9 +9,16 @@ Observe properties of peer elements or the host.
 <img src="http://img.badgesize.io/https://cdn.jsdelivr.net/npm/be-observant?compression=gzip">
 [![Playwright Tests](https://github.com/bahrus/be-observant/actions/workflows/CI.yml/badge.svg?branch=baseline)](https://github.com/bahrus/be-observant/actions/workflows/CI.yml)
 
+# Alternatives
 
 > [!Note]
 > An extra thin layer can be applied on top of be-observant, so that the original HTML that is streamed from the server can provide the initial values of the property that *be-observant* observes, and then once that initial handshake is established, lean exclusively on *be-observant* for all subsequent updates.  This is handled by [be-entrusting](https://github.com/bahrus/be-entrusting).
+
+> [!Note]
+> *be-observant* is strictly declarative and provides no support for script.  If your needs aren't met by the restrictions declarative constraints impose, consider [be-calculating](https://github.com/bahrus/be-calculating) which shares many common modules with *be-observant*, but specializes in scripting needs.
+
+> [!Note]
+> If you need full two-way binding, consider using [be-bound](https://github.com/bahrus/be-bound).
 
 
 ## The most quintessential example
@@ -267,6 +274,15 @@ The enh- prefix is there to avoid possible conflicts with attributes recognized 
 
 > [!NOTE]
 > This potentially could allow for a xss attack.  For now, be sure to only use this enhancement when sufficient CSP/TrustedType policies are in place.  Additional checks will be placed on this component:  Blocking setting properties innerHTML, on*, href, src, action unless the onload attribute is present [TODO].
+
+```html
+<input name=someCheckbox type=checkbox>
+
+<my-peer-element enh-🔭='
+    and set someBoolProp from @someCheckbox.
+    '></my-peer-element>
+
+```
 
 ## Multiple parallel observers
 

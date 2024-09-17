@@ -35,6 +35,7 @@ class BeObservant extends BE implements Actions {
             },
         },
         positractions: [
+            ...beCnfg.positractions!,
             {
                 do: 'warn',
                 ifAllOf: ['rawStatements'],

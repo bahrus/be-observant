@@ -84,7 +84,7 @@ export const emc = {
                         }
                     }
                 ]
-            }
+            },
         }
     },
     enhPropKey: 'beObservant',
