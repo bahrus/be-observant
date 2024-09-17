@@ -234,7 +234,7 @@ This observes the my-peer-element's someBoolProp property for changes and sets t
 ## By itemprop
 
 ```html
-<link itemprop=isHappy href=https://schema.org/True>
+<data value=true itemprop=isHappy hidden></data>
 
 ...
 
@@ -245,9 +245,7 @@ This observes the my-peer-element's someBoolProp property for changes and sets t
 >
 ```
 
-What this does:  If necessary, auto attaches the [be-value-added](https://github.com/bahrus/be-value-added) enhancement to the link element, which then recognizes the True/False values of schema.org as far as the href attribute, and provides a property oHTMLLinkElement.beValueAdded.value through which updated values can be passed / listened to.  Essentially it provides a hidden boolean "signal" we can bind to and also use for styling purposes.
-
-The checkbox element can observe changes to this "signal".
+What this does:  It watches for changes to the value attribute of the data element, and parses the value using JSON.parse and passes the value to the checked property of the input element.
 
 We saw earlier that we can adorn elements with the itemprop attribute with the 🔭 attribute, and it will automatically pull in values from the host.  This allows us to create a code-free "chain" of bindings from the host to Shadow children, and from the Shadow children to peer elements.
 
@@ -273,7 +271,7 @@ This watches the input element for input events and passes the checked property 
 The enh- prefix is there to avoid possible conflicts with attributes recognized by my-peer-element, in the absence of any [tender loving care from the platform](https://github.com/WICG/webcomponents/issues/1000).
 
 > [!NOTE]
-> This potentially could allow for a xss attack.  For now, be sure to only use this enhancement when sufficient CSP/TrustedType policies are in place.  Additional checks will be placed on this component:  Blocking setting properties innerHTML, on*, href, src, action unless the onload attribute is present [TODO].
+> This potentially could allow for a xss attack.  For that reason, *be-observant* blocks setting innerHTML to an arbitrary string [TODO].
 
 ```html
 <input name=someCheckbox type=checkbox>
