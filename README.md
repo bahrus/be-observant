@@ -64,7 +64,7 @@ If this assumption doesn't hold in some cases, then we can specify the name of t
     <input 
         type=checkbox 
         disabled 
-        be-observant='of /isHappy.'
+        be-observant-of='/isHappy.'
     >
 </mood-stone>
 ```
@@ -81,7 +81,7 @@ The slash ("/") symbol indicates to get the value from the host.  If omitted, it
     <input 
         type=checkbox 
         disabled 
-        🔭='of isHappy.'
+        🔭-of='isHappy.'
     >
 </mood-stone>
 ```
@@ -95,7 +95,7 @@ If Shadow DOM is not used, add the "itemscope" attribute so that *be-observant* 
     <input 
         type=checkbox 
         disabled 
-        🔭='of isHappy.'
+        🔭-of='isHappy.'
     >
 </mood-stone>
 ```
@@ -163,23 +163,23 @@ The syntax adopts what we refer as the DSS specification, where DSS stands for "
 This is documented in (increasingly) painstaking detail where the [DSS parser library is maintained](https://github.com/bahrus/trans-render/blob/baseline/dss/README.md#directed-scoped-specifiers-dss).
 
 
-<!--
+
 
 ## Example 1d  Negation
 
 ```html
 <mood-stone>
     #shadow
-    <input type=checkbox disabled be-observant='of not is vegetarian.'>
+    <input type=checkbox disabled be-observant-of-!='is vegetarian.'>
 </mood-stone>
 ```
-
+<!--
 ## Example 1e Translation 
 
 ```html
 <mood-stone>
     #shadow
-    <input type=readonly be-observant='of age - 20.'>
+    <input type=readonly be-observant-of='age - 20.'>
 </mood-stone>
 ```
 
