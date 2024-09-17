@@ -261,8 +261,7 @@ But sometimes we need to be more explicit because it isn't always transparent wh
 <input name=someCheckbox type=checkbox>
 
 <my-peer-element 
-    enh-🔭-of='@someCheckbox'
-    enh-🔭-and-set="someBoolProp from $1"
+    enh-🔭-of='@someCheckbox and set someBoolProp.'
     '></my-peer-element>
 
 ```
@@ -292,8 +291,7 @@ This example works, where each observing statement is treated independently:
 <input name=someOtherCheckbox type=checkbox>
 
 <mood-stone
-    enh-🔭-of="@someCheckbox and @someOtherCheckbox"
-    enh-🔭-and-set="isHappy from $1, isWealthy from $2."
+    enh-🔭-of="@someCheckbox and @someOtherCheckbox and set isHappy and isWealthy"
 '>
     <template shadowrootmode=open>
         <div itemscope>
@@ -318,7 +316,7 @@ This example works, where each observing statement is treated independently:
 ```
 
 
-## Unionizing
+## Many to 1
 
 If multiple remote endpoints are observed that map to a single local prop, by default, the "truthy" conjunction (&&) is applied to them all.  This will often result in passing in the value of the last property, unless the properties are actual booleans as they are below:
 
@@ -326,7 +324,7 @@ If multiple remote endpoints are observed that map to a single local prop, by de
 <input name=someCheckbox type=checkbox>
 <input name=someOtherCheckbox type=checkbox>
 
-<mood-stone enh-🔭='and set isHappy from @someCheckbox and @someOtherCheckbox.'>
+<mood-stone enh-🔭='of @someCheckbox and @someOtherCheckbox and set isHappy from the union.'>
     <template shadowrootmode=open>
         <div itemscope>
             is happy
@@ -382,9 +380,7 @@ They are:
 ```html
 <input type=checkbox name=isHappy>
 
-<div 🔭-of=@isHappy 
-     🔭-and-be="hello if $1 is true, goodbye if $1 is false, else ¯\_(ツ)_/¯">
-</div>
+<div 🔭-of="@isHappy  and be hello if true and be goodbye if false else ¯\_(ツ)_/¯"></div>
 ```
 
 The statement above uses toString on @isHappy if not null.  If it is null or doesn't match any of the other tests, sets to the else.
@@ -399,10 +395,26 @@ To use truthy checks:
 <input name=search>
 
 <div 
-    🔭-of=@search
-    🔭-and-be="Searching\.\.\. if truthy and otherwise be How can I help you today?.">
+    🔭-of="@search and be Searching\.\.\. if truthy and otherwise be How can I help you today?." 
+>
 </div>
 ```
+
+## Many to many
+
+So far we've seen 1-1 correspondences and many to 1.  The question is -- Is many to many too complex to express with English?  Is this a scenario where JavaScript is a must?
+
+
+```html
+<input name=search>
+<input type=checkbox name=feelingLucky>
+
+<div 
+    🔭-of="@search and be Searching\.\.\. if truthy and otherwise be How can I help you today?." 
+>
+</div>
+```
+
 
 
 ## For the power hungry JS-firsters
