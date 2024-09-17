@@ -371,7 +371,8 @@ They are:
 
 5.  Object Assignment [Untested]
 
-<mood-stone enh-🔭='and set myObjectProp to an object structure by assigning @name and @food.'>
+<mood-stone 
+    enh-🔭-of='@name and @food'and set myObjectProp to an object structure by assigning @name and @food.'>
 
 ## Observing a single remote endpoint and applying a simple mapping to the value
 
@@ -382,11 +383,13 @@ They are:
 <input type=checkbox name=isHappy>
 
 <div 🔭-of=@isHappy 
-     🔭-and-be="hello if true, goodbye if false, else ¯\_(ツ)_/¯">
+     🔭-and-be="hello if $1 is true, goodbye if $1 is false, else ¯\_(ツ)_/¯">
 </div>
 ```
 
 The statement above uses toString on @isHappy if not null.  If it is null or doesn't match any of the other tests, sets to the else.
+
+*-be is kind of like the map function of JS.  If *-of is observing more than one 
 
 ## Being boolish [TODO]
 
