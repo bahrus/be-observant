@@ -378,10 +378,12 @@ They are:
 ```html
 <input type=checkbox name=isHappy>
 
-<div 🔭='only of @isHappy 
-            and if true pass hello 
-            and if false pass goodbye 
-            and otherwise pass ¯\_(ツ)_/¯.'></div>
+```html
+<input type=checkbox name=isHappy>
+
+<div 🔭-of=@isHappy 
+     🔭-and-be="hello if true, goodbye if false, else ¯\_(ツ)_/¯">
+</div>
 ```
 
 The statement above uses toString on @isHappy if not null.  If it is null or doesn't match any of the other tests, sets to the else.
