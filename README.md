@@ -64,7 +64,7 @@ If this assumption doesn't hold in some cases, then we can specify the name of t
     <input 
         type=checkbox 
         disabled 
-        be-observant-of='/isHappy.'
+        be-observant='of /isHappy.'
     >
 </mood-stone>
 ```
@@ -81,7 +81,7 @@ The slash ("/") symbol indicates to get the value from the host.  If omitted, it
     <input 
         type=checkbox 
         disabled 
-        🔭-of='isHappy.'
+        🔭='of isHappy.'
     >
 </mood-stone>
 ```
@@ -95,7 +95,7 @@ If Shadow DOM is not used, add the "itemscope" attribute so that *be-observant* 
     <input 
         type=checkbox 
         disabled 
-        🔭-of='isHappy.'
+        🔭='of isHappy.'
     >
 </mood-stone>
 ```
@@ -170,7 +170,7 @@ This is documented in (increasingly) painstaking detail where the [DSS parser li
 ```html
 <mood-stone>
     #shadow
-    <input type=checkbox disabled 🔭-of-!='isVegetarian.'>
+    <input type=checkbox disabled 🔭='of !isVegetarian.'>
 </mood-stone>
 ```
 <!--
@@ -196,7 +196,7 @@ Now we will start to see how be-observant provides for more "grass-roots" democr
 ```html
 <input name=search type=search>
 
-<div 🔭-of='@search.'></div>
+<div 🔭='of @search.'></div>
 ```
 
 As the user types in the input field, the div's text content reflects the value that was typed.
@@ -210,7 +210,7 @@ This also works:
 ```html
 <input id=searchString type=search>
 
-<div 🔭-of='#searchString.'></div>
+<div 🔭='of #searchString.'></div>
 ```
 
 The search for element with id=searchString is done within the (shadow)root node, since id's are supposed to be unique with a (shadow)root node.
@@ -224,7 +224,7 @@ The search for element with id=searchString is done within the (shadow)root node
     <input 
         type=checkbox 
         disabled 
-        🔭-of='-some-bool-prop'
+        🔭='of -some-bool-prop'
     >
 </mood-stone>
 ```
@@ -241,7 +241,7 @@ This observes the my-peer-element's someBoolProp property for changes and sets t
 <input
     disabled
     type=checkbox 
-    🔭-of='|isHappy.'
+    🔭='of |isHappy.'
 >
 ```
 
@@ -261,7 +261,7 @@ But sometimes we need to be more explicit because it isn't always transparent wh
 <input name=someCheckbox type=checkbox>
 
 <my-peer-element 
-    enh-🔭-of='@someCheckbox and set someBoolProp.'
+    enh-🔭='of @someCheckbox and set someBoolProp.'
     '></my-peer-element>
 
 ```
@@ -291,7 +291,8 @@ This example works, where each observing statement is treated independently:
 <input name=someOtherCheckbox type=checkbox>
 
 <mood-stone
-    enh-🔭-of="@someCheckbox and @someOtherCheckbox and set isHappy and isWealthy"
+    enh-🔭="of @someCheckbox and set isHappy.
+            Of @someOtherCheckbox and set isWealthy."
 '>
     <template shadowrootmode=open>
         <div itemscope>
@@ -324,7 +325,9 @@ If multiple remote endpoints are observed that map to a single local prop, by de
 <input name=someCheckbox type=checkbox>
 <input name=someOtherCheckbox type=checkbox>
 
-<mood-stone enh-🔭='of @someCheckbox and @someOtherCheckbox and set isHappy from the union.'>
+<mood-stone 
+    enh-🔭='of @someCheckbox and @someOtherCheckbox and set isHappy to ||.'
+>
     <template shadowrootmode=open>
         <div itemscope>
             is happy
@@ -347,30 +350,34 @@ In other words, in this example, the *mood-stone*'s "isHappy" property will be s
 
 The number of things we can observe is limited only by when the developer tires of typing the word "and".
 
-*be-observant* also support additional ways of combining multiple remote endpoints into one local prop.
+*be-observant* also supports additional ways of combining multiple remote endpoints into one local prop.
 
 They are:
 
-1.  Union
+1.  Union [TODO]
 
-<mood-stone enh-🔭='(and) set isHappy to the union of @someCheckbox and @someOtherCheckbox.'>
+```html
+<mood-stone enh-🔭='of @someCheckbox and @someOtherCheckbox and set isHappy to ||.'>
+```
 
 2.  Sum [Untested]
 
-<mood-stone enh-🔭='and set mySum to the sum of @someNumericInput and @someOtherNumericInput.'>
+```html
+<mood-stone enh-🔭='of @someNumericInput and @someOtherNumericInput and set mySum to +.'>
+```
 
 3.  Product [Untested]
 
-<mood-stone enh-🔭='and set myProduct to the product of @someNumericInput and @someOtherNumericInput.'>
+<mood-stone enh-🔭='of @someNumericInput and @someOtherNumericInput and set myProduct to *.'>
 
 4.  Interpolation [TODO -- wait for sanitizer api or whatever it is called these days to finally land in all the browsers]
 
-<mood-stone enh-🔭='and set sentenceProp to `${0} eats ${1}` weaving in @name and @food.'>
+<mood-stone enh-🔭='of @name and @food and set sentenceProp to `${0} eats ${1}`.'>
 
 5.  Object Assignment [Untested]
 
 <mood-stone 
-    enh-🔭-of='@name and @food'and set myObjectProp to an object structure by assigning @name and @food.'>
+    enh-🔭='of @name and @food and set myObjectProp to {}.'>
 
 ## Observing a single remote endpoint and applying a simple mapping to the value
 
@@ -380,7 +387,7 @@ They are:
 ```html
 <input type=checkbox name=isHappy>
 
-<div 🔭-of="@isHappy  and be hello if true and be goodbye if false else ¯\_(ツ)_/¯"></div>
+<div 🔭="of @isHappy and be hello if true and be goodbye if false else ¯\_(ツ)_/¯"></div>
 ```
 
 The statement above uses toString on @isHappy if not null.  If it is null or doesn't match any of the other tests, sets to the else.
@@ -395,7 +402,7 @@ To use truthy checks:
 <input name=search>
 
 <div 
-    🔭-of="@search and be Searching\.\.\. if truthy and otherwise be How can I help you today?." 
+    🔭="of @search and be Searching\.\.\. if truthy and otherwise be How can I help you today?." 
 >
 </div>
 ```
@@ -410,7 +417,7 @@ So far we've seen 1-1 correspondences and many to 1.  The question is -- Is many
 <input type=checkbox name=feelingLucky>
 
 <div 
-    🔭-of="@search and be Searching\.\.\. if truthy and otherwise be How can I help you today?." 
+    🔭="of @search and be Searching\.\.\. if truthy and otherwise be How can I help you today?." 
 >
 </div>
 ```
