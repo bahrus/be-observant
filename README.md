@@ -170,7 +170,7 @@ This is documented in (increasingly) painstaking detail where the [DSS parser li
 ```html
 <mood-stone>
     #shadow
-    <input type=checkbox disabled be-observant-of-!='is vegetarian.'>
+    <input type=checkbox disabled 🔭-of-!='isVegetarian.'>
 </mood-stone>
 ```
 <!--
@@ -196,7 +196,7 @@ Now we will start to see how be-observant provides for more "grass-roots" democr
 ```html
 <input name=search type=search>
 
-<div 🔭='of @search.'></div>
+<div 🔭-of='@search.'></div>
 ```
 
 As the user types in the input field, the div's text content reflects the value that was typed.
@@ -210,7 +210,7 @@ This also works:
 ```html
 <input id=searchString type=search>
 
-<div 🔭='of #searchString.'></div>
+<div 🔭-of='#searchString.'></div>
 ```
 
 The search for element with id=searchString is done within the (shadow)root node, since id's are supposed to be unique with a (shadow)root node.
@@ -224,7 +224,7 @@ The search for element with id=searchString is done within the (shadow)root node
     <input 
         type=checkbox 
         disabled 
-        🔭='of -some-bool-prop'
+        🔭-of='-some-bool-prop'
     >
 </mood-stone>
 ```
@@ -241,7 +241,7 @@ This observes the my-peer-element's someBoolProp property for changes and sets t
 <input
     disabled
     type=checkbox 
-    🔭='of |isHappy.'
+    🔭-of='|isHappy.'
 >
 ```
 
@@ -260,27 +260,28 @@ But sometimes we need to be more explicit because it isn't always transparent wh
 ```html
 <input name=someCheckbox type=checkbox>
 
-<my-peer-element enh-🔭='
-    and set someBoolProp from @someCheckbox.
+<my-peer-element 
+    enh-🔭-of='@someCheckbox'
+    enh-🔭-and-set="someBoolProp from $1"
     '></my-peer-element>
 
 ```
 
-This watches the input element for input events and passes the checked property to someBoolProp of oMyPeerElement.  The word "and" is optional, there to allow for people who like to read complete sentences (including the (mentally mapped) attribute name)
+This watches the input element for input events and passes the checked property to someBoolProp of oMyPeerElement.  
 
 The enh- prefix is there to avoid possible conflicts with attributes recognized by my-peer-element, in the absence of any [tender loving care from the platform](https://github.com/WICG/webcomponents/issues/1000).
 
 > [!NOTE]
 > This potentially could allow for a xss attack.  For that reason, *be-observant* blocks setting innerHTML to an arbitrary string [TODO].
 
-```html
+<!-- ```html
 <input name=someCheckbox type=checkbox>
 
 <my-peer-element enh-🔭='
     and set someBoolProp from @someCheckbox.
     '></my-peer-element>
 
-```
+``` -->
 
 ## Multiple parallel observers
 
@@ -290,8 +291,9 @@ This example works, where each observing statement is treated independently:
 <input name=someCheckbox type=checkbox>
 <input name=someOtherCheckbox type=checkbox>
 
-<mood-stone enh-🔭='and set isHappy from @someCheckbox.
-    Set isWealthy from @someOtherCheckbox.
+<mood-stone
+    enh-🔭-of="@someCheckbox and @someOtherCheckbox"
+    enh-🔭-and-set="isHappy from $1, isWealthy from $2."
 '>
     <template shadowrootmode=open>
         <div itemscope>
@@ -391,7 +393,10 @@ To use truthy checks:
 ```html
 <input name=search>
 
-<div 🔭='only of @search and if truthy pass Searching\.\.\. and otherwise pass How can I help you today?.'></div>
+<div 
+    🔭-of=@search
+    🔭-and-be="Searching\.\.\. if truthy and otherwise be How can I help you today?.">
+</div>
 ```
 
 
