@@ -1,5 +1,5 @@
 import {BeHive, EMC, seed, MountObserver} from 'be-hive/be-hive.js';
-import {ObservingParameters} from './types';
+import {ObservingParameters} from '../types.js';
 import { RegExpExt } from 'trans-render/lib/prs/types';
 
 const dependencyPart = String.raw `(?<dependencyPart>.*)`;
