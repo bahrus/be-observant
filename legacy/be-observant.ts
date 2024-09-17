@@ -1,6 +1,6 @@
 import {config as beCnfg} from 'be-enhanced/config.js';
 import {BE, BEConfig} from 'be-enhanced/BE.js';
-import {Actions, AllProps, AP, EndPoints, EventForObserver, LoadEventName, ObservingParameters, PAP} from '../types';
+import {Actions, AllProps, AP, EndPoints, EventForObserver, LoadEventName, ObservingParameters, PAP} from '../ts-refs/be-observant/types';
 import {IEnhancement,  BEAllProps, EnhancementInfo, EMC} from 'trans-render/be/types';
 //import {getRemoteProp, getLocalSignal} from 'be-linked/defaults.js';
 import { Specifier } from 'trans-render/dss/types';
