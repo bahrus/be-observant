@@ -173,7 +173,7 @@ This is documented in (increasingly) painstaking detail where the [DSS parser li
     <input type=checkbox disabled be-observant-of-!='is vegetarian.'>
 </mood-stone>
 ```
-<--
+<!--
 ## Example 1e Translation 
 
 ```html
