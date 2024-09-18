@@ -329,7 +329,7 @@ If multiple remote endpoints are observed that map to a single local prop, by de
 <input name=someOtherCheckbox type=checkbox>
 
 <mood-stone 
-    enh-🔭='of @someCheckbox and @someOtherCheckbox and set isHappy to ||.'
+    enh-🔭='of @someCheckbox and @someOtherCheckbox and set isHappy.'
 >
     <template shadowrootmode=open>
         <div itemscope>
