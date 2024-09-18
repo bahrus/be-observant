@@ -24,7 +24,7 @@ Observe properties of peer elements or the host, mostly declaratively.
 > If you need full two-way binding, consider using [be-bound](https://github.com/bahrus/be-bound).
 
 
-## The most quintessential example
+## The most quintessential example [TODO]
 
 The example below follows the traditional "pass props down" from the host approach, only really it is "pulling props in". You say tomāto, I say tomäto kind of thing.
 
@@ -59,7 +59,7 @@ As we already discussed, in the example above, we made the assumption that if th
 
 If this assumption doesn't hold in some cases, then we can specify the name of the property we want to observe from the host:
 
-## Specifying the host property to observe
+## Specifying the host property to observe [TODO]
 
 ```html
 <mood-stone>
@@ -76,7 +76,7 @@ Now that we've spelled out the full word twice (*be-observant*), from now on, we
 
 The slash ("/") symbol indicates to get the value from the host.  If omitted, it is assumed:
 
-## Reducing cryptic syntax
+## Reducing cryptic syntax [TODO]
 
 ```html
 <mood-stone>
@@ -91,7 +91,7 @@ The slash ("/") symbol indicates to get the value from the host.  If omitted, it
 
 ## Hosts that do not use shadow DOM.
 
-If Shadow DOM is not used, add the "itemscope" attribute so that *be-observant* knows what to look for:
+If Shadow DOM is not used, add the "itemscope" attribute so that *be-observant* knows what to look for: [TODO]
 
 ```html
 <mood-stone itemscope>
@@ -103,7 +103,7 @@ If Shadow DOM is not used, add the "itemscope" attribute so that *be-observant* 
 </mood-stone>
 ```
 
-## Binding based on microdata attribute.
+## Binding based on microdata attribute. [TODO]
 
 ```html
 <mood-stone>
@@ -126,7 +126,7 @@ This sets the span's textContent to the .toString value of mood-stone's isHappy 
 
 *xtal-element*, by the way, is a [userland implementation](https://github.com/bahrus/xtal-element) of declarative custom elements, so the example above is actually fully functional (after importing two generic js references).
 
-## By Id also works:
+## By Id also works: [TODO]
 
 ```html
 <mood-stone>
@@ -168,7 +168,7 @@ This is documented in (increasingly) painstaking detail where the [DSS parser li
 
 
 
-## Example 1d  Negation
+## Example 1d  Negation [TODO]
 
 ```html
 <mood-stone>
@@ -194,7 +194,7 @@ Can also use addition (+), multiplication (*), division (/) [Untested].
 
 Now we will start to see how be-observant provides for more "grass-roots" democratic organism (web component) support.
 
-## By name attribute
+## By name attribute [TODO]
 
 ```html
 <input name=search type=search>
@@ -208,7 +208,7 @@ The search for the element with name=search is done within the closest form elem
 
 ## By id
 
-This also works:
+This also works: [TODO]
 
 ```html
 <input id=searchString type=search>
@@ -218,7 +218,7 @@ This also works:
 
 The search for element with id=searchString is done within the (shadow)root node, since id's are supposed to be unique with a (shadow)root node.
 
-## By markers
+## By markers [TODO]
 
 ```html
 <mood-stone>
@@ -234,7 +234,7 @@ The search for element with id=searchString is done within the (shadow)root node
 
 This observes the my-peer-element's someBoolProp property for changes and sets the adorned element's checked property based on the current value.
 
-## By itemprop
+## By itemprop [TODO]
 
 ```html
 <data value=true itemprop=isHappy hidden></data>
@@ -258,7 +258,7 @@ What we've seen above is a lot of mind reading about what our intentions are, as
 
 But sometimes we need to be more explicit because it isn't always transparent what we intend.
 
-## Single mapping from what to observe, specifying the property to target.
+## Single mapping from what to observe, specifying the property to target. [TODO]
 
 ```html
 <input name=someCheckbox type=checkbox>
@@ -287,7 +287,7 @@ The enh- prefix is there to avoid possible conflicts with attributes recognized 
 
 ## Multiple parallel observers
 
-This example works, where each observing statement is treated independently:
+This example works, where each observing statement is treated independently: [TODO]
 
 ```html
 <input name=someCheckbox type=checkbox>
@@ -322,7 +322,7 @@ This example works, where each observing statement is treated independently:
 
 ## Many to 1
 
-If multiple remote endpoints are observed that map to a single local prop, by default, the "truthy" conjunction (&&) is applied to them all.  This will often result in passing in the value of the last property, unless the properties are actual booleans as they are below:
+If multiple remote endpoints are observed that map to a single local prop, by default, the "truthy" conjunction (&&) is applied to them all.  This will often result in passing in the value of the last property, unless the properties are actual booleans as they are below: [TODO]
 
 ```html
 <input name=someCheckbox type=checkbox>
@@ -349,7 +349,7 @@ If multiple remote endpoints are observed that map to a single local prop, by de
 </mood-stone>
 ```
 
-In other words, in this example, the *mood-stone*'s "isHappy" property will be set if either checkbox is checked.
+In other words, in this example, the *mood-stone*'s "isHappy" property will be set only if both checkboxes are checked.
 
 The number of things we can observe is limited only by when the developer tires of typing the word "and".
 
@@ -363,13 +363,13 @@ They are:
 <mood-stone enh-🔭='of @someCheckbox and @someOtherCheckbox and set isHappy to ||.'>
 ```
 
-2.  Sum [Untested]
+2.  Sum [TODO]
 
 ```html
 <mood-stone enh-🔭='of @someNumericInput and @someOtherNumericInput and set mySum to +.'>
 ```
 
-3.  Product [Untested]
+3.  Product [TODO]
 
 <mood-stone enh-🔭='of @someNumericInput and @someOtherNumericInput and set myProduct to *.'>
 
@@ -377,12 +377,12 @@ They are:
 
 <mood-stone enh-🔭='of @name and @food and set sentenceProp to `${0} eats ${1}`.'>
 
-5.  Object Assignment [Untested]
+5.  Object Assignment [TODO]
 
 <mood-stone 
     enh-🔭='of @name and @food and set myObjectProp to {}.'>
 
-## Observing a single remote endpoint and applying a simple mapping to the value
+## Observing a single remote endpoint and applying a simple mapping to the value [TODO]
 
 ```html
 <input type=checkbox name=isHappy>
@@ -429,8 +429,7 @@ So far we've seen 1-1 correspondences and many to 1.  The question is -- Is many
 
 ## For the power hungry JS-firsters
 
-Choose to use [be-calculating](https://github.com/bahrus/be-calculating) instead.
-
+[TODO]
 
 
 ## Attaching and setting other enhancement values [TODO]
@@ -449,7 +448,7 @@ The plus symbol:  + is indicating to tap into a [custom enhancement](https://git
 
 The example above happens to refer to this [enhancement](https://github.com/bahrus/be-searching).
 
-## Observing a specified property of a peer custom element
+## Observing a specified property of a peer custom element [TODO]
 
 ```html
 <tr itemscope>
@@ -471,7 +470,7 @@ This will one-way synchronize *my-item-view-model*'s myProp 1/2 values to the ad
 
 ## Inferring the property to observe from a peer custom element
 
-This also works:
+This also works: [TODO]
 
 ```html
 <tr itemscope>
@@ -489,19 +488,7 @@ We can specify what property of the peer custom element to bind to as follows:
 
 
 
-## Negation [TODO]
 
-```html
-<mood-stone>
-    #shadow
-    
-    <input name=someCheckbox type=checkbox>
-
-    <my-peer-element enh-🔭='
-        and set someBoolProp from the negation of @someCheckbox.
-        '></my-peer-element>
-</mood-stone>
-```
 
 ## Toggle [TODO]
 
@@ -514,7 +501,7 @@ To simply toggle a property anytime the observed element changes:
     <input name=someCheckbox type=checkbox>
 
     <my-peer-element enh-🔭='
-        and toggle someBoolProp on @someCheckbox::input.
+         of @someCheckbox::input and toggle someBoolProp.
         '></my-peer-element>
 </mood-stone>
 ```
