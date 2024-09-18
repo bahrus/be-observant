@@ -119,7 +119,7 @@ If Shadow DOM is not used, add the "itemscope" attribute so that *be-observant* 
 </mood-stone>
 ```
 
-This sets the span's textContent to the .toString value of moon-stone's isHappy property, and monitors for changes, i.e. one-way binds.
+This sets the span's textContent to the .toString value of mood-stone's isHappy property, and monitors for changes, i.e. one-way binds.
 
 *xtal-element*, by the way, is a [userland implementation](https://github.com/bahrus/xtal-element) of declarative custom elements, so the example above is actually fully functional (after importing two generic js references).
 
