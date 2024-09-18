@@ -15,7 +15,10 @@ Observe properties of peer elements or the host, mostly declaratively.
 > An extra thin layer can be applied on top of be-observant, so that the original HTML that is streamed from the server can provide the initial values of the property that *be-observant* observes, and then once that initial handshake is established, lean exclusively on *be-observant* for all subsequent updates.  This is handled by [be-entrusting](https://github.com/bahrus/be-entrusting).
 
 > [!Note]
-> *be-observant* is strictly declarative and provides no support for script.  If your needs aren't met by the restrictions declarative constraints impose, consider [be-calculating](https://github.com/bahrus/be-calculating) which shares many common modules with *be-observant*, but specializes in scripting needs.
+> *be-observant* is very close to [be-calculating](https://github.com/bahrus/be-calculating) as far as feature set.  The two share many common modules.  The significant differences are: 
+> 1.  be-calculating only accepts one "statement" of observables, and hands everything over to JavaScript at that point.  
+> 2.  A single *be-observant* enhancement, in contrast, can work with multiple statements / grouped dependencies and provides more avenues to avoid requiring a scripting expression to go along with it.
+ 
 
 > [!Note]
 > If you need full two-way binding, consider using [be-bound](https://github.com/bahrus/be-bound).

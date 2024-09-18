@@ -7,7 +7,13 @@ import {aggs} from 'be-hive/aggEvt.js';
 /** @import {CSSQuery} from './ts-refs/trans-render/types.js' */
 
 const dependencyPart = String.raw `(?<dependencyPart>.*)`;
-const ofDependencyPart = String.raw `of ${dependencyPart}`;
+//const ofDependencyPart = String.raw `of ${dependencyPart}`;
+const ofDependencies = String.raw `^of ${dependencyPart}`;
+
+/**
+ * @type {Array<[string, string]>}
+ */
+const dssKeys = [['dependencyPart', 'remoteSpecifiers[]']];
 /**
  * @type {Partial<EMC<any, AP>>}
  */
@@ -19,6 +25,13 @@ export const emc = {
             objValMapsTo: '.',
             regExpExts: {
                 parsedStatements: [
+                    {
+                        regExp: ofDependencies,
+                        defaultVals:{
+
+                        },
+                        dssKeys
+                    }
 
                 ]
             }
