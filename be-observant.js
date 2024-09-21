@@ -24,6 +24,11 @@ class BeObservant extends BE {
             parsedStatements: {},
             customHandlers: {},
             scopedCustomHandlers: {},
+        },
+        actions: {
+            noAttrs: {
+                ifNoneOf: ['parsedStatements']
+            }
         }
     }
 
@@ -75,7 +80,7 @@ class BeObservant extends BE {
              * @type {{[key: string]: AbsorbingObject}}
              */
             const propToAO = {};
-            const {remoteSpecifiers, localPropToSet} = statement;
+            const {remoteSpecifiers, localPropToSet, aggKey} = statement;
             for(const remoteSpecifier of remoteSpecifiers){
                 const remoteEl = await find(enhancedElement, remoteSpecifier);
                 if(!(remoteEl instanceof Element)) continue;
@@ -88,7 +93,7 @@ class BeObservant extends BE {
                 propToAO[prop] = ao;
                 const so = await ASMR.getSO(enhancedElement, {valueProp: localPropToSet});
 
-                const asmrh = new ASMRHandler(self, so, propToAO);
+                const asmrh = new ASMRHandler(self, aggKey, so, propToAO);
                 //TODO: store asmrh for cleanup purposes
             }
         }
@@ -100,4 +105,5 @@ class BeObservant extends BE {
 
 await BeObservant.bootUp();
 export {BeObservant}
+
 
