@@ -104,6 +104,9 @@ export class ASMRHandler extends EventTarget{
             handlerObj(inputEvent);
         }
         this.dispatchEvent(inputEvent);
+        if(inputEvent.r !== rguid){
+            this.#localSharingObject.setValue(inputEvent.r);
+        }
     }
 
 }
