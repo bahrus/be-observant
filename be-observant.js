@@ -17,7 +17,7 @@ class BeObservant extends BE {
      */
     static config = {
         propDefaults: {
-            
+            didInferring: false,
         },
         propInfo: {
             ...propInfo,
@@ -28,6 +28,9 @@ class BeObservant extends BE {
         actions: {
             noAttrs: {
                 ifNoneOf: ['parsedStatements']
+            },
+            seek: {
+                ifAllOf: ['didInferring', 'parsedStatements']
             }
         }
     }
