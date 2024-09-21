@@ -38,10 +38,21 @@ export class ASMRHandler{
      */
     constructor(self, aggKey, localSharingObject, propToAO){
         //this.#aggKey = aggKey;
-        const sch = self.scopedCustomHandlers;
-        if(sch !== undefined){
-            const possibleHandlers = sch.get(aggKey);
-            
+        const {scopedCustomHandlers, customHandlers, enhancedElement} = self;
+        if(scopedCustomHandlers !== undefined){
+            const possibleHandlers = scopedCustomHandlers.get(aggKey);
+            if(possibleHandlers !== undefined){
+                for(const possibleHandler of possibleHandlers){
+                    const [cssQ, handlerObj] = possibleHandler;
+                    if(enhancedElement.closest(cssQ) !== null){
+                        this.#handlerObj = handlerObj;
+                        break;
+                    }
+                }
+            }
+        }
+        if(this.#handlerObj === undefined){
+
         }
         this.#localSharingObject = localSharingObject;
         this.#propToAO = propToAO;

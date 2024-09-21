@@ -69,6 +69,7 @@ class BeObservant extends BE {
         const {find} = await import('trans-render/dss/find.js');
         const {ASMR} = await import('trans-render/asmr/asmr.js');
         const {ASMRHandler} = await import('./ASMRHandler.js');
+        const {customHandlers, scopedCustomHandlers} = self;
         for(const statement of parsedStatements){
             /**
              * @type {{[key: string]: AbsorbingObject}}
@@ -86,6 +87,7 @@ class BeObservant extends BE {
                 });
                 propToAO[prop] = ao;
                 const so = await ASMR.getSO(enhancedElement, {valueProp: localPropToSet});
+
                 const asmrh = new ASMRHandler(self, so, propToAO);
                 //TODO: store asmrh for cleanup purposes
             }
