@@ -18,7 +18,7 @@ Observe properties of peer elements or the host, mostly declaratively.
 > *be-observant* is very close to [be-calculating](https://github.com/bahrus/be-calculating) as far as feature set.  The two share many common modules.  The significant differences are: 
 > 1.  *be-calculating* only accepts one "statement" of observables, and hands everything over to JavaScript at that point.  
 > 2.  A single *be-observant* enhancement, in contrast, can work with multiple statements / grouped dependencies and provides more avenues to avoid requiring a scripting expression to go along with it.
-> 3.  *be-calculating* is a little more vocal, emitting public events from the adorned element, which frameworks or local script handlers can subscribe to and engage with.  *be-observant* is more "introverted".
+> 3.  *be-calculating* is a little more vocal, emitting public events from the adorned element, which frameworks or local script handlers can subscribe to and engage with.  *be-observant* is more "introverted".  
  
 
 > [!Note]
