@@ -127,7 +127,7 @@ This sets the span's textContent to the .toString value of mood-stone's isHappy 
 
 *xtal-element*, by the way, is a [userland implementation](https://github.com/bahrus/xtal-element) of declarative custom elements, so the example above is actually fully functional (after importing two generic js references).
 
-## By Id also works: [TODO]
+## By Id also works:
 
 ```html
 <mood-stone>
