@@ -71,7 +71,15 @@ export class ASMRHandler extends EventTarget{
     }
 
 
+    /**
+     * @type {boolean | undefined}
+     */
+    #isClass;
 
+    /**
+     * @type {EventListenerObject }
+     */
+    #handlerObjInstance
     async handleEvent() {
         const obj = {};
         const args = [];
@@ -82,7 +90,20 @@ export class ASMRHandler extends EventTarget{
             args.push(val)
             obj[prop] = val;
         }
-        const inputEvent = new InputEvent(args, obj, )
+        const inputEvent = new InputEvent(args, obj, this);
+        const handlerObj = this.#handlerObj;
+        if(this.#isClass === undefined){
+            this.#isClass = handlerObj.toString().substring(0, 5) === 'class';
+        }
+        if(this.#isClass){
+            if(this.#handlerObjInstance === undefined){
+                this.#handlerObjInstance = new handlerObj();
+            }
+            this.#handlerObjInstance.handleEvent(inputEvent);
+        }else{
+            handlerObj(inputEvent);
+        }
+        this.dispatchEvent(inputEvent);
     }
 
 }
