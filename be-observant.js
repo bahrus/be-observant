@@ -89,9 +89,18 @@ class BeObservant extends BE {
                 if(!(remoteEl instanceof Element)) continue;
                 const {prop} = remoteSpecifier;
                 if(prop === undefined) throw 'NI';
+                let remoteProp;
+                const {s} = remoteSpecifier;
+                switch(s){
+                    case '/':
+                    case '-':
+                        remoteProp = prop;
+                        break;
+                }
                 const ao = await ASMR.getAO(remoteEl, {
                     evt: remoteSpecifier.evt || 'input',
                     selfIsVal: remoteSpecifier.path === '$0',
+                    propToAbsorb: remoteProp,
                 });
                 propToAO[prop] = ao;
                 const so = await ASMR.getSO(enhancedElement, {valueProp: localPropToSet});
