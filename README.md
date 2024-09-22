@@ -289,7 +289,7 @@ The enh- prefix is there to avoid possible conflicts with attributes recognized 
 
 ## Multiple parallel observers
 
-This example works, where each observing statement is treated independently: [TODO]
+This example works, where each observing statement is treated independently:
 
 ```html
 <input name=someCheckbox type=checkbox>
