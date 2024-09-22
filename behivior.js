@@ -12,6 +12,8 @@ const ofDependencies = String.raw `^(o|O)f ${dependencyPart}`;
 
 const ofDependenciesAndSetProp = String.raw `${ofDependencies} and set (?<localPropToSet>.*)`;
 
+const toAggregator = String.raw `${ofDependencies} and set to (?<aggKey>.*)`;
+
 /**
  * @type {Array<[string, string]>}
  */
@@ -27,6 +29,12 @@ export const emc = {
             objValMapsTo: '.',
             regExpExts: {
                 parsedStatements: [
+                    {
+                        regExp: toAggregator,
+                        defaultVals: {
+                        },
+                        dssArrayKeys
+                    },
                     {
                         regExp: ofDependenciesAndSetProp,
                         defaultVals: {

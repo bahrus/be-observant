@@ -429,9 +429,24 @@ So far we've seen 1-1 correspondences and many to 1.  The question is -- Is many
 
 
 
-## For the power hungry JS-firsters
+# For the power hungry JS-firsters
 
-[TODO]
+We can write custom JS expressions, and integration it with our observing statements.
+
+## Locally defined
+
+```html
+<script type=module>
+    import {within} from 'be-observant/🔭.js';
+    within('#hZs4GGd8EWxoIxPYAnpQA', 'appendWorld', e => e.r = e.args[0] + 'World')
+</script>
+<div id="hZs4GGd8EWxoIxPYAnpQA">
+    <input id=searchString type=search>
+
+    <div 🔭='of #searchString and set to appendWorld.'></div>
+</div>
+
+```
 
 
 ## Attaching and setting other enhancement values [TODO]
