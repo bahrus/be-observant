@@ -77,7 +77,7 @@ Now that we've spelled out the full word twice (*be-observant*), from now on, we
 
 The slash ("/") symbol indicates to get the value from the host.  If omitted, it is assumed:
 
-## Reducing cryptic syntax [TODO]
+## Reducing cryptic syntax
 
 ```html
 <mood-stone>
@@ -90,9 +90,9 @@ The slash ("/") symbol indicates to get the value from the host.  If omitted, it
 </mood-stone>
 ```
 
-## Hosts that do not use shadow DOM.
+## Hosts that do not use shadow DOM. [TODO]
 
-If Shadow DOM is not used, add the "itemscope" attribute so that *be-observant* knows what to look for: [TODO]
+If Shadow DOM is not used, add the "itemscope" attribute so that *be-observant* knows what to look for:
 
 ```html
 <mood-stone itemscope>
@@ -174,7 +174,7 @@ This is documented in (increasingly) painstaking detail where the [DSS parser li
 ```html
 <mood-stone>
     #shadow
-    <input type=checkbox disabled 🔭='of !isVegetarian.'>
+    <input type=checkbox disabled 🔭='of isVegetarian and set to !.'>
 </mood-stone>
 ```
 <!--
@@ -195,7 +195,7 @@ Can also use addition (+), multiplication (*), division (/) [Untested].
 
 Now we will start to see how be-observant provides for more "grass-roots" democratic organism (web component) support.
 
-## By name attribute [TODO]
+## By name attribute
 
 ```html
 <input name=search type=search>
