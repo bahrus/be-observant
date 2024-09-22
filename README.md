@@ -1,4 +1,4 @@
-# be-observant 🔭 [TODO]
+# be-observant 🔭 [WIP]
 
 Observe properties of peer elements or the host, mostly declaratively.
 
@@ -25,7 +25,7 @@ Observe properties of peer elements or the host, mostly declaratively.
 > If you need full two-way binding, consider using [be-bound](https://github.com/bahrus/be-bound).
 
 
-## The most quintessential example [TODO]
+## The most quintessential example
 
 The example below follows the traditional "pass props down" from the host approach, only really it is "pulling props in". You say tomāto, I say tomäto kind of thing.
 
