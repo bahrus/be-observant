@@ -235,7 +235,7 @@ The search for element with id=searchString is done within the (shadow)root node
 
 This observes the my-peer-element's someBoolProp property for changes and sets the adorned element's checked property based on the current value.
 
-## By itemprop [TODO]
+## By itemprop
 
 ```html
 <data value=true itemprop=isHappy hidden></data>
