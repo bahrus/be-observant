@@ -8,12 +8,12 @@ import {aggs} from 'be-hive/aggEvt.js';
 
 const dependencyPart = String.raw `(?<dependencyPart>.*)`;
 //const ofDependencyPart = String.raw `of ${dependencyPart}`;
-const ofDependencies = String.raw `^of ${dependencyPart}`;
+const ofDependencies = String.raw `^(o|O)f ${dependencyPart}`;
 
 /**
  * @type {Array<[string, string]>}
  */
-const dssKeys = [['dependencyPart', 'remoteSpecifiers[]']];
+const dssArrayKeys = [['dependencyPart', 'remoteSpecifiers']];
 /**
  * @type {Partial<EMC<any, AP>>}
  */
@@ -28,9 +28,9 @@ export const emc = {
                     {
                         regExp: ofDependencies,
                         defaultVals:{
-
+                            aggKey: '&&'
                         },
-                        dssKeys
+                        dssArrayKeys
                     }
 
                 ]

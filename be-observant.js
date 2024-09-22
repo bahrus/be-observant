@@ -1,6 +1,6 @@
 // @ts-check
 import { BE } from 'be-enhanced/BE.js';
-import { propInfo } from 'be-enhanced/cc.js';
+import { propInfo, resolved, rejected } from 'be-enhanced/cc.js';
 
 /** @import {BEConfig, IEnhancement, BEAllProps} from './ts-refs/be-enhanced/types.d.ts' */
 /** @import {Actions, PAP, AP, BAP, ObservingParameters} from './ts-refs/be-observant/types' */
@@ -31,8 +31,35 @@ class BeObservant extends BE {
             },
             seek: {
                 ifAllOf: ['didInferring', 'parsedStatements']
+            },
+            infer: {
+                ifAllOf: ['parsedStatements'],
+                ifNoneOf: ['didInferring']
             }
-        }
+        },
+        positractions: [
+            resolved, rejected,
+            {
+                do: 'warn',
+                ifAllOf: ['rawStatements'],
+                pass: ['`The followng statements could not be parsed.`', 'rawStatements']
+            }
+        ]
+    }
+
+    warn = console.warn;
+
+    /**
+     * 
+     * @param {BAP} self 
+     */
+    async infer(self){
+        const {parsedStatements, enhancedElement} = self;
+        //do any pre processing here, if applicable
+        //if no scenario presents itself, remove this linked action
+        return /** @type {PAP} */({
+            didInferring: true,
+        });
     }
 
     /**
