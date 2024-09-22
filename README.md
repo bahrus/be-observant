@@ -264,9 +264,10 @@ But sometimes we need to be more explicit because it isn't always transparent wh
 ```html
 <input name=someCheckbox type=checkbox>
 
-<my-peer-element 
-    enh-🔭='of @someCheckbox and set someBoolProp.'
-    '></my-peer-element>
+<mood-stone 
+    enh-🔭='of @someCheckbox and set isHappy.'
+    >
+</mood-stone>
 
 ```
 

@@ -10,6 +10,8 @@ const dependencyPart = String.raw `(?<dependencyPart>.*)`;
 //const ofDependencyPart = String.raw `of ${dependencyPart}`;
 const ofDependencies = String.raw `^(o|O)f ${dependencyPart}`;
 
+const ofDependenciesAndSetProp = String.raw `${ofDependencies} and set (?<localPropToSet>.*)`;
+
 /**
  * @type {Array<[string, string]>}
  */
@@ -25,6 +27,13 @@ export const emc = {
             objValMapsTo: '.',
             regExpExts: {
                 parsedStatements: [
+                    {
+                        regExp: ofDependenciesAndSetProp,
+                        defaultVals: {
+                            aggKey: '&&'
+                        },
+                        dssArrayKeys
+                    },
                     {
                         regExp: ofDependencies,
                         defaultVals:{
