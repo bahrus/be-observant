@@ -209,7 +209,7 @@ The search for the element with name=search is done within the closest form elem
 
 ## By id
 
-This also works: [TODO]
+This also works:
 
 ```html
 <input id=searchString type=search>
