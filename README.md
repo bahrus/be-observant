@@ -104,7 +104,7 @@ If Shadow DOM is not used, add the "itemscope" attribute so that *be-observant* 
 </mood-stone>
 ```
 
-## Binding based on microdata attribute. [TODO]
+## Binding based on microdata attribute.
 
 ```html
 <mood-stone>
