@@ -324,7 +324,7 @@ This example works, where each observing statement is treated independently:
 
 ## Many to 1
 
-If multiple remote endpoints are observed that map to a single local prop, by default, the "truthy" conjunction (&&) is applied to them all.  This will often result in passing in the value of the last property, unless the properties are actual booleans as they are below: [TODO]
+If multiple remote endpoints are observed that map to a single local prop, by default, the "truthy" conjunction (&&) is applied to them all:
 
 ```html
 <input name=someCheckbox type=checkbox>
@@ -359,19 +359,19 @@ The number of things we can observe is limited only by when the developer tires 
 
 They are:
 
-1.  Union [TODO]
+1.  Union [Untested]
 
 ```html
 <mood-stone enh-🔭='of @someCheckbox and @someOtherCheckbox and set isHappy to ||.'>
 ```
 
-2.  Sum [TODO]
+2.  Sum [Untested]
 
 ```html
 <mood-stone enh-🔭='of @someNumericInput and @someOtherNumericInput and set mySum to +.'>
 ```
 
-3.  Product [TODO]
+3.  Product [Untested]
 
 <mood-stone enh-🔭='of @someNumericInput and @someOtherNumericInput and set myProduct to *.'>
 
@@ -379,7 +379,7 @@ They are:
 
 <mood-stone enh-🔭='of @name and @food and set sentenceProp to `${0} eats ${1}`.'>
 
-5.  Object Assignment [TODO]
+5.  Object Assignment [Untested]
 
 <mood-stone 
     enh-🔭='of @name and @food and set myObjectProp to {}.'>
