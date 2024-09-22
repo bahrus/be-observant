@@ -219,7 +219,7 @@ This also works:
 
 The search for element with id=searchString is done within the (shadow)root node, since id's are supposed to be unique with a (shadow)root node.
 
-## By markers [TODO]
+## By markers
 
 ```html
 <mood-stone>
