@@ -259,7 +259,7 @@ What we've seen above is a lot of mind reading about what our intentions are, as
 
 But sometimes we need to be more explicit because it isn't always transparent what we intend.
 
-## Single mapping from what to observe, specifying the property to target. [TODO]
+## Single mapping from what to observe, specifying the property to target.
 
 ```html
 <input name=someCheckbox type=checkbox>
