@@ -90,7 +90,7 @@ The slash ("/") symbol indicates to get the value from the host.  If omitted, it
 </mood-stone>
 ```
 
-## Hosts that do not use shadow DOM. [TODO]
+## Hosts that do not use shadow DOM.
 
 If Shadow DOM is not used, add the "itemscope" attribute so that *be-observant* knows what to look for:
 
@@ -438,7 +438,7 @@ We can write custom JS expressions, and integration it with our observing statem
 ```html
 <script type=module>
     import {within} from 'be-observant/🔭.js';
-    within('#hZs4GGd8EWxoIxPYAnpQA', 'appendWorld', e => e.r = e.args[0] + 'World')
+    within('#hZs4GGd8EWxoIxPYAnpQA', 'appendWorld', e => e.r = e.args[0] + ' World')
 </script>
 <div id="hZs4GGd8EWxoIxPYAnpQA">
     <input id=searchString type=search>
@@ -447,6 +447,21 @@ We can write custom JS expressions, and integration it with our observing statem
 </div>
 
 ```
+
+What this does:  It sets the div's textContent property to the value of searchString input element, after appending the word "World".
+
+## Globally defined
+
+```html
+<script type=module>
+    import {register} from 'be-observant/🔭.js';
+    register('appendWorld', e => e.r = e.args[0] + ' World');
+</script>
+<input id=searchString type=search>
+
+<div 🔭='of #searchString and set to appendWorld.'></div>
+```
+
 
 
 ## Attaching and setting other enhancement values [TODO]
