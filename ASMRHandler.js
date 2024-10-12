@@ -34,7 +34,7 @@ export class ASMRHandler extends EventTarget{
     #ac;
 
     /**
-     * @param {Handlers & BEAllProps} self
+     * @param {import('./ts-refs/be-observant/types').BAP} self
      * @param {aggKeys} aggKey 
      * @param {SharingObject} localSharingObject 
      * @param {{[key: string] : AbsorbingObject}} propToAO 
@@ -42,13 +42,25 @@ export class ASMRHandler extends EventTarget{
     constructor(self, aggKey, localSharingObject, propToAO){
         super();
         //this.#aggKey = aggKey;
-        const {scopedCustomHandlers, customHandlers, enhancedElement} = self;
-        if(scopedCustomHandlers !== undefined){
-            const possibleHandlers = scopedCustomHandlers.get(aggKey);
-            if(possibleHandlers !== undefined){
-                for(const possibleHandler of possibleHandlers){
-                    const [cssQ, handlerObj] = possibleHandler;
-                    if(enhancedElement.closest(cssQ) !== null){
+        const {customHandlers, enhancedElement, ws} = self;
+        // if(scopedCustomHandlers !== undefined){
+        //     const possibleHandlers = scopedCustomHandlers.get(aggKey);
+        //     if(possibleHandlers !== undefined){
+        //         for(const possibleHandler of possibleHandlers){
+        //             const [cssQ, handlerObj] = possibleHandler;
+        //             if(enhancedElement.closest(cssQ) !== null){
+        //                 this.#handlerObj = handlerObj;
+        //                 break;
+        //             }
+        //         }
+        //     }
+        // }
+        if(ws !== undefined){
+            for(const w of ws){
+                const {refs} = w;
+                if(refs !== undefined){
+                    const handlerObj = refs[aggKey];
+                    if(handlerObj !== undefined){
                         this.#handlerObj = handlerObj;
                         break;
                     }

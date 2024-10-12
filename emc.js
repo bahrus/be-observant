@@ -60,7 +60,8 @@ export const emc = {
         const {BeObservant} = await import('./be-observant.js');
         return BeObservant;
     },
-    ws:[]
+    ws:[],
+    mapWSTo: 'ws'
 }
 
 const mose = seed(emc);

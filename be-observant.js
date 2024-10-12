@@ -25,7 +25,7 @@ class BeObservant extends BE {
             ...propInfo,
             parsedStatements: {},
             customHandlers: {},
-            scopedCustomHandlers: {},
+            ws: {},
         },
         actions: {
             noAttrs: {
@@ -44,7 +44,7 @@ class BeObservant extends BE {
             {
                 do: 'warn',
                 ifAllOf: ['rawStatements'],
-                pass: ['`The followng statements could not be parsed.`', 'rawStatements']
+                pass: ['`The following statements could not be parsed.`', 'rawStatements']
             }
         ]
     }
@@ -106,7 +106,7 @@ class BeObservant extends BE {
         const {find} = await import('trans-render/dss/find.js');
         const {ASMR} = await import('trans-render/asmr/asmr.js');
         const {ASMRHandler} = await import('./ASMRHandler.js');
-        const {customHandlers, scopedCustomHandlers} = self;
+        const {customHandlers} = self;
         for(const statement of parsedStatements){
             /**
              * @type {{[key: string]: AbsorbingObject}}

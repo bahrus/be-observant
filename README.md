@@ -351,7 +351,7 @@ If multiple remote endpoints are observed that map to a single local prop, by de
 </mood-stone>
 ```
 
-In other words, in this example, the *mood-stone*'s "isHappy" property will be set only if both checkboxes are checked.
+In other words, in this example, the *mood-stone*'s "isHappy" property will be set to true only if both checkboxes are checked, otherwise it will be set to false.
 
 The number of things we can observe is limited only by when the developer tires of typing the word "and".
 
@@ -429,16 +429,19 @@ So far we've seen 1-1 correspondences and many to 1.  The question is -- Is many
 
 
 
-# For the power hungry JS-firsters
+# For the power hungry JS-firsters [TODO]
 
-We can write custom JS expressions, and integration it with our observing statements.
+We can write custom JS expressions, and integrate it with our observing statements.
 
 ## Locally defined
 
 ```html
-<script type=module>
-    import {within} from 'be-observant/🔭.js';
-    within('#hZs4GGd8EWxoIxPYAnpQA', 'appendWorld', e => e.r = e.args[0] + ' World')
+<script type=module blocking=render>
+    (await import('be-observant/🔭.js'))
+    .w('hZs4GGd8EWxoIxPYAnpQA *')
+    .r({
+        appendWorld:  e => e.r = e.args[0] + ' World'
+    });
 </script>
 <div id="hZs4GGd8EWxoIxPYAnpQA">
     <input id=searchString type=search>
