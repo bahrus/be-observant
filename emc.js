@@ -2,6 +2,7 @@
 import { BeHive, seed, MountObserver } from 'be-hive/be-hive.js';
 import {Registry} from 'be-hive/Registry.js';
 import {aggs} from 'be-hive/aggEvt.js';
+import { w as bw } from 'be-hive/w.js';
 /** @import {EMC, EventListenerOrFn} from './ts-refs/trans-render/be/types' */
 /** @import {Actions, PAP,  AP} from './ts-refs/be-observant/types' */;
 /** @import {CSSQuery} from './ts-refs/trans-render/types.js' */
@@ -58,7 +59,8 @@ export const emc = {
     importEnh: async () => {
         const {BeObservant} = await import('./be-observant.js');
         return BeObservant;
-    }
+    },
+    ws:[]
 }
 
 const mose = seed(emc);
@@ -80,9 +82,7 @@ export function register(handlerName, handler){
 /**
  * 
  * @param {CSSQuery} q 
- * @param {string} handlerName 
- * @param {EventListenerOrFn} handler 
  */
-export function within(q, handlerName, handler){
-    Registry.within(emc, q, handlerName, handler);
+export function w(q){
+    return bw(q, emc.ws);
 }

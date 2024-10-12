@@ -17,7 +17,7 @@ Observe properties of peer elements or the host, mostly declaratively.
 > [!Note]
 > *be-observant* is very close to [be-calculating](https://github.com/bahrus/be-calculating) as far as feature set.  The two share many common modules.  The significant differences are: 
 > 1.  *be-calculating* only accepts one "statement" of observables, and hands everything over to JavaScript at that point.  
-> 2.  A single *be-observant* enhancement, in contrast, can work with multiple statements / grouped dependencies and provides more avenues to avoid requiring a scripting expression to go along with it.
+> 2.  A single *be-observant* enhancement, in contrast, is much more declarative.  It can work with multiple statements / grouped dependencies and provides more avenues to avoid requiring a scripting expression to go along with it, resorting to script expressions as a last resort.
 > 3.  *be-calculating* is a little more vocal, emitting public events from the adorned element, which frameworks or local script handlers can subscribe to and engage with.  *be-observant* is more "introverted".  
  
 
@@ -617,10 +617,11 @@ Any web server that can serve static files will do, but...
 1.  Install git.
 2.  Fork/clone this repo.
 3.  Install node.js.
-4.  Open command window to folder where you cloned this repo.
-5.  > npm install
-6.  > npm run serve
-7.  Open http://localhost:8000/demo/ in a modern browser.
+4.  Install python 3 or later.
+5.  Open command window to folder where you cloned this repo.
+6.  > npm install
+7.  > npm run serve
+8.  Open http://localhost:8000/demo/ in a modern browser.
 
 ## Running Tests
 
