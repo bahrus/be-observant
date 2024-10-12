@@ -438,7 +438,7 @@ We can write custom JS expressions, and integrate it with our observing statemen
 ```html
 <script type=module blocking=render>
     (await import('be-observant/🔭.js'))
-    .w('hZs4GGd8EWxoIxPYAnpQA *')
+    .w('#hZs4GGd8EWxoIxPYAnpQA *')
     .r({
         appendWorld:  e => e.r = e.args[0] + ' World'
     });
