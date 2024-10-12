@@ -1,6 +1,7 @@
 // @ts-check
 import { BE } from 'be-enhanced/BE.js';
 import { propInfo, resolved, rejected } from 'be-enhanced/cc.js';
+import { dispatchEvent as de } from 'trans-render/positractions/dispatchEvent.js';
 
 /** @import {BEConfig, IEnhancement, BEAllProps} from './ts-refs/be-enhanced/types.d.ts' */
 /** @import {Actions, PAP, AP, BAP, ObservingParameters} from './ts-refs/be-observant/types' */
@@ -12,6 +13,7 @@ import { propInfo, resolved, rejected } from 'be-enhanced/cc.js';
  * 
  */
 class BeObservant extends BE {
+    de = de;
     /**
      * @type {BEConfig<BAP, Actions & IEnhancement, any>}
      */
@@ -68,7 +70,7 @@ class BeObservant extends BE {
      */
     async noAttrs(self){
         const {enhancedElement} = self;
-        const {getDefaultRemotePropName} = await import('trans-render/asmr/getDefaultRemotePropName.js');
+        const {stdProp} = await import('trans-render/asmr/stdProp.js');
         /**
          * @type {Specifier}
          */
@@ -79,7 +81,7 @@ class BeObservant extends BE {
             scopeS: '[itemscope]',
             rec: true,
             rnf: true,
-            prop: getDefaultRemotePropName(enhancedElement),
+            prop: stdProp(enhancedElement),
             host: true
         }
         /**

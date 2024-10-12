@@ -10,7 +10,7 @@
     "bind",
     "observe"
   ],
-  "description": "Glue DOM and custom elements together via JSON declarations.",
+  "description": "Glue DOM and custom elements together mostly declaratively.",
   "main": "be-observant.js",
   "module": "be-observant.js",
   "exports": {
