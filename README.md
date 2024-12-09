@@ -75,6 +75,8 @@ If this assumption doesn't hold in some cases, then we can specify the name of t
 
 Now that we've spelled out the full word twice (*be-observant*), from now on, we will use "🔭" as our shortcut for be-observant, but please apply the mental mapping from 🔭 to the full name, for the statements to make the most sense.  
 
+Oh, also, the starting word "of" is optional, and is there simply to make the statement more readable.  It may become less readable if you chose a different name, as shown below [TODO].
+
 The slash ("/") symbol indicates to get the value from the host.  If omitted, it is assumed:
 
 ## Reducing cryptic syntax
@@ -85,7 +87,7 @@ The slash ("/") symbol indicates to get the value from the host.  If omitted, it
     <input 
         type=checkbox 
         disabled 
-        🔭='of isHappy.'
+        🔭=isHappy
     >
 </mood-stone>
 ```
@@ -99,7 +101,7 @@ If Shadow DOM is not used, add the "itemscope" attribute so that *be-observant* 
     <input 
         type=checkbox 
         disabled 
-        🔭='of isHappy.'
+        🔭=isHappy
     >
 </mood-stone>
 ```
@@ -200,7 +202,7 @@ Now we will start to see how be-observant provides for more "grass-roots" democr
 ```html
 <input name=search type=search>
 
-<div 🔭='of @search.'></div>
+<div 🔭=@search></div>
 ```
 
 As the user types in the input field, the div's text content reflects the value that was typed.
@@ -214,7 +216,7 @@ This also works:
 ```html
 <input id=searchString type=search>
 
-<div 🔭='of #searchString.'></div>
+<div 🔭=#searchString></div>
 ```
 
 The search for element with id=searchString is done within the (shadow)root node, since id's are supposed to be unique with a (shadow)root node.
@@ -228,7 +230,7 @@ The search for element with id=searchString is done within the (shadow)root node
     <input 
         type=checkbox 
         disabled 
-        🔭='of -some-bool-prop'
+        🔭=-some-bool-prop
     >
 </mood-stone>
 ```
@@ -245,7 +247,7 @@ This observes the my-peer-element's someBoolProp property for changes and sets t
 <input
     disabled
     type=checkbox 
-    🔭='of |isHappy.'
+    🔭=|isHappy
 >
 ```
 
@@ -271,7 +273,7 @@ But sometimes we need to be more explicit because it isn't always transparent wh
 
 ```
 
-This watches the input element for input events and passes the checked property to someBoolProp of oMyPeerElement.  
+This watches the input element for input events and passes the checked property to the isHappy property of oMoodStone.  
 
 The enh- prefix is there to avoid possible conflicts with attributes recognized by my-peer-element, in the absence of any [tender loving care from the platform](https://github.com/WICG/webcomponents/issues/1000).
 
@@ -439,16 +441,15 @@ We can write custom JS expressions, and integrate it with our observing statemen
 <div id="hZs4GGd8EWxoIxPYAnpQA">
     <input id=searchString type=search>
 
-    <div defer-🔭 🔭='of #searchString and punt.'></div>
+    <div defer-🔭 🔭='#searchString and punt.'></div>
     <script 🏇-on=🔭>document.currentScript.e = 
         e => e.target.textContent = e.args[0] + ' World';
     <script>
 </div>
 ```
 
-"e:r" essentially refers to event.result.
 
-*be-observant* fires an event from the adorned element whose name matches the current name of the enhancement attribute base ('🔭' in this case).  Anyone can subscribe and have a say on what event.r should be.  The markup below relies on a separate enhancement, [be-eventing](https://github.com/bahrus/be-eventing).
+*be-observant* fires an event from the adorned element whose name matches the current name of the enhancement attribute base ('🔭' in this case).  Anyone can subscribe and have a say on what happens then.  The markup below relies on a separate enhancement, [be-eventing](https://github.com/bahrus/be-eventing).  Other ways of attaching the event handler will also work (subject to delicate timing issues), such as from a framework or custom element host.
 
 What this does:  It sets the div's textContent property to the value of searchString input element, after appending the word "World".
 
