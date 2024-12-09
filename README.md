@@ -439,9 +439,9 @@ We can write custom JS expressions, and integrate it with our observing statemen
 <div id="hZs4GGd8EWxoIxPYAnpQA">
     <input id=searchString type=search>
 
-    <div defer-🔭 🔭='of #searchString and set to e:r.'></div>
+    <div defer-🔭 🔭='of #searchString and absorb from event handler.'></div>
     <script 🏇-on=🔭>document.currentScript.e = 
-        e => e.r = e.args[0] + ' World';
+        e => e.target.textContent = e.args[0] + ' World';
     <script>
 </div>
 ```
