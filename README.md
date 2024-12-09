@@ -439,14 +439,14 @@ We can write custom JS expressions, and integrate it with our observing statemen
 <div id="hZs4GGd8EWxoIxPYAnpQA">
     <input id=searchString type=search>
 
-    <div defer-🔭 🔭='of #searchString and set to r.'></div>
+    <div defer-🔭 🔭='of #searchString and set to e:r.'></div>
     <script 🏇-on=🔭>document.currentScript.e = 
         e => e.r = e.args[0] + ' World';
     <script>
 </div>
 ```
 
-"e.r" essentially refers to event.result.
+"e:r" essentially refers to event.result.
 
 *be-observant* fires an event from the adorned element whose name matches the current name of the enhancement attribute base ('🔭' in this case).  Anyone can subscribe and have a say on what event.r should be.  The markup below relies on a separate enhancement, [be-eventing](https://github.com/bahrus/be-eventing).
 
