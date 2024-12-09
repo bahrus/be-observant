@@ -436,17 +436,13 @@ We can write custom JS expressions, and integrate it with our observing statemen
 ## Locally defined
 
 ```html
-<script type=module blocking=render>
-    (await import('be-observant/🔭.js'))
-    .w('#hZs4GGd8EWxoIxPYAnpQA *')
-    .r({
-        appendWorld:  e => e.r = e.args[0] + ' World'
-    });
-</script>
 <div id="hZs4GGd8EWxoIxPYAnpQA">
     <input id=searchString type=search>
 
-    <div 🔭='of #searchString and set to appendWorld.'></div>
+    <div defer-🔭 🔭='of #searchString and set to e.r.'></div>
+    <script 🏇-on=🔭>document.currentScript.handle = 
+        e => e.r = e.args[0] + ' World'
+    <script>
 </div>
 
 ```
