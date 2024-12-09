@@ -440,8 +440,8 @@ We can write custom JS expressions, and integrate it with our observing statemen
     <input id=searchString type=search>
 
     <div defer-🔭 🔭='of #searchString and set to e.r.'></div>
-    <script 🏇-on=🔭>document.currentScript.handle = 
-        e => e.r = e.args[0] + ' World'
+    <script 🏇-on=🔭>document.currentScript.e = 
+        e => e.r = e.args[0] + ' World';
     <script>
 </div>
 
