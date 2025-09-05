@@ -1,6 +1,26 @@
-# be-observant [Currently Deprecated]
+# be-observant [TODO]
 
-This enhancement is currently deprecated in favor of [be-observing](https://github.com/bahrus/be-observing) which ended up rolling off the tongue better as the requirements gelled.
+```html
+<label>
+    a: <input id=a>
+</label>
+<label>
+    b: <input id=b type=checkbox>
+</label>
+<label>
+    c: <input id=d type=number>
+</label>
+<label>
+    d: <input id=d type=date>
+</label>
+<div be-observant="of a and b and c and d"></div>
+```
 
-This package may still be used for some other purpose in the future.
+What this does:
+
+sets data-[id] of the adorned element to the value of the input element:
+
+```html
+<div data-a=... data-b=... data-c=... data-d=...>
+```
 
