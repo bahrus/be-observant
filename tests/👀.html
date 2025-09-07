@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- #include virtual="/imports.html" -->
+    <script type=module>
+        import '/👀.js';
+    </script>
+</head>
+<body>
+    <label>
+        a: <input id=a>
+    </label>
+    <label>
+        b: <input id=b type=checkbox>
+    </label>
+    <label>
+        c: <input id=c type=number>
+    </label>
+    <label>
+        d: <input id=d type=date>
+    </label>
+    <div id=div 👀="of #a and #b and #c and #d"></div>
+    <div id=target></div>
+    <script>
+        function runTest(){
+            if(div.dataset.b === 'false'){
+                target.setAttribute('mark', 'good');
+            }
+        }
+        setTimeout(() => {
+            runTest();
+        }, 500);
+    </script>
+</body>
+</html>
