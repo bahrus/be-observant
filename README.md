@@ -15,7 +15,7 @@ be-observant is an HTML enhancement that reflects peer elements or the host's pr
     b: <input id=b type=checkbox>
 </label>
 <label>
-    c: <input id=d type=number>
+    c: <input id=c type=number>
 </label>
 <label>
     d: <input id=d type=date>
