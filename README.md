@@ -13,7 +13,7 @@
 <label>
     d: <input id=d type=date>
 </label>
-<div be-observant="of a and b and c and d"></div>
+<div be-observant="of #a and #b and #c and #d"></div>
 ```
 
 What this does:

@@ -28,9 +28,7 @@ export const emc = {
                 parsedStatements: [
                     {
                         regExp: ofDependencies,
-                        defaultVals:{
-                            aggKey: '&&'
-                        },
+                        defaultVals:{},
                         dssArrayKeys
                     }
 
@@ -43,30 +41,9 @@ export const emc = {
         const {BeObservant} = await import('./be-observant.js');
         return BeObservant;
     },
-    ws:[],
-    mapWSTo: 'ws'
+    
 }
 
 const mose = seed(emc);
 MountObserver.synthesize(document, BeHive, mose);
 
-for(const key in aggs){
-    Registry.register(emc, key, aggs[key]);
-}
-
-/**
- * 
- * @param {string} handlerName 
- * @param {EventListenerOrFn} handler 
- */
-export function register(handlerName, handler){
-    Registry.register(emc, handlerName, handler);
-}
-
-/**
- * 
- * @param {CSSQuery} q 
- */
-export function w(q){
-    return bw(q, emc.ws);
-}
