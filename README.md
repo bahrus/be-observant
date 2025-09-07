@@ -31,6 +31,24 @@ sets data-[id] of the adorned element to the value of the input element:
 <div data-a=... data-b=... data-c=... data-d=...>
 ```
 
+For more compact notation, consider importing an alternative name via the reference 'be-observant/👀.js'.  Also, the word and is optional.  So this also works:
+
+```html
+<label>
+    a: <input id=a>
+</label>
+<label>
+    b: <input id=b type=checkbox>
+</label>
+<label>
+    c: <input id=c type=number>
+</label>
+<label>
+    d: <input id=d type=date>
+</label>
+<div 👀="of #a #b #c and #d"></div>
+```
+
 ## Viewing Demos Locally
 
 Any web server that can serve static files with server side includes will do, but...
