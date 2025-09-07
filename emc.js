@@ -8,12 +8,8 @@ import { w as bw } from 'be-hive/w.js';
 /** @import {CSSQuery} from './ts-refs/trans-render/types.js' */
 
 const dependencyPart = String.raw `(?<dependencyPart>.*)`;
-//const ofDependencyPart = String.raw `of ${dependencyPart}`;
 const ofDependencies = String.raw `^(o|O)f ${dependencyPart}`;
 
-const ofDependenciesAndSetProp = String.raw `${ofDependencies} and set (?<localPropToSet>.*)`;
-
-const toAggregator = String.raw `${ofDependencies} and set to (?<aggKey>.*)`;
 
 /**
  * @type {Array<[string, string]>}
@@ -30,19 +26,6 @@ export const emc = {
             objValMapsTo: '.',
             regExpExts: {
                 parsedStatements: [
-                    {
-                        regExp: toAggregator,
-                        defaultVals: {
-                        },
-                        dssArrayKeys
-                    },
-                    {
-                        regExp: ofDependenciesAndSetProp,
-                        defaultVals: {
-                            aggKey: '&&'
-                        },
-                        dssArrayKeys
-                    },
                     {
                         regExp: ofDependencies,
                         defaultVals:{
