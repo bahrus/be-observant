@@ -1,4 +1,6 @@
-# be-observant (👀) [TODO]
+# be-observant (👀)
+
+be-observant is an HTML enhancement that reflects peer elements or the host's properties to data-* attributes.  This is useful for styling, among other reasons.
 
 ```html
 <label>
@@ -22,5 +24,45 @@ sets data-[id] of the adorned element to the value of the input element:
 
 ```html
 <div data-a=... data-b=... data-c=... data-d=...>
+```
+
+## Viewing Demos Locally
+
+Any web server that can serve static files with server side includes will do, but...
+
+1.  Install git.
+2.  Fork/clone this repo.
+3.  Install node.js.
+4.  Install python 3 or later.
+5.  Open command window to folder where you cloned this repo.
+6.  > npm install
+7.  > npm run serve
+8.  Open http://localhost:8000/demo/ in a modern browser.
+
+## Running Tests
+
+```
+> npm run test
+```
+
+## Using from ESM Module:
+
+```JavaScript
+import 'be-observant/emc.js';
+```
+
+or
+
+```JavaScript
+import 'be-observant/🔭.js';
+```
+
+
+## Using from CDN:
+
+```html
+<script type=module crossorigin=anonymous>
+    import 'https://esm.run/be-observant';
+</script>
 ```
 
