@@ -1,5 +1,7 @@
 # be-observant (👀)
 
+I think this was deprecated, replaced by [data-props](https://github.com/bahrus/data-props)
+
 be-observant is an HTML enhancement that reflects peer elements or the host's properties to data-* attributes.  This is useful for styling, among other reasons.
 
 [![NPM version](https://badge.fury.io/js/be-observant.png)](http://badge.fury.io/js/be-observant)
